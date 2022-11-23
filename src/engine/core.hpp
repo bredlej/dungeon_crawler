@@ -4,24 +4,21 @@
 
 #ifndef DUNGEON_CRAWLER_CORE_HPP
 #define DUNGEON_CRAWLER_CORE_HPP
-#include <entt/entt.hpp>
+#include "entt/entt.hpp"
 #include <utility>
+#include "assets.hpp"
 
 class Core {
 public:
     const entt::dispatcher &get_dispatcher() {
         return _dispatcher;
     }
-    void invoke() {
-        i+=1;
-    }
-    int get_i() const {
-        return i;
-    }
+    void load_assets();
+    assets::Assets *get_assets() {return _assets.get();}
 private:
+    std::unique_ptr<assets::Assets> _assets{nullptr};
     entt::dispatcher _dispatcher;
     entt::registry _registry;
-    int i = 0;
 };
 
 class UIView {

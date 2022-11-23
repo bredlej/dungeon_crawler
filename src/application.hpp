@@ -6,20 +6,21 @@
 extern "C" {
 #include <raylib.h>
 }
-#include <core.hpp>
+#include "engine/core.hpp"
+#include "views/dungeon_view.hpp"
+#include "views/main_menu.hpp"
 #include <cstdint>
 #include <cstdio>
-#include <dungeon_view.hpp>
-#include <main_menu.hpp>
 #include <string_view>
 #include <unordered_map>
+#include <engine/assets.hpp>
 
 struct Config {
     static constexpr std::string_view title = "Dungeon Crawler";
     static constexpr struct {
         uint32_t width;
         uint32_t height;
-    } window{640, 480};
+    } window{320, 240};
 };
 
 enum class ViewMode {
@@ -30,7 +31,7 @@ using ViewMap = std::unordered_map<ViewMode, std::unique_ptr<UIView>>;
 
 class Application {
 public:
-    explicit Application() noexcept : _view_mode{ViewMode::MainMenu}, _core{std::make_shared<Core>()} {};
+    explicit Application() noexcept : _view_mode{ViewMode::Dungeon}, _core{std::make_shared<Core>()} {};
     Application(const Application &) noexcept = delete;
     Application(Application &) noexcept = delete;
     Application(Application &&) noexcept = delete;

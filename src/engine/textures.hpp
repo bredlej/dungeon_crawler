@@ -1,0 +1,8 @@
+//
+// Created by geoco on 23.11.2022.
+//
+
+#ifndef DUNGEON_CRAWLER_TEXTURES_HPP
+#define DUNGEON_CRAWLER_TEXTURES_HPP
+
+#endif//DUNGEON_CRAWLER_TEXTURES_HPP

@@ -5,7 +5,7 @@
 #ifndef DUNGEON_CRAWLER_MAIN_MENU_HPP
 #define DUNGEON_CRAWLER_MAIN_MENU_HPP
 
-#include <core.hpp>
+#include "engine/core.hpp"
 #include <utility>
 extern "C" {
 #include <raylib.h>

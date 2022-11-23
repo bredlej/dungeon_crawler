@@ -5,12 +5,12 @@
 #ifndef DUNGEON_CRAWLER_DUNGEON_VIEW_HPP
 #define DUNGEON_CRAWLER_DUNGEON_VIEW_HPP
 
-#include <Core.hpp>
+#include "engine/core.hpp"
 #include <utility>
 extern "C" {
 #include <raylib.h>
 };
-#include <entt/entt.hpp>
+#include "entt/entt.hpp"
 
 struct Tile {
     entt::entity entity = entt::null;

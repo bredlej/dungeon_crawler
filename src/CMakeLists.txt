@@ -4,7 +4,7 @@ set(INCLUDE_DIRS
         )
 set(SOURCE_FILES
         application.cpp
-        main_menu.cpp dungeon_view.cpp dungeon_view.hpp)
+        views/main_menu.cpp views/dungeon_view.cpp views/dungeon_view.hpp engine/assets.hpp engine/asset_paths.hpp engine/core.cpp engine/textures.hpp)
 
 add_library(dungeon_crawler_application ${SOURCE_FILES})
 target_link_libraries(dungeon_crawler_application raylib EnTT)

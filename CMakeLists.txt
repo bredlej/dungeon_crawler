@@ -55,3 +55,9 @@ target_include_directories(imgui PUBLIC extern/imgui)
 add_library(rlimgui extern/rlimgui/rlImGui.cpp extern/rlimgui/rlImGui.h)
 target_link_libraries(rlimgui PUBLIC imgui raylib)
 target_include_directories(rlimgui PUBLIC raylib/src/external/glfw/include)
+
+add_custom_command(
+        TARGET dungeon_crawler POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/assets
+        ${CMAKE_CURRENT_BINARY_DIR}/assets)
