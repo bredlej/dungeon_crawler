@@ -24,8 +24,8 @@ public:
     TileMap(TileMap &other) noexcept = delete;
     TileMap(TileMap &&other) noexcept = default;
     TileMap &operator=(const TileMap &other) noexcept = delete;
-
 private:
+
     std::vector<Tile> _tiles;
     uint32_t _width;
     uint32_t _height;
@@ -33,7 +33,7 @@ private:
 
 class DungeonView : public UIView {
 public:
-    explicit DungeonView(std::shared_ptr<Core> core, TileMap tile_map) : UIView{std::move(core)}, _tile_map{std::move(tile_map)} {};
+    explicit DungeonView(std::shared_ptr<Core> core, TileMap tile_map) : UIView{std::move(core)}, _render_texture{LoadRenderTexture(320, 240)}, _tile_map{std::move(tile_map)} {};
     DungeonView(const DungeonView &) noexcept = delete;
     DungeonView(DungeonView &) noexcept = delete;
     DungeonView(DungeonView &&other) noexcept = delete;
@@ -44,6 +44,7 @@ public:
     void update() override;
 
 private:
+    RenderTexture _render_texture;
     TileMap _tile_map;
 };
 
