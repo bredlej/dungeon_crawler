@@ -10,15 +10,13 @@
 
 class Core {
 public:
-    const entt::dispatcher &get_dispatcher() {
-        return _dispatcher;
-    }
     void load_assets();
     assets::Assets *get_assets() {return _assets.get();}
-private:
-    std::unique_ptr<assets::Assets> _assets{nullptr};
     entt::dispatcher _dispatcher;
     entt::registry _registry;
+private:
+    std::unique_ptr<assets::Assets> _assets{nullptr};
+
 };
 
 class UIView {

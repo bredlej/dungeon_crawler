@@ -6,14 +6,14 @@
 extern "C" {
 #include <raylib.h>
 }
-#include "engine/core.hpp"
+#include <engine/assets.hpp>
+#include <engine/core.hpp>
 #include "views/dungeon_view.hpp"
 #include "views/main_menu.hpp"
 #include <cstdint>
 #include <cstdio>
 #include <string_view>
 #include <unordered_map>
-#include <engine/assets.hpp>
 
 struct Config {
     static constexpr std::string_view title = "Dungeon Crawler";

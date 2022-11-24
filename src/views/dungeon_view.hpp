@@ -10,30 +10,11 @@
 extern "C" {
 #include <raylib.h>
 };
-#include "entt/entt.hpp"
-
-struct Tile {
-    entt::entity entity = entt::null;
-};
-
-class TileMap {
-public:
-    explicit TileMap() : _width{20}, _height{20}, _tiles{std::vector<Tile>(_width * _height)} {};
-    explicit TileMap(uint32_t width, uint32_t height) : _width{width}, _height{height}, _tiles{std::vector<Tile>(width * height)} {};
-    TileMap(const TileMap &other) noexcept = delete;
-    TileMap(TileMap &other) noexcept = delete;
-    TileMap(TileMap &&other) noexcept = default;
-    TileMap &operator=(const TileMap &other) noexcept = delete;
-private:
-
-    std::vector<Tile> _tiles;
-    uint32_t _width;
-    uint32_t _height;
-};
+#include <ecs/tile_map.hpp>
 
 class DungeonView : public UIView {
 public:
-    explicit DungeonView(std::shared_ptr<Core> core, TileMap tile_map) : UIView{std::move(core)}, _render_texture{LoadRenderTexture(320, 240)}, _tile_map{std::move(tile_map)} {};
+    explicit DungeonView(std::shared_ptr<Core> core, TileMap &&tile_map) : UIView{std::move(core)}, _render_texture{LoadRenderTexture(320, 240)}, _tile_map{std::move(tile_map)} { std::printf("Dungeon View constructed\n");};
     DungeonView(const DungeonView &) noexcept = delete;
     DungeonView(DungeonView &) noexcept = delete;
     DungeonView(DungeonView &&other) noexcept = delete;
@@ -42,8 +23,8 @@ public:
 
     void render() override;
     void update() override;
-
 private:
+    std::vector<entt::entity> _player_fov;
     RenderTexture _render_texture;
     TileMap _tile_map;
 };

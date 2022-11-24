@@ -7,11 +7,13 @@
 extern "C" {
 #include <raylib.h>
 };
-#include "asset_paths.hpp"
+#include <engine/asset_paths.hpp>
 #include <cstdint>
 #include <cstdio>
 #include <unordered_map>
 #include <variant>
+#include <ecs/types.hpp>
+
 namespace assets {
     struct DCTexture {
     public:
@@ -31,20 +33,8 @@ namespace assets {
         [[nodiscard]] Texture2D get() const {
             return _texture;
         }
-
     private:
         Texture2D _texture;
-    };
-
-
-    enum class FloorType {
-        NORMAL
-    };
-    enum class CeilingType {
-        NORMAL
-    };
-    enum class WallType {
-        NORMAL
     };
 
     // clang-format off
