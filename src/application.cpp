@@ -12,10 +12,12 @@ void initialize_player(const std::shared_ptr<Core>& core) {
     const entt::entity player_entity = core->_registry.create();
     core->_registry.emplace<components::general::Player>(player_entity, true);
     core->_registry.emplace<components::general::Direction>(player_entity, WorldDirection::NORTH);
-    core->_registry.emplace<components::fields::MapPosition>(player_entity, 10, 10);
+    core->_registry.emplace<components::fields::MapPosition>(player_entity, 2, 4);
 }
 
-void run_raylib(ViewMap &views, ViewMode view_mode, std::shared_ptr<Core> core) {
+
+
+void run_raylib(ViewMap &views, ViewMode view_mode, std::shared_ptr<Core> &core) {
     InitWindow(Config::window.width, Config::window.height, Config::title.data());
     core->load_assets();
     initialize_views(views, core);

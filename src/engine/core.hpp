@@ -10,6 +10,10 @@
 
 class Core {
 public:
+    explicit Core() {
+        std::printf("Core created\n");
+    }
+
     void load_assets();
     assets::Assets *get_assets() {return _assets.get();}
     entt::dispatcher _dispatcher;
@@ -21,7 +25,7 @@ private:
 
 class UIView {
 public:
-    explicit UIView(std::shared_ptr<Core> core) : _core{std::move(core)} {};
+    explicit UIView(std::shared_ptr<Core> &core) : _core{core} {};
     virtual void render() = 0;
     virtual void update() = 0;
     virtual ~UIView() = default;
