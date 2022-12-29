@@ -14,6 +14,12 @@
 struct Tile {
     entt::entity entity = entt::null;
 };
+
+struct NeighbourTile {
+    entt::entity entity;
+    WorldDirection direction;
+};
+
 constexpr auto kDEFAULT_MAP_SIZE = 20;
 
 class TileMap {
@@ -28,6 +34,7 @@ public:
     uint32_t _width;
     uint32_t _height;
     [[nodiscard]] entt::entity get_at(int32_t x, int32_t y) const;
+    [[nodiscard]] std::vector<NeighbourTile> get_neighbours_of (int32_t x, int32_t y) const;
 private:
     void _initialize();
 

@@ -9,13 +9,13 @@
 
 enum class FloorType
 {
-    NORMAL
+    RUINS_01, RUINS_02
 };
 enum class CeilingType {
     NORMAL
 };
 enum class WallType {
-    NORMAL
+    RUINS_01
 };
 enum class WorldDirection {
     NORTH, EAST, WEST, SOUTH

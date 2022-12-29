@@ -7,74 +7,87 @@
 #include <string_view>
 namespace assets {
     namespace tiles {
-        namespace floor {
-            namespace normal {
-                constexpr const char * f01 = "assets/Tiles/Floor/F01.png";
-                constexpr const char * f02 = "assets/Tiles/Floor/F02.png";
-                constexpr const char * f03 = "assets/Tiles/Floor/F03.png";
-                constexpr const char * f04 = "assets/Tiles/Floor/F04.png";
-                constexpr const char * f05 = "assets/Tiles/Floor/F05.png";
-                constexpr const char * f06 = "assets/Tiles/Floor/F06.png";
-                constexpr const char * f07 = "assets/Tiles/Floor/F07.png";
-                constexpr const char * f08 = "assets/Tiles/Floor/F08.png";
-                constexpr const char * f09 = "assets/Tiles/Floor/F09.png";
-                constexpr const char * f10 = "assets/Tiles/Floor/F10.png";
-                constexpr const char * f11 = "assets/Tiles/Floor/F11.png";
-                constexpr const char * f12 = "assets/Tiles/Floor/F12.png";
-                constexpr const char * f13 = "assets/Tiles/Floor/F13.png";
-                constexpr const char * f14 = "assets/Tiles/Floor/F14.png";
-                constexpr const char * f15 = "assets/Tiles/Floor/F15.png";
-                constexpr const char * f16 = "assets/Tiles/Floor/F16.png";
-                constexpr const char * f17 = "assets/Tiles/Floor/F17.png";
-                constexpr const char * f18 = "assets/Tiles/Floor/F18.png";
-                constexpr const char * f19 = "assets/Tiles/Floor/F19.png";
-            }
-        }
-        namespace ceiling {
-            namespace normal {
-                constexpr const char *c01 = "assets/Tiles/Ceiling/C01.png";
-                constexpr const char *c02 = "assets/Tiles/Ceiling/C02.png";
-                constexpr const char *c03 = "assets/Tiles/Ceiling/C03.png";
-                constexpr const char *c04 = "assets/Tiles/Ceiling/C04.png";
-                constexpr const char *c05 = "assets/Tiles/Ceiling/C05.png";
-                constexpr const char *c06 = "assets/Tiles/Ceiling/C06.png";
-                constexpr const char *c07 = "assets/Tiles/Ceiling/C07.png";
-                constexpr const char *c08 = "assets/Tiles/Ceiling/C08.png";
-                constexpr const char *c09 = "assets/Tiles/Ceiling/C09.png";
-                constexpr const char *c10 = "assets/Tiles/Ceiling/C10.png";
-                constexpr const char *c11 = "assets/Tiles/Ceiling/C11.png";
-                constexpr const char *c12 = "assets/Tiles/Ceiling/C12.png";
-                constexpr const char *c13 = "assets/Tiles/Ceiling/C13.png";
-                constexpr const char *c14 = "assets/Tiles/Ceiling/C14.png";
-                constexpr const char *c15 = "assets/Tiles/Ceiling/C15.png";
-                constexpr const char *c16 = "assets/Tiles/Ceiling/C16.png";
-                constexpr const char *c17 = "assets/Tiles/Ceiling/C17.png";
-                constexpr const char *c18 = "assets/Tiles/Ceiling/C18.png";
-                constexpr const char *c19 = "assets/Tiles/Ceiling/C19.png";
-            }
-        }
-        namespace wall {
-            namespace normal {
-                constexpr const char *wall01 = "assets/Tiles/Walls/01-05/Wall01.png";
-                constexpr const char *wall02 = "assets/Tiles/Walls/01-05/Wall02.png";
-                constexpr const char *wall03 = "assets/Tiles/Walls/01-05/Wall03.png";
-                constexpr const char *wall04 = "assets/Tiles/Walls/01-05/Wall04.png";
-                constexpr const char *wall05 = "assets/Tiles/Walls/01-05/Wall05.png";
-                constexpr const char *wall06 = "assets/Tiles/Walls/06-10/Wall06.png";
-                constexpr const char *wall07 = "assets/Tiles/Walls/06-10/Wall07.png";
-                constexpr const char *wall08 = "assets/Tiles/Walls/06-10/Wall08.png";
-                constexpr const char *wall09 = "assets/Tiles/Walls/06-10/Wall09.png";
-                constexpr const char *wall10 = "assets/Tiles/Walls/06-10/Wall10.png";
-                constexpr const char *wall11 = "assets/Tiles/Walls/11-13/Wall11.png";
-                constexpr const char *wall12 = "assets/Tiles/Walls/11-13/Wall12.png";
-                constexpr const char *wall13 = "assets/Tiles/Walls/11-13/Wall13.png";
-                constexpr const char *wall14 = "assets/Tiles/Walls/14-16/Wall14.png";
-                constexpr const char *wall15 = "assets/Tiles/Walls/14-16/Wall15.png";
-                constexpr const char *wall16 = "assets/Tiles/Walls/14-16/Wall16.png";
-                constexpr const char *wall17 = "assets/Tiles/Walls/17-19/Wall17.png";
-                constexpr const char *wall19 = "assets/Tiles/Walls/17-19/Wall19.png";
-            }
-        }
-    }
-}
+        namespace stratum {
+            namespace ruins {
+                namespace floor {
+                    namespace floor_01 {
+                        constexpr const char *f01 = "assets/Tiles/Stratum/Ruins/Floor/01/01.png";
+                        constexpr const char *f02 = "assets/Tiles/Stratum/Ruins/Floor/01/02.png";
+                        constexpr const char *f03 = "assets/Tiles/Stratum/Ruins/Floor/01/03.png";
+                        constexpr const char *f04 = "assets/Tiles/Stratum/Ruins/Floor/01/04.png";
+                        constexpr const char *f05 = "assets/Tiles/Stratum/Ruins/Floor/01/05.png";
+                        constexpr const char *f06 = "assets/Tiles/Stratum/Ruins/Floor/01/06.png";
+                        constexpr const char *f07 = "assets/Tiles/Stratum/Ruins/Floor/01/07.png";
+                        constexpr const char *f08 = "assets/Tiles/Stratum/Ruins/Floor/01/08.png";
+                        constexpr const char *f09 = "assets/Tiles/Stratum/Ruins/Floor/01/09.png";
+                        constexpr const char *f10 = "assets/Tiles/Stratum/Ruins/Floor/01/10.png";
+                        constexpr const char *f11 = "assets/Tiles/Stratum/Ruins/Floor/01/11.png";
+                        constexpr const char *f12 = "assets/Tiles/Stratum/Ruins/Floor/01/12.png";
+                        constexpr const char *f13 = "assets/Tiles/Stratum/Ruins/Floor/01/13.png";
+                        constexpr const char *f14 = "assets/Tiles/Stratum/Ruins/Floor/01/14.png";
+                        constexpr const char *f15 = "assets/Tiles/Stratum/Ruins/Floor/01/15.png";
+                        constexpr const char *f16 = "assets/Tiles/Stratum/Ruins/Floor/01/16.png";
+                        constexpr const char *f17 = "assets/Tiles/Stratum/Ruins/Floor/01/17.png";
+                        constexpr const char *f18 = "assets/Tiles/Stratum/Ruins/Floor/01/18.png";
+                        constexpr const char *f19 = "assets/Tiles/Stratum/Ruins/Floor/01/19.png";
+                    }// namespace floor_01
+                    namespace floor_02 {
+                        constexpr const char *f01 = "assets/Tiles/Stratum/Ruins/Floor/02/01.png";
+                        constexpr const char *f02 = "assets/Tiles/Stratum/Ruins/Floor/02/02.png";
+                        constexpr const char *f03 = "assets/Tiles/Stratum/Ruins/Floor/02/03.png";
+                        constexpr const char *f04 = "assets/Tiles/Stratum/Ruins/Floor/02/04.png";
+                        constexpr const char *f05 = "assets/Tiles/Stratum/Ruins/Floor/02/05.png";
+                        constexpr const char *f06 = "assets/Tiles/Stratum/Ruins/Floor/02/06.png";
+                        constexpr const char *f07 = "assets/Tiles/Stratum/Ruins/Floor/02/07.png";
+                        constexpr const char *f08 = "assets/Tiles/Stratum/Ruins/Floor/02/08.png";
+                        constexpr const char *f09 = "assets/Tiles/Stratum/Ruins/Floor/02/09.png";
+                        constexpr const char *f10 = "assets/Tiles/Stratum/Ruins/Floor/02/10.png";
+                        constexpr const char *f11 = "assets/Tiles/Stratum/Ruins/Floor/02/11.png";
+                        constexpr const char *f12 = "assets/Tiles/Stratum/Ruins/Floor/02/12.png";
+                        constexpr const char *f13 = "assets/Tiles/Stratum/Ruins/Floor/02/13.png";
+                        constexpr const char *f14 = "assets/Tiles/Stratum/Ruins/Floor/02/14.png";
+                        constexpr const char *f15 = "assets/Tiles/Stratum/Ruins/Floor/02/15.png";
+                        constexpr const char *f16 = "assets/Tiles/Stratum/Ruins/Floor/02/16.png";
+                        constexpr const char *f17 = "assets/Tiles/Stratum/Ruins/Floor/02/17.png";
+                        constexpr const char *f18 = "assets/Tiles/Stratum/Ruins/Floor/02/18.png";
+                        constexpr const char *f19 = "assets/Tiles/Stratum/Ruins/Floor/02/19.png";
+                    }// namespace floor_02
+                }    // namespace floor
+                namespace wall {
+                    namespace wall_01 {
+                        constexpr const char *w01_e = "assets/Tiles/Stratum/Ruins/Wall/W01_E.png";
+                        constexpr const char *w01_s = "assets/Tiles/Stratum/Ruins/Wall/W01_S.png";
+                        constexpr const char *w02_e = "assets/Tiles/Stratum/Ruins/Wall/W02_E.png";
+                        constexpr const char *w02_s = "assets/Tiles/Stratum/Ruins/Wall/W02_S.png";
+                        constexpr const char *w03_s = "assets/Tiles/Stratum/Ruins/Wall/W03_S.png";
+                        constexpr const char *w04_s = "assets/Tiles/Stratum/Ruins/Wall/W04_S.png";
+                        constexpr const char *w04_w = "assets/Tiles/Stratum/Ruins/Wall/W04_W.png";
+                        constexpr const char *w05_s = "assets/Tiles/Stratum/Ruins/Wall/W05_S.png";
+                        constexpr const char *w05_w = "assets/Tiles/Stratum/Ruins/Wall/W05_W.png";
+                        constexpr const char *w06_e = "assets/Tiles/Stratum/Ruins/Wall/W06_E.png";
+                        constexpr const char *w07_e = "assets/Tiles/Stratum/Ruins/Wall/W07_E.png";
+                        constexpr const char *w07_s = "assets/Tiles/Stratum/Ruins/Wall/W07_S.png";
+                        constexpr const char *w08_s = "assets/Tiles/Stratum/Ruins/Wall/W08_S.png";
+                        constexpr const char *w09_s = "assets/Tiles/Stratum/Ruins/Wall/W09_S.png";
+                        constexpr const char *w09_w = "assets/Tiles/Stratum/Ruins/Wall/W09_W.png";
+                        constexpr const char *w10_w = "assets/Tiles/Stratum/Ruins/Wall/W10_W.png";
+                        constexpr const char *w11_e = "assets/Tiles/Stratum/Ruins/Wall/W11_E.png";
+                        constexpr const char *w11_s = "assets/Tiles/Stratum/Ruins/Wall/W11_S.png";
+                        constexpr const char *w12_s = "assets/Tiles/Stratum/Ruins/Wall/W12_S.png";
+                        constexpr const char *w13_s = "assets/Tiles/Stratum/Ruins/Wall/W13_S.png";
+                        constexpr const char *w13_w = "assets/Tiles/Stratum/Ruins/Wall/W13_W.png";
+                        constexpr const char *w14_e = "assets/Tiles/Stratum/Ruins/Wall/W14_E.png";
+                        constexpr const char *w14_s = "assets/Tiles/Stratum/Ruins/Wall/W14_S.png";
+                        constexpr const char *w15_s = "assets/Tiles/Stratum/Ruins/Wall/W15_S.png";
+                        constexpr const char *w16_s = "assets/Tiles/Stratum/Ruins/Wall/W16_S.png";
+                        constexpr const char *w16_w = "assets/Tiles/Stratum/Ruins/Wall/W16_W.png";
+                        constexpr const char *w17_e = "assets/Tiles/Stratum/Ruins/Wall/W17_e.png";
+                        constexpr const char *w19_w = "assets/Tiles/Stratum/Ruins/Wall/W19_w.png";
+                    }// namespace wall_01
+                }    // namespace wall
+            }        // namespace ruins
+        }            // namespace stratum
+
+    }// namespace tiles
+}// namespace assets
 #endif//DUNGEON_CRAWLER_ASSET_PATHS_HPP

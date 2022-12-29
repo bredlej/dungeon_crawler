@@ -29,6 +29,8 @@ namespace components {
         };
         struct Wall {
             WallType type;
+            entt::entity field1;
+            entt::entity field2;
         };
         struct Visibility {
             bool is_visible;

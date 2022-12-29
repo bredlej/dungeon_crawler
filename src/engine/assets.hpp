@@ -7,12 +7,12 @@
 extern "C" {
 #include <raylib.h>
 };
-#include <engine/asset_paths.hpp>
 #include <cstdint>
 #include <cstdio>
+#include <ecs/types.hpp>
+#include <engine/asset_paths.hpp>
 #include <unordered_map>
 #include <variant>
-#include <ecs/types.hpp>
 
 namespace assets {
     struct DCTexture {
@@ -33,6 +33,7 @@ namespace assets {
         [[nodiscard]] Texture2D get() const {
             return _texture;
         }
+
     private:
         Texture2D _texture;
     };
@@ -40,7 +41,18 @@ namespace assets {
     // clang-format off
     namespace dungeon_view {
         enum class POVField : uint8_t {
-            F01=0,F02,F03,F04,F05,F06,F07,F08,F09,F10,F11,F12,F13,F14,F15,F16,F17,F18,F19//
+            F01=0,F02,F03,F04,F05,//
+            F06,F07,F08,F09,F10,//
+            F11,F12,F13,//
+            F14,F15,F16,//
+            F17,F18,F19//
+        };
+        enum class POVWall : uint8_t {
+            W01_E=0, W01_S, W02_E, W02_S, W03_S, W04_S, W04_W, W05_S, W05_W,//
+            W06_E, W07_E, W07_S, W08_S, W09_S, W09_W, W10_W,//
+            W11_E, W11_S, W12_S, W13_S, W13_W,//
+            W14_E, W14_S, W15_S, W16_S, W16_W,//
+            W17_E, W19_W//
         };
     }
     // clang-format on
@@ -56,70 +68,81 @@ namespace assets {
                 }
             }
         }
-        std::unordered_map<dungeon_view::POVField, FieldMap> _tiles;
+        std::unordered_map<std::variant<dungeon_view::POVField, dungeon_view::POVWall>, FieldMap> _tiles;
     };
 
     class Assets {
     public:
         explicit Assets() noexcept : _textures{} {
-            _textures._tiles[dungeon_view::POVField::F01].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f01);
-            _textures._tiles[dungeon_view::POVField::F02].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f02);
-            _textures._tiles[dungeon_view::POVField::F03].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f03);
-            _textures._tiles[dungeon_view::POVField::F04].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f04);
-            _textures._tiles[dungeon_view::POVField::F05].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f05);
-            _textures._tiles[dungeon_view::POVField::F06].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f06);
-            _textures._tiles[dungeon_view::POVField::F07].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f07);
-            _textures._tiles[dungeon_view::POVField::F08].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f08);
-            _textures._tiles[dungeon_view::POVField::F09].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f09);
-            _textures._tiles[dungeon_view::POVField::F10].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f10);
-            _textures._tiles[dungeon_view::POVField::F11].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f11);
-            _textures._tiles[dungeon_view::POVField::F12].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f12);
-            _textures._tiles[dungeon_view::POVField::F13].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f13);
-            _textures._tiles[dungeon_view::POVField::F14].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f14);
-            _textures._tiles[dungeon_view::POVField::F15].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f15);
-            _textures._tiles[dungeon_view::POVField::F16].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f16);
-            _textures._tiles[dungeon_view::POVField::F17].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f17);
-            _textures._tiles[dungeon_view::POVField::F18].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f18);
-            _textures._tiles[dungeon_view::POVField::F19].emplace(FloorType::NORMAL, assets::tiles::floor::normal::f19);
+            // ruins: floor type 1
+            _textures._tiles[dungeon_view::POVField::F01].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f01);
+            _textures._tiles[dungeon_view::POVField::F02].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f02);
+            _textures._tiles[dungeon_view::POVField::F03].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f03);
+            _textures._tiles[dungeon_view::POVField::F04].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f04);
+            _textures._tiles[dungeon_view::POVField::F05].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f05);
+            _textures._tiles[dungeon_view::POVField::F06].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f06);
+            _textures._tiles[dungeon_view::POVField::F07].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f07);
+            _textures._tiles[dungeon_view::POVField::F08].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f08);
+            _textures._tiles[dungeon_view::POVField::F09].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f09);
+            _textures._tiles[dungeon_view::POVField::F10].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f10);
+            _textures._tiles[dungeon_view::POVField::F11].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f11);
+            _textures._tiles[dungeon_view::POVField::F12].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f12);
+            _textures._tiles[dungeon_view::POVField::F13].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f13);
+            _textures._tiles[dungeon_view::POVField::F14].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f14);
+            _textures._tiles[dungeon_view::POVField::F15].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f15);
+            _textures._tiles[dungeon_view::POVField::F16].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f16);
+            _textures._tiles[dungeon_view::POVField::F17].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f17);
+            _textures._tiles[dungeon_view::POVField::F18].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f18);
+            _textures._tiles[dungeon_view::POVField::F19].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f19);
 
-            _textures._tiles[dungeon_view::POVField::F01].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c01);
-            _textures._tiles[dungeon_view::POVField::F02].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c02);
-            _textures._tiles[dungeon_view::POVField::F03].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c03);
-            _textures._tiles[dungeon_view::POVField::F04].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c04);
-            _textures._tiles[dungeon_view::POVField::F05].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c05);
-            _textures._tiles[dungeon_view::POVField::F06].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c06);
-            _textures._tiles[dungeon_view::POVField::F07].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c07);
-            _textures._tiles[dungeon_view::POVField::F08].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c08);
-            _textures._tiles[dungeon_view::POVField::F09].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c09);
-            _textures._tiles[dungeon_view::POVField::F10].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c10);
-            _textures._tiles[dungeon_view::POVField::F11].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c11);
-            _textures._tiles[dungeon_view::POVField::F12].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c12);
-            _textures._tiles[dungeon_view::POVField::F13].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c13);
-            _textures._tiles[dungeon_view::POVField::F14].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c14);
-            _textures._tiles[dungeon_view::POVField::F15].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c15);
-            _textures._tiles[dungeon_view::POVField::F16].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c16);
-            _textures._tiles[dungeon_view::POVField::F17].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c17);
-            _textures._tiles[dungeon_view::POVField::F18].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c18);
-            _textures._tiles[dungeon_view::POVField::F19].emplace(CeilingType::NORMAL, assets::tiles::ceiling::normal::c19);
+            // ruins: floor type 2
+            _textures._tiles[dungeon_view::POVField::F01].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f01);
+            _textures._tiles[dungeon_view::POVField::F02].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f02);
+            _textures._tiles[dungeon_view::POVField::F03].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f03);
+            _textures._tiles[dungeon_view::POVField::F04].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f04);
+            _textures._tiles[dungeon_view::POVField::F05].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f05);
+            _textures._tiles[dungeon_view::POVField::F06].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f06);
+            _textures._tiles[dungeon_view::POVField::F07].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f07);
+            _textures._tiles[dungeon_view::POVField::F08].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f08);
+            _textures._tiles[dungeon_view::POVField::F09].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f09);
+            _textures._tiles[dungeon_view::POVField::F10].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f10);
+            _textures._tiles[dungeon_view::POVField::F11].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f11);
+            _textures._tiles[dungeon_view::POVField::F12].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f12);
+            _textures._tiles[dungeon_view::POVField::F13].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f13);
+            _textures._tiles[dungeon_view::POVField::F14].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f14);
+            _textures._tiles[dungeon_view::POVField::F15].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f15);
+            _textures._tiles[dungeon_view::POVField::F16].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f16);
+            _textures._tiles[dungeon_view::POVField::F17].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f17);
+            _textures._tiles[dungeon_view::POVField::F18].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f18);
+            _textures._tiles[dungeon_view::POVField::F19].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f19);
 
-            _textures._tiles[dungeon_view::POVField::F01].emplace(WallType::NORMAL, assets::tiles::wall::normal::wall01);
-            _textures._tiles[dungeon_view::POVField::F02].emplace(WallType::NORMAL, assets::tiles::wall::normal::wall02);
-            _textures._tiles[dungeon_view::POVField::F03].emplace(WallType::NORMAL, assets::tiles::wall::normal::wall03);
-            _textures._tiles[dungeon_view::POVField::F04].emplace(WallType::NORMAL, assets::tiles::wall::normal::wall04);
-            _textures._tiles[dungeon_view::POVField::F05].emplace(WallType::NORMAL, assets::tiles::wall::normal::wall05);
-            _textures._tiles[dungeon_view::POVField::F06].emplace(WallType::NORMAL, assets::tiles::wall::normal::wall06);
-            _textures._tiles[dungeon_view::POVField::F07].emplace(WallType::NORMAL, assets::tiles::wall::normal::wall07);
-            _textures._tiles[dungeon_view::POVField::F08].emplace(WallType::NORMAL, assets::tiles::wall::normal::wall08);
-            _textures._tiles[dungeon_view::POVField::F09].emplace(WallType::NORMAL, assets::tiles::wall::normal::wall09);
-            _textures._tiles[dungeon_view::POVField::F10].emplace(WallType::NORMAL, assets::tiles::wall::normal::wall10);
-            _textures._tiles[dungeon_view::POVField::F11].emplace(WallType::NORMAL, assets::tiles::wall::normal::wall11);
-            _textures._tiles[dungeon_view::POVField::F12].emplace(WallType::NORMAL, assets::tiles::wall::normal::wall12);
-            _textures._tiles[dungeon_view::POVField::F13].emplace(WallType::NORMAL, assets::tiles::wall::normal::wall13);
-            _textures._tiles[dungeon_view::POVField::F14].emplace(WallType::NORMAL, assets::tiles::wall::normal::wall14);
-            _textures._tiles[dungeon_view::POVField::F15].emplace(WallType::NORMAL, assets::tiles::wall::normal::wall15);
-            _textures._tiles[dungeon_view::POVField::F16].emplace(WallType::NORMAL, assets::tiles::wall::normal::wall16);
-            _textures._tiles[dungeon_view::POVField::F17].emplace(WallType::NORMAL, assets::tiles::wall::normal::wall17);
-            _textures._tiles[dungeon_view::POVField::F19].emplace(WallType::NORMAL, assets::tiles::wall::normal::wall19);
+            _textures._tiles[dungeon_view::POVWall::W01_E].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w01_e);
+            _textures._tiles[dungeon_view::POVWall::W01_S].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w01_s);
+            _textures._tiles[dungeon_view::POVWall::W02_E].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w02_e);
+            _textures._tiles[dungeon_view::POVWall::W02_S].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w02_s);
+            _textures._tiles[dungeon_view::POVWall::W03_S].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w03_s);
+            _textures._tiles[dungeon_view::POVWall::W04_W].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w04_w);
+            _textures._tiles[dungeon_view::POVWall::W04_S].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w04_s);
+            _textures._tiles[dungeon_view::POVWall::W05_W].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w05_w);
+            _textures._tiles[dungeon_view::POVWall::W05_S].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w05_s);
+            _textures._tiles[dungeon_view::POVWall::W06_E].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w06_e);
+            _textures._tiles[dungeon_view::POVWall::W07_E].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w07_e);
+            _textures._tiles[dungeon_view::POVWall::W07_S].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w07_s);
+            _textures._tiles[dungeon_view::POVWall::W08_S].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w08_s);
+            _textures._tiles[dungeon_view::POVWall::W09_W].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w09_w);
+            _textures._tiles[dungeon_view::POVWall::W09_S].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w09_s);
+            _textures._tiles[dungeon_view::POVWall::W10_W].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w10_w);
+            _textures._tiles[dungeon_view::POVWall::W11_E].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w11_e);
+            _textures._tiles[dungeon_view::POVWall::W11_S].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w11_s);
+            _textures._tiles[dungeon_view::POVWall::W12_S].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w12_s);
+            _textures._tiles[dungeon_view::POVWall::W13_W].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w13_w);
+            _textures._tiles[dungeon_view::POVWall::W14_E].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w14_e);
+            _textures._tiles[dungeon_view::POVWall::W14_S].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w14_s);
+            _textures._tiles[dungeon_view::POVWall::W15_S].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w15_s);
+            _textures._tiles[dungeon_view::POVWall::W16_W].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w16_w);
+            _textures._tiles[dungeon_view::POVWall::W16_S].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w16_s);
+            _textures._tiles[dungeon_view::POVWall::W17_E].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w17_e);
+            _textures._tiles[dungeon_view::POVWall::W19_W].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w19_w);
         };
 
         Textures _textures;
