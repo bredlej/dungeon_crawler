@@ -181,96 +181,44 @@ void DungeonView::update() {
     }
 }
 
+static void fill_player_fov(std::vector<entt::entity> &player_fov, const components::fields::MapPosition player_position, const TileMap& tile_map, WorldDirection direction) {
+    int x_mod, y_mod;
+    switch (direction) {
+        case WorldDirection::NORTH:
+        case WorldDirection::EAST:
+            x_mod = 1; y_mod = 1; break;
+        case WorldDirection::SOUTH:
+        case WorldDirection::WEST:
+            x_mod = -1; y_mod = -1; break;
+    }
+
+    player_fov[(size_t) assets::dungeon_view::POVField::F01] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x - 2 * x_mod, player_position.y - 4 * y_mod) : tile_map.get_at(player_position.x + 4 * x_mod, player_position.y - 2 * y_mod);
+    player_fov[(size_t) assets::dungeon_view::POVField::F02] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x - 1 * x_mod, player_position.y - 4 * y_mod) : tile_map.get_at(player_position.x + 4 * x_mod, player_position.y - 1 * y_mod);
+    player_fov[(size_t) assets::dungeon_view::POVField::F03] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x, player_position.y - 4 * y_mod)             : tile_map.get_at(player_position.x + 4 * x_mod, player_position.y)    ;
+    player_fov[(size_t) assets::dungeon_view::POVField::F04] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x + 1 * x_mod, player_position.y - 4 * y_mod) : tile_map.get_at(player_position.x + 4 * x_mod, player_position.y + 1 * y_mod);
+    player_fov[(size_t) assets::dungeon_view::POVField::F05] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x + 2 * x_mod, player_position.y - 4 * y_mod) : tile_map.get_at(player_position.x + 4 * x_mod, player_position.y + 2 * y_mod);
+    player_fov[(size_t) assets::dungeon_view::POVField::F06] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x - 2 * x_mod, player_position.y - 3 * y_mod) : tile_map.get_at(player_position.x + 3 * x_mod, player_position.y - 2 * y_mod);
+    player_fov[(size_t) assets::dungeon_view::POVField::F07] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x - 1 * x_mod, player_position.y - 3 * y_mod) : tile_map.get_at(player_position.x + 3 * x_mod, player_position.y - 1 * y_mod);
+    player_fov[(size_t) assets::dungeon_view::POVField::F08] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x, player_position.y - 3 * y_mod)             : tile_map.get_at(player_position.x + 3 * x_mod, player_position.y)    ;
+    player_fov[(size_t) assets::dungeon_view::POVField::F09] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x + 1 * x_mod, player_position.y - 3 * y_mod) : tile_map.get_at(player_position.x + 3 * x_mod, player_position.y + 1 * y_mod);
+    player_fov[(size_t) assets::dungeon_view::POVField::F10] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x + 2 * x_mod, player_position.y - 3 * y_mod) : tile_map.get_at(player_position.x + 3 * x_mod, player_position.y + 2 * y_mod);
+    player_fov[(size_t) assets::dungeon_view::POVField::F11] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x - 1 * x_mod, player_position.y - 2 * y_mod) : tile_map.get_at(player_position.x + 2 * x_mod, player_position.y - 1 * y_mod);
+    player_fov[(size_t) assets::dungeon_view::POVField::F12] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x, player_position.y - 2 * y_mod)             : tile_map.get_at(player_position.x + 2 * x_mod, player_position.y)    ;
+    player_fov[(size_t) assets::dungeon_view::POVField::F13] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x + 1 * x_mod, player_position.y - 2 * y_mod) : tile_map.get_at(player_position.x + 2 * x_mod, player_position.y + 1 * y_mod);
+    player_fov[(size_t) assets::dungeon_view::POVField::F14] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x - 1 * x_mod, player_position.y - 1 * y_mod) : tile_map.get_at(player_position.x + 1 * x_mod, player_position.y - 1 * y_mod);
+    player_fov[(size_t) assets::dungeon_view::POVField::F15] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x, player_position.y - 1 * y_mod)             : tile_map.get_at(player_position.x + 1 * x_mod, player_position.y)    ;
+    player_fov[(size_t) assets::dungeon_view::POVField::F16] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x + 1 * x_mod, player_position.y - 1 * y_mod) : tile_map.get_at(player_position.x + 1 * x_mod, player_position.y + 1 * y_mod);
+    player_fov[(size_t) assets::dungeon_view::POVField::F17] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x - 1 * x_mod, player_position.y)             : tile_map.get_at(player_position.x, player_position.y - 1 * y_mod)    ;
+    player_fov[(size_t) assets::dungeon_view::POVField::F18] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x, player_position.y)                         : tile_map.get_at(player_position.x, player_position.y);
+    player_fov[(size_t) assets::dungeon_view::POVField::F19] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x + 1 * x_mod, player_position.y)             : tile_map.get_at(player_position.x, player_position.y + 1 * y_mod)    ;
+}
+
 void DungeonView::_calculate_fov() {
     auto player_view = _core->_registry.view<components::general::Player, components::general::Direction, components::fields::MapPosition>();
     for (auto entity: player_view) {
         auto player_position = player_view.get<components::fields::MapPosition>(entity);
         auto player_direction = player_view.get<components::general::Direction>(entity);
-        switch (player_direction.direction) {
-            case WorldDirection::NORTH:
-                _player_fov[(size_t) assets::dungeon_view::POVField::F01] = _tile_map.get_at(player_position.x - 2, player_position.y - 4);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F02] = _tile_map.get_at(player_position.x - 1, player_position.y - 4);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F03] = _tile_map.get_at(player_position.x, player_position.y - 4);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F04] = _tile_map.get_at(player_position.x + 1, player_position.y - 4);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F05] = _tile_map.get_at(player_position.x + 2, player_position.y - 4);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F06] = _tile_map.get_at(player_position.x - 2, player_position.y - 3);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F07] = _tile_map.get_at(player_position.x - 1, player_position.y - 3);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F08] = _tile_map.get_at(player_position.x, player_position.y - 3);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F09] = _tile_map.get_at(player_position.x + 1, player_position.y - 3);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F10] = _tile_map.get_at(player_position.x + 2, player_position.y - 3);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F11] = _tile_map.get_at(player_position.x - 1, player_position.y - 2);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F12] = _tile_map.get_at(player_position.x, player_position.y - 2);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F13] = _tile_map.get_at(player_position.x + 1, player_position.y - 2);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F14] = _tile_map.get_at(player_position.x - 1, player_position.y - 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F15] = _tile_map.get_at(player_position.x, player_position.y - 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F16] = _tile_map.get_at(player_position.x + 1, player_position.y - 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F17] = _tile_map.get_at(player_position.x - 1, player_position.y);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F18] = _tile_map.get_at(player_position.x, player_position.y);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F19] = _tile_map.get_at(player_position.x + 1, player_position.y);
-                break;
-            case WorldDirection::EAST:
-                _player_fov[(size_t) assets::dungeon_view::POVField::F01] = _tile_map.get_at(player_position.x + 4, player_position.y - 2);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F02] = _tile_map.get_at(player_position.x + 4, player_position.y - 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F03] = _tile_map.get_at(player_position.x + 4, player_position.y);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F04] = _tile_map.get_at(player_position.x + 4, player_position.y + 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F05] = _tile_map.get_at(player_position.x + 4, player_position.y + 2);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F06] = _tile_map.get_at(player_position.x + 3, player_position.y - 2);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F07] = _tile_map.get_at(player_position.x + 3, player_position.y - 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F08] = _tile_map.get_at(player_position.x + 3, player_position.y);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F09] = _tile_map.get_at(player_position.x + 3, player_position.y + 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F10] = _tile_map.get_at(player_position.x + 3, player_position.y + 2);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F11] = _tile_map.get_at(player_position.x + 2, player_position.y - 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F12] = _tile_map.get_at(player_position.x + 2, player_position.y);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F13] = _tile_map.get_at(player_position.x + 2, player_position.y + 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F14] = _tile_map.get_at(player_position.x + 1, player_position.y - 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F15] = _tile_map.get_at(player_position.x + 1, player_position.y);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F16] = _tile_map.get_at(player_position.x + 1, player_position.y + 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F17] = _tile_map.get_at(player_position.x, player_position.y - 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F18] = _tile_map.get_at(player_position.x, player_position.y);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F19] = _tile_map.get_at(player_position.x, player_position.y + 1);
-                break;
-            case WorldDirection::SOUTH:
-                _player_fov[(size_t) assets::dungeon_view::POVField::F01] = _tile_map.get_at(player_position.x + 2, player_position.y + 4);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F02] = _tile_map.get_at(player_position.x + 1, player_position.y + 4);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F03] = _tile_map.get_at(player_position.x, player_position.y + 4);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F04] = _tile_map.get_at(player_position.x - 1, player_position.y + 4);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F05] = _tile_map.get_at(player_position.x - 2, player_position.y + 4);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F06] = _tile_map.get_at(player_position.x + 2, player_position.y + 3);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F07] = _tile_map.get_at(player_position.x + 1, player_position.y + 3);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F08] = _tile_map.get_at(player_position.x, player_position.y + 3);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F09] = _tile_map.get_at(player_position.x - 1, player_position.y + 3);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F10] = _tile_map.get_at(player_position.x - 2, player_position.y + 3);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F11] = _tile_map.get_at(player_position.x + 1, player_position.y + 2);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F12] = _tile_map.get_at(player_position.x, player_position.y + 2);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F13] = _tile_map.get_at(player_position.x - 1, player_position.y + 2);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F14] = _tile_map.get_at(player_position.x + 1, player_position.y + 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F15] = _tile_map.get_at(player_position.x, player_position.y + 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F16] = _tile_map.get_at(player_position.x - 1, player_position.y + 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F17] = _tile_map.get_at(player_position.x + 1, player_position.y);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F18] = _tile_map.get_at(player_position.x, player_position.y);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F19] = _tile_map.get_at(player_position.x - 1, player_position.y);
-                break;
-            case WorldDirection::WEST:
-                _player_fov[(size_t) assets::dungeon_view::POVField::F01] = _tile_map.get_at(player_position.x - 4, player_position.y + 2);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F02] = _tile_map.get_at(player_position.x - 4, player_position.y + 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F03] = _tile_map.get_at(player_position.x - 4, player_position.y);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F04] = _tile_map.get_at(player_position.x - 4, player_position.y - 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F05] = _tile_map.get_at(player_position.x - 4, player_position.y - 2);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F06] = _tile_map.get_at(player_position.x - 3, player_position.y + 2);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F07] = _tile_map.get_at(player_position.x - 3, player_position.y + 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F08] = _tile_map.get_at(player_position.x - 3, player_position.y);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F09] = _tile_map.get_at(player_position.x - 3, player_position.y - 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F10] = _tile_map.get_at(player_position.x - 3, player_position.y - 2);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F11] = _tile_map.get_at(player_position.x - 2, player_position.y + 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F12] = _tile_map.get_at(player_position.x - 2, player_position.y);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F13] = _tile_map.get_at(player_position.x - 2, player_position.y - 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F14] = _tile_map.get_at(player_position.x - 1, player_position.y + 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F15] = _tile_map.get_at(player_position.x - 1, player_position.y);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F16] = _tile_map.get_at(player_position.x - 1, player_position.y - 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F17] = _tile_map.get_at(player_position.x, player_position.y + 1);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F18] = _tile_map.get_at(player_position.x, player_position.y);
-                _player_fov[(size_t) assets::dungeon_view::POVField::F19] = _tile_map.get_at(player_position.x, player_position.y - 1);
-                break;
-        }
+
+        fill_player_fov(_player_fov, player_position, _tile_map, player_direction.direction);
     }
 }

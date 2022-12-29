@@ -32,6 +32,12 @@ void TileMap::_initialize() {
     wall_entity = get_at(3,3);
     _core->_registry.emplace<components::fields::Wall>(wall_entity, WallType::NORMAL);
     _core->_registry.emplace_or_replace<components::fields::Walkability>(wall_entity, false);
+    wall_entity = get_at(7,3);
+    _core->_registry.emplace<components::fields::Wall>(wall_entity, WallType::NORMAL);
+    _core->_registry.emplace_or_replace<components::fields::Walkability>(wall_entity, false);
+    wall_entity = get_at(7,5);
+    _core->_registry.emplace<components::fields::Wall>(wall_entity, WallType::NORMAL);
+    _core->_registry.emplace_or_replace<components::fields::Walkability>(wall_entity, false);
 }
 entt::entity TileMap::get_at(int32_t x, int32_t y) const {
     entt::entity result{entt::null};
