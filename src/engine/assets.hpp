@@ -135,6 +135,7 @@ namespace assets {
             _textures._tiles[dungeon_view::POVWall::W11_E].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w11_e);
             _textures._tiles[dungeon_view::POVWall::W11_S].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w11_s);
             _textures._tiles[dungeon_view::POVWall::W12_S].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w12_s);
+            _textures._tiles[dungeon_view::POVWall::W13_S].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w13_s);
             _textures._tiles[dungeon_view::POVWall::W13_W].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w13_w);
             _textures._tiles[dungeon_view::POVWall::W14_E].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w14_e);
             _textures._tiles[dungeon_view::POVWall::W14_S].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w14_s);

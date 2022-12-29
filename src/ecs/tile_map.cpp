@@ -29,7 +29,7 @@ entt::entity TileMap::get_at(int32_t x, int32_t y) const {
 }
 
 std::vector<NeighbourTile> TileMap::get_neighbours_of(int32_t x, int32_t y) const {
-    std::vector<NeighbourTile> result(4);
+    std::vector<NeighbourTile> result;
     entt::entity neighbour = get_at(x-1, y);
     if (neighbour != entt::null) {
         result.emplace_back(NeighbourTile{neighbour, WorldDirection::WEST});
