@@ -10,41 +10,41 @@ void TileMap::_initialize() {
         for (auto x = 0; x < _width; x++) {
             Tile tile{_core->_registry.create()};
             _core->_registry.emplace<components::fields::MapPosition>(tile.entity, x, y);
-            _core->_registry.emplace<components::fields::Floor>(tile.entity, FloorType::NORMAL);
+            _core->_registry.emplace<components::fields::Floor>(tile.entity, rand() % 100 < 50 ? FloorType::RUINS_01 : FloorType::RUINS_02);
             _core->_registry.emplace<components::fields::Ceiling>(tile.entity, CeilingType::NORMAL);
             _core->_registry.emplace<components::fields::Visibility>(tile.entity, true);
             _core->_registry.emplace<components::fields::Walkability>(tile.entity, true);
             _tiles.emplace_back(tile);
         }
     }
-    auto wall_entity = get_at(5,5);
-    _core->_registry.emplace<components::fields::Wall>(wall_entity, WallType::NORMAL);
-    _core->_registry.emplace_or_replace<components::fields::Walkability>(wall_entity, false);
-    wall_entity = get_at(5,4);
-    _core->_registry.emplace<components::fields::Wall>(wall_entity, WallType::NORMAL);
-    _core->_registry.emplace_or_replace<components::fields::Walkability>(wall_entity, false);
-    wall_entity = get_at(5,3);
-    _core->_registry.emplace<components::fields::Wall>(wall_entity, WallType::NORMAL);
-    _core->_registry.emplace_or_replace<components::fields::Walkability>(wall_entity, false);
-    wall_entity = get_at(4,3);
-    _core->_registry.emplace<components::fields::Wall>(wall_entity, WallType::NORMAL);
-    _core->_registry.emplace_or_replace<components::fields::Walkability>(wall_entity, false);
-    wall_entity = get_at(3,3);
-    _core->_registry.emplace<components::fields::Wall>(wall_entity, WallType::NORMAL);
-    _core->_registry.emplace_or_replace<components::fields::Walkability>(wall_entity, false);
-    wall_entity = get_at(7,3);
-    _core->_registry.emplace<components::fields::Wall>(wall_entity, WallType::NORMAL);
-    _core->_registry.emplace_or_replace<components::fields::Walkability>(wall_entity, false);
-    wall_entity = get_at(7,5);
-    _core->_registry.emplace<components::fields::Wall>(wall_entity, WallType::NORMAL);
-    _core->_registry.emplace_or_replace<components::fields::Walkability>(wall_entity, false);
 }
 entt::entity TileMap::get_at(int32_t x, int32_t y) const {
     entt::entity result{entt::null};
-    _core->_registry.view<components::fields::MapPosition>().each([&result, &x, &y](entt::entity entity, components::fields::MapPosition position) {
+    _core->_registry.view<components::fields::MapPosition>().each([&result, &x, &y](entt::entity entity, const components::fields::MapPosition &position) {
         if (position.x == x && position.y == y) {
             result = entity;
         }
     });
+    return result;
+}
+
+std::vector<NeighbourTile> TileMap::get_neighbours_of(int32_t x, int32_t y) const {
+    std::vector<NeighbourTile> result;
+    entt::entity neighbour = get_at(x-1, y);
+    if (neighbour != entt::null) {
+        result.emplace_back(NeighbourTile{neighbour, WorldDirection::WEST});
+    }
+    neighbour = get_at(x+1, y);
+    if (neighbour != entt::null) {
+        result.emplace_back(NeighbourTile{neighbour, WorldDirection::EAST});
+    }
+    neighbour = get_at(x, y-1);
+    if (neighbour != entt::null) {
+        result.emplace_back(NeighbourTile{neighbour, WorldDirection::NORTH});
+    }
+    neighbour = get_at(x, y+1);
+    if (neighbour != entt::null) {
+        result.emplace_back(NeighbourTile{neighbour, WorldDirection::SOUTH});
+    }
     return result;
 }

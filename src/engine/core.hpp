@@ -20,7 +20,6 @@ public:
     entt::registry _registry;
 private:
     std::unique_ptr<assets::Assets> _assets{nullptr};
-
 };
 
 class UIView {

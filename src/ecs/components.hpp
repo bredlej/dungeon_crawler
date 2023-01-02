@@ -29,12 +29,17 @@ namespace components {
         };
         struct Wall {
             WallType type;
+            entt::entity field1;
+            entt::entity field2;
         };
         struct Visibility {
             bool is_visible;
         };
         struct Walkability {
             bool is_walkable;
+        };
+        struct InFovOfEntity {
+            entt::entity entity;
         };
     }
 }
