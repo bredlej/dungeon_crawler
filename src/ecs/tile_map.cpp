@@ -10,7 +10,7 @@ void TileMap::_initialize() {
         for (auto x = 0; x < _width; x++) {
             Tile tile{_core->_registry.create()};
             _core->_registry.emplace<components::fields::MapPosition>(tile.entity, x, y);
-            _core->_registry.emplace<components::fields::Floor>(tile.entity, FloorType::RUINS_01);
+            _core->_registry.emplace<components::fields::Floor>(tile.entity, rand() % 100 < 50 ? FloorType::RUINS_01 : FloorType::RUINS_02);
             _core->_registry.emplace<components::fields::Ceiling>(tile.entity, CeilingType::NORMAL);
             _core->_registry.emplace<components::fields::Visibility>(tile.entity, true);
             _core->_registry.emplace<components::fields::Walkability>(tile.entity, true);

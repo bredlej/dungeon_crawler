@@ -24,9 +24,8 @@ public:
     std::vector<WallEntity> _walls;
     [[nodiscard]] entt::entity get_between(entt::entity field1, entt::entity field2) const;
     void initialize(const TileMap&);
+    void place_wall_at(const TileMap &tile_map, uint32_t x, uint32_t y, WallType wall_type);
 private:
-
-    
     std::shared_ptr<Core> _core;
 };
 #endif//DUNGEON_CRAWLER_WALL_MAP_HPP

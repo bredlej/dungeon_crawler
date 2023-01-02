@@ -6,6 +6,12 @@
 #define DUNGEON_CRAWLER_ASSET_PATHS_HPP
 #include <string_view>
 namespace assets {
+    namespace gui {
+        namespace minimap {
+            constexpr const char *background = "assets/GUI/Minimap/background.png";
+            constexpr const char *player_ss = "assets/GUI/Minimap/player.png";
+        }
+    }
     namespace tiles {
         namespace stratum {
             namespace ruins {
@@ -56,12 +62,17 @@ namespace assets {
                 namespace wall {
                     namespace wall_01 {
                         constexpr const char *w01_e = "assets/Tiles/Stratum/Ruins/Wall/W01_E.png";
+                        constexpr const char *w01_n = "assets/Tiles/Stratum/Ruins/Wall/W01_N.png";
                         constexpr const char *w01_s = "assets/Tiles/Stratum/Ruins/Wall/W01_S.png";
                         constexpr const char *w02_e = "assets/Tiles/Stratum/Ruins/Wall/W02_E.png";
+                        constexpr const char *w02_n = "assets/Tiles/Stratum/Ruins/Wall/W02_N.png";
                         constexpr const char *w02_s = "assets/Tiles/Stratum/Ruins/Wall/W02_S.png";
+                        constexpr const char *w03_n = "assets/Tiles/Stratum/Ruins/Wall/W03_N.png";
                         constexpr const char *w03_s = "assets/Tiles/Stratum/Ruins/Wall/W03_S.png";
+                        constexpr const char *w04_n = "assets/Tiles/Stratum/Ruins/Wall/W04_N.png";
                         constexpr const char *w04_s = "assets/Tiles/Stratum/Ruins/Wall/W04_S.png";
                         constexpr const char *w04_w = "assets/Tiles/Stratum/Ruins/Wall/W04_W.png";
+                        constexpr const char *w05_n = "assets/Tiles/Stratum/Ruins/Wall/W05_N.png";
                         constexpr const char *w05_s = "assets/Tiles/Stratum/Ruins/Wall/W05_S.png";
                         constexpr const char *w05_w = "assets/Tiles/Stratum/Ruins/Wall/W05_W.png";
                         constexpr const char *w06_e = "assets/Tiles/Stratum/Ruins/Wall/W06_E.png";

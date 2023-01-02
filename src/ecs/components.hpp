@@ -38,6 +38,9 @@ namespace components {
         struct Walkability {
             bool is_walkable;
         };
+        struct InFovOfEntity {
+            entt::entity entity;
+        };
     }
 }
 #endif//DUNGEON_CRAWLER_COMPONENTS_HPP

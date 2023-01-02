@@ -10,6 +10,7 @@
 #include <engine/core.hpp>
 #include <utility>
 #include <ecs/components.hpp>
+#include <random>
 
 struct Tile {
     entt::entity entity = entt::null;

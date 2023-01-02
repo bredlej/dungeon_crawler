@@ -13,9 +13,14 @@ extern "C" {
 };
 #include <ecs/tile_map.hpp>
 
+template <typename T>
+struct POVField {
+    std::array<entt::entity, static_cast<size_t>(T::SIZE)> field;
+};
+
 class DungeonView : public UIView {
 public:
-    explicit DungeonView(std::shared_ptr<Core> &core, TileMap &&tile_map) : UIView{core}, _render_texture{LoadRenderTexture(320, 240)}, _wall_map{core}, _tile_map{std::move(tile_map)} {
+    explicit DungeonView(std::shared_ptr<Core> &core, TileMap &&tile_map) : UIView{core}, _render_texture_pov{LoadRenderTexture(320, 240)}, _render_texture_gui(LoadRenderTexture(120, 120)), _wall_map{core}, _tile_map{std::move(tile_map)} {
         _wall_map.initialize(_tile_map);
         std::printf("Dungeon View constructed\n");
     };
@@ -28,10 +33,13 @@ public:
     void render() override;
     void update() override;
 private:
+    void _render_pov();
+    void _render_minimap();
     void _calculate_fov();
-    std::vector<entt::entity> _player_fov_tile{19};
-    std::vector<entt::entity> _player_fov_wall{28};
-    RenderTexture _render_texture;
+    POVField<assets::dungeon_view::POVFloor> _player_fov_tile;
+    POVField<assets::dungeon_view::POVWall> _player_fov_wall;
+    RenderTexture _render_texture_pov;
+    RenderTexture _render_texture_gui;
     TileMap _tile_map;
     WallMap _wall_map;
 };
