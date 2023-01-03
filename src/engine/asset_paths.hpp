@@ -92,8 +92,8 @@ namespace assets {
                         constexpr const char *w15_s = "assets/Tiles/Stratum/Ruins/Wall/W15_S.png";
                         constexpr const char *w16_s = "assets/Tiles/Stratum/Ruins/Wall/W16_S.png";
                         constexpr const char *w16_w = "assets/Tiles/Stratum/Ruins/Wall/W16_W.png";
-                        constexpr const char *w17_e = "assets/Tiles/Stratum/Ruins/Wall/W17_e.png";
-                        constexpr const char *w19_w = "assets/Tiles/Stratum/Ruins/Wall/W19_w.png";
+                        constexpr const char *w17_e = "assets/Tiles/Stratum/Ruins/Wall/W17_E.png";
+                        constexpr const char *w19_w = "assets/Tiles/Stratum/Ruins/Wall/W19_W.png";
                     }// namespace wall_01
                 }    // namespace wall
             }        // namespace ruins
