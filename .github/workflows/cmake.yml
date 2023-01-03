@@ -1,0 +1,33 @@
+name: Build and Deploy Webassembly Project
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+env:
+  BUILD_WASM: 1
+jobs:
+  build-and-deploy:
+    concurrency: ci-${{ github.ref }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Setup Emscripten toolchain
+        uses: mymindstorm/setup-emsdk@29ba4851d6da084ffdc1e0fc390efadbd75df9d1
+        with:
+          version: latest
+          
+      - name: Configure CMake
+        run: cmake -B ${{github.workspace}}/build_webasm -DCMAKE_TOOLCHAIN_FILE=$EMSDK/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake -DPLATFORM=Web
+    
+      - name: Build
+        run: cmake --build ${{github.workspace}}/build_webasm
+        
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        with:
+          branch: gh-pages
+          folder: docs
