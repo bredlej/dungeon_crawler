@@ -25,10 +25,10 @@ namespace assets {
         explicit DCTexture() = default;
         DCTexture(const Texture &other) noexcept = delete;
         DCTexture(DCTexture &other) noexcept = delete;
-        DCTexture(DCTexture &&other) noexcept : _texture(other._texture){};
-        DCTexture &operator=(const DCTexture &other) noexcept { _texture = other._texture; };
-        DCTexture &operator=(const DCTexture other) noexcept { _texture = other._texture; };
-        DCTexture &operator=(DCTexture &&other) noexcept { _texture = other._texture; };
+        DCTexture(DCTexture &&other) noexcept : _texture(other._texture) {};
+        DCTexture &operator=(const DCTexture &other) noexcept { _texture = other._texture; return *this; };
+        DCTexture &operator=(const DCTexture other) noexcept { _texture = other._texture; return *this; };
+        DCTexture &operator=(DCTexture &&other) noexcept { _texture = other._texture; return *this; };
         ~DCTexture() = default;
         [[nodiscard]] Texture2D get() const {
             return _texture;

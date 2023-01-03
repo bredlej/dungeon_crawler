@@ -20,7 +20,7 @@ struct Config {
     static constexpr struct {
         uint32_t width;
         uint32_t height;
-    } window{1024, 800};
+    } window{1024, 768};
 };
 
 enum class ViewMode {

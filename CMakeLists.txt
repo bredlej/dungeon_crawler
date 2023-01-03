@@ -63,7 +63,7 @@ else ()
 endif ()
 
 add_custom_command(
-        TARGET dungeon_crawler POST_BUILD
+        TARGET dungeon_crawler PRE_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/assets
         ${CMAKE_CURRENT_BINARY_DIR}/assets)

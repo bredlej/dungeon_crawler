@@ -8,8 +8,8 @@ using namespace assets::dungeon_view;
 constexpr static Color BACKGROUND_COLOR = {0x34, 0x31, 0x1d, 0xff};
 constexpr static Color FOV_COLOR = {0x48, 0x53, 0x22, 0xff};
 constexpr static Color WALL_COLOR = {0xb1, 0x48, 0x63, 0xff};
-constexpr static Rectangle POV_DIMENSION = Rectangle{15.0f, 15.0f, static_cast<float>(640.0f), static_cast<float>(480.0f)};
-constexpr static Rectangle GUI_DIMENSION = Rectangle{700.0f, 15.0f, static_cast<float>(240.0f), static_cast<float>(240.0f)};
+constexpr static Rectangle POV_DIMENSION = Rectangle{0.0f, 0.0f, static_cast<float>(1024.0f), static_cast<float>(768.0f)};
+constexpr static Rectangle GUI_DIMENSION = Rectangle{700.0f, 50.0f, static_cast<float>(240.0f), static_cast<float>(240.0f)};
 
 constexpr static std::array<assets::dungeon_view::POVWall, static_cast<size_t>(POVWall::SIZE)> draw_order_walls = {
     POVWall::W01_N, POVWall::W02_N, POVWall::W03_N, POVWall::W04_N, POVWall::W05_N, POVWall::W01_E, POVWall::W02_E, POVWall::W04_W, POVWall::W05_W, POVWall::W01_S, POVWall::W02_S, POVWall::W03_S, POVWall::W04_S, POVWall::W05_S,
