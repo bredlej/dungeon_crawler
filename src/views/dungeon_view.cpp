@@ -5,13 +5,7 @@
 #include <views/dungeon_view.hpp>
 using namespace assets::dungeon_view;
 
-constexpr static Color BACKGROUND_COLOR = {0x34, 0x31, 0x1d, 0xff};
-constexpr static Color FOV_COLOR = {0x48, 0x53, 0x22, 0xff};
-constexpr static Color WALL_COLOR = {0xb1, 0x48, 0x63, 0xff};
-constexpr static Rectangle POV_DIMENSION = Rectangle{0.0f, 0.0f, static_cast<float>(1024.0f), static_cast<float>(768.0f)};
-constexpr static Rectangle GUI_DIMENSION = Rectangle{700.0f, 50.0f, static_cast<float>(240.0f), static_cast<float>(240.0f)};
-
-constexpr static std::array<assets::dungeon_view::POVWall, static_cast<size_t>(POVWall::SIZE)> draw_order_walls = {
+constexpr static std::array<POVWall, static_cast<size_t>(POVWall::SIZE)> draw_order_walls = {
     POVWall::W01_N, POVWall::W02_N, POVWall::W03_N, POVWall::W04_N, POVWall::W05_N, POVWall::W01_E, POVWall::W02_E, POVWall::W04_W, POVWall::W05_W, POVWall::W01_S, POVWall::W02_S, POVWall::W03_S, POVWall::W04_S, POVWall::W05_S,
     POVWall::W06_E, POVWall::W07_E, POVWall::W09_W, POVWall::W10_W, POVWall::W07_S, POVWall::W08_S, POVWall::W09_S,
     POVWall::W11_E, POVWall::W13_W, POVWall::W11_S, POVWall::W12_S, POVWall::W13_S,
@@ -112,6 +106,15 @@ void DungeonView::render() {
     EndDrawing();
 }
 
+static inline void change_position(ModXY mod, entt::registry &registry, TileMap &tile_map, components::fields::MapPosition &position) {
+    entt::entity destination = tile_map.get_at(position.x + mod.x, position.y + mod.y);
+    if (registry.valid(destination) && registry.get<components::fields::Walkability>(destination).is_walkable) {
+        components::fields::MapPosition destination_position = registry.get<components::fields::MapPosition>(destination);
+        position.x = destination_position.x;
+        position.y = destination_position.y;
+    }
+}
+
 void DungeonView::update() {
     static bool after_first_update = false;
     static bool recalculate_fov = true;
@@ -159,44 +162,25 @@ void DungeonView::update() {
     }
     if (IsKeyPressed(KEY_UP)) {
         auto view = _core->_registry.view<components::general::Player, components::fields::MapPosition, components::general::Direction>();
+
         for (auto entity: view) {
             auto &position = _core->_registry.get<components::fields::MapPosition>(entity);
             auto direction = _core->_registry.get<components::general::Direction>(entity);
             switch (direction.direction) {
                 case WorldDirection::NORTH: {
-                    entt::entity destination = _tile_map.get_at(position.x, position.y - 1);
-                    if (_core->_registry.valid(destination) && _core->_registry.get<components::fields::Walkability>(destination).is_walkable) {
-                        auto destination_position = _core->_registry.get<components::fields::MapPosition>(destination);
-                        position.x = destination_position.x;
-                        position.y = destination_position.y;
-                    }
+                    change_position({0, -1}, _core->_registry, _tile_map, position);
                     break;
                 }
                 case WorldDirection::SOUTH: {
-                    entt::entity destination = _tile_map.get_at(position.x, position.y + 1);
-                    if (_core->_registry.valid(destination) && _core->_registry.get<components::fields::Walkability>(destination).is_walkable) {
-                        auto destination_position = _core->_registry.get<components::fields::MapPosition>(destination);
-                        position.x = destination_position.x;
-                        position.y = destination_position.y;
-                    }
+                    change_position({0, 1}, _core->_registry, _tile_map, position);
                     break;
                 }
                 case WorldDirection::WEST: {
-                    entt::entity destination = _tile_map.get_at(position.x - 1, position.y);
-                    if (_core->_registry.valid(destination) && _core->_registry.get<components::fields::Walkability>(destination).is_walkable) {
-                        auto destination_position = _core->_registry.get<components::fields::MapPosition>(destination);
-                        position.x = destination_position.x;
-                        position.y = destination_position.y;
-                    }
+                    change_position({-1, 0}, _core->_registry, _tile_map, position);
                     break;
                 }
                 case WorldDirection::EAST: {
-                    entt::entity destination = _tile_map.get_at(position.x + 1, position.y);
-                    if (_core->_registry.valid(destination) && _core->_registry.get<components::fields::Walkability>(destination).is_walkable) {
-                        auto destination_position = _core->_registry.get<components::fields::MapPosition>(destination);
-                        position.x = destination_position.x;
-                        position.y = destination_position.y;
-                    }
+                    change_position({1, 0}, _core->_registry, _tile_map, position);
                     break;
                 }
             }
@@ -210,39 +194,19 @@ void DungeonView::update() {
             auto direction = _core->_registry.get<components::general::Direction>(entity);
             switch (direction.direction) {
                 case WorldDirection::NORTH: {
-                    entt::entity destination = _tile_map.get_at(position.x, position.y + 1);
-                    if (_core->_registry.valid(destination) && _core->_registry.get<components::fields::Walkability>(destination).is_walkable) {
-                        auto destination_position = _core->_registry.get<components::fields::MapPosition>(destination);
-                        position.x = destination_position.x;
-                        position.y = destination_position.y;
-                    }
+                    change_position({0, 1}, _core->_registry, _tile_map, position);
                     break;
                 }
                 case WorldDirection::SOUTH: {
-                    entt::entity destination = _tile_map.get_at(position.x, position.y - 1);
-                    if (_core->_registry.valid(destination) && _core->_registry.get<components::fields::Walkability>(destination).is_walkable) {
-                        auto destination_position = _core->_registry.get<components::fields::MapPosition>(destination);
-                        position.x = destination_position.x;
-                        position.y = destination_position.y;
-                    }
+                    change_position({0, -1}, _core->_registry, _tile_map, position);
                     break;
                 }
                 case WorldDirection::WEST: {
-                    entt::entity destination = _tile_map.get_at(position.x + 1, position.y);
-                    if (_core->_registry.valid(destination) && _core->_registry.get<components::fields::Walkability>(destination).is_walkable) {
-                        auto destination_position = _core->_registry.get<components::fields::MapPosition>(destination);
-                        position.x = destination_position.x;
-                        position.y = destination_position.y;
-                    }
+                    change_position({1, 0}, _core->_registry, _tile_map, position);
                     break;
                 }
                 case WorldDirection::EAST: {
-                    entt::entity destination = _tile_map.get_at(position.x - 1, position.y);
-                    if (_core->_registry.valid(destination) && _core->_registry.get<components::fields::Walkability>(destination).is_walkable) {
-                        auto destination_position = _core->_registry.get<components::fields::MapPosition>(destination);
-                        position.x = destination_position.x;
-                        position.y = destination_position.y;
-                    }
+                    change_position({-1, 0}, _core->_registry, _tile_map, position);
                     break;
                 }
             }

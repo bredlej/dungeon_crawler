@@ -13,9 +13,20 @@ extern "C" {
 };
 #include <ecs/tile_map.hpp>
 
-template <typename T>
+
+constexpr static Color BACKGROUND_COLOR = {0x34, 0x31, 0x1d, 0xff};
+constexpr static Color FOV_COLOR = {0x48, 0x53, 0x22, 0xff};
+constexpr static Color WALL_COLOR = {0xb1, 0x48, 0x63, 0xff};
+constexpr static Rectangle POV_DIMENSION = Rectangle{0.0f, 0.0f, static_cast<float>(1024.0f), static_cast<float>(768.0f)};
+constexpr static Rectangle GUI_DIMENSION = Rectangle{750.0f, 50.0f, static_cast<float>(240.0f), static_cast<float>(240.0f)};
+
+template <typename T, typename = typename std::enable_if<std::is_enum<T>::value, T >::type>
 struct POVField {
     std::array<entt::entity, static_cast<size_t>(T::SIZE)> field;
+};
+
+struct ModXY {
+    int x,y;
 };
 
 class DungeonView : public UIView {
