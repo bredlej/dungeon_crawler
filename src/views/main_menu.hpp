@@ -13,7 +13,7 @@ extern "C" {
 
 class MainMenu : public UIView {
 public:
-    explicit MainMenu(std::shared_ptr<Core> core) : UIView {std::move(core)} {};
+    explicit MainMenu(std::shared_ptr<Core> core) : UIView {core} {};
     void render() override;
     void update() override;
 private:

@@ -57,9 +57,9 @@ target_link_libraries(rlimgui PUBLIC imgui raylib)
 target_include_directories(rlimgui PUBLIC raylib/src/external/glfw/include)
 
 if (${WASM})
-    target_link_libraries(${PROJECT_NAME} tleilax-lib glfw3)
+    target_link_libraries(${PROJECT_NAME} glfw3)
 else ()
-    target_link_libraries(${PROJECT_NAME} tleilax-lib ${EXTRA_LIBS})
+    target_link_libraries(${PROJECT_NAME} ${EXTRA_LIBS})
 endif ()
 
 add_custom_command(
