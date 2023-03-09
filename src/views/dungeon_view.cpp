@@ -10,8 +10,13 @@ void DungeonView::_render_pov() {
     if (assets::Assets *assets = _core->get_assets()) {
         for (size_t i = 0; i < _player_fov_tile.field.size(); i++) {
             if (_core->_registry.valid(_player_fov_tile.field[i])) {
-                const auto floor = _core->_registry.get<components::fields::Floor>(_player_fov_tile.field[i]);
-                DrawTexture(assets->_textures._tiles[static_cast<POVFloor>(i)][floor.type].get(), 0, 0, WHITE);
+                const auto floor = _core->_registry.try_get<components::fields::Floor>(_player_fov_tile.field[i]);
+                if (floor) {
+                    DrawTexture(assets->_textures._tiles[static_cast<POVFloor>(i)][floor->type].get(), 0, 0, WHITE);
+                }
+                else {
+                    DrawTexture(assets->_textures._tiles[static_cast<POVFloor>(i)][FloorType::RUINS_01].get(), 0, 0, RED);
+                }
             } else {
                 DrawTexture(assets->_textures._tiles[static_cast<POVFloor>(i)][FloorType::RUINS_01].get(), 0, 0, RED);
             }
@@ -147,6 +152,12 @@ void DungeonView::update() {
         handle_movement(_core->_registry, _tile_map, {0, 1}, {0, -1}, {1, 0}, {-1, 0});
         recalculate_fov = true;
     }
+    if (IsKeyPressed(KEY_L)) {
+        _clear();
+        auto json = LevelParser().parse("assets/Levels/Ruins/ruins_01.json");
+        _tile_map.load(json);
+        _calculate_fov();
+    }
     after_first_update = true;
 }
 
@@ -234,5 +245,16 @@ void DungeonView::_calculate_fov() {
             }
         }
     }
-
+}
+void DungeonView::_clear() {
+    for (auto wall_entity: _wall_map._walls) {
+        _core->_registry.destroy(wall_entity.entity);
+    }
+    _wall_map._walls.clear();
+    for (auto tile_entity: _tile_map._tiles) {
+        _core->_registry.destroy(tile_entity.entity);
+    }
+    _tile_map._tiles.clear();
+    _player_fov_tile.field.fill(entt::null);
+    _player_fov_wall.field.fill(entt::null);
 }

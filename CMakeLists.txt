@@ -33,7 +33,7 @@ if (DEFINED ENV{BUILD_WASM})
     message("-- Building for WebAssembly")
     set(WASM ON)
 else ()
-    message("-- Building for Desktop")
+    message("-- Building for Desktop --")
     set(WASM OFF)
 endif ()
 

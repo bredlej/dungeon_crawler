@@ -18,6 +18,14 @@ void TileMap::_initialize() {
         }
     }
 }
+
+void TileMap::load(nlohmann::json &json) {
+    using namespace level_schema;
+    _tiles.clear();
+    auto size_x = json[names[types::size_x]];
+    auto size_y = json[names[types::size_x]];
+}
+
 entt::entity TileMap::get_at(int32_t x, int32_t y) const {
     entt::entity result{entt::null};
     _core->_registry.view<components::fields::MapPosition>().each([&result, &x, &y](entt::entity entity, const components::fields::MapPosition &position) {
