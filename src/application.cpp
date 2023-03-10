@@ -12,7 +12,7 @@ void initialize_player(const std::shared_ptr<Core>& core) {
     const entt::entity player_entity = core->_registry.create();
     core->_registry.emplace<components::general::Player>(player_entity, true);
     core->_registry.emplace<components::general::Direction>(player_entity, WorldDirection::EAST);
-    core->_registry.emplace<components::fields::MapPosition>(player_entity, 1, 9);
+    core->_registry.emplace<components::fields::MapPosition>(player_entity, 1, 1);
 }
 
 

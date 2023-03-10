@@ -13,6 +13,7 @@ extern "C" {
 #include <engine/asset_paths.hpp>
 #include <unordered_map>
 #include <variant>
+#include <string>
 
 namespace assets {
     struct DCTexture {
@@ -38,6 +39,10 @@ namespace assets {
         Texture2D _texture;
     };
 
+    static std::unordered_map<std::string, FloorType> name_to_floor = {
+            {"RUINS_01", FloorType::RUINS_01},
+            {"RUINS_02", FloorType::RUINS_02}
+    };
     // clang-format off
     namespace dungeon_view {
         namespace GUI {

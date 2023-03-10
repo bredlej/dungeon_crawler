@@ -153,10 +153,16 @@ void DungeonView::update() {
         recalculate_fov = true;
     }
     if (IsKeyPressed(KEY_L)) {
-        _clear();
-        auto json = LevelParser().parse("assets/Levels/Ruins/ruins_01.json");
-        _tile_map.load(json);
-        _calculate_fov();
+        try {
+            auto json = LevelParser().parse("assets/Levels/Ruins/ruins_01.json");
+            _clear();
+            _tile_map.from_json(json);
+            _calculate_fov();
+        }
+        catch (std::exception &e) {
+            printf("Exception: %s\n", e.what());
+        }
+
     }
     after_first_update = true;
 }
