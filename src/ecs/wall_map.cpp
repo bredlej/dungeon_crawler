@@ -49,10 +49,26 @@ static constexpr inline std::array<uint8_t, 400> walls = {
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 };
+
 void WallMap::initialize(const TileMap &tile_map) {
     for (size_t i = 0; i < walls.size(); i++) {
         if (walls[i] == 1) {
             place_wall_at(tile_map, i % 20, i / 20, WallType::RUINS_01);
+        }
+    }
+}
+
+void WallMap::from_json(const TileMap &tile_map, const nlohmann::json &json) {
+    using namespace level_schema;
+    for (const auto &wall: json[names[types::walls]]) {
+        entt::entity field1 = tile_map.get_at(wall[names[types::between]][0], wall[names[types::between]][1]);
+        entt::entity field2 = tile_map.get_at(wall[names[types::between]][2], wall[names[types::between]][3]);
+        WallType wall_type = assets::name_to_wall_type[wall[names[types::wall]]];
+        if (get_between(field1, field2) == entt::null) {
+            entt::entity wall_entity = _core->_registry.create();
+            _core->_registry.emplace_or_replace<components::fields::Wall>(wall_entity, wall_type, field1, field2);
+            _core->_registry.emplace_or_replace<components::fields::Walkability>(wall_entity, false);
+            _walls.emplace_back(WallEntity{wall_entity});
         }
     }
 }

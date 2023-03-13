@@ -1,6 +1,7 @@
 {
   "size_x": 10,
   "size_y": 10,
+  "player_spawn": {"x": 1, "y": 1, "direction": "SOUTH"},
   "tiles": [
     [
       {
@@ -603,5 +604,8 @@
       }
     ]
   ],
-  "walls": []
+  "walls": [
+    {"wall": "RUINS_01", "between" : [1,0,2,0]},
+    {"wall": "RUINS_01", "between" : [1,1,2,1]}
+  ]
 }

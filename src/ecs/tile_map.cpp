@@ -36,7 +36,7 @@ void TileMap::from_json(nlohmann::json &json) {
         if (!tile_contents.empty()) {
             for (auto &content: tile_contents) {
                 if (content.contains(names[level_schema::types::floor])) {
-                    _core->_registry.emplace<components::fields::Floor>(tile.entity, assets::name_to_floor[content[names[level_schema::types::floor]]]);
+                    _core->_registry.emplace<components::fields::Floor>(tile.entity, assets::name_to_floor_type[content[names[level_schema::types::floor]]]);
                     if (content.contains(names[level_schema::types::walkable])) {
                         _core->_registry.emplace<components::fields::Walkability>(tile.entity, content[names[level_schema::types::walkable]]);
                     }

@@ -25,6 +25,8 @@ public:
     [[nodiscard]] entt::entity get_between(entt::entity field1, entt::entity field2) const;
     void initialize(const TileMap&);
     void place_wall_at(const TileMap &tile_map, uint32_t x, uint32_t y, WallType wall_type);
+    void from_json(const TileMap &tile_map, const nlohmann::json &json);
+
 private:
     std::shared_ptr<Core> _core;
 };

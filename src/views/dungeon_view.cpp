@@ -95,25 +95,28 @@ void DungeonView::render() {
     EndDrawing();
 }
 
-static inline void change_position(ModXY mod, entt::registry &registry, TileMap &tile_map, components::fields::MapPosition &position) {
+static inline void change_position(ModXY mod, entt::registry &registry, const TileMap &tile_map, const WallMap &wall_map, components::fields::MapPosition &position) {
     entt::entity destination = tile_map.get_at(position.x + mod.x, position.y + mod.y);
     if (registry.valid(destination) && registry.get<components::fields::Walkability>(destination).is_walkable) {
-        components::fields::MapPosition destination_position = registry.get<components::fields::MapPosition>(destination);
-        position.x = destination_position.x;
-        position.y = destination_position.y;
+        entt::entity wall = wall_map.get_between(tile_map.get_at(position.x, position.y), destination);
+        if (wall == entt::null || registry.get<components::fields::Walkability>(wall).is_walkable) {
+            components::fields::MapPosition destination_position = registry.get<components::fields::MapPosition>(destination);
+            position.x = destination_position.x;
+            position.y = destination_position.y;
+        }
     }
 }
 
-static inline void handle_movement (entt::registry &registry, TileMap &tile_map, ModXY mod_north, ModXY mod_south, ModXY mod_west, ModXY mod_east) {
+static inline void handle_movement (entt::registry &registry, TileMap &tile_map, const WallMap &wall_map, ModXY mod_north, ModXY mod_south, ModXY mod_west, ModXY mod_east) {
     auto view = registry.view<components::general::Player, components::fields::MapPosition, components::general::Direction>();
     for (auto entity: view) {
         auto &position = registry.get<components::fields::MapPosition>(entity);
         auto direction = registry.get<components::general::Direction>(entity);
         switch (direction.direction) {
-            case WorldDirection::NORTH: change_position(mod_north, registry, tile_map, position); break; 
-            case WorldDirection::SOUTH: change_position(mod_south, registry, tile_map, position); break;
-            case WorldDirection::WEST: change_position(mod_west, registry, tile_map, position); break;
-            case WorldDirection::EAST: change_position(mod_east, registry, tile_map, position); break;
+            case WorldDirection::NORTH: change_position(mod_north, registry, tile_map, wall_map, position); break;
+            case WorldDirection::SOUTH: change_position(mod_south, registry, tile_map, wall_map, position); break;
+            case WorldDirection::WEST: change_position(mod_west, registry, tile_map, wall_map, position); break;
+            case WorldDirection::EAST: change_position(mod_east, registry, tile_map, wall_map, position); break;
         }
     }
 }
@@ -145,18 +148,28 @@ void DungeonView::update() {
         recalculate_fov = true;
     }
     if (IsKeyPressed(KEY_UP)) {
-        handle_movement(_core->_registry, _tile_map, {0, -1}, {0, 1}, {-1, 0}, {1, 0});
+        handle_movement(_core->_registry, _tile_map, _wall_map, {0, -1}, {0, 1}, {-1, 0}, {1, 0});
         recalculate_fov = true;
     }
     if (IsKeyPressed(KEY_DOWN)) {
-        handle_movement(_core->_registry, _tile_map, {0, 1}, {0, -1}, {1, 0}, {-1, 0});
+        handle_movement(_core->_registry, _tile_map, _wall_map, {0, 1}, {0, -1}, {1, 0}, {-1, 0});
         recalculate_fov = true;
     }
     if (IsKeyPressed(KEY_L)) {
         try {
-            auto json = LevelParser().parse("assets/Levels/Ruins/ruins_01.json");
+            auto json = LevelParser::parse("assets/Levels/Ruins/ruins_01.json");
             _clear();
             _tile_map.from_json(json);
+            _wall_map.from_json(_tile_map, json);
+            using namespace level_schema;
+            if (json.contains(names[types::player_spawn])) {
+                _core->_registry.view<components::general::Player, components::general::Direction, components::fields::MapPosition>().each([&json](const entt::entity entity, const components::general::Player player, components::general::Direction &direction, components::fields::MapPosition &position) {
+                   direction.direction = direction_names[json[names[types::player_spawn]][names[types::direction]]];
+                   position.x = json[names[types::player_spawn]][names[types::x]];
+                   position.y = json[names[types::player_spawn]][names[types::y]];
+                });
+
+            }
             _calculate_fov();
         }
         catch (std::exception &e) {
