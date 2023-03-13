@@ -56,6 +56,7 @@ private:
     void _render_pov();
     void _render_minimap();
     void _calculate_fov();
+    void _clear();
     POVField<assets::dungeon_view::POVFloor> _player_fov_tile;
     POVField<assets::dungeon_view::POVWall> _player_fov_wall;
     RenderTexture _render_texture_pov;

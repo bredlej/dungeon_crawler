@@ -11,6 +11,7 @@
 #include <utility>
 #include <ecs/components.hpp>
 #include <random>
+#include <engine/level_parser.h>
 
 struct Tile {
     entt::entity entity = entt::null;
@@ -36,6 +37,7 @@ public:
     uint32_t _height;
     [[nodiscard]] entt::entity get_at(int32_t x, int32_t y) const;
     [[nodiscard]] std::vector<NeighbourTile> get_neighbours_of (int32_t x, int32_t y) const;
+    void from_json(nlohmann::json &);
 private:
     void _initialize();
 

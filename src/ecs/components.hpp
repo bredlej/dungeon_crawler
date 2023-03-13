@@ -21,6 +21,9 @@ namespace components {
             int32_t x;
             int32_t y;
         };
+        struct Field {
+            int id;
+        };
         struct Floor {
             FloorType type;
         };
