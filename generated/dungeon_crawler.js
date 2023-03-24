@@ -1279,7 +1279,7 @@ function createWasm() {
     assert(Module === trueModule, 'the Module object should not be replaced during async compilation - perhaps the order of HTML elements is wrong?');
     trueModule = null;
     // TODO: Due to Closure regression https://github.com/google/closure-compiler/issues/3193, the above line no longer optimizes out down to the following line.
-    // When the regression is fixed, can restore the above USE_PTHREADS-enabled path.
+    // When the regression is fixed, can restore the above PTHREADS-enabled path.
     receiveInstance(result['instance']);
   }
 
@@ -1403,6 +1403,9 @@ function dbg(text) {
 // end include: runtime_debug.js
 // === Body ===
 
+var ASM_CONSTS = {
+  249844: () => { if (document.fullscreenElement) document.exitFullscreen(); else Module.requestFullscreen(false, true); }
+};
 function GetCanvasWidth() { return canvas.clientWidth; }
 function GetCanvasHeight() { return canvas.clientHeight; }
 
@@ -4021,6 +4024,41 @@ function GetCanvasHeight() { return canvas.clientHeight; }
 
   function _abort() {
       abort('native code called abort()');
+    }
+
+  var readEmAsmArgsArray = [];
+  function readEmAsmArgs(sigPtr, buf) {
+      // Nobody should have mutated _readEmAsmArgsArray underneath us to be something else than an array.
+      assert(Array.isArray(readEmAsmArgsArray));
+      // The input buffer is allocated on the stack, so it must be stack-aligned.
+      assert(buf % 16 == 0);
+      readEmAsmArgsArray.length = 0;
+      var ch;
+      // Most arguments are i32s, so shift the buffer pointer so it is a plain
+      // index into HEAP32.
+      buf >>= 2;
+      while (ch = HEAPU8[sigPtr++]) {
+        var chr = String.fromCharCode(ch);
+        var validChars = ['d', 'f', 'i'];
+        assert(validChars.includes(chr), 'Invalid character ' + ch + '("' + chr + '") in readEmAsmArgs! Use only [' + validChars + '], and do not specify "v" for void return argument.');
+        // Floats are always passed as doubles, and doubles and int64s take up 8
+        // bytes (two 32-bit slots) in memory, align reads to these:
+        buf += (ch != 105/*i*/) & buf;
+        readEmAsmArgsArray.push(
+          ch == 105/*i*/ ? HEAP32[buf] :
+         HEAPF64[buf++ >> 1]
+        );
+        ++buf;
+      }
+      return readEmAsmArgsArray;
+    }
+  function runEmAsmFunction(code, sigPtr, argbuf) {
+      var args = readEmAsmArgs(sigPtr, argbuf);
+      if (!ASM_CONSTS.hasOwnProperty(code)) abort('No EM_ASM constant found at address ' + code);
+      return ASM_CONSTS[code].apply(null, args);
+    }
+  function _emscripten_asm_const_int(code, sigPtr, argbuf) {
+      return runEmAsmFunction(code, sigPtr, argbuf);
     }
 
   function _emscripten_date_now() {
@@ -6832,6 +6870,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
 
   function _glRenderbufferStorage(x0, x1, x2, x3) { GLctx['renderbufferStorage'](x0, x1, x2, x3) }
 
+  function _glScissor(x0, x1, x2, x3) { GLctx['scissor'](x0, x1, x2, x3) }
+
   function _glShaderSource(shader, count, string, length) {
       var source = GL.getSource(shader, count, string, length);
   
@@ -8525,6 +8565,10 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       return prevcbfun;
     }
 
+  function _glfwSetCursorPos(winid, x, y) {
+      GLFW.setCursorPos(winid, x, y);
+    }
+
   function _glfwSetCursorPosCallback(winid, cbfun) {
       return GLFW.setCursorPosCallback(winid, cbfun);
     }
@@ -8571,6 +8615,10 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       var win = GLFW.WindowFromId(winid);
       if (!win) return;
       win.shouldClose = value;
+    }
+
+  function _glfwSetWindowSize(winid, width, height) {
+      GLFW.setWindowSize(winid, width, height);
     }
 
   function _glfwSetWindowSizeCallback(winid, cbfun) {
@@ -9503,6 +9551,7 @@ var wasmImports = {
   "__syscall_openat": ___syscall_openat,
   "_emscripten_get_now_is_monotonic": __emscripten_get_now_is_monotonic,
   "abort": _abort,
+  "emscripten_asm_const_int": _emscripten_asm_const_int,
   "emscripten_date_now": _emscripten_date_now,
   "emscripten_get_element_css_size": _emscripten_get_element_css_size,
   "emscripten_get_gamepad_status": _emscripten_get_gamepad_status,
@@ -9740,6 +9789,7 @@ var wasmImports = {
   "glPixelStorei": _glPixelStorei,
   "glReadPixels": _glReadPixels,
   "glRenderbufferStorage": _glRenderbufferStorage,
+  "glScissor": _glScissor,
   "glShaderSource": _glShaderSource,
   "glTexImage2D": _glTexImage2D,
   "glTexParameteri": _glTexParameteri,
@@ -9759,6 +9809,7 @@ var wasmImports = {
   "glfwMakeContextCurrent": _glfwMakeContextCurrent,
   "glfwSetCharCallback": _glfwSetCharCallback,
   "glfwSetCursorEnterCallback": _glfwSetCursorEnterCallback,
+  "glfwSetCursorPos": _glfwSetCursorPos,
   "glfwSetCursorPosCallback": _glfwSetCursorPosCallback,
   "glfwSetDropCallback": _glfwSetDropCallback,
   "glfwSetErrorCallback": _glfwSetErrorCallback,
@@ -9768,6 +9819,7 @@ var wasmImports = {
   "glfwSetWindowFocusCallback": _glfwSetWindowFocusCallback,
   "glfwSetWindowIconifyCallback": _glfwSetWindowIconifyCallback,
   "glfwSetWindowShouldClose": _glfwSetWindowShouldClose,
+  "glfwSetWindowSize": _glfwSetWindowSize,
   "glfwSetWindowSizeCallback": _glfwSetWindowSizeCallback,
   "glfwSwapBuffers": _glfwSwapBuffers,
   "glfwSwapInterval": _glfwSwapInterval,
@@ -9788,9 +9840,9 @@ var _malloc = createExportWrapper("malloc");
 /** @type {function(...*):?} */
 var _free = createExportWrapper("free");
 /** @type {function(...*):?} */
-var ___dl_seterr = createExportWrapper("__dl_seterr");
-/** @type {function(...*):?} */
 var _fflush = Module["_fflush"] = createExportWrapper("fflush");
+/** @type {function(...*):?} */
+var ___dl_seterr = createExportWrapper("__dl_seterr");
 /** @type {function(...*):?} */
 var _emscripten_stack_init = function() {
   return (_emscripten_stack_init = Module["asm"]["emscripten_stack_init"]).apply(null, arguments);
@@ -9849,6 +9901,8 @@ var dynCall_vii = Module["dynCall_vii"] = createExportWrapper("dynCall_vii");
 var dynCall_viiii = Module["dynCall_viiii"] = createExportWrapper("dynCall_viiii");
 /** @type {function(...*):?} */
 var dynCall_vidd = Module["dynCall_vidd"] = createExportWrapper("dynCall_vidd");
+/** @type {function(...*):?} */
+var dynCall_fii = Module["dynCall_fii"] = createExportWrapper("dynCall_fii");
 /** @type {function(...*):?} */
 var dynCall_vffff = Module["dynCall_vffff"] = createExportWrapper("dynCall_vffff");
 /** @type {function(...*):?} */
@@ -9909,8 +9963,8 @@ var _asyncify_stop_unwind = createExportWrapper("asyncify_stop_unwind");
 var _asyncify_start_rewind = createExportWrapper("asyncify_start_rewind");
 /** @type {function(...*):?} */
 var _asyncify_stop_rewind = createExportWrapper("asyncify_stop_rewind");
-var ___start_em_js = Module['___start_em_js'] = 129220;
-var ___stop_em_js = Module['___stop_em_js'] = 129295;
+var ___start_em_js = Module['___start_em_js'] = 249947;
+var ___stop_em_js = Module['___stop_em_js'] = 250022;
 
 // include: postamble.js
 // === Auto-generated postamble setup entry stuff ===
@@ -9934,7 +9988,7 @@ var missingLibrarySymbols = [
   'getHostByName',
   'traverseStack',
   'convertPCtoSourceLocation',
-  'readEmAsmArgs',
+  'runMainThreadEmAsm',
   'jstoi_s',
   'listenOnce',
   'autoResumeAudioContext',
@@ -10083,6 +10137,8 @@ var unexportedSymbols = [
   'warnOnce',
   'UNWIND_CACHE',
   'readEmAsmArgsArray',
+  'readEmAsmArgs',
+  'runEmAsmFunction',
   'jstoi_q',
   'getExecutableName',
   'handleException',
