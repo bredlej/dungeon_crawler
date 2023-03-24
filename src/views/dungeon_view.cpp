@@ -93,7 +93,6 @@ static inline void render_texture(const Texture &texture, const Rectangle &dimen
 void DungeonView::render() {
     BeginDrawing();
     ClearBackground(BLACK);
-
     _render_pov();
     _render_minimap();
     static Rectangle POV_DIMENSION_FULLSCREEN = Rectangle{0,0, static_cast<float>(GetMonitorWidth(GetCurrentMonitor())), static_cast<float>(GetMonitorHeight(GetCurrentMonitor()))};
@@ -102,20 +101,6 @@ void DungeonView::render() {
     render_texture(_render_texture_gui.texture, IsWindowFullscreen() ? GUI_DIMENSION_FULLSCREEN : GUI_DIMENSION);
     _ui.render();
     EndDrawing();
-}
-
-
-
-
-static inline void handle_turn_direction (entt::registry &registry, WorldDirection from_north, WorldDirection from_east, WorldDirection from_south, WorldDirection from_west) {
-    registry.view<components::general::Player, components::general::Direction>().each([from_north, from_east, from_south, from_west](const entt::entity entity, const components::general::Player player, components::general::Direction &direction) {
-        switch (direction.direction) {
-            case WorldDirection::NORTH: direction.direction = from_north; break;
-            case WorldDirection::EAST: direction.direction = from_east; break;
-            case WorldDirection::SOUTH: direction.direction = from_south; break;
-            case WorldDirection::WEST: direction.direction = from_west; break;
-        }
-    });
 }
 
 void DungeonView::update() {
@@ -253,6 +238,7 @@ void DungeonView::_calculate_fov() {
         }
     }
 }
+
 void DungeonView::_clear() {
     for (auto wall_entity: _wall_map._walls) {
         _core->_registry.destroy(wall_entity.entity);
