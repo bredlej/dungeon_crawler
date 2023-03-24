@@ -2,8 +2,8 @@
 // Created by Patryk Szczypień on 09/03/2023.
 //
 
-#ifndef DUNGEON_CRAWLER_LEVEL_PARSER_H
-#define DUNGEON_CRAWLER_LEVEL_PARSER_H
+#ifndef DUNGEON_CRAWLER_LEVEL_PARSER_HPP
+#define DUNGEON_CRAWLER_LEVEL_PARSER_HPP
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <string>
@@ -68,4 +68,4 @@ public:
 private:
     static void _validate(const nlohmann::json &json);
 };
-#endif//DUNGEON_CRAWLER_LEVEL_PARSER_H
+#endif//DUNGEON_CRAWLER_LEVEL_PARSER_HPP

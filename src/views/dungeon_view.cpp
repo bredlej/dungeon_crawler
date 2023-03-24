@@ -4,6 +4,10 @@
 
 #include <views/dungeon_view.hpp>
 
+static inline void draw_floor(assets::Assets *assets, const size_t index, const FloorType floor_type, const Color tint) {
+    DrawTexture(assets->_textures._tiles[static_cast<POVFloor>(index)][floor_type].get(), 0, 0, tint);
+}
+
 void DungeonView::_render_pov() {
     BeginTextureMode(_render_texture_pov);
     ClearBackground(BACKGROUND_COLOR);
@@ -12,13 +16,13 @@ void DungeonView::_render_pov() {
             if (_core->_registry.valid(_player_fov_tile.field[i])) {
                 const auto floor = _core->_registry.try_get<components::fields::Floor>(_player_fov_tile.field[i]);
                 if (floor) {
-                    DrawTexture(assets->_textures._tiles[static_cast<POVFloor>(i)][floor->type].get(), 0, 0, WHITE);
+                    draw_floor(assets, i, floor->type, WHITE);
                 }
                 else {
-                    DrawTexture(assets->_textures._tiles[static_cast<POVFloor>(i)][FloorType::RUINS_01].get(), 0, 0, RED);
+                    draw_floor(assets, i, FloorType::RUINS_01, RED);
                 }
             } else {
-                DrawTexture(assets->_textures._tiles[static_cast<POVFloor>(i)][FloorType::RUINS_01].get(), 0, 0, RED);
+                draw_floor(assets, i, FloorType::RUINS_01, RED);
             }
         }
         for (const POVWall i: draw_order_walls) {
@@ -35,6 +39,7 @@ void DungeonView::_render_pov() {
 static inline void minimap_draw_player_frame(const Texture2D &texture, const Rectangle &frame, components::fields::MapPosition &position, ModXY offset) {
     DrawTextureRec(texture, frame, Vector2{static_cast<float>(position.x * MINIMAP_GRID_SIZE + offset.x), static_cast<float>(position.y * MINIMAP_GRID_SIZE + offset.y)}, WHITE);
 }
+
 void DungeonView::_render_minimap() {
     BeginTextureMode(_render_texture_gui);
     ClearBackground(BACKGROUND_COLOR);
@@ -90,70 +95,36 @@ void DungeonView::render() {
     ClearBackground(BLACK);
     _render_pov();
     _render_minimap();
-    render_texture(_render_texture_pov.texture, POV_DIMENSION);
-    render_texture(_render_texture_gui.texture, GUI_DIMENSION);
+    static Rectangle POV_DIMENSION_FULLSCREEN = Rectangle{0,0, static_cast<float>(GetMonitorWidth(GetCurrentMonitor())), static_cast<float>(GetMonitorHeight(GetCurrentMonitor()))};
+    static Rectangle GUI_DIMENSION_FULLSCREEN = Rectangle{static_cast<float>(GetMonitorWidth(GetCurrentMonitor())) * 0.75f, static_cast<float>(GetMonitorHeight(GetCurrentMonitor())) * 0.1f, static_cast<float>(GetMonitorWidth(GetCurrentMonitor())) * 0.2f, static_cast<float>(GetMonitorWidth(GetCurrentMonitor())) * 0.2f};
+    render_texture(_render_texture_pov.texture, IsWindowFullscreen() ? POV_DIMENSION_FULLSCREEN : POV_DIMENSION);
+    render_texture(_render_texture_gui.texture, IsWindowFullscreen() ? GUI_DIMENSION_FULLSCREEN : GUI_DIMENSION);
+    _ui.render();
     EndDrawing();
-}
-
-static inline void change_position(ModXY mod, entt::registry &registry, const TileMap &tile_map, const WallMap &wall_map, components::fields::MapPosition &position) {
-    entt::entity destination = tile_map.get_at(position.x + mod.x, position.y + mod.y);
-    if (registry.valid(destination) && registry.get<components::fields::Walkability>(destination).is_walkable) {
-        entt::entity wall = wall_map.get_between(tile_map.get_at(position.x, position.y), destination);
-        if (wall == entt::null || registry.get<components::fields::Walkability>(wall).is_walkable) {
-            components::fields::MapPosition destination_position = registry.get<components::fields::MapPosition>(destination);
-            position.x = destination_position.x;
-            position.y = destination_position.y;
-        }
-    }
-}
-
-static inline void handle_movement (entt::registry &registry, TileMap &tile_map, const WallMap &wall_map, ModXY mod_north, ModXY mod_south, ModXY mod_west, ModXY mod_east) {
-    auto view = registry.view<components::general::Player, components::fields::MapPosition, components::general::Direction>();
-    for (auto entity: view) {
-        auto &position = registry.get<components::fields::MapPosition>(entity);
-        auto direction = registry.get<components::general::Direction>(entity);
-        switch (direction.direction) {
-            case WorldDirection::NORTH: change_position(mod_north, registry, tile_map, wall_map, position); break;
-            case WorldDirection::SOUTH: change_position(mod_south, registry, tile_map, wall_map, position); break;
-            case WorldDirection::WEST: change_position(mod_west, registry, tile_map, wall_map, position); break;
-            case WorldDirection::EAST: change_position(mod_east, registry, tile_map, wall_map, position); break;
-        }
-    }
-}
-
-static inline void handle_turn_direction (entt::registry &registry, WorldDirection from_north, WorldDirection from_east, WorldDirection from_south, WorldDirection from_west) {
-    registry.view<components::general::Player, components::general::Direction>().each([from_north, from_east, from_south, from_west](const entt::entity entity, const components::general::Player player, components::general::Direction &direction) {
-        switch (direction.direction) {
-            case WorldDirection::NORTH: direction.direction = from_north; break;
-            case WorldDirection::EAST: direction.direction = from_east; break;
-            case WorldDirection::SOUTH: direction.direction = from_south; break;
-            case WorldDirection::WEST: direction.direction = from_west; break;
-        }
-    });
 }
 
 void DungeonView::update() {
     static bool after_first_update = false;
     static bool recalculate_fov = true;
-    if (after_first_update && recalculate_fov) {
-        _calculate_fov();
+    if (recalculate_fov) {
+        _core->_registry.ctx().emplace<events::dungeon::RecalculateFov>();
         recalculate_fov = false;
     }
+    if (after_first_update && _core->_registry.ctx().contains<events::dungeon::RecalculateFov>()) {
+        _calculate_fov();
+        _core->_registry.ctx().erase<events::dungeon::RecalculateFov>();
+    }
     if (IsKeyPressed(KEY_LEFT)) {
-        handle_turn_direction(_core->_registry, WorldDirection::WEST, WorldDirection::NORTH, WorldDirection::EAST, WorldDirection::SOUTH);
-        recalculate_fov = true;
+        _core->_dispatcher.enqueue(events::dungeon::TurnLeft{});
     }
     if (IsKeyPressed(KEY_RIGHT)) {
-        handle_turn_direction(_core->_registry, WorldDirection::EAST, WorldDirection::SOUTH, WorldDirection::WEST, WorldDirection::NORTH);
-        recalculate_fov = true;
+        _core->_dispatcher.enqueue(events::dungeon::TurnRight{});
     }
     if (IsKeyPressed(KEY_UP)) {
-        handle_movement(_core->_registry, _tile_map, _wall_map, {0, -1}, {0, 1}, {-1, 0}, {1, 0});
-        recalculate_fov = true;
+        _core->_dispatcher.enqueue(events::dungeon::MoveForward{});
     }
     if (IsKeyPressed(KEY_DOWN)) {
-        handle_movement(_core->_registry, _tile_map, _wall_map, {0, 1}, {0, -1}, {1, 0}, {-1, 0});
-        recalculate_fov = true;
+        _core->_dispatcher.enqueue(events::dungeon::MoveBack{});
     }
     if (IsKeyPressed(KEY_L)) {
         try {
@@ -175,7 +146,9 @@ void DungeonView::update() {
         catch (std::exception &e) {
             printf("Exception: %s\n", e.what());
         }
-
+    }
+    if (IsKeyDown(KEY_LEFT_ALT) && IsKeyPressed(KEY_D)) {
+        _core->_dispatcher.enqueue(events::ui::ToggleShowDemo());
     }
     after_first_update = true;
 }
@@ -265,6 +238,7 @@ void DungeonView::_calculate_fov() {
         }
     }
 }
+
 void DungeonView::_clear() {
     for (auto wall_entity: _wall_map._walls) {
         _core->_registry.destroy(wall_entity.entity);

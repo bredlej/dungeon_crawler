@@ -6,6 +6,7 @@
 #define DUNGEON_CRAWLER_COMPONENTS_HPP
 #include <cstdint>
 #include <ecs/types.hpp>
+#include <entt/entt.hpp>
 
 namespace components {
     namespace general {

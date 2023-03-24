@@ -5,13 +5,14 @@
 #ifndef DUNGEON_CRAWLER_TILE_MAP_HPP
 #define DUNGEON_CRAWLER_TILE_MAP_HPP
 
-#include <entt/entt.hpp>
 #include <cstdint>
+#include <ecs/components.hpp>
 #include <engine/core.hpp>
-#include <utility>
+#include <engine/level_parser.hpp>
+#include <entt/entt.hpp>
 #include <ecs/components.hpp>
 #include <random>
-#include <engine/level_parser.h>
+#include <utility>
 
 struct Tile {
     entt::entity entity = entt::null;

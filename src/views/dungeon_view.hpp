@@ -12,6 +12,9 @@ extern "C" {
 #include <raylib.h>
 };
 #include <ecs/tile_map.hpp>
+#include <views/ui/dungeon_ui.hpp>
+#include <views/actions/dungeon_actions.hpp>
+#include <events.hpp>
 
 constexpr static Color BACKGROUND_COLOR = {0x34, 0x31, 0x1d, 0xff};
 constexpr static Color FOV_COLOR = {0x48, 0x53, 0x22, 0xff};
@@ -40,7 +43,7 @@ struct ModXY {
 
 class DungeonView : public UIView {
 public:
-    explicit DungeonView(std::shared_ptr<Core> &core, TileMap &&tile_map) : UIView{core}, _render_texture_pov{LoadRenderTexture(320, 240)}, _render_texture_gui(LoadRenderTexture(120, 120)), _wall_map{core}, _tile_map{std::move(tile_map)} {
+    explicit DungeonView(std::shared_ptr<Core> &core, TileMap &&tile_map) : UIView{core}, _ui{core}, _render_texture_pov{LoadRenderTexture(320, 240)}, _render_texture_gui(LoadRenderTexture(120, 120)), _wall_map{core}, _tile_map{std::move(tile_map)} {
         _wall_map.initialize(_tile_map);
         std::printf("Dungeon View constructed\n");
     };
@@ -63,6 +66,8 @@ private:
     RenderTexture _render_texture_gui;
     TileMap _tile_map;
     WallMap _wall_map;
+    DungeonUI _ui;
+    DungeonActions _actions{_core, &_tile_map, &_wall_map};
 };
 
 

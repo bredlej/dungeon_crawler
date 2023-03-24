@@ -1,7 +1,7 @@
 //
 // Created by Patryk Szczypień on 09/03/2023.
 //
-#include <level_parser.h>
+#include <level_parser.hpp>
 
 using namespace level_schema;
 nlohmann::json LevelParser::parse(const std::string &path) {
