@@ -3,6 +3,9 @@
 //
 #ifndef DUNGEON_CRAWLER_APPLICATION_HPP
 #define DUNGEON_CRAWLER_APPLICATION_HPP
+#include <imgui/imgui.h>
+#include <imgui/rlImGui.h>
+#include <colors.hpp>
 extern "C" {
 #include <raylib.h>
 }
@@ -43,5 +46,6 @@ private:
     ViewMode _view_mode;
     ViewMap _views;
     std::shared_ptr<Core> _core;
+    void _toggle_fullscreen();
 };
 #endif//DUNGEON_CRAWLER_APPLICATION_HPP
