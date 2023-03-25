@@ -52,6 +52,10 @@ static inline void handle_movement (entt::registry &registry, const TileMap *til
         }
     }
     registry.ctx().emplace<events::dungeon::RecalculateFov>();
+    auto encounter_chance = registry.ctx().find<components::values::EncounterChance>();
+    components::values::EncounterChance new_chance {encounter_chance->fraction + 0.05f};
+    registry.ctx().erase<components::values::EncounterChance>();
+    registry.ctx().emplace<components::values::EncounterChance>(new_chance.fraction);
 }
 
 void DungeonActions::turn_left() {

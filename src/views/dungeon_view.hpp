@@ -45,6 +45,7 @@ class DungeonView : public UIView {
 public:
     explicit DungeonView(std::shared_ptr<Core> &core, TileMap &&tile_map) : UIView{core}, _ui{core}, _render_texture_pov{LoadRenderTexture(320, 240)}, _render_texture_gui(LoadRenderTexture(120, 120)), _wall_map{core}, _tile_map{std::move(tile_map)} {
         _wall_map.initialize(_tile_map);
+        _initialize();
         std::printf("Dungeon View constructed\n");
     };
     DungeonView(const DungeonView &) noexcept = delete;
@@ -56,6 +57,7 @@ public:
     void render() override;
     void update() override;
 private:
+    void _initialize();
     void _render_pov();
     void _render_minimap();
     void _calculate_fov();

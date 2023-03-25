@@ -9,7 +9,8 @@
 #include <imgui/imgui.h>
 #include <imgui/rlImGui.h>
 #include <events.hpp>
-
+#include <components.hpp>
+#include <colors.hpp>
 class DungeonUI {
 public:
     explicit DungeonUI(const std::shared_ptr<Core>& core) : _core{core} {_initialize();};
@@ -24,6 +25,9 @@ private:
     void _initialize();
     bool _show_demo{false};
     bool _bottom_window_visible{false};
+    bool _encounter_chance_window_visible{false};
     void _toggle_demo();
+    void _render_movement_buttons();
+    void _render_encounter_chance();
 };
 #endif//DUNGEON_CRAWLER_DUNGEON_UI_H

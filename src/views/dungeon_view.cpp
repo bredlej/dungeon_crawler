@@ -4,6 +4,9 @@
 
 #include <views/dungeon_view.hpp>
 
+void DungeonView::_initialize() {
+    _core->_registry.ctx().emplace<components::values::EncounterChance>(0.03f);
+}
 static inline void draw_floor(assets::Assets *assets, const size_t index, const FloorType floor_type, const Color tint) {
     DrawTexture(assets->_textures._tiles[static_cast<POVFloor>(index)][floor_type].get(), 0, 0, tint);
 }

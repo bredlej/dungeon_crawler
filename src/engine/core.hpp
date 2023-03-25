@@ -7,6 +7,7 @@
 #include "entt/entt.hpp"
 #include <utility>
 #include "assets.hpp"
+#include <game_log.hpp>
 
 class Core {
 public:
@@ -18,6 +19,7 @@ public:
     assets::Assets *get_assets() {return _assets.get();}
     entt::dispatcher _dispatcher;
     entt::registry _registry;
+    GameLog _game_log;
 private:
     std::unique_ptr<assets::Assets> _assets{nullptr};
 };
