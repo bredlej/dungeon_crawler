@@ -4,6 +4,9 @@
 
 #include <views/dungeon_view.hpp>
 
+void DungeonView::_initialize() {
+    _core->registry.ctx().emplace<components::values::EncounterChance>(0.00f);
+}
 static inline void draw_floor(assets::Assets *assets, const size_t index, const FloorType floor_type, const Color tint) {
     DrawTexture(assets->_textures._tiles[static_cast<POVFloor>(index)][floor_type].get(), 0, 0, tint);
 }
@@ -13,8 +16,8 @@ void DungeonView::_render_pov() {
     ClearBackground(BACKGROUND_COLOR);
     if (assets::Assets *assets = _core->get_assets()) {
         for (size_t i = 0; i < _player_fov_tile.field.size(); i++) {
-            if (_core->_registry.valid(_player_fov_tile.field[i])) {
-                const auto floor = _core->_registry.try_get<components::fields::Floor>(_player_fov_tile.field[i]);
+            if (_core->registry.valid(_player_fov_tile.field[i])) {
+                const auto floor = _core->registry.try_get<components::fields::Floor>(_player_fov_tile.field[i]);
                 if (floor) {
                     draw_floor(assets, i, floor->type, WHITE);
                 }
@@ -26,11 +29,14 @@ void DungeonView::_render_pov() {
             }
         }
         for (const POVWall i: draw_order_walls) {
-            if (_core->_registry.valid(_player_fov_wall.field[static_cast<const size_t>(i)])) {
-                if (const components::fields::Wall *wall = _core->_registry.try_get<components::fields::Wall>(_player_fov_wall.field[static_cast<const size_t>(i)])) {
+            if (_core->registry.valid(_player_fov_wall.field[static_cast<const size_t>(i)])) {
+                if (const components::fields::Wall *wall = _core->registry.try_get<components::fields::Wall>(_player_fov_wall.field[static_cast<const size_t>(i)])) {
                     DrawTexture(assets->_textures._tiles[static_cast<POVWall>(i)][wall->type].get(), 0, 0, WHITE);
                 }
             }
+        }
+        if (_core->registry.ctx().contains<components::values::Encounter>()) {
+            DrawTexture(assets->_textures._beasts[Beast::GoblinWarrior].get(), 140, 55, WHITE);
         }
     }
     EndTextureMode();
@@ -46,9 +52,9 @@ void DungeonView::_render_minimap() {
     DrawTexture(_core->get_assets()->_textures._gui[assets::dungeon_view::GUI::MiniMap::Background].get(), 0, 0, WHITE);
     ModXY offset {10,10};
     for (auto tile: _tile_map._tiles) {
-        if (_core->_registry.valid(tile.entity)) {
-            components::fields::MapPosition position = _core->_registry.get<components::fields::MapPosition>(tile.entity);
-            auto *tile_in_fov = _core->_registry.try_get<components::fields::InFovOfEntity>(tile.entity);
+        if (_core->registry.valid(tile.entity)) {
+            components::fields::MapPosition position = _core->registry.get<components::fields::MapPosition>(tile.entity);
+            auto *tile_in_fov = _core->registry.try_get<components::fields::InFovOfEntity>(tile.entity);
             if (tile_in_fov) {
                 DrawRectangle(position.x * MINIMAP_GRID_SIZE + offset.x, position.y * MINIMAP_GRID_SIZE +offset.y, MINIMAP_GRID_SIZE, MINIMAP_GRID_SIZE, FOV_COLOR);
             }
@@ -57,7 +63,7 @@ void DungeonView::_render_minimap() {
             }
         }
     }
-    auto player_view = _core->_registry.view<components::general::Player, components::general::Direction, components::fields::MapPosition>();
+    auto player_view = _core->registry.view<components::general::Player, components::general::Direction, components::fields::MapPosition>();
     Texture2D player_texture = _core->get_assets()->_textures._gui[assets::dungeon_view::GUI::MiniMap::Player].get();
     player_view.each([&](const entt::entity entity, const components::general::Player player, components::general::Direction direction, components::fields::MapPosition position) {
         switch (direction.direction) {
@@ -68,9 +74,9 @@ void DungeonView::_render_minimap() {
         }
     });
     for (WallEntity wall: _wall_map._walls) {
-        components::fields::Wall wall_component = _core->_registry.get<components::fields::Wall>(wall.entity);
-        components::fields::MapPosition field1_position = _core->_registry.get<components::fields::MapPosition>(wall_component.field1);
-        components::fields::MapPosition field2_position = _core->_registry.get<components::fields::MapPosition>(wall_component.field2);
+        components::fields::Wall wall_component = _core->registry.get<components::fields::Wall>(wall.entity);
+        components::fields::MapPosition field1_position = _core->registry.get<components::fields::MapPosition>(wall_component.field1);
+        components::fields::MapPosition field2_position = _core->registry.get<components::fields::MapPosition>(wall_component.field2);
         if (field1_position.x == field2_position.x) {
             DrawLine(field1_position.x * MINIMAP_GRID_SIZE + offset.x, std::max(field1_position.y, field2_position.y) * MINIMAP_GRID_SIZE + offset.y, field1_position.x * MINIMAP_GRID_SIZE + offset.x + MINIMAP_GRID_SIZE, std::max(field1_position.y, field2_position.y) * 5 + offset.y, WALL_COLOR);
         }
@@ -107,24 +113,24 @@ void DungeonView::update() {
     static bool after_first_update = false;
     static bool recalculate_fov = true;
     if (recalculate_fov) {
-        _core->_registry.ctx().emplace<events::dungeon::RecalculateFov>();
+        _core->registry.ctx().emplace<events::dungeon::RecalculateFov>();
         recalculate_fov = false;
     }
-    if (after_first_update && _core->_registry.ctx().contains<events::dungeon::RecalculateFov>()) {
+    if (after_first_update && _core->registry.ctx().contains<events::dungeon::RecalculateFov>()) {
         _calculate_fov();
-        _core->_registry.ctx().erase<events::dungeon::RecalculateFov>();
+        _core->registry.ctx().erase<events::dungeon::RecalculateFov>();
     }
     if (IsKeyPressed(KEY_LEFT)) {
-        _core->_dispatcher.enqueue(events::dungeon::TurnLeft{});
+        _core->dispatcher.enqueue(events::dungeon::TurnLeft{});
     }
     if (IsKeyPressed(KEY_RIGHT)) {
-        _core->_dispatcher.enqueue(events::dungeon::TurnRight{});
+        _core->dispatcher.enqueue(events::dungeon::TurnRight{});
     }
     if (IsKeyPressed(KEY_UP)) {
-        _core->_dispatcher.enqueue(events::dungeon::MoveForward{});
+        _core->dispatcher.enqueue(events::dungeon::MoveForward{});
     }
     if (IsKeyPressed(KEY_DOWN)) {
-        _core->_dispatcher.enqueue(events::dungeon::MoveBack{});
+        _core->dispatcher.enqueue(events::dungeon::MoveBack{});
     }
     if (IsKeyPressed(KEY_L)) {
         try {
@@ -134,7 +140,7 @@ void DungeonView::update() {
             _wall_map.from_json(_tile_map, json);
             using namespace level_schema;
             if (json.contains(names[types::player_spawn])) {
-                _core->_registry.view<components::general::Player, components::general::Direction, components::fields::MapPosition>().each([&json](const entt::entity entity, const components::general::Player player, components::general::Direction &direction, components::fields::MapPosition &position) {
+                _core->registry.view<components::general::Player, components::general::Direction, components::fields::MapPosition>().each([&json](const entt::entity entity, const components::general::Player player, components::general::Direction &direction, components::fields::MapPosition &position) {
                    direction.direction = direction_names[json[names[types::player_spawn]][names[types::direction]]];
                    position.x = json[names[types::player_spawn]][names[types::x]];
                    position.y = json[names[types::player_spawn]][names[types::y]];
@@ -148,7 +154,7 @@ void DungeonView::update() {
         }
     }
     if (IsKeyDown(KEY_LEFT_ALT) && IsKeyPressed(KEY_D)) {
-        _core->_dispatcher.enqueue(events::ui::ToggleShowDemo());
+        _core->dispatcher.enqueue(events::ui::ToggleShowDemo());
     }
     after_first_update = true;
 }
@@ -222,8 +228,8 @@ static void fill_player_fov_tiles(std::array<entt::entity, SIZE> &player_fov_til
 }
 
 void DungeonView::_calculate_fov() {
-    _core->_registry.clear<components::fields::InFovOfEntity>();
-    auto player_view = _core->_registry.view<components::general::Player, components::general::Direction, components::fields::MapPosition>();
+    _core->registry.clear<components::fields::InFovOfEntity>();
+    auto player_view = _core->registry.view<components::general::Player, components::general::Direction, components::fields::MapPosition>();
     for (auto entity: player_view) {
         auto player_position = player_view.get<components::fields::MapPosition>(entity);
         auto player_direction = player_view.get<components::general::Direction>(entity);
@@ -232,8 +238,8 @@ void DungeonView::_calculate_fov() {
         fill_player_fov_walls(_player_fov_wall.field, player_position, _wall_map, _tile_map, player_direction.direction);
 
         for (entt::entity fov_tile: _player_fov_tile.field) {
-            if (_core->_registry.valid(fov_tile)) {
-                _core->_registry.emplace_or_replace<components::fields::InFovOfEntity>(fov_tile, entity);
+            if (_core->registry.valid(fov_tile)) {
+                _core->registry.emplace_or_replace<components::fields::InFovOfEntity>(fov_tile, entity);
             }
         }
     }
@@ -241,11 +247,11 @@ void DungeonView::_calculate_fov() {
 
 void DungeonView::_clear() {
     for (auto wall_entity: _wall_map._walls) {
-        _core->_registry.destroy(wall_entity.entity);
+        _core->registry.destroy(wall_entity.entity);
     }
     _wall_map._walls.clear();
     for (auto tile_entity: _tile_map._tiles) {
-        _core->_registry.destroy(tile_entity.entity);
+        _core->registry.destroy(tile_entity.entity);
     }
     _tile_map._tiles.clear();
     _player_fov_tile.field.fill(entt::null);

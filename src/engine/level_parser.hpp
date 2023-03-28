@@ -37,7 +37,8 @@ namespace level_schema {
         player_spawn,
         x,
         y,
-        direction
+        direction,
+        encounter_chance
     };
     static std::unordered_map<types, const char *> names = {
             {types::size_x, "size_x"},
@@ -52,6 +53,7 @@ namespace level_schema {
             {types::x, "x"},
             {types::y, "y"},
             {types::direction, "direction"},
+            {types::encounter_chance, "encounter_chance"},
     };
     static std::unordered_map<std::string, WorldDirection> direction_names = {
             {"NORTH", WorldDirection::NORTH},

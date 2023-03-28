@@ -17,6 +17,12 @@ namespace components {
             bool is_active;
         };
     }
+    namespace values {
+        struct EncounterChance {
+            float fraction;
+        };
+        struct Encounter {};
+    }
     namespace fields {
         struct MapPosition {
             int32_t x;

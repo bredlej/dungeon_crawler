@@ -67,6 +67,7 @@ static inline void validate_tiles_have_correct_size(const nlohmann::json &json) 
         throw LevelParserException(stringStream.str());
     }
 }
+
 static inline void validate_definition_player_spawn(const nlohmann::json &json) {
     if (json.contains(names[types::player_spawn])) {
         if (!json[names[types::player_spawn]].contains(names[types::x])) {

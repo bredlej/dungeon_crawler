@@ -20,4 +20,5 @@ enum class WallType {
 enum class WorldDirection {
     NORTH, EAST, WEST, SOUTH
 };
+
 #endif//DUNGEON_CRAWLER_TYPES_HPP
