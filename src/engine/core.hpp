@@ -8,6 +8,13 @@
 #include <utility>
 #include "assets.hpp"
 #include <game_log.hpp>
+#include <pcg/pcg_random.hpp>
+#include <cstdint>
+
+struct ModXY {
+    int32_t x;
+    int32_t y;
+};
 
 class Core {
 public:
@@ -17,9 +24,10 @@ public:
 
     void load_assets();
     assets::Assets *get_assets() {return _assets.get();}
-    entt::dispatcher _dispatcher;
-    entt::registry _registry;
-    GameLog _game_log;
+    entt::dispatcher dispatcher;
+    entt::registry registry;
+    GameLog game_log;
+    pcg32 pcg;
 private:
     std::unique_ptr<assets::Assets> _assets{nullptr};
 };

@@ -8,13 +8,14 @@ void TileMap::_initialize() {
     _tiles.clear();
     for (auto y = 0; y < _height; y++) {
         for (auto x = 0; x < _width; x++) {
-            Tile tile{_core->_registry.create()};
-            _core->_registry.emplace<components::fields::MapPosition>(tile.entity, x, y);
-            _core->_registry.emplace<components::fields::Floor>(tile.entity, rand() % 100 < 50 ? FloorType::RUINS_01 : FloorType::RUINS_02);
-            _core->_registry.emplace<components::fields::Ceiling>(tile.entity, CeilingType::NORMAL);
-            _core->_registry.emplace<components::fields::Visibility>(tile.entity, true);
-            _core->_registry.emplace<components::fields::Walkability>(tile.entity, true);
-            _core->_registry.emplace<components::fields::Field>(tile.entity, 1);
+            Tile tile{_core->registry.create()};
+            _core->registry.emplace<components::fields::MapPosition>(tile.entity, x, y);
+            _core->registry.emplace<components::fields::Floor>(tile.entity, rand() % 100 < 50 ? FloorType::RUINS_01 : FloorType::RUINS_02);
+            _core->registry.emplace<components::fields::Ceiling>(tile.entity, CeilingType::NORMAL);
+            _core->registry.emplace<components::fields::Visibility>(tile.entity, true);
+            _core->registry.emplace<components::fields::Walkability>(tile.entity, true);
+            _core->registry.emplace<components::fields::Field>(tile.entity, 1);
+            _core->registry.emplace<components::values::EncounterChance>(tile.entity, 0.05f);
             _tiles.emplace_back(tile);
         }
     }
@@ -28,25 +29,26 @@ void TileMap::from_json(nlohmann::json &json) {
     auto tiles = json[names[types::tiles]];
     int index = 0;
     for (const auto &tile_contents: tiles) {
-        Tile tile{_core->_registry.create()};
-        _core->_registry.emplace<components::fields::MapPosition>(tile.entity, index % size_x, index / size_y);
-        _core->_registry.emplace<components::fields::Ceiling>(tile.entity, CeilingType::NORMAL);
-        _core->_registry.emplace<components::fields::Visibility>(tile.entity, true);
-        _core->_registry.emplace<components::fields::Field>(tile.entity, 1);
+        Tile tile{_core->registry.create()};
+        _core->registry.emplace<components::fields::MapPosition>(tile.entity, index % size_x, index / size_y);
+        _core->registry.emplace<components::fields::Ceiling>(tile.entity, CeilingType::NORMAL);
+        _core->registry.emplace<components::fields::Visibility>(tile.entity, true);
+        _core->registry.emplace<components::fields::Field>(tile.entity, 1);
+        _core->registry.emplace<components::values::EncounterChance>(tile.entity, 0.05f);
         if (!tile_contents.empty()) {
             for (auto &content: tile_contents) {
                 if (content.contains(names[level_schema::types::floor])) {
-                    _core->_registry.emplace<components::fields::Floor>(tile.entity, assets::name_to_floor_type[content[names[level_schema::types::floor]]]);
+                    _core->registry.emplace<components::fields::Floor>(tile.entity, assets::name_to_floor_type[content[names[level_schema::types::floor]]]);
                     if (content.contains(names[level_schema::types::walkable])) {
-                        _core->_registry.emplace<components::fields::Walkability>(tile.entity, content[names[level_schema::types::walkable]]);
+                        _core->registry.emplace<components::fields::Walkability>(tile.entity, content[names[level_schema::types::walkable]]);
                     }
                     else {
-                        _core->_registry.emplace<components::fields::Walkability>(tile.entity, true);
+                        _core->registry.emplace<components::fields::Walkability>(tile.entity, true);
                     }
                 }
             }
         } else {
-            _core->_registry.emplace<components::fields::Walkability>(tile.entity, true);
+            _core->registry.emplace<components::fields::Walkability>(tile.entity, true);
         }
         _tiles.emplace_back(tile);
         index += 1;
@@ -55,7 +57,7 @@ void TileMap::from_json(nlohmann::json &json) {
 
 entt::entity TileMap::get_at(int32_t x, int32_t y) const {
     entt::entity result{entt::null};
-    _core->_registry.view<components::fields::Field, components::fields::MapPosition>().each([&result, &x, &y](entt::entity entity, const components::fields::Field &, const components::fields::MapPosition &position) {
+    _core->registry.view<components::fields::Field, components::fields::MapPosition>().each([&result, &x, &y](entt::entity entity, const components::fields::Field &, const components::fields::MapPosition &position) {
         if (position.x == x && position.y == y) {
             result = entity;
         }

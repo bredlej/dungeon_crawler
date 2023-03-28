@@ -10,7 +10,7 @@ void DungeonUI::render() {
     }
     _render_movement_buttons();
     _render_encounter_chance();
-    _core->_game_log.render_no_border("GameLog", &_show_demo);
+    _core->game_log.render_no_border("GameLog", &_show_demo);
     rlImGuiEnd();
 }
 
@@ -18,7 +18,7 @@ void DungeonUI::_toggle_demo() {
     _show_demo = !_show_demo;
 }
 void DungeonUI::_initialize() {
-    _core->_dispatcher.sink<events::ui::ToggleShowDemo>().connect<&DungeonUI::_toggle_demo>(this);
+    _core->dispatcher.sink<events::ui::ToggleShowDemo>().connect<&DungeonUI::_toggle_demo>(this);
 }
 
 void DungeonUI::_render_movement_buttons() {
@@ -37,27 +37,27 @@ void DungeonUI::_render_movement_buttons() {
     ImVec2 button_sz(60, 60);
     if (ImGui::Begin("Movement", &_bottom_window_visible, window_flags)) {
         if (ImGui::Button("LT", button_sz)) {
-            _core->_dispatcher.enqueue(events::dungeon::TurnLeft {});
-            _core->_game_log.message("Turn left.\n");
+            _core->dispatcher.enqueue(events::dungeon::TurnLeft {});
+            _core->game_log.message("Turn left.\n");
         };
         ImGui::SameLine();
         if (ImGui::Button("UP", button_sz)) {
-            _core->_dispatcher.enqueue(events::dungeon::MoveForward {});
+            _core->dispatcher.enqueue(events::dungeon::MoveForward {});
         }
         ImGui::SameLine();
         if (ImGui::Button("RT", button_sz)) {
-            _core->_dispatcher.enqueue(events::dungeon::TurnRight {});
+            _core->dispatcher.enqueue(events::dungeon::TurnRight {});
         }
         if (ImGui::Button("LEFT", button_sz)) {
-            _core->_dispatcher.enqueue(events::dungeon::MoveLeft {});
+            _core->dispatcher.enqueue(events::dungeon::MoveLeft {});
         }
         ImGui::SameLine();
         if (ImGui::Button("DOWN", button_sz)) {
-            _core->_dispatcher.enqueue(events::dungeon::MoveBack {});
+            _core->dispatcher.enqueue(events::dungeon::MoveBack {});
         }
         ImGui::SameLine();
         if (ImGui::Button("RIGHT",button_sz)) {
-            _core->_dispatcher.enqueue(events::dungeon::MoveRight {});
+            _core->dispatcher.enqueue(events::dungeon::MoveRight {});
         }
     }
     ImGui::End();
@@ -76,14 +76,13 @@ void DungeonUI::_render_encounter_chance() {
     window_pos_pivot.x = 0.0f;
     window_pos_pivot.y = 1.0f;
     ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always);
-    //ImGui::SetNextWindowSize({work_size.x / 4, work_size.y / 20});
 
     ImGui::SetNextWindowBgAlpha(0.25f);// Transparent background
     if (!ImGui::Begin("Encounter", &_encounter_chance_window_visible, window_flags)) {
         ImGui::End();
         return;
     }
-    auto encounter_chance = _core->_registry.ctx().find<components::values::EncounterChance>()->fraction;
+    auto encounter_chance = _core->registry.ctx().find<components::values::EncounterChance>()->fraction;
     if (encounter_chance < 0.6) {
         ImGui::PushStyleColor(ImGuiCol_PlotHistogram, ImVec4(static_cast<float>(palette::green.r)/255.0f, static_cast<float>(palette::green.g)/255.0f, static_cast<float>(palette::green.b)/255.0f, 1));
     }

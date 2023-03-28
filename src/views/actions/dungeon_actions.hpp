@@ -26,8 +26,11 @@ public:
     void move_back();
     void move_left();
     void move_right();
+    void start_encounter();
 private:
     void _initialize();
+    void _on_movement(const events::dungeon::Movement &movement);
+    void _on_encounter_chance_changed(events::dungeon::EncounterChanceChange);
     const TileMap *_tile_map;
     const WallMap *_wall_map;
     std::shared_ptr<Core> _core;

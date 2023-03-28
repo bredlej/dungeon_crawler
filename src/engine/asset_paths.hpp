@@ -12,6 +12,9 @@ namespace assets {
             constexpr const char *player_ss = "assets/GUI/Minimap/player.png";
         }
     }
+    namespace beasts {
+        constexpr const char *goblin_warrior = "assets/Bestiary/goblin_warrior.png";
+    }
     namespace tiles {
         namespace stratum {
             namespace ruins {

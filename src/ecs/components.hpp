@@ -21,6 +21,7 @@ namespace components {
         struct EncounterChance {
             float fraction;
         };
+        struct Encounter {};
     }
     namespace fields {
         struct MapPosition {

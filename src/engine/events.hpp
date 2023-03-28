@@ -16,5 +16,14 @@ namespace events::dungeon {
     struct MoveBack {};
     struct MoveLeft {};
     struct MoveRight {};
+    struct Movement {
+        entt::entity who;
+        entt::entity from;
+        entt::entity to;
+    };
+    struct EncounterChanceChange {
+        float fraction;
+    };
+    struct StartEncounter {};
 }
 #endif//DUNGEON_CRAWLER_EVENTS_HPP

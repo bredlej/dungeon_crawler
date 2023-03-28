@@ -37,10 +37,6 @@ struct POVField {
     std::array<entt::entity, static_cast<size_t>(T::SIZE)> field;
 };
 
-struct ModXY {
-    int x,y;
-};
-
 class DungeonView : public UIView {
 public:
     explicit DungeonView(std::shared_ptr<Core> &core, TileMap &&tile_map) : UIView{core}, _ui{core}, _render_texture_pov{LoadRenderTexture(320, 240)}, _render_texture_gui(LoadRenderTexture(120, 120)), _wall_map{core}, _tile_map{std::move(tile_map)} {

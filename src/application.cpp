@@ -9,10 +9,10 @@ void initialize_views(ViewMap &views,  std::shared_ptr<Core>& core) {
 }
 
 void initialize_player(const std::shared_ptr<Core>& core) {
-    const entt::entity player_entity = core->_registry.create();
-    core->_registry.emplace<components::general::Player>(player_entity, true);
-    core->_registry.emplace<components::general::Direction>(player_entity, WorldDirection::EAST);
-    core->_registry.emplace<components::fields::MapPosition>(player_entity, 1, 1);
+    const entt::entity player_entity = core->registry.create();
+    core->registry.emplace<components::general::Player>(player_entity, true);
+    core->registry.emplace<components::general::Direction>(player_entity, WorldDirection::EAST);
+    core->registry.emplace<components::fields::MapPosition>(player_entity, 1, 1);
 }
 
 static inline void setup_imgui_colors() {
@@ -101,7 +101,7 @@ void run_raylib(ViewMap &views, ViewMode view_mode, std::shared_ptr<Core> &core)
     while (!WindowShouldClose()) {
         _toggle_fullscreen();
         views[view_mode]->update();
-        core->_dispatcher.update();
+        core->dispatcher.update();
         views[view_mode]->render();
     }
     rlImGuiShutdown();

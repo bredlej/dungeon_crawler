@@ -10,6 +10,7 @@ extern "C" {
 #include <cstdint>
 #include <cstdio>
 #include <ecs/types.hpp>
+#include <ecs/beasts.hpp>
 #include <engine/asset_paths.hpp>
 #include <unordered_map>
 #include <variant>
@@ -45,6 +46,9 @@ namespace assets {
     };
     static std::unordered_map<std::string, WallType> name_to_wall_type = {
             {"RUINS_01", WallType::RUINS_01}
+    };
+    static std::unordered_map<std::string, Beast> name_to_beast_type = {
+            {"GoblinWarrior", Beast::GoblinWarrior}
     };
     // clang-format off
     namespace dungeon_view {
@@ -88,6 +92,7 @@ namespace assets {
         }
         std::unordered_map<std::variant<dungeon_view::POVFloor, dungeon_view::POVWall>, FieldMap> _tiles;
         std::unordered_map<std::variant<dungeon_view::GUI::MiniMap>, const assets::DCTexture> _gui;
+        std::unordered_map<Beast, const assets::DCTexture> _beasts;
     };
 
     class Assets {
@@ -173,6 +178,9 @@ namespace assets {
             // GUI
             _textures._gui.emplace(dungeon_view::GUI::MiniMap::Background, assets::gui::minimap::background);
             _textures._gui.emplace(dungeon_view::GUI::MiniMap::Player, assets::gui::minimap::player_ss);
+
+            // Bestiary
+            _textures._beasts.emplace(Beast::GoblinWarrior, assets::beasts::goblin_warrior);
         };
 
         Textures _textures;
