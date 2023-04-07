@@ -47,11 +47,12 @@ static inline void minimap_draw_player_frame(const Texture2D &texture, const Rec
 }
 
 void DungeonView::_render_minimap() {
+
     BeginTextureMode(_render_texture_gui);
     ClearBackground(BACKGROUND_COLOR);
     DrawTexture(_core->get_assets()->_textures._gui[assets::dungeon_view::GUI::MiniMap::Background].get(), 0, 0, WHITE);
     ModXY offset {10,10};
-    for (auto tile: _tile_map._tiles) {
+    for (auto tile: _level.tile_map._tiles) {
         if (_core->registry.valid(tile.entity)) {
             components::fields::MapPosition position = _core->registry.get<components::fields::MapPosition>(tile.entity);
             auto *tile_in_fov = _core->registry.try_get<components::fields::InFovOfEntity>(tile.entity);
@@ -73,7 +74,7 @@ void DungeonView::_render_minimap() {
             case WorldDirection::WEST: minimap_draw_player_frame(player_texture, {15,0,5,5}, position, offset); break;
         }
     });
-    for (WallEntity wall: _wall_map._walls) {
+    for (WallEntity wall: _level.wall_map._walls) {
         components::fields::Wall wall_component = _core->registry.get<components::fields::Wall>(wall.entity);
         components::fields::MapPosition field1_position = _core->registry.get<components::fields::MapPosition>(wall_component.field1);
         components::fields::MapPosition field2_position = _core->registry.get<components::fields::MapPosition>(wall_component.field2);
@@ -134,19 +135,9 @@ void DungeonView::update() {
     }
     if (IsKeyPressed(KEY_L)) {
         try {
-            auto json = LevelParser::parse("assets/Levels/Ruins/ruins_01.json");
             _clear();
-            _tile_map.from_json(json);
-            _wall_map.from_json(_tile_map, json);
-            using namespace level_schema;
-            if (json.contains(names[types::player_spawn])) {
-                _core->registry.view<components::general::Player, components::general::Direction, components::fields::MapPosition>().each([&json](const entt::entity entity, const components::general::Player player, components::general::Direction &direction, components::fields::MapPosition &position) {
-                   direction.direction = direction_names[json[names[types::player_spawn]][names[types::direction]]];
-                   position.x = json[names[types::player_spawn]][names[types::x]];
-                   position.y = json[names[types::player_spawn]][names[types::y]];
-                });
+            _level.load("assets/Levels/Ruins/ruins_01.json");
 
-            }
             _calculate_fov();
         }
         catch (std::exception &e) {
@@ -234,8 +225,8 @@ void DungeonView::_calculate_fov() {
         auto player_position = player_view.get<components::fields::MapPosition>(entity);
         auto player_direction = player_view.get<components::general::Direction>(entity);
 
-        fill_player_fov_tiles(_player_fov_tile.field, player_position, _tile_map, player_direction.direction);
-        fill_player_fov_walls(_player_fov_wall.field, player_position, _wall_map, _tile_map, player_direction.direction);
+        fill_player_fov_tiles(_player_fov_tile.field, player_position, _level.tile_map, player_direction.direction);
+        fill_player_fov_walls(_player_fov_wall.field, player_position, _level.wall_map, _level.tile_map, player_direction.direction);
 
         for (entt::entity fov_tile: _player_fov_tile.field) {
             if (_core->registry.valid(fov_tile)) {
@@ -246,14 +237,7 @@ void DungeonView::_calculate_fov() {
 }
 
 void DungeonView::_clear() {
-    for (auto wall_entity: _wall_map._walls) {
-        _core->registry.destroy(wall_entity.entity);
-    }
-    _wall_map._walls.clear();
-    for (auto tile_entity: _tile_map._tiles) {
-        _core->registry.destroy(tile_entity.entity);
-    }
-    _tile_map._tiles.clear();
+    _level.clear();
     _player_fov_tile.field.fill(entt::null);
     _player_fov_wall.field.fill(entt::null);
 }

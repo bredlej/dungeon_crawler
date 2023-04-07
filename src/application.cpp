@@ -5,7 +5,7 @@
 
 void initialize_views(ViewMap &views,  std::shared_ptr<Core>& core) {
     views[ViewMode::MainMenu] = std::make_unique<MainMenu>(MainMenu(core));
-    views[ViewMode::Dungeon] = std::make_unique<DungeonView>(core, TileMap(core, 20, 20));
+    views[ViewMode::Dungeon] = std::make_unique<DungeonView>(core, Level(core, TileMap(core, 20, 20)));
 }
 
 void initialize_player(const std::shared_ptr<Core>& core) {
