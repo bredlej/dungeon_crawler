@@ -10,7 +10,7 @@ void Level::load(const std::string &path) {
     using namespace level_schema;
     if (json.contains(names[types::player_spawn])) {
         _core->registry.view<components::general::Player, components::general::Direction, components::fields::MapPosition>().each([&json](const entt::entity entity, const components::general::Player player, components::general::Direction &direction, components::fields::MapPosition &position) {
-            direction.direction = direction_names[json[names[types::player_spawn]][names[types::direction]]];
+            direction.direction = name_to_direction[json[names[types::player_spawn]][names[types::direction]]];
             position.x = json[names[types::player_spawn]][names[types::x]];
             position.y = json[names[types::player_spawn]][names[types::y]];
         });
@@ -29,4 +29,14 @@ void Level::clear() {
     tile_map._tiles.clear();
 }
 void Level::save(const std::string &path) {
+    nlohmann::json json;
+    tile_map.to_json(json);
+    wall_map.to_json(json);
+    using namespace level_schema;
+    _core->registry.view<components::general::Player, components::general::Direction, components::fields::MapPosition>().each([&json](const entt::entity entity, const components::general::Player player, const components::general::Direction &direction, const components::fields::MapPosition &position) {
+        json[names[types::player_spawn]][names[types::direction]] = direction_to_name[direction.direction];
+        json[names[types::player_spawn]][names[types::x]] = position.x;
+        json[names[types::player_spawn]][names[types::y]] = position.y;
+    });
+    LevelParser::save(path, json);
 }

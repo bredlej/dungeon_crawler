@@ -55,6 +55,30 @@ void TileMap::from_json(nlohmann::json &json) {
     }
 }
 
+void TileMap::to_json(nlohmann::json &json) {
+    using namespace level_schema;
+    json[names[types::size_x]] = _width;
+    json[names[types::size_y]] = _height;
+    json[names[types::tiles]] = nlohmann::json::array();
+    for (auto y = 0; y < _height; y++) {
+        for (auto x = 0; x < _width; x++) {
+            auto tile = get_at(x, y);
+            if (tile != entt::null) {
+                json[names[types::tiles]].emplace_back();
+                auto &tile_contents = json[names[types::tiles]].back();
+                if (_core->registry.any_of<components::fields::Floor>(tile)) {
+                    auto &floor = _core->registry.get<components::fields::Floor>(tile);
+                    tile_contents[names[types::floor]] = assets::floor_type_to_name[floor.type];
+                    if (_core->registry.any_of<components::fields::Walkability>(tile)) {
+                        auto &walkability = _core->registry.get<components::fields::Walkability>(tile);
+                        tile_contents[names[types::walkable]] = walkability.walkable;
+                    }
+                }
+            }
+        }
+    }
+}
+
 entt::entity TileMap::get_at(int32_t x, int32_t y) const {
     entt::entity result{entt::null};
     _core->registry.view<components::fields::Field, components::fields::MapPosition>().each([&result, &x, &y](entt::entity entity, const components::fields::Field &, const components::fields::MapPosition &position) {

@@ -55,11 +55,17 @@ namespace level_schema {
             {types::direction, "direction"},
             {types::encounter_chance, "encounter_chance"},
     };
-    static std::unordered_map<std::string, WorldDirection> direction_names = {
+    static std::unordered_map<std::string, WorldDirection> name_to_direction = {
             {"NORTH", WorldDirection::NORTH},
             {"EAST", WorldDirection::EAST},
             {"SOUTH", WorldDirection::SOUTH},
             {"WEST", WorldDirection::WEST}
+    };
+    static std::unordered_map<WorldDirection, std::string> direction_to_name = {
+            {WorldDirection::NORTH, "NORTH"},
+            {WorldDirection::EAST, "EAST"},
+            {WorldDirection::SOUTH, "SOUTH"},
+            {WorldDirection::WEST, "WEST"}
     };
 } // namespace assets
 
@@ -67,6 +73,7 @@ class LevelParser {
 public:
     static nlohmann::json parse(const std::string &path);
     static nlohmann::json parse_json(const nlohmann::json &json);
+    static void save(const std::string &path, const nlohmann::json &json);
 private:
     static void _validate(const nlohmann::json &json);
 };

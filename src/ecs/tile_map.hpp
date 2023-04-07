@@ -39,6 +39,7 @@ public:
     [[nodiscard]] entt::entity get_at(int32_t x, int32_t y) const;
     [[nodiscard]] std::vector<NeighbourTile> get_neighbours_of (int32_t x, int32_t y) const;
     void from_json(nlohmann::json &);
+    void to_json(nlohmann::json &);
 private:
     void _initialize();
 

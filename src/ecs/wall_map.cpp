@@ -72,3 +72,21 @@ void WallMap::from_json(const TileMap &tile_map, const nlohmann::json &json) {
         }
     }
 }
+
+void WallMap::to_json(nlohmann::json &json) {
+    using namespace level_schema;
+    for (const auto &wall: _walls) {
+        auto &wall_component = _core->registry.get<components::fields::Wall>(wall.entity);
+        // clang-format off
+        json[names[types::walls]].push_back({
+            {names[types::wall], assets::wall_type_to_name[wall_component.type]},
+            {names[types::between], {
+                _core->registry.get<components::fields::MapPosition>(wall_component.field1).x,
+                _core->registry.get<components::fields::MapPosition>(wall_component.field1).y,
+                _core->registry.get<components::fields::MapPosition>(wall_component.field2).x,
+                _core->registry.get<components::fields::MapPosition>(wall_component.field2).y
+            }}
+        });
+        // clang-format on
+    }
+}

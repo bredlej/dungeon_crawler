@@ -16,6 +16,11 @@ nlohmann::json LevelParser::parse_json(const nlohmann::json &json) {
     return json;
 }
 
+void LevelParser::save(const std::string &path, const nlohmann::json &json) {
+    std::ofstream file(path.c_str());
+    file << json.dump(4);
+}
+
 static inline void validate_definition_size_xy(const nlohmann::json &json) {
     if (!json.contains(names[types::size_x])) {
         throw LevelParserException("Missing `size_x` definition.");
@@ -98,7 +103,7 @@ static inline void validate_definition_player_spawn(const nlohmann::json &json) 
             }
         }
         std::string direction = json[names[types::player_spawn]][names[types::direction]];
-        if (direction_names.find(direction) == direction_names.end()) {
+        if (name_to_direction.find(direction) == name_to_direction.end()) {
             std::ostringstream stringStream;
             stringStream << "Wrong value [" << direction << "] defined for `player_spawn.direction` - Must be one of [NORTH, EAST, WEST, SOUTH].";
             throw LevelParserException(stringStream.str());

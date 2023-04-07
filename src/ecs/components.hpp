@@ -46,7 +46,7 @@ namespace components {
             bool is_visible;
         };
         struct Walkability {
-            bool is_walkable;
+            bool walkable;
         };
         struct InFovOfEntity {
             entt::entity entity;
