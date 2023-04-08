@@ -12,6 +12,7 @@
 
 class Level {
 public:
+    explicit Level(std::shared_ptr<Core> core) : _core{core}, tile_map{core}, wall_map{core} {};
     explicit Level(std::shared_ptr<Core> core, TileMap &&tile_map) : _core{core}, tile_map(std::move(tile_map)), wall_map(core) {
         wall_map.initialize(this->tile_map);
     }

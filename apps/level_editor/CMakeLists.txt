@@ -9,7 +9,9 @@ set(EDITOR_SOURCE_FILES
         editor_application.cpp
         ./views/main_view.cpp
         ./views/map_view.cpp
-        ./views/components/main_menu.cpp)
+        ./views/components/main_menu.cpp
+        ./views/components/level_list.cpp
+        ./views/components/entity_details.cpp)
 set(EDITOR_INCLUDE_DIRS
         ${PROJECT_SOURCE_DIR}/apps/level_editor
         ${PROJECT_SOURCE_DIR}/apps/level_editor/views

@@ -4,11 +4,27 @@
 
 #ifndef DUNGEON_CRAWLER_EVENTS_HPP
 #define DUNGEON_CRAWLER_EVENTS_HPP
-enum class EditMode {
-    None, Tile, Wall
-};
-struct CurrentEditMode {
-    EditMode edit_mode;
-};
-struct ChangeEditMode {EditMode edit_mode;};
+#include <filesystem>
+namespace editor {
+    enum class EditMode {
+        None,
+        Tile,
+        Wall
+    };
+    struct CurrentEditMode {
+        EditMode edit_mode;
+    };
+    struct ChangeEditMode {
+        EditMode edit_mode;
+    };
+    struct LoadLevel {
+        std::filesystem::path path;
+    };
+    struct SaveLevel {
+        std::string path;
+    };
+    struct EntitySelected {
+        entt::entity entity;
+    };
+}// namespace editor
 #endif//DUNGEON_CRAWLER_EVENTS_HPP

@@ -82,7 +82,7 @@ void DungeonUI::_render_encounter_chance() {
         ImGui::End();
         return;
     }
-    auto encounter_chance = _core->registry.ctx().find<components::values::EncounterChance>()->fraction;
+    auto encounter_chance = _core->registry.ctx().find<components::values::EncounterChance>()->chance;
     if (encounter_chance < 0.6) {
         ImGui::PushStyleColor(ImGuiCol_PlotHistogram, ImVec4(static_cast<float>(palette::green.r)/255.0f, static_cast<float>(palette::green.g)/255.0f, static_cast<float>(palette::green.b)/255.0f, 1));
     }

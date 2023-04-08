@@ -84,7 +84,7 @@ void DungeonActions::_on_movement(const events::dungeon::Movement &movement) {
     auto *tile_encounter_chance = _core->registry.try_get<components::values::EncounterChance>(_tile_map->get_at(new_position.x, new_position.y));
     if (tile_encounter_chance) {
         auto encounter_chance = _core->registry.ctx().find<components::values::EncounterChance>();
-        _core->dispatcher.enqueue<events::dungeon::EncounterChanceChange>(encounter_chance->fraction + tile_encounter_chance->fraction);
+        _core->dispatcher.enqueue<events::dungeon::EncounterChanceChange>(encounter_chance->chance + tile_encounter_chance->chance);
     }
     if (_core->registry.ctx().contains<components::values::Encounter>()) {
         _core->registry.ctx().erase<components::values::Encounter>();

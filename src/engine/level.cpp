@@ -4,6 +4,7 @@
 #include <level.hpp>
 
 void Level::load(const std::string &path) {
+    clear();
     auto json = LevelParser::parse(path);
     tile_map.from_json(json);
     wall_map.from_json(tile_map, json);
@@ -14,7 +15,6 @@ void Level::load(const std::string &path) {
             position.x = json[names[types::player_spawn]][names[types::x]];
             position.y = json[names[types::player_spawn]][names[types::y]];
         });
-
     }
 }
 
@@ -28,6 +28,7 @@ void Level::clear() {
     }
     tile_map._tiles.clear();
 }
+
 void Level::save(const std::string &path) {
     nlohmann::json json;
     tile_map.to_json(json);

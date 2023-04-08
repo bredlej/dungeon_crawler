@@ -27,8 +27,8 @@ constexpr auto kDEFAULT_MAP_SIZE = 20;
 
 class TileMap {
 public:
-    explicit TileMap(std::shared_ptr<Core> &core) : _core(std::move(core)), _width{kDEFAULT_MAP_SIZE}, _height{kDEFAULT_MAP_SIZE}, _tiles{std::vector<Tile>(kDEFAULT_MAP_SIZE * kDEFAULT_MAP_SIZE)} {_initialize();};
-    explicit TileMap(std::shared_ptr<Core> &core, uint32_t width, uint32_t height) : _core(core), _width{width}, _height{height}, _tiles{std::vector<Tile>(width * height)} {_initialize();};
+    explicit TileMap(std::shared_ptr<Core> core) : _core(core), _width{kDEFAULT_MAP_SIZE}, _height{kDEFAULT_MAP_SIZE}, _tiles{std::vector<Tile>(kDEFAULT_MAP_SIZE * kDEFAULT_MAP_SIZE)} {_initialize();};
+    explicit TileMap(std::shared_ptr<Core> core, uint32_t width, uint32_t height) : _core(core), _width{width}, _height{height}, _tiles{std::vector<Tile>(width * height)} {_initialize();};
     TileMap(const TileMap &other) noexcept = delete;
     TileMap(TileMap &other) noexcept = delete;
     TileMap(TileMap &&other) noexcept = default;

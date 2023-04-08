@@ -4,36 +4,57 @@
 #include <map_view.hpp>
 
 void MapView::render() {
+    using namespace editor;
     ClearBackground(BLACK);
-
-    //display a grid of 10x10 squares without filling them
-    for (int x = 0; x < _grid_size.y; x++) {
-        for (int y = 0; y < _grid_size.x; y++) {
-            DrawRectangleLines(x * _spacing + _offset.x, y * _spacing+ _offset.y, _spacing, _spacing, GRAY);
-            switch (_core->registry.ctx().find<CurrentEditMode>()->edit_mode) {
-                case EditMode::Tile:
-                    if (CheckCollisionPointRec(GetMousePosition(), {x * _spacing + _offset.x, y * _spacing + _offset.y, _spacing, _spacing})) {
-                            DrawRectangle(x * _spacing + _offset.x, y * _spacing + _offset.y, _spacing, _spacing, RED);
-                    }
-                    break;
-                case EditMode::Wall:
-                    if (CheckCollisionPointRec(GetMousePosition(), {x * _spacing + _offset.x, y * _spacing + _offset.y, _spacing, _spacing})) {
-                            DrawRectangle(x * _spacing + _offset.x, y * _spacing + _offset.y, _spacing, _spacing, BLUE);
-                    }
-                    break;
-                default:
-                    break;
+    for (const auto tile: _level.tile_map._tiles) {
+        components::fields::MapPosition position = _core->registry.get<components::fields::MapPosition>(tile.entity);
+        if (_core->registry.any_of<components::fields::Floor>(tile.entity)) {
+            components::fields::Floor floor = _core->registry.get<components::fields::Floor>(tile.entity);
+            if (floor.type == FloorType::RUINS_01) {
+                DrawRectangle(position.x * _spacing + _offset.x, position.y * _spacing + _offset.y, _spacing, _spacing, ORANGE);
+            }
+            else {
+                DrawRectangle(position.x * _spacing + _offset.x, position.y * _spacing + _offset.y, _spacing, _spacing, YELLOW);
             }
         }
-    }
-    // Draw circles on the grid where lines intersect
-    for (int i = 0; i < _grid_size.y + 1; i++) {
-        for (int j = 0; j < _grid_size.x + 1; j++) {
-            DrawCircleLines(i * _spacing + _offset.x, j * _spacing + _offset.y, 3.0f, RED);
+        switch (_core->registry.ctx().find<CurrentEditMode>()->edit_mode) {
+            case EditMode::None:
+                break;
+            case EditMode::Tile:
+                if (CheckCollisionPointRec(GetMousePosition(), {position.x * _spacing + _offset.x, position.y * _spacing + _offset.y, _spacing, _spacing})) {
+                    DrawRectangle(position.x * _spacing + _offset.x, position.y * _spacing + _offset.y, _spacing, _spacing, RED);
+                    if (_level.tile_map.get_at(position.x, position.y) != entt::null) {
+                        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+                            _core->registry.ctx().erase<EntitySelected>();
+                            _core->registry.ctx().emplace<editor::EntitySelected>(_level.tile_map.get_at(position.x, position.y));
+                        }
+                    }
+
+                }
+                break;
+            case EditMode::Wall:
+                if (CheckCollisionPointRec(GetMousePosition(), {position.x * _spacing + _offset.x, position.y * _spacing + _offset.y, _spacing, _spacing})) {
+                    DrawRectangle(position.x * _spacing + _offset.x, position.y * _spacing + _offset.y, _spacing, _spacing, BLUE);
+                }
+                break;
+            default:
+                break;
         }
     }
 }
 
+void MapView::set_edit_mode(ChangeEditMode change_edit_mode) {
+    _core->registry.ctx().erase<CurrentEditMode>();
+    _core->registry.ctx().emplace<CurrentEditMode>(change_edit_mode.edit_mode);
+}
+void MapView::load_level(LoadLevel level) {
+    _core->registry.ctx().erase<CurrentEditMode>();
+    _core->registry.ctx().emplace<CurrentEditMode>(EditMode::None);
+    _level.load(level.path);
+}
 void MapView::update() {
 
+}
+void MapView::save_level(const SaveLevel& level) {
+    _level.save(level.path);
 }

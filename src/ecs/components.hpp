@@ -19,7 +19,7 @@ namespace components {
     }
     namespace values {
         struct EncounterChance {
-            float fraction;
+            float chance;
         };
         struct Encounter {};
     }
