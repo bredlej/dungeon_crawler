@@ -17,6 +17,13 @@ namespace editor {
     struct ChangeEditMode {
         EditMode edit_mode;
     };
+    struct RefreshLevels {};
+    struct ShowError {
+        std::string message;
+    };
+    struct LevelFileName {
+        std::string name;
+    };
     struct LoadLevel {
         std::filesystem::path path;
     };

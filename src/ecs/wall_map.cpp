@@ -75,6 +75,7 @@ void WallMap::from_json(const TileMap &tile_map, const nlohmann::json &json) {
 
 void WallMap::to_json(nlohmann::json &json) {
     using namespace level_schema;
+    json[names[types::walls]] = nlohmann::json::array();
     for (const auto &wall: _walls) {
         auto &wall_component = _core->registry.get<components::fields::Wall>(wall.entity);
         // clang-format off

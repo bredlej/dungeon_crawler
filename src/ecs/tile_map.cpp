@@ -40,8 +40,7 @@ void TileMap::from_json(nlohmann::json &json) {
                     _core->registry.emplace<components::fields::Floor>(tile.entity, assets::name_to_floor_type[content[names[level_schema::types::floor]]]);
                     if (content.contains(names[level_schema::types::walkable])) {
                         _core->registry.emplace<components::fields::Walkability>(tile.entity, content[names[level_schema::types::walkable]]);
-                    }
-                    else {
+                    } else {
                         _core->registry.emplace<components::fields::Walkability>(tile.entity, true);
                     }
                 }
@@ -50,7 +49,7 @@ void TileMap::from_json(nlohmann::json &json) {
                 }
             }
         } else {
-            _core->registry.emplace<components::fields::Walkability>(tile.entity, true);
+            _core->registry.emplace<components::fields::Walkability>(tile.entity, false);
         }
         _tiles.emplace_back(tile);
         index += 1;
@@ -65,12 +64,12 @@ void TileMap::to_json(nlohmann::json &json) {
     for (auto y = 0; y < _height; y++) {
         for (auto x = 0; x < _width; x++) {
             auto tile = get_at(x, y);
+            json[names[types::tiles]].emplace_back();
+            auto &tile_contents = json[names[types::tiles]].back();
+            tile_contents = nlohmann::json::array();
+            std::vector<nlohmann::json> contents;
             if (tile != entt::null) {
-                json[names[types::tiles]].emplace_back();
-                auto &tile_contents = json[names[types::tiles]].back();
-                tile_contents = nlohmann::json::array();
                 if (_core->registry.any_of<components::fields::Floor>(tile)) {
-                    std::vector<nlohmann::json> contents;
                     auto json_floor = nlohmann::json::object();
                     auto &floor = _core->registry.get<components::fields::Floor>(tile);
                     json_floor[names[types::floor]] = assets::floor_type_to_name[floor.type];
@@ -78,11 +77,14 @@ void TileMap::to_json(nlohmann::json &json) {
                         auto &walkability = _core->registry.get<components::fields::Walkability>(tile);
                         json_floor[names[types::walkable]] = walkability.walkable;
                     }
-                    json_floor[names[types::encounter_chance]] = _core->registry.get<components::values::EncounterChance>(tile).chance;
+                    components::values::EncounterChance *encounter_chance = _core->registry.try_get<components::values::EncounterChance>(tile);
+                    if (encounter_chance) {
+                        json_floor[names[types::encounter_chance]] = fmt::format("{:.2f}", encounter_chance->chance);
+                    }
                     contents.emplace_back(json_floor);
-                    tile_contents=contents;
                 }
             }
+            tile_contents = contents;
         }
     }
 }
@@ -99,19 +101,19 @@ entt::entity TileMap::get_at(int32_t x, int32_t y) const {
 
 std::vector<NeighbourTile> TileMap::get_neighbours_of(int32_t x, int32_t y) const {
     std::vector<NeighbourTile> result;
-    entt::entity neighbour = get_at(x-1, y);
+    entt::entity neighbour = get_at(x - 1, y);
     if (neighbour != entt::null) {
         result.emplace_back(NeighbourTile{neighbour, WorldDirection::WEST});
     }
-    neighbour = get_at(x+1, y);
+    neighbour = get_at(x + 1, y);
     if (neighbour != entt::null) {
         result.emplace_back(NeighbourTile{neighbour, WorldDirection::EAST});
     }
-    neighbour = get_at(x, y-1);
+    neighbour = get_at(x, y - 1);
     if (neighbour != entt::null) {
         result.emplace_back(NeighbourTile{neighbour, WorldDirection::NORTH});
     }
-    neighbour = get_at(x, y+1);
+    neighbour = get_at(x, y + 1);
     if (neighbour != entt::null) {
         result.emplace_back(NeighbourTile{neighbour, WorldDirection::SOUTH});
     }

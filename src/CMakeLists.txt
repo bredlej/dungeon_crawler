@@ -18,5 +18,5 @@ set(SOURCE_FILES
         views/actions/dungeon_actions.cpp)
 
 add_library(dungeon_crawler_application ${SOURCE_FILES})
-target_link_libraries(dungeon_crawler_application raylib EnTT nlohmann_json::nlohmann_json imgui rlimgui)
+target_link_libraries(dungeon_crawler_application raylib EnTT nlohmann_json::nlohmann_json imgui rlimgui fmt::fmt)
 target_include_directories(dungeon_crawler_application PUBLIC ${INCLUDE_DIRS})

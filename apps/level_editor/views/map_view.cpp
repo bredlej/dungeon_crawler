@@ -8,6 +8,9 @@ void MapView::render() {
     ClearBackground(BLACK);
     for (const auto tile: _level.tile_map._tiles) {
         components::fields::MapPosition position = _core->registry.get<components::fields::MapPosition>(tile.entity);
+        if (tile.entity == entt::null) {
+            DrawRectangle(position.x * _spacing + _offset.x, position.y * _spacing + _offset.y, _spacing, _spacing, GRAY);
+        }
         if (_core->registry.any_of<components::fields::Floor>(tile.entity)) {
             components::fields::Floor floor = _core->registry.get<components::fields::Floor>(tile.entity);
             if (floor.type == FloorType::RUINS_01) {
@@ -50,11 +53,19 @@ void MapView::set_edit_mode(ChangeEditMode change_edit_mode) {
 void MapView::load_level(LoadLevel level) {
     _core->registry.ctx().erase<CurrentEditMode>();
     _core->registry.ctx().emplace<CurrentEditMode>(EditMode::None);
+    _core->registry.ctx().erase<LevelFileName>();
+    _core->registry.ctx().emplace<LevelFileName>(level.path.filename());
     _level.load(level.path);
 }
 void MapView::update() {
 
 }
 void MapView::save_level(const SaveLevel& level) {
-    _level.save(level.path);
+    try {
+        _level.save("../../assets/levels/" + level.path);
+    }
+    catch(const std::exception& e) {
+        std::cerr << e.what() << '\n';
+    }
+    _core->dispatcher.enqueue<RefreshLevels>();
 }

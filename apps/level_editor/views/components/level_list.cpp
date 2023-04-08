@@ -14,6 +14,7 @@ void LevelList::render() {
 }
 
 void LevelList::find_levels(const std::string &path) {
+    _levels.clear();
     try {
         for (const auto &entry : std::filesystem::directory_iterator(path)) {
             if (entry.is_directory()) {

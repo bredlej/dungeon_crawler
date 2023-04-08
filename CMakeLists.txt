@@ -9,6 +9,8 @@ include(cmake/CPM.cmake)
 include(cmake/fetch-json.cmake)
 include(cmake/fetch-googletest.cmake)
 include(cmake/fetch-entt.cmake)
+include(cmake/fetch-fmt.cmake)
+
 enable_testing()
 add_subdirectory(extern)
 add_subdirectory(src)

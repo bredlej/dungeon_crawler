@@ -13,6 +13,7 @@
 #include <ecs/components.hpp>
 #include <random>
 #include <utility>
+#include <fmt/format.h>
 
 struct Tile {
     entt::entity entity = entt::null;

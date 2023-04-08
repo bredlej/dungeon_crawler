@@ -23,7 +23,7 @@ void MainView::render() {
     if (ImGui::RadioButton("Wall", edit_mode == EditMode::Wall)) {
         _core->dispatcher.enqueue<ChangeEditMode>(EditMode::Wall);
     }
-    static char _save_as[256] = "level_1.json";
+
     ImGui::InputText("", _save_as, 256);
     ImGui::SameLine();
     if (ImGui::Button("Save")) {
@@ -38,5 +38,14 @@ void MainView::update() {
 }
 
 void MainView::_initialize() {
+    _core->registry.ctx().emplace<LevelFileName>("new_level.json");
+    _refresh_levels();
+}
+
+void MainView::_refresh_levels() {
     _level_list.find_levels("../../assets/levels");
+}
+
+void MainView::_change_level_name(const LoadLevel &load_level) {
+    std::strcpy(_save_as, load_level.path.filename().string().c_str());
 }
