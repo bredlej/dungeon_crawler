@@ -6,7 +6,12 @@
 void MapView::render() {
     using namespace editor;
     ClearBackground(BLACK);
-    for (const auto tile: _level.tile_map._tiles) {
+    for (uint32_t y = 0; y < _level.tile_map._height; y++) {
+        for (uint32_t x = 0; x < _level.tile_map._width; x++) {
+            DrawRectangleLines(x * _spacing + _offset.x, y * _spacing + _offset.y, _spacing, _spacing, GRAY);
+        }
+    }
+    for (const auto &tile: _level.tile_map._tiles) {
         components::fields::MapPosition position = _core->registry.get<components::fields::MapPosition>(tile.entity);
         if (tile.entity == entt::null) {
             DrawRectangle(position.x * _spacing + _offset.x, position.y * _spacing + _offset.y, _spacing, _spacing, GRAY);

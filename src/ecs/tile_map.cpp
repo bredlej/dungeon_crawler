@@ -25,7 +25,9 @@ void TileMap::from_json(nlohmann::json &json) {
     using namespace level_schema;
     _tiles.clear();
     int size_x = json[names[types::size_x]];
-    int size_y = json[names[types::size_x]];
+    int size_y = json[names[types::size_y]];
+    _width = size_x;
+    _height = size_y;
     auto tiles = json[names[types::tiles]];
     int index = 0;
     for (const auto &tile_contents: tiles) {
@@ -79,7 +81,7 @@ void TileMap::to_json(nlohmann::json &json) {
                     }
                     components::values::EncounterChance *encounter_chance = _core->registry.try_get<components::values::EncounterChance>(tile);
                     if (encounter_chance) {
-                        json_floor[names[types::encounter_chance]] = fmt::format("{:.2f}", encounter_chance->chance);
+                        json_floor[names[types::encounter_chance]] = encounter_chance->chance;//fmt::format("{:.2f}", encounter_chance->chance);
                     }
                     contents.emplace_back(json_floor);
                 }
