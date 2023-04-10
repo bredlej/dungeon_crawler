@@ -3,20 +3,20 @@
 //
 #ifndef DUNGEON_CRAWLER_APPLICATION_HPP
 #define DUNGEON_CRAWLER_APPLICATION_HPP
+#include <colors.hpp>
 #include <imgui/imgui.h>
 #include <imgui/rlImGui.h>
-#include <colors.hpp>
 extern "C" {
 #include <raylib.h>
 }
-#include <engine/assets.hpp>
-#include <engine/core.hpp>
 #include "views/dungeon_view.hpp"
 #include "views/main_menu.hpp"
+#include <concepts>
 #include <cstdint>
 #include <cstdio>
+#include <engine/assets.hpp>
+#include <engine/core.hpp>
 #include <string_view>
-#include <unordered_map>
 
 struct Config {
     static constexpr std::string_view title = "Dungeon Crawler";
@@ -27,14 +27,16 @@ struct Config {
 };
 
 enum class ViewMode {
-    MainMenu, Dungeon
+    MainMenu,
+    Dungeon
 };
-
-using ViewMap = std::unordered_map<ViewMode, std::unique_ptr<UIView>>;
 
 class Application {
 public:
-    explicit Application() noexcept : _view_mode{ViewMode::Dungeon}, _core{std::make_shared<Core>()} {};
+    explicit Application() noexcept : _view_mode{ViewMode::Dungeon}, _core{std::make_shared<Core>()} {
+        dungeon_view = std::make_unique<DungeonView>(_core, Level(_core, TileMap(_core, 20, 20)));
+        main_menu_view = std::make_unique<MainMenu>(_core);
+    };
     Application(const Application &) noexcept = delete;
     Application(Application &) noexcept = delete;
     Application(Application &&) noexcept = delete;
@@ -42,10 +44,12 @@ public:
     Application &operator=(const Application &&) noexcept = delete;
 
     void run();
+
 private:
     ViewMode _view_mode;
-    ViewMap _views;
     std::shared_ptr<Core> _core;
-    void _toggle_fullscreen();
+    std::unique_ptr<DungeonView> dungeon_view;
+    std::unique_ptr<MainMenu> main_menu_view;
+    static void _toggle_fullscreen();
 };
 #endif//DUNGEON_CRAWLER_APPLICATION_HPP

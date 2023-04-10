@@ -38,7 +38,7 @@ struct POVField {
     std::array<entt::entity, static_cast<size_t>(T::SIZE)> field;
 };
 
-class DungeonView : public UIView {
+class DungeonView : public UIView<DungeonView> {
 public:
     explicit DungeonView(std::shared_ptr<Core> &core, Level &&level) : UIView{core}, _ui{core}, _render_texture_pov{LoadRenderTexture(320, 240)}, _render_texture_gui(LoadRenderTexture(120, 120)), _level{std::move(level)} {
         _initialize();

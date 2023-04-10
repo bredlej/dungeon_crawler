@@ -18,7 +18,7 @@ extern "C" {
 #include <map_view.hpp>
 #include <memory>
 
-class MainView : public UIView {
+class MainView : public UIView<MainView> {
 public:
     explicit MainView(std::shared_ptr<Core> &core) : UIView(core),
                                                      _level_list(core),

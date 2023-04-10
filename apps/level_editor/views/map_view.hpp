@@ -14,7 +14,7 @@
 #include <views/colors.hpp>
 using namespace editor;
 
-class MapView : public UIView {
+class MapView : public UIView<MapView> {
 public:
     explicit MapView(std::shared_ptr<Core> core, Rectangle dimension) noexcept : UIView{core}, _dimension(dimension), _level{core} {
         texture = LoadRenderTexture(static_cast<int>(dimension.width), static_cast<int>(dimension.height));

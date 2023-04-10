@@ -32,11 +32,16 @@ private:
     std::unique_ptr<assets::Assets> _assets{nullptr};
 };
 
+template <typename T>
 class UIView {
 public:
     explicit UIView(std::shared_ptr<Core> &core) : _core{core} {};
-    virtual void render() = 0;
-    virtual void update() = 0;
+    virtual void render(){
+        static_cast<T*>(this)->render();
+    };
+    virtual void update() {
+        static_cast<T*>(this)->update();
+    }
     virtual ~UIView() = default;
 
 protected:
