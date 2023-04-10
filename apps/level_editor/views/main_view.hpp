@@ -8,7 +8,9 @@ extern "C" {
 #include <raylib.h>
 };
 #include <core.hpp>
+#include <edit_mode.hpp>
 #include <entity_details.hpp>
+#include <file_operations.hpp>
 #include <imgui/imgui.h>
 #include <imgui/rlImGui.h>
 #include <level_list.hpp>
@@ -18,9 +20,12 @@ extern "C" {
 
 class MainView : public UIView {
 public:
-    explicit MainView(std::shared_ptr<Core> &core) : UIView(core), _level_list(core), _entity_details{core} {
+    explicit MainView(std::shared_ptr<Core> &core) : UIView(core),
+                                                     _level_list(core),
+                                                     _entity_details{core},
+                                                     _edit_mode{core},
+                                                     _file_operations{core} {
         _core->dispatcher.sink<RefreshLevels>().connect<&MainView::_refresh_levels>(this);
-        _core->dispatcher.sink<LoadLevel>().connect<&MainView::_change_level_name>(this);
         _initialize();
     };
     void render() override;
@@ -30,11 +35,11 @@ public:
 private:
     Rectangle _dimension{0, 0, 1024, 768};
     MainMenu _main_menu;
+    FileOperations _file_operations;
     LevelList _level_list;
     EntityDetails _entity_details;
+    EditModeSelector _edit_mode;
     void _initialize();
     void _refresh_levels();
-    void _change_level_name(const LoadLevel &load_level);
-    char _save_as[256] = "level_1.json";
 };
 #endif//DUNGEON_CRAWLER_MAIN_VIEW_HPP

@@ -29,6 +29,7 @@ public:
     void find_levels(const std::string &path);
 
 private:
+    bool _visible{true};
     std::shared_ptr<Core> _core;
     std::vector<std::filesystem::path> _levels;
 };

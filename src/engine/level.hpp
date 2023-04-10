@@ -21,7 +21,7 @@ public:
     Level &operator=(const Level &) = delete;
     Level &operator=(Level &&) = delete;
     ~Level() = default;
-
+    void new_level(int width, int height);
     void load(const std::string &path);
     void clear();
     void save(const std::string &path);

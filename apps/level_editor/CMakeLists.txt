@@ -7,9 +7,12 @@
 set(EDITOR_SOURCE_FILES
         level_editor.cpp
         editor_application.cpp
+        editor_assets.cpp
         ./views/main_view.cpp
         ./views/map_view.cpp
         ./views/components/main_menu.cpp
+        ./views/components/edit_mode.cpp
+        ./views/components/file_operations.cpp
         ./views/components/level_list.cpp
         ./views/components/entity_details.cpp)
 set(EDITOR_INCLUDE_DIRS

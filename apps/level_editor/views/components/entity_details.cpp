@@ -40,7 +40,7 @@ void EntityDetails::render_component<components::fields::Field>(entt::entity ent
 }
 
 void EntityDetails::render() {
-    if (ImGui::CollapsingHeader("Entity Details")) {
+    if (ImGui::CollapsingHeader("Entity Details"), &_visible, ImGuiTreeNodeFlags_DefaultOpen) {
         if (_core->registry.ctx().contains<editor::EntitySelected>()) {
             entt::entity entity = _core->registry.ctx().find<editor::EntitySelected>()->entity;
             if (_core->registry.valid(entity) && entity != entt::null) {

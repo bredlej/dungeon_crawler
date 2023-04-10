@@ -29,6 +29,11 @@ void Level::clear() {
     tile_map._tiles.clear();
 }
 
+void Level::new_level(int width, int height) {
+    clear();
+    tile_map._width = width;
+    tile_map._height = height;
+}
 void Level::save(const std::string &path) {
     nlohmann::json json;
     tile_map.to_json(json);

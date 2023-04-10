@@ -4,7 +4,7 @@
 #include <level_list.hpp>
 
 void LevelList::render() {
-    if (ImGui::CollapsingHeader("Levels")) {
+    if (ImGui::CollapsingHeader("Levels"), &_visible, ImGuiTreeNodeFlags_DefaultOpen) {
         for (const auto &level : _levels) {
             if (ImGui::Button(level.filename().c_str())) {
                 _core->dispatcher.enqueue<editor::LoadLevel>(level);

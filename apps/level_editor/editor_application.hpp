@@ -11,6 +11,7 @@ extern "C" {
 #include <main_view.hpp>
 #include <imgui/imgui.h>
 #include <imgui/rlImGui.h>
+#include <editor_assets.hpp>
 
 class EditorApplication {
 public:

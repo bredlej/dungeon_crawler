@@ -18,6 +18,7 @@ public:
     void render();
     void update();
 private:
+    bool _visible{true};
     template<typename T>
     void render_component(entt::entity entity);
     std::shared_ptr<Core> _core;

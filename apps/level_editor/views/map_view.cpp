@@ -6,49 +6,10 @@
 void MapView::render() {
     using namespace editor;
     ClearBackground(BLACK);
-    for (uint32_t y = 0; y < _level.tile_map._height; y++) {
-        for (uint32_t x = 0; x < _level.tile_map._width; x++) {
-            DrawRectangleLines(x * _spacing + _offset.x, y * _spacing + _offset.y, _spacing, _spacing, GRAY);
-        }
-    }
-    for (const auto &tile: _level.tile_map._tiles) {
-        components::fields::MapPosition position = _core->registry.get<components::fields::MapPosition>(tile.entity);
-        if (tile.entity == entt::null) {
-            DrawRectangle(position.x * _spacing + _offset.x, position.y * _spacing + _offset.y, _spacing, _spacing, GRAY);
-        }
-        if (_core->registry.any_of<components::fields::Floor>(tile.entity)) {
-            components::fields::Floor floor = _core->registry.get<components::fields::Floor>(tile.entity);
-            if (floor.type == FloorType::RUINS_01) {
-                DrawRectangle(position.x * _spacing + _offset.x, position.y * _spacing + _offset.y, _spacing, _spacing, ORANGE);
-            }
-            else {
-                DrawRectangle(position.x * _spacing + _offset.x, position.y * _spacing + _offset.y, _spacing, _spacing, YELLOW);
-            }
-        }
-        switch (_core->registry.ctx().find<CurrentEditMode>()->edit_mode) {
-            case EditMode::None:
-                break;
-            case EditMode::Tile:
-                if (CheckCollisionPointRec(GetMousePosition(), {position.x * _spacing + _offset.x, position.y * _spacing + _offset.y, _spacing, _spacing})) {
-                    DrawRectangle(position.x * _spacing + _offset.x, position.y * _spacing + _offset.y, _spacing, _spacing, RED);
-                    if (_level.tile_map.get_at(position.x, position.y) != entt::null) {
-                        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-                            _core->registry.ctx().erase<EntitySelected>();
-                            _core->registry.ctx().emplace<editor::EntitySelected>(_level.tile_map.get_at(position.x, position.y));
-                        }
-                    }
-
-                }
-                break;
-            case EditMode::Wall:
-                if (CheckCollisionPointRec(GetMousePosition(), {position.x * _spacing + _offset.x, position.y * _spacing + _offset.y, _spacing, _spacing})) {
-                    DrawRectangle(position.x * _spacing + _offset.x, position.y * _spacing + _offset.y, _spacing, _spacing, BLUE);
-                }
-                break;
-            default:
-                break;
-        }
-    }
+    _draw_grid();
+    _draw_tile_map();
+    _draw_wall_map();
+    _draw_cursor();
 }
 
 void MapView::set_edit_mode(ChangeEditMode change_edit_mode) {
@@ -63,14 +24,96 @@ void MapView::load_level(LoadLevel level) {
     _level.load(level.path);
 }
 void MapView::update() {
-
 }
-void MapView::save_level(const SaveLevel& level) {
+
+void MapView::save_level(const SaveLevel &level) {
     try {
         _level.save("../../assets/levels/" + level.path);
-    }
-    catch(const std::exception& e) {
+    } catch (const std::exception &e) {
         std::cerr << e.what() << '\n';
     }
     _core->dispatcher.enqueue<RefreshLevels>();
+}
+
+void MapView::_check_tile_collision(const int32_t x, const int32_t y) const {
+    if (CheckCollisionPointRec(GetMousePosition(), {x * _cell_size + _offset.x, y * _cell_size + _offset.y, _cell_size, _cell_size})) {
+        DrawRectangleLines(x * _cell_size + _offset.x, y * _cell_size + _offset.y, _cell_size, _cell_size, GREEN);
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            _core->registry.ctx().erase<EntitySelected>();
+            _core->registry.ctx().emplace<editor::EntitySelected>(_level.tile_map.get_at(x, y));
+        }
+    }
+}
+void MapView::_check_wall_collision(int32_t x, int32_t y) const {
+    static constexpr float divider = 5.0f;
+    if (CheckCollisionPointRec(GetMousePosition(), {x * _cell_size + _offset.x, y * _cell_size + _offset.y - (_cell_size / divider), _cell_size, 2 * (_cell_size / divider)})) {
+        DrawLine(x * _cell_size + _offset.x, y * _cell_size + _offset.y - 1, x * _cell_size + _offset.x + _cell_size, y * _cell_size + _offset.y - 1, RED);
+        DrawLine(x * _cell_size + _offset.x, y * _cell_size + _offset.y, x * _cell_size + _offset.x + _cell_size, y * _cell_size + _offset.y, RED);
+        DrawLine(x * _cell_size + _offset.x, y * _cell_size + _offset.y + 1, x * _cell_size + _offset.x + _cell_size, y * _cell_size + _offset.y + 1, RED);
+    }
+    if (CheckCollisionPointRec(GetMousePosition(), {x * _cell_size + _offset.x - (_cell_size / divider), y * _cell_size + _offset.y, 2 * (_cell_size / divider), _cell_size})) {
+        DrawLine(x * _cell_size + _offset.x - 1, y * _cell_size + _offset.y, x * _cell_size + _offset.x - 1, y * _cell_size + _offset.y + _cell_size, RED);
+        DrawLine(x * _cell_size + _offset.x, y * _cell_size + _offset.y, x * _cell_size + _offset.x, y * _cell_size + _offset.y + _cell_size, RED);
+        DrawLine(x * _cell_size + _offset.x + 1, y * _cell_size + _offset.y, x * _cell_size + _offset.x + 1, y * _cell_size + _offset.y + _cell_size, RED);
+    }
+}
+
+void MapView::new_level(NewLevel new_level) {
+    _level.clear();
+    _level.new_level(new_level.width, new_level.height);
+}
+void MapView::_draw_grid() const {
+    for (uint32_t y = 0; y < _level.tile_map._height; y++) {
+        for (uint32_t x = 0; x < _level.tile_map._width; x++) {
+            DrawRectangleLines(x * _cell_size + _offset.x, y * _cell_size + _offset.y, _cell_size, _cell_size, palette::gray);
+        }
+    }
+}
+
+void MapView::_draw_tile_map() const {
+    for (const auto &tile: _level.tile_map._tiles) {
+        components::fields::MapPosition position = _core->registry.get<components::fields::MapPosition>(tile.entity);
+        if (tile.entity == entt::null) {
+            DrawRectangle(position.x * _cell_size + _offset.x, position.y * _cell_size + _offset.y, _cell_size, _cell_size, GRAY);
+        }
+        if (_core->registry.any_of<components::fields::Floor>(tile.entity)) {
+            components::fields::Floor floor = _core->registry.get<components::fields::Floor>(tile.entity);
+            DrawTextureRec(_core->registry.ctx().find<EditorAssets>()->_textures[floor.type].get(), {0, 0, 25, 25}, {position.x * _cell_size + _offset.x, position.y * _cell_size + _offset.y}, WHITE);
+            DrawRectangleLines(position.x * _cell_size + _offset.x, position.y * _cell_size + _offset.y, _cell_size, _cell_size, palette::dark_gray);
+        }
+    }
+}
+void MapView::_draw_wall_map() const {
+    for (const auto &wall: _level.wall_map._walls) {
+        const components::fields::Wall wall_data = _core->registry.get<components::fields::Wall>(wall.entity);
+        const components::fields::MapPosition field1 = _core->registry.get<components::fields::MapPosition>(wall_data.field1);
+        const components::fields::MapPosition field2 = _core->registry.get<components::fields::MapPosition>(wall_data.field2);
+        if (field1.x < field2.x && field1.y == field2.y) {
+            DrawLine(field2.x * _cell_size + _offset.x, field2.y * _cell_size + _offset.y, field2.x * _cell_size + _offset.x, field2.y * _cell_size + _offset.y + _cell_size, palette::yellow);
+        } else if (field1.x > field2.x && field1.y == field2.y) {
+            DrawLine(field1.x * _cell_size + _offset.x, field1.y * _cell_size + _offset.y, field1.x * _cell_size + _offset.x, field1.y * _cell_size + _offset.y + _cell_size, palette::yellow);
+        } else if (field1.x == field2.x && field1.y < field2.y) {
+            DrawLine(field1.x * _cell_size + _offset.x, field2.y * _cell_size + _offset.y, field1.x * _cell_size + _offset.x + _cell_size, field2.y * _cell_size + _offset.y, palette::yellow);
+        } else if (field1.x == field2.x && field1.y > field2.y) {
+            DrawLine(field1.x * _cell_size + _offset.x, field1.y * _cell_size + _offset.y, field1.x * _cell_size + _offset.x + _cell_size, field1.y * _cell_size + _offset.y, palette::yellow);
+        }
+    }
+}
+void MapView::_draw_cursor() const {
+    for (uint32_t y = 0; y < _level.tile_map._height; y++) {
+        for (uint32_t x = 0; x < _level.tile_map._width; x++) {
+            switch (_core->registry.ctx().find<CurrentEditMode>()->edit_mode) {
+                case EditMode::None:
+                    break;
+                case EditMode::Tile:
+                    _check_tile_collision(x, y);
+                    break;
+                case EditMode::Wall:
+                    _check_wall_collision(x, y);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }

@@ -24,6 +24,10 @@ namespace editor {
     struct LevelFileName {
         std::string name;
     };
+    struct NewLevel {
+        int width;
+        int height;
+    };
     struct LoadLevel {
         std::filesystem::path path;
     };

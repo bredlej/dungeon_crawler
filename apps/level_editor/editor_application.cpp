@@ -11,6 +11,8 @@ void EditorApplication::run() const {
     core->registry.ctx().emplace<CurrentEditMode>(EditMode::None);
     MainView main_view{core};
 
+    core->registry.ctx().emplace<EditorAssets>();
+    core->registry.ctx().find<EditorAssets>()->load_textures();
     // main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {

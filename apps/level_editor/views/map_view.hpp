@@ -10,7 +10,8 @@
 #include <level.hpp>
 #include <level_parser.hpp>
 #include <filesystem>
-
+#include <editor_assets.hpp>
+#include <views/colors.hpp>
 using namespace editor;
 
 class MapView : public UIView {
@@ -18,6 +19,7 @@ public:
     explicit MapView(std::shared_ptr<Core> core, Rectangle dimension) noexcept : UIView{core}, _dimension(dimension), _level{core} {
         texture = LoadRenderTexture(static_cast<int>(dimension.width), static_cast<int>(dimension.height));
         core->dispatcher.sink<ChangeEditMode>().connect<&MapView::set_edit_mode>(this);
+        core->dispatcher.sink<NewLevel>().connect<&MapView::new_level>(this);
         core->dispatcher.sink<LoadLevel>().connect<&MapView::load_level>(this);
         core->dispatcher.sink<SaveLevel>().connect<&MapView::save_level>(this);
     }
@@ -32,14 +34,21 @@ public:
     };
     RenderTexture2D texture{};
     void set_edit_mode(ChangeEditMode change_edit_mode);
+    void new_level(NewLevel new_level);
     void load_level(LoadLevel level);
     void save_level(const SaveLevel& level);
 private:
     Rectangle _dimension{};
     Vector2 _offset{15.0f, 35.0f};
     Vector2 _grid_size{20.0f, 20.0f};
-    float _spacing{25.0f};
+    float _cell_size{25.0f};
     EditMode _edit_mode{EditMode::Wall};
     Level _level;
+    void _draw_grid() const;
+    void _draw_tile_map() const;
+    void _draw_wall_map() const;
+    void _draw_cursor() const;
+    void _check_tile_collision(int32_t x, int32_t y) const;
+    void _check_wall_collision(int32_t x, int32_t y) const;
 };
 #endif//DUNGEON_CRAWLER_MAP_VIEW_HPP
