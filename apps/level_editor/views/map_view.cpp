@@ -3,7 +3,7 @@
 //
 #include <map_view.hpp>
 
-void MapView::render() {
+void MapView::render() noexcept {
     using namespace editor;
     ClearBackground(BLACK);
     _draw_grid();
@@ -23,7 +23,7 @@ void MapView::load_level(LoadLevel level) {
     _core->registry.ctx().emplace<LevelFileName>(level.path.filename());
     _level.load(level.path);
 }
-void MapView::update() {
+void MapView::update() noexcept {
 }
 
 void MapView::save_level(const SaveLevel &level) {
@@ -86,8 +86,8 @@ void MapView::_draw_tile_map() const {
 void MapView::_draw_wall_map() const {
     for (const auto &wall: _level.wall_map._walls) {
         const components::fields::Wall wall_data = _core->registry.get<components::fields::Wall>(wall.entity);
-        const components::fields::MapPosition field1 = _core->registry.get<components::fields::MapPosition>(wall_data.field1);
-        const components::fields::MapPosition field2 = _core->registry.get<components::fields::MapPosition>(wall_data.field2);
+        const components::fields::MapPosition field1 = wall_data.field1;
+        const components::fields::MapPosition field2 = wall_data.field2;
         if (field1.x < field2.x && field1.y == field2.y) {
             DrawLine(field2.x * _cell_size + _offset.x, field2.y * _cell_size + _offset.y, field2.x * _cell_size + _offset.x, field2.y * _cell_size + _offset.y + _cell_size, palette::yellow);
         } else if (field1.x > field2.x && field1.y == field2.y) {

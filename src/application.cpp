@@ -68,7 +68,7 @@ static inline void setup_imgui_colors() {
     colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
 }
 
-void Application::_toggle_fullscreen() {
+void Application::_toggle_fullscreen() noexcept {
     if (IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT)))
     {
         if (IsWindowFullscreen())
@@ -84,7 +84,7 @@ void Application::_toggle_fullscreen() {
     }
 }
 
-void Application::run() {
+void Application::run() noexcept {
     std::printf("Dungeon crawler is running.\n");
 
     setup_imgui_colors();

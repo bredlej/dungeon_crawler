@@ -28,8 +28,8 @@ public:
         _core->dispatcher.sink<RefreshLevels>().connect<&MainView::_refresh_levels>(this);
         _initialize();
     };
-    void render() override;
-    void update() override;
+    void render() noexcept override;
+    void update() noexcept override;
     ~MainView() override = default;
 
 private:

@@ -50,14 +50,14 @@ public:
     DungeonView &operator=(const DungeonView &) noexcept = delete;
     DungeonView &operator=(const DungeonView &&) noexcept = delete;
 
-    void render() override;
-    void update() override;
+    void render() noexcept override;
+    void update() noexcept override;
 private:
-    void _initialize();
-    void _render_pov();
-    void _render_minimap();
-    void _calculate_fov();
-    void _clear();
+    void _initialize() noexcept;
+    void _render_pov() noexcept;
+    void _render_minimap() noexcept;
+    void _calculate_fov() noexcept;
+    void _clear() noexcept;
     POVField<assets::dungeon_view::POVFloor> _player_fov_tile;
     POVField<assets::dungeon_view::POVWall> _player_fov_wall;
     RenderTexture _render_texture_pov;

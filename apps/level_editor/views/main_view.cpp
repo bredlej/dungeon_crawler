@@ -2,7 +2,7 @@
 // Created by Patryk Szczypień on 05/04/2023.
 //
 #include <main_view.hpp>
-void MainView::render() {
+void MainView::render() noexcept {
     using namespace editor;
     MainMenu::render();
     _core->registry.ctx().find<MapView>()->render();
@@ -15,7 +15,7 @@ void MainView::render() {
 
     ImGui::End();
 }
-void MainView::update() {
+void MainView::update() noexcept {
 }
 
 void MainView::_initialize() {

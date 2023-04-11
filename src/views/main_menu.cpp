@@ -3,11 +3,11 @@
 //
 
 #include "main_menu.hpp"
-void MainMenu::render() {
+void MainMenu::render() noexcept {
     BeginDrawing();
     ClearBackground(BLACK);
     DrawText("Main Menu", 10, 10, 42, WHITE);
     EndDrawing();
 }
-void MainMenu::update() {
+void MainMenu::update() noexcept {
 }

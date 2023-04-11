@@ -14,8 +14,8 @@ extern "C" {
 class MainMenu : public UIView<MainMenu> {
 public:
     explicit MainMenu(std::shared_ptr<Core> core) : UIView {core} {};
-    void render() override;
-    void update() override;
+    void render() noexcept override;
+    void update() noexcept override;
 private:
 };
 

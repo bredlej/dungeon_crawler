@@ -43,13 +43,13 @@ public:
     Application &operator=(const Application &) noexcept = delete;
     Application &operator=(const Application &&) noexcept = delete;
 
-    void run();
+    void run() noexcept;
 
 private:
     ViewMode _view_mode;
     std::shared_ptr<Core> _core;
     std::unique_ptr<DungeonView> dungeon_view;
     std::unique_ptr<MainMenu> main_menu_view;
-    static void _toggle_fullscreen();
+    static void _toggle_fullscreen() noexcept;
 };
 #endif//DUNGEON_CRAWLER_APPLICATION_HPP

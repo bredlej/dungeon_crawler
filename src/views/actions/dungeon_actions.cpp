@@ -29,9 +29,10 @@ static inline void handle_turn_direction (entt::registry &registry, WorldDirecti
 }
 
 static inline void change_position(ModXY mod, entt::registry &registry, const TileMap *tile_map, const WallMap *wall_map, components::fields::MapPosition &position) {
+    using namespace components::fields;
     entt::entity destination = tile_map->get_at(position.x + mod.x, position.y + mod.y);
     if (registry.valid(destination) && registry.get<components::fields::Walkability>(destination).walkable) {
-        entt::entity wall = wall_map->get_between(tile_map->get_at(position.x, position.y), destination);
+        entt::entity wall = wall_map->get_between(MapPosition{position.x, position.y}, MapPosition{position.x + mod.x, position.y + mod.y});
         if (wall == entt::null || registry.get<components::fields::Walkability>(wall).walkable) {
             components::fields::MapPosition destination_position = registry.get<components::fields::MapPosition>(destination);
             position.x = destination_position.x;

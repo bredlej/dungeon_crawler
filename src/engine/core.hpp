@@ -36,10 +36,10 @@ template <typename T>
 class UIView {
 public:
     explicit UIView(std::shared_ptr<Core> &core) : _core{core} {};
-    virtual void render(){
+    virtual void render() noexcept{
         static_cast<T*>(this)->render();
     };
-    virtual void update() {
+    virtual void update() noexcept {
         static_cast<T*>(this)->update();
     }
     virtual ~UIView() = default;

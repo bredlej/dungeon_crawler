@@ -27,8 +27,8 @@ public:
     MapView(MapView &&) noexcept = delete;
     MapView &operator=(const MapView &) noexcept = delete;
     MapView &operator=(MapView &&) noexcept = delete;
-    void render() override;
-    void update() override;
+    void render() noexcept override;
+    void update() noexcept override;
     ~MapView() override {
         UnloadTexture(texture.texture);
     };
