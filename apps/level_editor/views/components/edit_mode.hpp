@@ -21,5 +21,7 @@ public:
 private:
     bool _visible{true};
     std::shared_ptr<Core> _core;
+    template <editor::EditMode T>
+    void _render_edit_mode_tools();
 };
 #endif//DUNGEON_CRAWLER_EDIT_MODE_HPP

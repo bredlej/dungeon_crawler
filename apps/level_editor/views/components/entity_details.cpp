@@ -31,10 +31,19 @@ void EntityDetails::render_component<components::values::EncounterChance>(entt::
 }
 
 template<>
+void EntityDetails::render_component<components::fields::Walkability>(entt::entity entity) {
+    components::fields::Walkability *walkability = _core->registry.try_get<components::fields::Walkability>(entity);
+    if (walkability) {
+        ImGui::Checkbox("Walkable", &walkability->walkable);
+    }
+}
+
+template<>
 void EntityDetails::render_component<components::fields::Field>(entt::entity entity) {
     components::fields::Field *field = _core->registry.try_get<components::fields::Field>(entity);
     if (field) {
         render_component<components::fields::Floor>(entity);
+        render_component<components::fields::Walkability>(entity);
         render_component<components::values::EncounterChance>(entity);
     }
 }

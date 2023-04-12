@@ -21,6 +21,7 @@ void EditorApplication::run() const {
         BeginDrawing();
         ClearBackground(BLACK);
         rlImGuiBegin();
+        main_view.update();
         main_view.render();
         rlImGuiEnd();
         EndDrawing();

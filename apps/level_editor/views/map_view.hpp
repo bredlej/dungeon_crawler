@@ -41,6 +41,8 @@ private:
     Rectangle _dimension{};
     Vector2 _offset{15.0f, 35.0f};
     Vector2 _grid_size{20.0f, 20.0f};
+    Vector2 _mouse_drag_start_position{};
+    Vector2 _mouse_drag_end_position{};
     float _cell_size{25.0f};
     EditMode _edit_mode{EditMode::Wall};
     Level _level;

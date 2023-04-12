@@ -24,6 +24,19 @@ void MapView::load_level(LoadLevel level) {
     _level.load(level.path);
 }
 void MapView::update() noexcept {
+    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+        if (_mouse_drag_start_position.x == 0 && _mouse_drag_start_position.y == 0)
+        {
+            _mouse_drag_start_position = GetMousePosition();
+        }
+        else
+        {
+            _mouse_drag_end_position = GetMousePosition();
+        }
+    }
+    else {
+        _mouse_drag_start_position = _mouse_drag_end_position = (Vector2){0, 0};
+    }
 }
 
 void MapView::save_level(const SaveLevel &level) {
@@ -63,10 +76,33 @@ void MapView::new_level(NewLevel new_level) {
     _level.new_level(new_level.width, new_level.height);
 }
 void MapView::_draw_grid() const {
+    static int start_selection_x = 0;
+    static int start_selection_y = 0;
+    static int end_selection_x = 0;
+    static int end_selection_y = 0;
     for (uint32_t y = 0; y < _level.tile_map._height; y++) {
         for (uint32_t x = 0; x < _level.tile_map._width; x++) {
             DrawRectangleLines(x * _cell_size + _offset.x, y * _cell_size + _offset.y, _cell_size, _cell_size, palette::gray);
+            if (_mouse_drag_start_position.x >= x * _cell_size + _offset.x && _mouse_drag_start_position.x <= x * _cell_size + _offset.x + _cell_size && _mouse_drag_start_position.y >= y * _cell_size + _offset.y && _mouse_drag_start_position.y <= y * _cell_size + _offset.y + _cell_size) {
+                start_selection_x = x;
+                start_selection_y = y;
+                std::printf("(%d, %d)\n",x,y);
+            }
+            if (_mouse_drag_end_position.x >= x * _cell_size + _offset.x && _mouse_drag_end_position.x <= x * _cell_size + _offset.x + _cell_size && _mouse_drag_end_position.y >= y * _cell_size + _offset.y && _mouse_drag_end_position.y <= y * _cell_size + _offset.y + _cell_size) {
+                end_selection_x = x;
+                end_selection_y = y;
+                std::printf("END (%d, %d)\n",x,y);
+            }
         }
+    }
+    if (_mouse_drag_start_position.x != 0 && _mouse_drag_start_position.y != 0 && _mouse_drag_end_position.x != 0 && _mouse_drag_end_position.y != 0)
+    {
+     //  DrawRectangleLines(start_selection_x * _cell_size + _offset.x, start_selection_y * _cell_size + _offset.y, (end_selection_x-start_selection_x + 1) * _cell_size, (end_selection_y-start_selection_y+1)* _cell_size, palette::yellow);
+        const auto min_x = std::min(start_selection_x, end_selection_x);
+        const auto min_y = std::min(start_selection_y, end_selection_y);
+        const auto max_x = std::max(start_selection_x, end_selection_x);
+        const auto max_y = std::max(start_selection_y, end_selection_y);
+        DrawRectangleLinesEx({min_x * _cell_size + _offset.x, min_y * _cell_size + _offset.y, (max_x-min_x + 1) * _cell_size, (max_y-min_y+1)* _cell_size}, 5, palette::yellow);
     }
 }
 

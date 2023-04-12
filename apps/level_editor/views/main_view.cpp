@@ -9,13 +9,14 @@ void MainView::render() noexcept {
     ImGui::SetNextWindowPos(ImVec2(550, 35));
     ImGui::Begin("Main View", nullptr,  ImGuiWindowFlags_NoTitleBar);
     _file_operations.render();
-    _edit_mode.render();
     _level_list.render();
+    _edit_mode.render();
     _entity_details.render();
 
     ImGui::End();
 }
 void MainView::update() noexcept {
+    _core->registry.ctx().find<MapView>()->update();
 }
 
 void MainView::_initialize() {
