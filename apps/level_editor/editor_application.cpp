@@ -8,11 +8,11 @@ void EditorApplication::run() const {
     rlImGuiSetup(true);
     std::shared_ptr<Core> core = std::make_shared<Core>();
     core->registry.ctx().emplace<MapView>(core, Rectangle{0, 0, 1024, 768});
-    core->registry.ctx().emplace<CurrentEditMode>(EditMode::None);
     MainView main_view{core};
 
     core->registry.ctx().emplace<EditorAssets>();
     core->registry.ctx().find<EditorAssets>()->load_textures();
+    SetExitKey(0);
     // main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {

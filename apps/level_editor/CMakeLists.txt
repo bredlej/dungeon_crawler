@@ -14,7 +14,9 @@ set(EDITOR_SOURCE_FILES
         ./views/components/edit_mode.cpp
         ./views/components/file_operations.cpp
         ./views/components/level_list.cpp
-        ./views/components/entity_details.cpp)
+        ./views/components/entity_details.cpp
+        ./views/components/blueprint.cpp
+        ./views/components/component_renderer.cpp)
 set(EDITOR_INCLUDE_DIRS
         ${PROJECT_SOURCE_DIR}/apps/level_editor
         ${PROJECT_SOURCE_DIR}/apps/level_editor/views

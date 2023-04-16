@@ -4,7 +4,7 @@
 #include <file_operations.hpp>
 void FileOperations::render() {
     using namespace editor;
-    if (ImGui::CollapsingHeader("File Operations", &_visible, ImGuiTreeNodeFlags_DefaultOpen)) {
+    if (ImGui::TreeNode("File Operations")) {
         if (ImGui::Button("New")) {
             ImGui::OpenPopup("New Level");
             ImVec2 center = ImGui::GetMainViewport()->GetCenter();
@@ -33,6 +33,8 @@ void FileOperations::render() {
         if (ImGui::Button("Save")) {
             _core->dispatcher.enqueue<SaveLevel>(std::string(_save_as));
         }
+        ImGui::TreePop();
+
     }
 }
 
