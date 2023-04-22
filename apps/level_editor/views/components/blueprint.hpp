@@ -45,9 +45,7 @@ public:
         _core->dispatcher.sink<FieldComponentSelected>().connect<&Blueprint::_field_component_selected>(this);
         _core->dispatcher.sink<FieldComponentAdded>().connect<&Blueprint::_field_component_added>(this);
         _core->dispatcher.sink<FieldComponentRemoved>().connect<&Blueprint::_field_component_removed>(this);
-        _core->dispatcher.sink<editor::PlaceComponent<Floor>>().connect<&Blueprint::_place_floor>(this);
-        _core->dispatcher.sink<editor::PlaceComponent<EncounterChance>>().connect<&Blueprint::_place_encounter_chance>(this);
-        _core->dispatcher.sink<editor::PlaceComponent<EncounterChance>>().connect<&Blueprint::_place_encounter_chance>(this);
+
         _initialize();
     };
     Blueprint(const Blueprint &) = delete;
@@ -68,9 +66,5 @@ private:
     void _field_component_added(FieldComponentAdded type);
     void _field_component_removed(FieldComponentRemoved type);
     FieldComponent<Floor, Walkability, EncounterChance> _field_components;
-
-    void _place_floor(editor::PlaceComponent<Floor> event);
-    void _place_walkability(editor::PlaceComponent<Walkability> event);
-    void _place_encounter_chance(editor::PlaceComponent<EncounterChance> event);
 };
 #endif//DUNGEON_CRAWLER_BLUEPRINT_HPP

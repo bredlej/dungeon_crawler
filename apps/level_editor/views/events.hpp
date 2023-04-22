@@ -48,6 +48,7 @@ namespace editor {
     template<typename Component>
     struct PlaceComponent{
         Component component;
+        std::vector<components::fields::MapPosition> *positions;
     };
 
     struct EntitiesSelected {

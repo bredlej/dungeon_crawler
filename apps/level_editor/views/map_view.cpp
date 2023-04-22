@@ -186,6 +186,7 @@ void MapView::_select_tiles_in_rectangle() {
         DrawRectangleLinesEx(selection, 3, palette::yellow);
     }
 }
+
 void MapView::_handle_entities_selection(const MapPositionSelected &event) {
     _core->registry.ctx().erase<EntitiesSelected>();
     std::vector<std::pair<components::fields::MapPosition, entt::entity>> entities;
@@ -195,6 +196,47 @@ void MapView::_handle_entities_selection(const MapPositionSelected &event) {
     }
     _core->registry.ctx().emplace<EntitiesSelected>(entities);
 }
+
 void MapView::_clear_rectangle_selection(ClearSelection clearSelection) {
     _core->registry.ctx().erase<RectangleSelected>();
+}
+
+void MapView::_place_floor(editor::PlaceComponent<Floor> event) {
+    for (const auto &position: *event.positions) {
+        auto field = _level.tile_map.get_at(position.x, position.y);
+        if (field == entt::null) {
+            field = _core->registry.create();
+            _core->registry.emplace<components::fields::Field>(field);
+            _core->registry.emplace<components::fields::MapPosition>(field, position.x, position.y);
+            _level.tile_map._tiles.emplace_back(Tile{field});
+        }
+        _core->registry.emplace_or_replace<components::fields::Floor>(field, event.component.type);
+    }
+}
+void MapView::_place_encounter_chance(editor::PlaceComponent<EncounterChance> event) {
+    for (const auto &position: *event.positions) {
+        auto field = _level.tile_map.get_at(position.x, position.y);
+        if (field == entt::null) {
+            field = _core->registry.create();
+            _core->registry.emplace<components::fields::Field>(field);
+            _core->registry.emplace<components::fields::MapPosition>(field, position.x, position.y);
+            _level.tile_map._tiles.emplace_back(Tile{field});
+        }
+        _core->registry.emplace_or_replace<components::values::EncounterChance>(field, event.component.chance);
+    }
+    std::printf("Placing encounter chance");
+}
+
+void MapView::_place_walkability(editor::PlaceComponent<Walkability> event) {
+    for (const auto &position: *event.positions) {
+        auto field = _level.tile_map.get_at(position.x, position.y);
+        if (field == entt::null) {
+            field = _core->registry.create();
+            _core->registry.emplace<components::fields::Field>(field);
+            _core->registry.emplace<components::fields::MapPosition>(field, position.x, position.y);
+            _level.tile_map._tiles.emplace_back(Tile{field});
+        }
+        _core->registry.emplace_or_replace<components::fields::Walkability>(field, event.component.walkable);
+    }
+    std::printf("Placing walkability");
 }

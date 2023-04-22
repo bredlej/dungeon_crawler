@@ -12,7 +12,10 @@
 #include <filesystem>
 #include <editor_assets.hpp>
 #include <views/colors.hpp>
+#include <components.hpp>
 using namespace editor;
+using namespace components::fields;
+using namespace components::values;
 
 class MapView : public UIView<MapView> {
 public:
@@ -23,6 +26,9 @@ public:
         core->dispatcher.sink<SaveLevel>().connect<&MapView::save_level>(this);
         core->dispatcher.sink<MapPositionSelected>().connect<&MapView::_handle_entities_selection>(this);
         core->dispatcher.sink<ClearSelection>().connect<&MapView::_clear_rectangle_selection>(this);
+        _core->dispatcher.sink<editor::PlaceComponent<Floor>>().connect<&MapView::_place_floor>(this);
+        _core->dispatcher.sink<editor::PlaceComponent<EncounterChance>>().connect<&MapView::_place_encounter_chance>(this);
+        _core->dispatcher.sink<editor::PlaceComponent<Walkability>>().connect<&MapView::_place_walkability>(this);
     }
     MapView(const MapView &) noexcept = delete;
     MapView(MapView &&) noexcept = delete;
@@ -57,5 +63,9 @@ private:
     void _select_tiles_in_rectangle();
     void _check_tile_collision(int32_t x, int32_t y) const;
     void _check_wall_collision(int32_t x, int32_t y) const;
+
+    void _place_floor(editor::PlaceComponent<Floor> event);
+    void _place_walkability(editor::PlaceComponent<Walkability> event);
+    void _place_encounter_chance(editor::PlaceComponent<EncounterChance> event);
 };
 #endif//DUNGEON_CRAWLER_MAP_VIEW_HPP

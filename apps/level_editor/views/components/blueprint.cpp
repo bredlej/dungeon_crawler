@@ -84,19 +84,27 @@ void Blueprint::render() {
             case editor::EditMode::None:
                 break;
         }
-        if (ImGui::Button("Place")) {
-            _core->dispatcher.enqueue<editor::PlaceComponent<EncounterChance>>();
+        if (auto * positions = _core->registry.ctx().find<editor::MapPositionSelected>()) {
+            if (ImGui::Button("Place")) {
+                std::for_each(_all_field_component_types.begin(), _all_field_component_types.end(), [&](const auto &component_type) {
+                    switch (component_type) {
+                        case FieldComponentType::Floor:
+                            _core->dispatcher.enqueue<editor::PlaceComponent<Floor>>(std::get<Floor>(_field_components.components), &positions->positions);
+                            break;
+                        case FieldComponentType::EncounterChance:
+                            _core->dispatcher.enqueue<editor::PlaceComponent<EncounterChance>>(std::get<EncounterChance>(_field_components.components), &positions->positions);
+                            break;
+                        case FieldComponentType::Walkability:
+                            _core->dispatcher.enqueue<editor::PlaceComponent<Walkability>>(std::get<Walkability>(_field_components.components), &positions->positions);
+                            break;
+                        case FieldComponentType::None:
+                            break;
+                    }
+                });
+
+            }
         }
+
         ImGui::TreePop();
     }
-
-}
-void Blueprint::_place_floor(editor::PlaceComponent<Floor> event) {
-
-}
-void Blueprint::_place_encounter_chance(editor::PlaceComponent<EncounterChance> event) {
-
-}
-void Blueprint::_place_walkability(editor::PlaceComponent<Walkability> event) {
-
 }
