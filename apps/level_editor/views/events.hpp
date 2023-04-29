@@ -54,6 +54,7 @@ namespace editor {
     struct EntitiesSelected {
         std::vector<std::pair<components::fields::MapPosition, entt::entity>> entities;
     };
+    struct RemoveAllSelectedEntities {};
     struct ToggleShowDemo {};
     struct LevelFileName {
         std::string name;

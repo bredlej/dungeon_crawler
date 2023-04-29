@@ -99,10 +99,15 @@ void MapView::_draw_tile_map() const {
         if (tile.entity == entt::null) {
             DrawRectangle(position.x * _cell_size + _offset.x, position.y * _cell_size + _offset.y, _cell_size, _cell_size, GRAY);
         }
-        if (_core->registry.any_of<components::fields::Floor>(tile.entity)) {
-            components::fields::Floor floor = _core->registry.get<components::fields::Floor>(tile.entity);
-            DrawTextureRec(_core->registry.ctx().find<EditorAssets>()->_textures[floor.type].get(), {0, 0, 25, 25}, {position.x * _cell_size + _offset.x, position.y * _cell_size + _offset.y}, WHITE);
-            DrawRectangleLines(position.x * _cell_size + _offset.x, position.y * _cell_size + _offset.y, _cell_size, _cell_size, palette::dark_gray);
+        else {
+            if (_core->registry.any_of<components::fields::Floor>(tile.entity)) {
+                components::fields::Floor floor = _core->registry.get<components::fields::Floor>(tile.entity);
+                DrawTextureRec(_core->registry.ctx().find<EditorAssets>()->_textures[floor.type].get(), {0, 0, 25, 25}, {position.x * _cell_size + _offset.x, position.y * _cell_size + _offset.y}, WHITE);
+                DrawRectangleLines(position.x * _cell_size + _offset.x, position.y * _cell_size + _offset.y, _cell_size, _cell_size, palette::dark_gray);
+            }
+            else {
+                DrawRectangle(position.x * _cell_size + _offset.x, position.y * _cell_size + _offset.y, _cell_size, _cell_size, palette::dark_gray);
+            }
         }
     }
     if (auto *rectangle_selected = _core->registry.ctx().find<RectangleSelected>()) {
@@ -239,4 +244,27 @@ void MapView::_place_walkability(editor::PlaceComponent<Walkability> event) {
         _core->registry.emplace_or_replace<components::fields::Walkability>(field, event.component.walkable);
     }
     std::printf("Placing walkability");
+}
+
+void MapView::_remove_all_selected_tiles() {
+    const auto *selected_tiles = _core->registry.ctx().find<EntitiesSelected>();
+    for (const auto &tile: selected_tiles->entities) {
+        if (_core->registry.valid(tile.second) && tile.second != entt::null) {
+            _core->registry.destroy(tile.second);
+        }
+    }
+    _level.tile_map._tiles.erase(std::remove_if(_level.tile_map._tiles.begin(), _level.tile_map._tiles.end(), [selected_tiles](const Tile &tile) {
+        for (const auto &selected_tile: selected_tiles->entities) {
+            if (selected_tile.second == tile.entity) {
+                return true;
+            }
+        }
+        return false;
+    }), _level.tile_map._tiles.end());
+    _core->registry.ctx().erase<EntitiesSelected>();
+
+    auto *selected_positions = _core->registry.ctx().find<MapPositionSelected>();
+    if (selected_positions) {
+        _core->dispatcher.enqueue<MapPositionSelected>(selected_positions->positions);
+    }
 }

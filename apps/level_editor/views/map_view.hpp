@@ -29,6 +29,7 @@ public:
         _core->dispatcher.sink<editor::PlaceComponent<Floor>>().connect<&MapView::_place_floor>(this);
         _core->dispatcher.sink<editor::PlaceComponent<EncounterChance>>().connect<&MapView::_place_encounter_chance>(this);
         _core->dispatcher.sink<editor::PlaceComponent<Walkability>>().connect<&MapView::_place_walkability>(this);
+        _core->dispatcher.sink<editor::RemoveAllSelectedEntities>().connect<&MapView::_remove_all_selected_tiles>(this);
     }
     MapView(const MapView &) noexcept = delete;
     MapView(MapView &&) noexcept = delete;
@@ -67,5 +68,7 @@ private:
     void _place_floor(editor::PlaceComponent<Floor> event);
     void _place_walkability(editor::PlaceComponent<Walkability> event);
     void _place_encounter_chance(editor::PlaceComponent<EncounterChance> event);
+
+    void _remove_all_selected_tiles();
 };
 #endif//DUNGEON_CRAWLER_MAP_VIEW_HPP

@@ -6,6 +6,8 @@
 #define DUNGEON_CRAWLER_COMPONENT_RENDERER_HPP
 #include <core.hpp>
 #include <components.hpp>
+#include <fmt/format.h>
+
 class ComponentRenderer {
 public:
     explicit ComponentRenderer(std::shared_ptr<Core> core) : _core{core} {};

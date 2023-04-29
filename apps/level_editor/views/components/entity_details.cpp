@@ -6,6 +6,9 @@
 void EntityDetails::render() {
     if (ImGui::TreeNode("Entity Details")) {
         if (_core->registry.ctx().contains<editor::EntitiesSelected>()) {
+            if (ImGui::Button("Remove all")) {
+                _core->dispatcher.enqueue<editor::RemoveAllSelectedEntities>();
+            }
             int i = 0;
             _core->registry.ctx().erase<editor::MapPositionHovered>();
             for (const auto &[position, entity] : _core->registry.ctx().find<editor::EntitiesSelected>()->entities) {

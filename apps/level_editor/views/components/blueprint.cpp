@@ -84,7 +84,7 @@ void Blueprint::render() {
             case editor::EditMode::None:
                 break;
         }
-        if (auto * positions = _core->registry.ctx().find<editor::MapPositionSelected>()) {
+        if (auto *positions = _core->registry.ctx().find<editor::MapPositionSelected>()) {
             if (ImGui::Button("Place")) {
                 std::for_each(_all_field_component_types.begin(), _all_field_component_types.end(), [&](const auto &component_type) {
                     switch (component_type) {
@@ -101,7 +101,8 @@ void Blueprint::render() {
                             break;
                     }
                 });
-
+                _core->dispatcher.update();
+                _core->dispatcher.enqueue<editor::MapPositionSelected>(positions->positions);
             }
         }
 
