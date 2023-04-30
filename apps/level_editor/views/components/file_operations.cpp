@@ -4,12 +4,12 @@
 #include <file_operations.hpp>
 void FileOperations::render() {
     using namespace editor;
-    ImGui::InputText("", _save_as, 256);
-    ImGui::SameLine();
-    if (ImGui::Button("Save")) {
-        _core->dispatcher.enqueue<SaveLevel>(std::string(_save_as));
-    }
     if (ImGui::TreeNode("File Operations")) {
+        ImGui::InputText("##save_as", _save_as, 256);
+        ImGui::SameLine();
+        if (ImGui::Button("Save")) {
+            _core->dispatcher.enqueue<SaveLevel>(std::string(_save_as));
+        }
         if (ImGui::Button("New")) {
             ImGui::OpenPopup("New Level");
             ImVec2 center = ImGui::GetMainViewport()->GetCenter();
