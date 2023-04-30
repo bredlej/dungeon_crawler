@@ -58,15 +58,41 @@ void MapView::_check_tile_collision(const int32_t x, const int32_t y) const {
 }
 void MapView::_check_wall_collision(int32_t x, int32_t y) const {
     static constexpr float divider = 5.0f;
+    const auto *edit_mode_tool = _core->registry.ctx().find<CurrentEditModeTool>();
+
     if (CheckCollisionPointRec(GetMousePosition(), {x * _cell_size + _offset.x, y * _cell_size + _offset.y - (_cell_size / divider), _cell_size, 2 * (_cell_size / divider)})) {
+        // upper
         DrawLine(x * _cell_size + _offset.x, y * _cell_size + _offset.y - 1, x * _cell_size + _offset.x + _cell_size, y * _cell_size + _offset.y - 1, RED);
         DrawLine(x * _cell_size + _offset.x, y * _cell_size + _offset.y, x * _cell_size + _offset.x + _cell_size, y * _cell_size + _offset.y, RED);
         DrawLine(x * _cell_size + _offset.x, y * _cell_size + _offset.y + 1, x * _cell_size + _offset.x + _cell_size, y * _cell_size + _offset.y + 1, RED);
+        if (edit_mode_tool && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            switch (edit_mode_tool->edit_mode_tool) {
+                case EditModeTool::Select:
+                    _core->dispatcher.enqueue<WallSelected>(MapPosition{x,y-1}, MapPosition{x, y});
+                    break;
+                case EditModeTool::Fill:
+                    break;
+                default:
+                    break;
+            }
+        }
     }
     if (CheckCollisionPointRec(GetMousePosition(), {x * _cell_size + _offset.x - (_cell_size / divider), y * _cell_size + _offset.y, 2 * (_cell_size / divider), _cell_size})) {
+        // left
         DrawLine(x * _cell_size + _offset.x - 1, y * _cell_size + _offset.y, x * _cell_size + _offset.x - 1, y * _cell_size + _offset.y + _cell_size, RED);
         DrawLine(x * _cell_size + _offset.x, y * _cell_size + _offset.y, x * _cell_size + _offset.x, y * _cell_size + _offset.y + _cell_size, RED);
         DrawLine(x * _cell_size + _offset.x + 1, y * _cell_size + _offset.y, x * _cell_size + _offset.x + 1, y * _cell_size + _offset.y + _cell_size, RED);
+        if (edit_mode_tool && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            switch (edit_mode_tool->edit_mode_tool) {
+                case EditModeTool::Select:
+                    _core->dispatcher.enqueue<WallSelected>(MapPosition{x-1, y}, MapPosition{x, y});
+                    break;
+                case EditModeTool::Fill:
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
 
@@ -115,6 +141,7 @@ void MapView::_draw_tile_map() const {
     }
 }
 void MapView::_draw_wall_map() const {
+    const auto *wall_selected = _core->registry.ctx().find<WallSelected>();
     for (const auto &wall: _level.wall_map._walls) {
         const components::fields::Wall wall_data = _core->registry.get<components::fields::Wall>(wall.entity);
         const components::fields::MapPosition field1 = wall_data.field1;
@@ -129,6 +156,14 @@ void MapView::_draw_wall_map() const {
             DrawLineEx({field1.x * _cell_size + _offset.x, field2.y * _cell_size + _offset.y}, {field1.x * _cell_size + _offset.x + _cell_size, field2.y * _cell_size + _offset.y}, wall_thickness, wall_color);
         } else if (field1.x == field2.x && field1.y > field2.y) {
             DrawLineEx({field1.x * _cell_size + _offset.x, field1.y * _cell_size + _offset.y}, {field1.x * _cell_size + _offset.x + _cell_size, field1.y * _cell_size + _offset.y}, wall_thickness, wall_color);
+        }
+    }
+    if (wall_selected) {
+        if (wall_selected->position1.x < wall_selected->position2.x && wall_selected->position1.y == wall_selected->position2.y) {
+            DrawLineEx({wall_selected->position2.x * _cell_size + _offset.x, wall_selected->position1.y * _cell_size + _offset.y}, {wall_selected->position2.x * _cell_size + _offset.x, wall_selected->position2.y * _cell_size + _offset.y + _cell_size}, 3, palette::yellow);
+        }
+        else if (wall_selected->position1.x == wall_selected->position2.x && wall_selected->position1.y < wall_selected->position2.y) {
+            DrawLineEx({wall_selected->position1.x * _cell_size + _offset.x, wall_selected->position2.y * _cell_size + _offset.y}, {wall_selected->position2.x * _cell_size + _offset.x + _cell_size, wall_selected->position2.y * _cell_size + _offset.y}, 3, palette::yellow);
         }
     }
 }
@@ -229,7 +264,6 @@ void MapView::_place_encounter_chance(editor::PlaceComponent<EncounterChance> ev
         }
         _core->registry.emplace_or_replace<components::values::EncounterChance>(field, event.component.chance);
     }
-    std::printf("Placing encounter chance");
 }
 
 void MapView::_place_walkability(editor::PlaceComponent<Walkability> event) {
@@ -243,7 +277,6 @@ void MapView::_place_walkability(editor::PlaceComponent<Walkability> event) {
         }
         _core->registry.emplace_or_replace<components::fields::Walkability>(field, event.component.walkable);
     }
-    std::printf("Placing walkability");
 }
 
 void MapView::_remove_all_selected_tiles() {
@@ -267,4 +300,9 @@ void MapView::_remove_all_selected_tiles() {
     if (selected_positions) {
         _core->dispatcher.enqueue<MapPositionSelected>(selected_positions->positions);
     }
+}
+
+void MapView::_select_wall(const WallSelected &wallSelected) {
+    _core->registry.ctx().erase<WallSelected>();
+    _core->registry.ctx().emplace<WallSelected>(wallSelected);
 }

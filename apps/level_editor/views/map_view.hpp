@@ -21,15 +21,16 @@ class MapView : public UIView<MapView> {
 public:
     explicit MapView(std::shared_ptr<Core> core, Rectangle dimension) noexcept : UIView{core}, _dimension(dimension), _level{core} {
         texture = LoadRenderTexture(static_cast<int>(dimension.width), static_cast<int>(dimension.height));
-        core->dispatcher.sink<NewLevel>().connect<&MapView::new_level>(this);
-        core->dispatcher.sink<LoadLevel>().connect<&MapView::load_level>(this);
-        core->dispatcher.sink<SaveLevel>().connect<&MapView::save_level>(this);
-        core->dispatcher.sink<MapPositionSelected>().connect<&MapView::_handle_entities_selection>(this);
-        core->dispatcher.sink<ClearSelection>().connect<&MapView::_clear_rectangle_selection>(this);
+        _core->dispatcher.sink<NewLevel>().connect<&MapView::new_level>(this);
+        _core->dispatcher.sink<LoadLevel>().connect<&MapView::load_level>(this);
+        _core->dispatcher.sink<SaveLevel>().connect<&MapView::save_level>(this);
+        _core->dispatcher.sink<MapPositionSelected>().connect<&MapView::_handle_entities_selection>(this);
+        _core->dispatcher.sink<ClearSelection>().connect<&MapView::_clear_rectangle_selection>(this);
         _core->dispatcher.sink<editor::PlaceComponent<Floor>>().connect<&MapView::_place_floor>(this);
         _core->dispatcher.sink<editor::PlaceComponent<EncounterChance>>().connect<&MapView::_place_encounter_chance>(this);
         _core->dispatcher.sink<editor::PlaceComponent<Walkability>>().connect<&MapView::_place_walkability>(this);
         _core->dispatcher.sink<editor::RemoveAllSelectedEntities>().connect<&MapView::_remove_all_selected_tiles>(this);
+        _core->dispatcher.sink<editor::WallSelected>().connect<&MapView::_select_wall>(this);
     }
     MapView(const MapView &) noexcept = delete;
     MapView(MapView &&) noexcept = delete;
@@ -50,12 +51,13 @@ private:
     Vector2 _grid_size{20.0f, 20.0f};
     Vector2 _mouse_drag_start_position{};
     Vector2 _mouse_drag_end_position{};
-    std::vector<components::fields::MapPosition> _selected_positions;
-    void _handle_entities_selection(const MapPositionSelected &mapPositionSelected);
-    void _clear_rectangle_selection(ClearSelection clearSelection);
     float _cell_size{25.0f};
     EditMode _edit_mode{EditMode::Wall};
     Level _level;
+    std::vector<components::fields::MapPosition> _selected_positions;
+
+    void _handle_entities_selection(const MapPositionSelected &mapPositionSelected);
+    void _clear_rectangle_selection(ClearSelection clearSelection);
     void _draw_grid() const;
     void _draw_tile_map() const;
     void _draw_wall_map() const;
@@ -70,5 +72,7 @@ private:
     void _place_encounter_chance(editor::PlaceComponent<EncounterChance> event);
 
     void _remove_all_selected_tiles();
+
+    void _select_wall(const WallSelected &wallSelected);
 };
 #endif//DUNGEON_CRAWLER_MAP_VIEW_HPP

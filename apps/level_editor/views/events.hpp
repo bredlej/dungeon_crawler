@@ -13,7 +13,7 @@ namespace editor {
         Tile,
         Wall
     };
-    enum class EditModeTool {
+    enum class EditModeTool : uint8_t{
         Select,
         Paint,
         Fill
@@ -53,6 +53,19 @@ namespace editor {
 
     struct EntitiesSelected {
         std::vector<std::pair<components::fields::MapPosition, entt::entity>> entities;
+    };
+
+    struct WallSelected {
+        components::fields::MapPosition position1;
+        components::fields::MapPosition position2;
+    };
+    struct WallRemoved {
+        components::fields::MapPosition position1;
+        components::fields::MapPosition position2;
+    };
+    struct WallAdded {
+        components::fields::MapPosition position1;
+        components::fields::MapPosition position2;
     };
     struct RemoveAllSelectedEntities {};
     struct ToggleShowDemo {};
