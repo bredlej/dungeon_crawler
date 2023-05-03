@@ -49,6 +49,7 @@ void ComponentRenderer::render_component<components::values::EncounterChance>(en
     if (encounter_chance) {
         const auto label = fmt::format("Encounter chance##{}", static_cast<int32_t>(entity));
         const auto hidden_label = fmt::format("##encounter{}", static_cast<int32_t>(entity));
+        ImGui::SetNextTreeNodeOpen(true, ImGuiCond_Once);
         if (ImGui::TreeNode(label.c_str())) {
             ImGui::InputFloat(hidden_label.c_str(), &encounter_chance->chance);
             ImGui::TreePop();
@@ -67,6 +68,7 @@ void ComponentRenderer::render_component<components::fields::Walkability>(entt::
     if (walkability) {
         const auto label = fmt::format("Walkable##{}", static_cast<int32_t>(entity));
         const auto hidden_label = fmt::format("##walkable{}", static_cast<int32_t>(entity));
+        ImGui::SetNextTreeNodeOpen(true, ImGuiCond_Once);
         if (ImGui::TreeNode(label.c_str())) {
             ImGui::Checkbox(hidden_label.c_str(), &walkability->walkable);
             ImGui::TreePop();

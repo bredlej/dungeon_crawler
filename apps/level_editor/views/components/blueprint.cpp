@@ -24,6 +24,7 @@ void Blueprint::_field_component_removed(FieldComponentRemoved type) {
     _selected_field_component_type = _available_field_component_types.empty() ? FieldComponentType::None : _available_field_component_types[0];
 }
 void Blueprint::render() {
+    ImGui::SetNextTreeNodeOpen(true, ImGuiCond_Once);
     if (ImGui::TreeNode("Blueprint")) {
         auto edit_mode = _core->registry.ctx().find<editor::CurrentEditMode>();
         if (!edit_mode) return;

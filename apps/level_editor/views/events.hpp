@@ -16,7 +16,8 @@ namespace editor {
     enum class EditModeTool : uint8_t{
         Select,
         Paint,
-        Fill
+        Fill,
+        Line
     };
     struct CurrentEditMode {
         EditMode edit_mode;
@@ -64,6 +65,7 @@ namespace editor {
         components::fields::MapPosition position2;
     };
     struct WallAdded {
+        WallType type;
         components::fields::MapPosition position1;
         components::fields::MapPosition position2;
     };

@@ -4,6 +4,7 @@
 #include <level_list.hpp>
 
 void LevelList::render() {
+    ImGui::SetNextTreeNodeOpen(true, ImGuiCond_Once);
     if (ImGui::TreeNode("Levels")) {
         for (const auto &level : _levels) {
             if (ImGui::Button(level.filename().c_str())) {

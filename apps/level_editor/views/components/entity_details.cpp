@@ -4,6 +4,7 @@
 #include <entity_details.hpp>
 
 void EntityDetails::render() {
+    ImGui::SetNextTreeNodeOpen(true, ImGuiCond_Once);
     if (ImGui::TreeNode("Entity Details")) {
         if (_core->registry.ctx().contains<editor::EntitiesSelected>()) {
             if (ImGui::Button("Remove all")) {

@@ -31,6 +31,8 @@ public:
         _core->dispatcher.sink<editor::PlaceComponent<Walkability>>().connect<&MapView::_place_walkability>(this);
         _core->dispatcher.sink<editor::RemoveAllSelectedEntities>().connect<&MapView::_remove_all_selected_tiles>(this);
         _core->dispatcher.sink<editor::WallSelected>().connect<&MapView::_select_wall>(this);
+        _core->dispatcher.sink<editor::WallAdded>().connect<&MapView::_add_wall>(this);
+        _core->dispatcher.sink<editor::WallRemoved>().connect<&MapView::_remove_wall>(this);
     }
     MapView(const MapView &) noexcept = delete;
     MapView(MapView &&) noexcept = delete;
@@ -74,5 +76,7 @@ private:
     void _remove_all_selected_tiles();
 
     void _select_wall(const WallSelected &wallSelected);
+    void _add_wall(const WallAdded &wallAdded);
+    void _remove_wall(const WallRemoved &wallRemoved);
 };
 #endif//DUNGEON_CRAWLER_MAP_VIEW_HPP

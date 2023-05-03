@@ -4,6 +4,7 @@
 #include <file_operations.hpp>
 void FileOperations::render() {
     using namespace editor;
+    ImGui::SetNextTreeNodeOpen(true, ImGuiCond_Once);
     if (ImGui::TreeNode("File Operations")) {
         ImGui::InputText("##save_as", _save_as, 256);
         ImGui::SameLine();
