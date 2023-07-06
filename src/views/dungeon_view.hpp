@@ -16,7 +16,7 @@ extern "C" {
 #include <views/actions/dungeon_actions.hpp>
 #include <events.hpp>
 
-constexpr static Color BACKGROUND_COLOR = {0x34, 0x31, 0x1d, 0xff};
+constexpr static Color BACKGROUND_COLOR = {0x34 /2, 0x31/2, 0x1d/2, 0xff};
 constexpr static Color FOV_COLOR = {0x48, 0x53, 0x22, 0xff};
 constexpr static Color WALL_COLOR = {0xb1, 0x48, 0x63, 0xff};
 constexpr static Rectangle POV_DIMENSION = Rectangle{0.0f, 0.0f, static_cast<float>(1024.0f), static_cast<float>(768.0f)};
@@ -31,6 +31,12 @@ constexpr static std::array<POVWall, static_cast<size_t>(POVWall::SIZE)> draw_or
         POVWall::W14_E, POVWall::W16_W, POVWall::W14_S, POVWall::W15_S, POVWall::W16_S,
         POVWall::W17_E, POVWall::W19_W
 };
+static constexpr const auto NO_TINT = 0xFF;
+static constexpr const auto TINT_DARKEST = 255 - (NO_TINT / 2);
+static constexpr const auto TINT_DARKER = 255 - (NO_TINT / 3);
+static constexpr const auto TINT_DARK = 255 - (NO_TINT / 4);
+static constexpr const auto TINT_A_BIT_DARK = 255 - (NO_TINT / 5);
+
 //clang-format on
 template <typename T, typename = typename std::enable_if<std::is_enum<T>::value, T >::type>
 struct POVField {
