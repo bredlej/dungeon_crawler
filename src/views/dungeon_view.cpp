@@ -4,14 +4,14 @@
 
 #include <views/dungeon_view.hpp>
 
-void DungeonView::_initialize() {
+void DungeonView::_initialize() noexcept{
     _core->registry.ctx().emplace<components::values::EncounterChance>(0.00f);
 }
 static inline void draw_floor(assets::Assets *assets, const size_t index, const FloorType floor_type, const Color tint) {
     DrawTexture(assets->_textures._tiles[static_cast<POVFloor>(index)][floor_type].get(), 0, 0, tint);
 }
 
-void DungeonView::_render_pov() {
+void DungeonView::_render_pov() noexcept {
     BeginTextureMode(_render_texture_pov);
     ClearBackground(BACKGROUND_COLOR);
     if (assets::Assets *assets = _core->get_assets()) {
@@ -19,7 +19,13 @@ void DungeonView::_render_pov() {
             if (_core->registry.valid(_player_fov_tile.field[i])) {
                 const auto floor = _core->registry.try_get<components::fields::Floor>(_player_fov_tile.field[i]);
                 if (floor) {
-                    draw_floor(assets, i, floor->type, WHITE);
+                    const auto tint = _core->registry.try_get<components::values::Tint>(_player_fov_tile.field[i]);
+                    if (tint) {
+                        draw_floor(assets, i, floor->type, Color{tint->r, tint->g, tint->b, tint->a});
+                    }
+                    else {
+                        draw_floor(assets, i, floor->type, WHITE);
+                    }
                 }
                 else {
                     draw_floor(assets, i, FloorType::RUINS_01, RED);
@@ -31,7 +37,13 @@ void DungeonView::_render_pov() {
         for (const POVWall i: draw_order_walls) {
             if (_core->registry.valid(_player_fov_wall.field[static_cast<const size_t>(i)])) {
                 if (const components::fields::Wall *wall = _core->registry.try_get<components::fields::Wall>(_player_fov_wall.field[static_cast<const size_t>(i)])) {
-                    DrawTexture(assets->_textures._tiles[static_cast<POVWall>(i)][wall->type].get(), 0, 0, WHITE);
+                    const auto tint = _core->registry.try_get<components::values::Tint>(_player_fov_wall.field[static_cast<const size_t>(i)]);
+                    if (tint) {
+                        DrawTexture(assets->_textures._tiles[static_cast<POVWall>(i)][wall->type].get(), 0, 0, Color{tint->r, tint->g, tint->b, tint->a});
+                    }
+                    else {
+                        DrawTexture(assets->_textures._tiles[static_cast<POVWall>(i)][wall->type].get(), 0, 0, WHITE);
+                    }
                 }
             }
         }
@@ -46,12 +58,13 @@ static inline void minimap_draw_player_frame(const Texture2D &texture, const Rec
     DrawTextureRec(texture, frame, Vector2{static_cast<float>(position.x * MINIMAP_GRID_SIZE + offset.x), static_cast<float>(position.y * MINIMAP_GRID_SIZE + offset.y)}, WHITE);
 }
 
-void DungeonView::_render_minimap() {
+void DungeonView::_render_minimap() noexcept {
+
     BeginTextureMode(_render_texture_gui);
     ClearBackground(BACKGROUND_COLOR);
     DrawTexture(_core->get_assets()->_textures._gui[assets::dungeon_view::GUI::MiniMap::Background].get(), 0, 0, WHITE);
     ModXY offset {10,10};
-    for (auto tile: _tile_map._tiles) {
+    for (auto tile: _level.tile_map._tiles) {
         if (_core->registry.valid(tile.entity)) {
             components::fields::MapPosition position = _core->registry.get<components::fields::MapPosition>(tile.entity);
             auto *tile_in_fov = _core->registry.try_get<components::fields::InFovOfEntity>(tile.entity);
@@ -73,10 +86,10 @@ void DungeonView::_render_minimap() {
             case WorldDirection::WEST: minimap_draw_player_frame(player_texture, {15,0,5,5}, position, offset); break;
         }
     });
-    for (WallEntity wall: _wall_map._walls) {
+    for (WallEntity wall: _level.wall_map._walls) {
         components::fields::Wall wall_component = _core->registry.get<components::fields::Wall>(wall.entity);
-        components::fields::MapPosition field1_position = _core->registry.get<components::fields::MapPosition>(wall_component.field1);
-        components::fields::MapPosition field2_position = _core->registry.get<components::fields::MapPosition>(wall_component.field2);
+        components::fields::MapPosition field1_position = wall_component.field1;
+        components::fields::MapPosition field2_position = wall_component.field2;
         if (field1_position.x == field2_position.x) {
             DrawLine(field1_position.x * MINIMAP_GRID_SIZE + offset.x, std::max(field1_position.y, field2_position.y) * MINIMAP_GRID_SIZE + offset.y, field1_position.x * MINIMAP_GRID_SIZE + offset.x + MINIMAP_GRID_SIZE, std::max(field1_position.y, field2_position.y) * 5 + offset.y, WALL_COLOR);
         }
@@ -96,7 +109,7 @@ static inline void render_texture(const Texture &texture, const Rectangle &dimen
                    WHITE);
 }
 
-void DungeonView::render() {
+void DungeonView::render() noexcept {
     BeginDrawing();
     ClearBackground(BLACK);
     _render_pov();
@@ -109,7 +122,7 @@ void DungeonView::render() {
     EndDrawing();
 }
 
-void DungeonView::update() {
+void DungeonView::update() noexcept {
     static bool after_first_update = false;
     static bool recalculate_fov = true;
     if (recalculate_fov) {
@@ -134,20 +147,17 @@ void DungeonView::update() {
     }
     if (IsKeyPressed(KEY_L)) {
         try {
-            auto json = LevelParser::parse("assets/Levels/Ruins/ruins_01.json");
             _clear();
-            _tile_map.from_json(json);
-            _wall_map.from_json(_tile_map, json);
-            using namespace level_schema;
-            if (json.contains(names[types::player_spawn])) {
-                _core->registry.view<components::general::Player, components::general::Direction, components::fields::MapPosition>().each([&json](const entt::entity entity, const components::general::Player player, components::general::Direction &direction, components::fields::MapPosition &position) {
-                   direction.direction = direction_names[json[names[types::player_spawn]][names[types::direction]]];
-                   position.x = json[names[types::player_spawn]][names[types::x]];
-                   position.y = json[names[types::player_spawn]][names[types::y]];
-                });
-
-            }
+            _level.load("assets/Levels/Ruins/ruins_02_saved.json");
             _calculate_fov();
+        }
+        catch (std::exception &e) {
+            printf("Exception: %s\n", e.what());
+        }
+    }
+    if (IsKeyPressed(KEY_S)) {
+        try {
+            _level.save("assets/Levels/Ruins/ruins_01_saved.json");
         }
         catch (std::exception &e) {
             printf("Exception: %s\n", e.what());
@@ -161,45 +171,46 @@ void DungeonView::update() {
 
 template<size_t AMOUNT_WALLS_IN_FOV>
 static void fill_player_fov_walls(std::array<entt::entity, AMOUNT_WALLS_IN_FOV> &player_fov_walls, const components::fields::MapPosition player_position, const WallMap &wall_map, const TileMap &tile_map, const WorldDirection direction) {
+    using namespace components::fields;
     ModXY mod = (direction == WorldDirection::NORTH || direction == WorldDirection::EAST) ? ModXY{1, 1} : ModXY{-1, -1};
     // 01 - 05
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W01_N] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x - 2 * mod.x, player_position.y - 4 * mod.y), tile_map.get_at(player_position.x - 2 * mod.x, player_position.y - 5 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 4 * mod.x, player_position.y - 2 * mod.y), tile_map.get_at(player_position.x + 5 * mod.x, player_position.y - 2 * mod.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W01_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x - 2 * mod.x, player_position.y - 4 * mod.y), tile_map.get_at(player_position.x - 2 * mod.x, player_position.y - 3 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 4 * mod.x, player_position.y - 2 * mod.y), tile_map.get_at(player_position.x + 3 * mod.x, player_position.y - 2 * mod.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W01_E] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x - 2 * mod.x, player_position.y - 4 * mod.y), tile_map.get_at(player_position.x - 1 * mod.x, player_position.y - 4 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 4 * mod.x, player_position.y - 2 * mod.y), tile_map.get_at(player_position.x + 4 * mod.x, player_position.y - 1 * mod.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W02_N] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x - 1 * mod.x, player_position.y - 4 * mod.y), tile_map.get_at(player_position.x - 1 * mod.x, player_position.y - 5 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 4 * mod.x, player_position.y - 1 * mod.y), tile_map.get_at(player_position.x + 5 * mod.x, player_position.y - 1 * mod.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W02_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x - 1 * mod.x, player_position.y - 4 * mod.y), tile_map.get_at(player_position.x - 1 * mod.x, player_position.y - 3 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 4 * mod.x, player_position.y - 1 * mod.y), tile_map.get_at(player_position.x + 3 * mod.x, player_position.y - 1 * mod.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W02_E] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x - 1 * mod.x, player_position.y - 4 * mod.y), tile_map.get_at(player_position.x, player_position.y - 4 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 4 * mod.x, player_position.y - 1 * mod.y), tile_map.get_at(player_position.x + 4 * mod.x, player_position.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W03_N] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x, player_position.y - 4 * mod.y), tile_map.get_at(player_position.x, player_position.y - 5 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 4 * mod.x, player_position.y), tile_map.get_at(player_position.x + 5 * mod.x, player_position.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W03_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x, player_position.y - 4 * mod.y), tile_map.get_at(player_position.x, player_position.y - 3 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 4 * mod.x, player_position.y), tile_map.get_at(player_position.x + 3 * mod.x, player_position.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W04_N] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 4 * mod.y), tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 5 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 4 * mod.x, player_position.y + 1 * mod.y), tile_map.get_at(player_position.x + 5 * mod.x, player_position.y  + 1* mod.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W04_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 4 * mod.y), tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 3 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 4 * mod.x, player_position.y + 1 * mod.y), tile_map.get_at(player_position.x + 3 * mod.x, player_position.y  + 1* mod.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W04_W] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x, player_position.y - 4 * mod.y), tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 4 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 4 * mod.x, player_position.y), tile_map.get_at(player_position.x + 4 * mod.x, player_position.y +1 * mod.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W05_N] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x + 2 * mod.x, player_position.y - 4 * mod.y), tile_map.get_at(player_position.x + 2 * mod.x, player_position.y - 5 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 4 * mod.x, player_position.y + 2 * mod.y), tile_map.get_at(player_position.x + 5 * mod.x, player_position.y + 2 * mod.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W05_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x + 2 * mod.x, player_position.y - 4 * mod.y), tile_map.get_at(player_position.x + 2 * mod.x, player_position.y - 3 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 4 * mod.x, player_position.y + 2 * mod.y), tile_map.get_at(player_position.x + 3 * mod.x, player_position.y + 2 * mod.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W05_W] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x + 2 * mod.x, player_position.y - 4 * mod.y), tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 4 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 4 * mod.x, player_position.y + 2 * mod.y), tile_map.get_at(player_position.x + 4 * mod.x, player_position.y + 1 * mod.y));
-    // 06 - 10
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W06_E] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x - 2 * mod.x, player_position.y - 3 * mod.y), tile_map.get_at(player_position.x - 1 * mod.x, player_position.y - 3 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 3 * mod.x, player_position.y - 2 * mod.y), tile_map.get_at(player_position.x + 3 * mod.x, player_position.y - 1 * mod.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W07_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x - 1 * mod.x, player_position.y - 3 * mod.y), tile_map.get_at(player_position.x - 1 * mod.x, player_position.y - 2 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 3 * mod.x, player_position.y - 1 * mod.y), tile_map.get_at(player_position.x + 2 * mod.x, player_position.y - 1 * mod.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W07_E] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x - 1 * mod.x, player_position.y - 3 * mod.y), tile_map.get_at(player_position.x, player_position.y - 3 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 3 * mod.x, player_position.y - 1 * mod.y), tile_map.get_at(player_position.x + 3 * mod.x, player_position.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W08_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x, player_position.y - 3 * mod.y), tile_map.get_at(player_position.x, player_position.y - 2 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 3 * mod.x, player_position.y), tile_map.get_at(player_position.x + 2 * mod.x, player_position.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W09_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 3 * mod.y), tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 2 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 3 * mod.x, player_position.y + 1 * mod.y), tile_map.get_at(player_position.x + 2 * mod.x, player_position.y + 1 * mod.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W09_W] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x, player_position.y - 3 * mod.y), tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 3 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 3 * mod.x, player_position.y), tile_map.get_at(player_position.x + 3 * mod.x, player_position.y + 1 * mod.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W10_W] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x + 2 * mod.x, player_position.y - 3 * mod.y), tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 3 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 3 * mod.x, player_position.y + 1 * mod.y), tile_map.get_at(player_position.x + 3 * mod.x, player_position.y + 2 * mod.y));
-    // 11 - 13
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W11_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x - 1 * mod.x, player_position.y - 2 * mod.y), tile_map.get_at(player_position.x - 1 * mod.x, player_position.y - 1 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 2 * mod.x, player_position.y - 1 * mod.y), tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 1 * mod.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W11_E] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x - 1 * mod.x, player_position.y - 2 * mod.y), tile_map.get_at(player_position.x, player_position.y - 2 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 2 * mod.x, player_position.y - 1 * mod.y), tile_map.get_at(player_position.x + 2 * mod.x, player_position.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W12_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x, player_position.y - 2 * mod.y), tile_map.get_at(player_position.x, player_position.y - 1 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 2 * mod.x, player_position.y), tile_map.get_at(player_position.x + 1 * mod.x, player_position.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W13_W] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x, player_position.y - 2 * mod.y), tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 2 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 2 * mod.x, player_position.y), tile_map.get_at(player_position.x + 2 * mod.x, player_position.y + 1 * mod.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W13_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 2 * mod.y), tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 1 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 2 * mod.x, player_position.y + 1 * mod.y), tile_map.get_at(player_position.x + 1 * mod.x, player_position.y + 1* mod.y));
-    // 14 - 16
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W14_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x - 1 * mod.x, player_position.y - 1 * mod.y), tile_map.get_at(player_position.x - 1 * mod.x, player_position.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 1 * mod.y), tile_map.get_at(player_position.x, player_position.y - 1 * mod.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W14_E] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x - 1 * mod.x, player_position.y - 1 * mod.y), tile_map.get_at(player_position.x, player_position.y - 1 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 1 * mod.y), tile_map.get_at(player_position.x + 1 * mod.x, player_position.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W15_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x, player_position.y - 1 * mod.y), tile_map.get_at(player_position.x, player_position.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 1 * mod.x, player_position.y), tile_map.get_at(player_position.x, player_position.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W16_W] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x, player_position.y - 1 * mod.y), tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 1 * mod.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 1 * mod.x, player_position.y), tile_map.get_at(player_position.x + 1 * mod.x, player_position.y + 1 * mod.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W16_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 1 * mod.y), tile_map.get_at(player_position.x + 1 * mod.x, player_position.y)) : wall_map.get_between(tile_map.get_at(player_position.x + 1 * mod.x, player_position.y + 1 * mod.y), tile_map.get_at(player_position.x, player_position.y + 1 * mod.y));
-    // 17 - 19
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W17_E] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x - 1 * mod.x, player_position.y), tile_map.get_at(player_position.x, player_position.y)) : wall_map.get_between(tile_map.get_at(player_position.x, player_position.y - 1 * mod.y), tile_map.get_at(player_position.x, player_position.y));
-    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W19_W] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(tile_map.get_at(player_position.x, player_position.y), tile_map.get_at(player_position.x + 1 * mod.x, player_position.y)) : wall_map.get_between(tile_map.get_at(player_position.x, player_position.y), tile_map.get_at(player_position.x, player_position.y + 1 * mod.y));
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W01_N] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x - 2 * mod.x, player_position.y - 4 * mod.y}, MapPosition{player_position.x - 2 * mod.x, player_position.y - 5 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 4 * mod.x, player_position.y - 2 * mod.y}, MapPosition{player_position.x + 5 * mod.x, player_position.y - 2 * mod.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W01_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x - 2 * mod.x, player_position.y - 4 * mod.y}, MapPosition{player_position.x - 2 * mod.x, player_position.y - 3 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 4 * mod.x, player_position.y - 2 * mod.y}, MapPosition{player_position.x + 3 * mod.x, player_position.y - 2 * mod.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W01_E] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x - 2 * mod.x, player_position.y - 4 * mod.y}, MapPosition{player_position.x - 1 * mod.x, player_position.y - 4 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 4 * mod.x, player_position.y - 2 * mod.y}, MapPosition{player_position.x + 4 * mod.x, player_position.y - 1 * mod.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W02_N] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x - 1 * mod.x, player_position.y - 4 * mod.y}, MapPosition{player_position.x - 1 * mod.x, player_position.y - 5 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 4 * mod.x, player_position.y - 1 * mod.y}, MapPosition{player_position.x + 5 * mod.x, player_position.y - 1 * mod.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W02_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x - 1 * mod.x, player_position.y - 4 * mod.y}, MapPosition{player_position.x - 1 * mod.x, player_position.y - 3 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 4 * mod.x, player_position.y - 1 * mod.y}, MapPosition{player_position.x + 3 * mod.x, player_position.y - 1 * mod.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W02_E] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x - 1 * mod.x, player_position.y - 4 * mod.y}, MapPosition{player_position.x, player_position.y - 4 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 4 * mod.x, player_position.y - 1 * mod.y}, MapPosition{player_position.x + 4 * mod.x, player_position.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W03_N] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x, player_position.y - 4 * mod.y}, MapPosition{player_position.x, player_position.y - 5 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 4 * mod.x, player_position.y}, MapPosition{player_position.x + 5 * mod.x, player_position.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W03_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x, player_position.y - 4 * mod.y}, MapPosition{player_position.x, player_position.y - 3 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 4 * mod.x, player_position.y}, MapPosition{player_position.x + 3 * mod.x, player_position.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W04_N] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x + 1 * mod.x, player_position.y - 4 * mod.y}, MapPosition{player_position.x + 1 * mod.x, player_position.y - 5 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 4 * mod.x, player_position.y + 1 * mod.y}, MapPosition{player_position.x + 5 * mod.x, player_position.y + 1 * mod.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W04_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x + 1 * mod.x, player_position.y - 4 * mod.y}, MapPosition{player_position.x + 1 * mod.x, player_position.y - 3 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 4 * mod.x, player_position.y + 1 * mod.y}, MapPosition{player_position.x + 3 * mod.x, player_position.y + 1 * mod.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W04_W] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x, player_position.y - 4 * mod.y}, MapPosition{player_position.x + 1 * mod.x, player_position.y - 4 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 4 * mod.x, player_position.y}, MapPosition{player_position.x + 4 * mod.x, player_position.y + 1 * mod.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W05_N] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x + 2 * mod.x, player_position.y - 4 * mod.y}, MapPosition{player_position.x + 2 * mod.x, player_position.y - 5 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 4 * mod.x, player_position.y + 2 * mod.y}, MapPosition{player_position.x + 5 * mod.x, player_position.y + 2 * mod.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W05_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x + 2 * mod.x, player_position.y - 4 * mod.y}, MapPosition{player_position.x + 2 * mod.x, player_position.y - 3 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 4 * mod.x, player_position.y + 2 * mod.y}, MapPosition{player_position.x + 3 * mod.x, player_position.y + 2 * mod.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W05_W] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x + 2 * mod.x, player_position.y - 4 * mod.y}, MapPosition{player_position.x + 1 * mod.x, player_position.y - 4 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 4 * mod.x, player_position.y + 2 * mod.y}, MapPosition{player_position.x + 4 * mod.x, player_position.y + 1 * mod.y});
+    // 06 - 10                                                                                                                                                                   MapPosition{
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W06_E] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x - 2 * mod.x, player_position.y - 3 * mod.y}, MapPosition{player_position.x - 1 * mod.x, player_position.y - 3 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 3 * mod.x, player_position.y - 2 * mod.y}, MapPosition{player_position.x + 3 * mod.x, player_position.y - 1 * mod.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W07_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x - 1 * mod.x, player_position.y - 3 * mod.y}, MapPosition{player_position.x - 1 * mod.x, player_position.y - 2 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 3 * mod.x, player_position.y - 1 * mod.y}, MapPosition{player_position.x + 2 * mod.x, player_position.y - 1 * mod.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W07_E] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x - 1 * mod.x, player_position.y - 3 * mod.y}, MapPosition{player_position.x, player_position.y - 3 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 3 * mod.x, player_position.y - 1 * mod.y}, MapPosition{player_position.x + 3 * mod.x, player_position.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W08_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x, player_position.y - 3 * mod.y}, MapPosition{player_position.x, player_position.y - 2 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 3 * mod.x, player_position.y}, MapPosition{player_position.x + 2 * mod.x, player_position.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W09_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x + 1 * mod.x, player_position.y - 3 * mod.y}, MapPosition{player_position.x + 1 * mod.x, player_position.y - 2 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 3 * mod.x, player_position.y + 1 * mod.y}, MapPosition{player_position.x + 2 * mod.x, player_position.y + 1 * mod.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W09_W] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x, player_position.y - 3 * mod.y}, MapPosition{player_position.x + 1 * mod.x, player_position.y - 3 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 3 * mod.x, player_position.y}, MapPosition{player_position.x + 3 * mod.x, player_position.y + 1 * mod.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W10_W] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x + 2 * mod.x, player_position.y - 3 * mod.y}, MapPosition{player_position.x + 1 * mod.x, player_position.y - 3 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 3 * mod.x, player_position.y + 1 * mod.y}, MapPosition{player_position.x + 3 * mod.x, player_position.y + 2 * mod.y});
+    // 11 - 13                                                                                                                                                                   MapPosition{
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W11_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x - 1 * mod.x, player_position.y - 2 * mod.y}, MapPosition{player_position.x - 1 * mod.x, player_position.y - 1 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 2 * mod.x, player_position.y - 1 * mod.y}, MapPosition{player_position.x + 1 * mod.x, player_position.y - 1 * mod.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W11_E] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x - 1 * mod.x, player_position.y - 2 * mod.y}, MapPosition{player_position.x, player_position.y - 2 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 2 * mod.x, player_position.y - 1 * mod.y}, MapPosition{player_position.x + 2 * mod.x, player_position.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W12_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x, player_position.y - 2 * mod.y}, MapPosition{player_position.x, player_position.y - 1 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 2 * mod.x, player_position.y}, MapPosition{player_position.x + 1 * mod.x, player_position.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W13_W] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x, player_position.y - 2 * mod.y}, MapPosition{player_position.x + 1 * mod.x, player_position.y - 2 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 2 * mod.x, player_position.y}, MapPosition{player_position.x + 2 * mod.x, player_position.y + 1 * mod.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W13_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x + 1 * mod.x, player_position.y - 2 * mod.y}, MapPosition{player_position.x + 1 * mod.x, player_position.y - 1 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 2 * mod.x, player_position.y + 1 * mod.y}, MapPosition{player_position.x + 1 * mod.x, player_position.y + 1 * mod.y});
+    // 14 - 16                                                                                                                                                                   MapPosition{
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W14_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x - 1 * mod.x, player_position.y - 1 * mod.y}, MapPosition{player_position.x - 1 * mod.x, player_position.y}) : wall_map.get_between(MapPosition{player_position.x + 1 * mod.x, player_position.y - 1 * mod.y}, MapPosition{player_position.x, player_position.y - 1 * mod.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W14_E] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x - 1 * mod.x, player_position.y - 1 * mod.y}, MapPosition{player_position.x, player_position.y - 1 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 1 * mod.x, player_position.y - 1 * mod.y}, MapPosition{player_position.x + 1 * mod.x, player_position.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W15_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x, player_position.y - 1 * mod.y}, MapPosition{player_position.x, player_position.y}) : wall_map.get_between(MapPosition{player_position.x + 1 * mod.x, player_position.y}, MapPosition{player_position.x, player_position.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W16_W] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x, player_position.y - 1 * mod.y}, MapPosition{player_position.x + 1 * mod.x, player_position.y - 1 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 1 * mod.x, player_position.y}, MapPosition{player_position.x + 1 * mod.x, player_position.y + 1 * mod.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W16_S] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x + 1 * mod.x, player_position.y - 1 * mod.y}, MapPosition{player_position.x + 1 * mod.x, player_position.y}) : wall_map.get_between(MapPosition{player_position.x + 1 * mod.x, player_position.y + 1 * mod.y}, MapPosition{player_position.x, player_position.y + 1 * mod.y});
+    // 17 - 19                                                                                                                                                                   MapPosition{
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W17_E] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x - 1 * mod.x, player_position.y}, MapPosition{player_position.x, player_position.y}) : wall_map.get_between(MapPosition{player_position.x, player_position.y - 1 * mod.y}, MapPosition{player_position.x, player_position.y});
+    player_fov_walls[(size_t) assets::dungeon_view::POVWall::W19_W] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x, player_position.y}, MapPosition{player_position.x + 1 * mod.x, player_position.y}) : wall_map.get_between(MapPosition{player_position.x, player_position.y}, MapPosition{player_position.x, player_position.y + 1 * mod.y});
 }
 
 template <size_t SIZE>
@@ -227,15 +238,88 @@ static void fill_player_fov_tiles(std::array<entt::entity, SIZE> &player_fov_til
     player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F19] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x + 1 * mod.x, player_position.y) : tile_map.get_at(player_position.x, player_position.y + 1 * mod.y);
 }
 
-void DungeonView::_calculate_fov() {
+static inline void set_tint_on_entity(entt::registry &registry, const entt::entity entity, uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+    if (registry.valid(entity)) {
+        registry.emplace_or_replace<components::values::Tint>(entity, r, g, b, a);
+    }
+}
+
+template <size_t SIZE>
+static inline void set_tiles_tint(entt::registry &registry, const std::array<entt::entity, SIZE> &player_fov_tiles) {
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F01], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F02], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F03], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F04], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F05], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F06], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F07], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F08], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F09], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F10], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F11], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F12], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F13], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
+    
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F14], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F15], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F16], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
+}
+
+template <size_t SIZE>
+static inline void set_walls_tint(entt::registry &registry, const std::array<entt::entity, SIZE> &player_fov_walls) {
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W01_E], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W01_N], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W01_S], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W02_E], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W02_N], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W02_S], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W03_N], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W03_S], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W04_N], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W04_S], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W04_W], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W05_N], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W05_S], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W05_W], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W06_E], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W07_E], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W07_S], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W08_S], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W09_W], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W09_S], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W10_W], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W11_E], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W11_S], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W12_S], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W13_S], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W13_W], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
+
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W14_E], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W14_S], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W15_S], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W16_S], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W16_W], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
+
+}
+
+void DungeonView::_calculate_fov() noexcept {
     _core->registry.clear<components::fields::InFovOfEntity>();
     auto player_view = _core->registry.view<components::general::Player, components::general::Direction, components::fields::MapPosition>();
+
     for (auto entity: player_view) {
         auto player_position = player_view.get<components::fields::MapPosition>(entity);
         auto player_direction = player_view.get<components::general::Direction>(entity);
 
-        fill_player_fov_tiles(_player_fov_tile.field, player_position, _tile_map, player_direction.direction);
-        fill_player_fov_walls(_player_fov_wall.field, player_position, _wall_map, _tile_map, player_direction.direction);
+        fill_player_fov_tiles(_player_fov_tile.field, player_position, _level.tile_map, player_direction.direction);
+        fill_player_fov_walls(_player_fov_wall.field, player_position, _level.wall_map, _level.tile_map, player_direction.direction);
+
+        _core->registry.clear<components::values::Tint>();
+        set_tiles_tint(_core->registry, _player_fov_tile.field);
+        set_walls_tint(_core->registry, _player_fov_wall.field);
 
         for (entt::entity fov_tile: _player_fov_tile.field) {
             if (_core->registry.valid(fov_tile)) {
@@ -245,15 +329,9 @@ void DungeonView::_calculate_fov() {
     }
 }
 
-void DungeonView::_clear() {
-    for (auto wall_entity: _wall_map._walls) {
-        _core->registry.destroy(wall_entity.entity);
-    }
-    _wall_map._walls.clear();
-    for (auto tile_entity: _tile_map._tiles) {
-        _core->registry.destroy(tile_entity.entity);
-    }
-    _tile_map._tiles.clear();
+void DungeonView::_clear() noexcept {
+    _level.clear();
+
     _player_fov_tile.field.fill(entt::null);
     _player_fov_wall.field.fill(entt::null);
 }
