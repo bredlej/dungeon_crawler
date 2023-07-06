@@ -65,6 +65,8 @@ private:
     void _field_component_selected(FieldComponentSelected type);
     void _field_component_added(FieldComponentAdded type);
     void _field_component_removed(FieldComponentRemoved type);
+    void _add_component_to_context(FieldComponentType type);
+    void _remove_component_from_context(FieldComponentType type);
     FieldComponent<Floor, Walkability, EncounterChance> _field_components;
 };
 #endif//DUNGEON_CRAWLER_BLUEPRINT_HPP

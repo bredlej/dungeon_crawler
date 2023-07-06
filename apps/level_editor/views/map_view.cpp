@@ -6,6 +6,22 @@
 static inline bool is_tile_select(const Core &core) {
     return core.registry.ctx().find<CurrentEditMode>()->edit_mode == EditMode::Tile && core.registry.ctx().find<CurrentEditModeTool>()->edit_mode_tool == EditModeTool::Select;
 }
+static inline bool is_tile_paint(const Core &core) {
+    return core.registry.ctx().find<CurrentEditMode>()->edit_mode == EditMode::Tile && core.registry.ctx().find<CurrentEditModeTool>()->edit_mode_tool == EditModeTool::Paint;
+}
+static inline bool is_tile_fill(const Core &core) {
+    return core.registry.ctx().find<CurrentEditMode>()->edit_mode == EditMode::Tile && core.registry.ctx().find<CurrentEditModeTool>()->edit_mode_tool == EditModeTool::Fill;
+}
+static inline bool is_wall_select(const Core &core) {
+    return core.registry.ctx().find<CurrentEditMode>()->edit_mode == EditMode::Wall && core.registry.ctx().find<CurrentEditModeTool>()->edit_mode_tool == EditModeTool::Select;
+}
+static inline bool is_wall_paint(const Core &core) {
+    return core.registry.ctx().find<CurrentEditMode>()->edit_mode == EditMode::Wall && core.registry.ctx().find<CurrentEditModeTool>()->edit_mode_tool == EditModeTool::Paint;
+}
+static inline bool is_wall_line(const Core &core) {
+    return core.registry.ctx().find<CurrentEditMode>()->edit_mode == EditMode::Wall && core.registry.ctx().find<CurrentEditModeTool>()->edit_mode_tool == EditModeTool::Line;
+}
+
 void MapView::render() noexcept {
     using namespace editor;
     ClearBackground(BLACK);
@@ -16,6 +32,7 @@ void MapView::render() noexcept {
     _draw_selection_hovered_tile();
     if (is_tile_select(*_core)) {
         _select_tiles_in_rectangle();
+    } else if (is_tile_paint(*_core)) {
     }
 }
 
@@ -38,8 +55,7 @@ void MapView::update() noexcept {
         }
     } else if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON) && is_tile_select(*_core)) {
         _core->dispatcher.enqueue<ClearSelection>();
-    }
-    else {
+    } else {
         _mouse_drag_start_position = _mouse_drag_end_position = (Vector2){0, 0};
     }
 }
@@ -59,6 +75,9 @@ void MapView::_check_tile_collision(const int32_t x, const int32_t y) const {
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             _core->registry.ctx().erase<EntitySelected>();
             _core->registry.ctx().emplace<editor::EntitySelected>(_level.tile_map.get_at(x, y));
+            if (is_tile_paint(*_core)) {
+                _core->dispatcher.enqueue<PaintTile>(x, y);
+            }
         }
     }
 }
@@ -74,22 +93,21 @@ void MapView::_check_wall_collision(int32_t x, int32_t y) const {
         if (edit_mode_tool && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             switch (edit_mode_tool->edit_mode_tool) {
                 case EditModeTool::Select:
-                    _core->dispatcher.enqueue<WallSelected>(MapPosition{x,y-1}, MapPosition{x, y});
+                    _core->dispatcher.enqueue<WallSelected>(MapPosition{x, y - 1}, MapPosition{x, y});
                     break;
                 case EditModeTool::Paint:
-                    _core->dispatcher.enqueue<WallAdded>(WallType::RUINS_01, MapPosition{x,y-1}, MapPosition{x, y});
+                    _core->dispatcher.enqueue<WallAdded>(WallType::RUINS_01, MapPosition{x, y - 1}, MapPosition{x, y});
                     break;
                 default:
                     break;
             }
-        }
-        else if (edit_mode_tool && IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)) {
+        } else if (edit_mode_tool && IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)) {
             switch (edit_mode_tool->edit_mode_tool) {
                 case EditModeTool::Select:
                     _core->registry.ctx().erase<WallSelected>();
                     break;
                 case EditModeTool::Paint:
-                    _core->dispatcher.enqueue<WallRemoved>(MapPosition{x, y-1}, MapPosition{x, y});
+                    _core->dispatcher.enqueue<WallRemoved>(MapPosition{x, y - 1}, MapPosition{x, y});
                     break;
                 default:
                     break;
@@ -104,22 +122,21 @@ void MapView::_check_wall_collision(int32_t x, int32_t y) const {
         if (edit_mode_tool && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             switch (edit_mode_tool->edit_mode_tool) {
                 case EditModeTool::Select:
-                    _core->dispatcher.enqueue<WallSelected>(MapPosition{x-1, y}, MapPosition{x, y});
+                    _core->dispatcher.enqueue<WallSelected>(MapPosition{x - 1, y}, MapPosition{x, y});
                     break;
                 case EditModeTool::Paint:
-                    _core->dispatcher.enqueue<WallAdded>(WallType::RUINS_01, MapPosition{x-1,y}, MapPosition{x, y});
+                    _core->dispatcher.enqueue<WallAdded>(WallType::RUINS_01, MapPosition{x - 1, y}, MapPosition{x, y});
                     break;
                 default:
                     break;
             }
-        }
-        else if (edit_mode_tool && IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)) {
+        } else if (edit_mode_tool && IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)) {
             switch (edit_mode_tool->edit_mode_tool) {
                 case EditModeTool::Select:
                     _core->registry.ctx().erase<WallSelected>();
                     break;
                 case EditModeTool::Paint:
-                    _core->dispatcher.enqueue<WallRemoved>(MapPosition{x-1,y}, MapPosition{x, y});
+                    _core->dispatcher.enqueue<WallRemoved>(MapPosition{x - 1, y}, MapPosition{x, y});
                     break;
                 default:
                     break;
@@ -142,7 +159,7 @@ void MapView::_draw_grid() const {
 void MapView::_draw_selection_hovered_tile() const {
     for (uint32_t y = 0; y < _level.tile_map._height; y++) {
         for (uint32_t x = 0; x < _level.tile_map._width; x++) {
-            if (auto *position_hovered = _core->registry.ctx().find<MapPositionHovered>() ) {
+            if (auto *position_hovered = _core->registry.ctx().find<MapPositionHovered>()) {
                 if (position_hovered->position.x == x && position_hovered->position.y == y) {
                     DrawRectangleLinesEx({x * _cell_size + _offset.x, y * _cell_size + _offset.y, _cell_size, _cell_size}, 3, palette::yellow);
                 }
@@ -156,14 +173,12 @@ void MapView::_draw_tile_map() const {
         components::fields::MapPosition position = _core->registry.get<components::fields::MapPosition>(tile.entity);
         if (tile.entity == entt::null) {
             DrawRectangle(position.x * _cell_size + _offset.x, position.y * _cell_size + _offset.y, _cell_size, _cell_size, GRAY);
-        }
-        else {
+        } else {
             if (_core->registry.any_of<components::fields::Floor>(tile.entity)) {
                 components::fields::Floor floor = _core->registry.get<components::fields::Floor>(tile.entity);
                 DrawTextureRec(_core->registry.ctx().find<EditorAssets>()->_textures[floor.type].get(), {0, 0, 25, 25}, {position.x * _cell_size + _offset.x, position.y * _cell_size + _offset.y}, WHITE);
                 DrawRectangleLines(position.x * _cell_size + _offset.x, position.y * _cell_size + _offset.y, _cell_size, _cell_size, palette::dark_gray);
-            }
-            else {
+            } else {
                 DrawRectangle(position.x * _cell_size + _offset.x, position.y * _cell_size + _offset.y, _cell_size, _cell_size, palette::dark_gray);
             }
         }
@@ -193,8 +208,7 @@ void MapView::_draw_wall_map() const {
     if (wall_selected) {
         if (wall_selected->position1.x < wall_selected->position2.x && wall_selected->position1.y == wall_selected->position2.y) {
             DrawLineEx({wall_selected->position2.x * _cell_size + _offset.x, wall_selected->position1.y * _cell_size + _offset.y}, {wall_selected->position2.x * _cell_size + _offset.x, wall_selected->position2.y * _cell_size + _offset.y + _cell_size}, 3, palette::yellow);
-        }
-        else if (wall_selected->position1.x == wall_selected->position2.x && wall_selected->position1.y < wall_selected->position2.y) {
+        } else if (wall_selected->position1.x == wall_selected->position2.x && wall_selected->position1.y < wall_selected->position2.y) {
             DrawLineEx({wall_selected->position1.x * _cell_size + _offset.x, wall_selected->position2.y * _cell_size + _offset.y}, {wall_selected->position2.x * _cell_size + _offset.x + _cell_size, wall_selected->position2.y * _cell_size + _offset.y}, 3, palette::yellow);
         }
     }
@@ -259,6 +273,17 @@ void MapView::_select_tiles_in_rectangle() {
     }
 }
 
+void MapView::_paint_tile(PaintTile paint_tile) {
+    if (auto entity = _core->registry.ctx().find<EntitySelected>()) {
+        auto field = _level.tile_map.get_at(paint_tile.x, paint_tile.y);
+        if (field == entt::null) {
+            field = _core->registry.create();
+            _core->registry.emplace<components::fields::Field>(field);
+            _core->registry.emplace<components::fields::MapPosition>(field, paint_tile.x, paint_tile.y);
+            _level.tile_map._tiles.emplace_back(Tile{field});
+        }
+    }
+}
 void MapView::_handle_entities_selection(const MapPositionSelected &event) {
     _core->registry.ctx().erase<EntitiesSelected>();
     std::vector<std::pair<components::fields::MapPosition, entt::entity>> entities;
@@ -320,13 +345,14 @@ void MapView::_remove_all_selected_tiles() {
         }
     }
     _level.tile_map._tiles.erase(std::remove_if(_level.tile_map._tiles.begin(), _level.tile_map._tiles.end(), [selected_tiles](const Tile &tile) {
-        for (const auto &selected_tile: selected_tiles->entities) {
-            if (selected_tile.second == tile.entity) {
-                return true;
-            }
-        }
-        return false;
-    }), _level.tile_map._tiles.end());
+                                     for (const auto &selected_tile: selected_tiles->entities) {
+                                         if (selected_tile.second == tile.entity) {
+                                             return true;
+                                         }
+                                     }
+                                     return false;
+                                 }),
+                                 _level.tile_map._tiles.end());
     _core->registry.ctx().erase<EntitiesSelected>();
 
     auto *selected_positions = _core->registry.ctx().find<MapPositionSelected>();
@@ -358,14 +384,16 @@ void MapView::_add_wall(const WallAdded &wallAdded) {
 void MapView::_remove_wall(const WallRemoved &wallRemoved) {
     entt::entity to_remove = entt::null;
     _core->registry.view<Wall>().each([this, &wallRemoved, &to_remove](const entt::entity &entity, const Wall &wall) {
-        if (wall.field1.x == wallRemoved.position1.x && wall.field1.y == wallRemoved.position1.y && wall.field2.x == wallRemoved.position2.x && wall.field2.y == wallRemoved.position2.y) {
+        if (wall.field1.x == wallRemoved.position1.x && wall.field1.y == wallRemoved.position1.y && wall.field2.x == wallRemoved.position2.x && wall.field2.y == wallRemoved.position2.y
+            || wall.field1.x == wallRemoved.position2.x && wall.field1.y == wallRemoved.position2.y && wall.field2.x == wallRemoved.position1.x && wall.field2.y == wallRemoved.position1.y) {
             to_remove = entity;
         }
     });
     if (to_remove != entt::null) {
         _level.wall_map._walls.erase(std::remove_if(_level.wall_map._walls.begin(), _level.wall_map._walls.end(), [to_remove](const WallEntity &wall) {
-            return wall.entity == to_remove;
-        }), _level.wall_map._walls.end());
+                                         return wall.entity == to_remove;
+                                     }),
+                                     _level.wall_map._walls.end());
         _core->registry.destroy(to_remove);
     }
 }

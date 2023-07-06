@@ -136,7 +136,7 @@ void DungeonView::update() noexcept {
     if (IsKeyPressed(KEY_L)) {
         try {
             _clear();
-            _level.load("assets/Levels/Ruins/level_new.json");
+            _level.load("assets/Levels/Ruins/ruins_02_saved.json");
             _calculate_fov();
         }
         catch (std::exception &e) {

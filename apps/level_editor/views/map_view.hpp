@@ -33,6 +33,7 @@ public:
         _core->dispatcher.sink<editor::WallSelected>().connect<&MapView::_select_wall>(this);
         _core->dispatcher.sink<editor::WallAdded>().connect<&MapView::_add_wall>(this);
         _core->dispatcher.sink<editor::WallRemoved>().connect<&MapView::_remove_wall>(this);
+        _core->dispatcher.sink<editor::PaintTile>().connect<&MapView::_paint_tile>(this);
     }
     MapView(const MapView &) noexcept = delete;
     MapView(MapView &&) noexcept = delete;
@@ -66,6 +67,7 @@ private:
     void _draw_selection_hovered_tile() const;
     void _draw_cursor() const;
     void _select_tiles_in_rectangle();
+    void _paint_tile(PaintTile paintTile);
     void _check_tile_collision(int32_t x, int32_t y) const;
     void _check_wall_collision(int32_t x, int32_t y) const;
 

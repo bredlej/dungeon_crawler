@@ -46,6 +46,11 @@ namespace editor {
     };
     struct ClearSelection {};
 
+    struct PaintTile {
+        int32_t x;
+        int32_t y;
+    };
+
     template<typename Component>
     struct PlaceComponent{
         Component component;

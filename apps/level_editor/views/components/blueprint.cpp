@@ -23,6 +23,45 @@ void Blueprint::_field_component_removed(FieldComponentRemoved type) {
     _available_field_component_types.push_back(type.type);
     _selected_field_component_type = _available_field_component_types.empty() ? FieldComponentType::None : _available_field_component_types[0];
 }
+void Blueprint::_add_component_to_context(FieldComponentType type) {
+    switch (type) {
+        case FieldComponentType::Floor: {
+            _core->registry.ctx().emplace<components::fields::Floor>(std::get<Floor>(_field_components.components));
+            break;
+        }
+        case FieldComponentType::EncounterChance: {
+            _core->registry.ctx().emplace<components::values::EncounterChance>(std::get<EncounterChance>(_field_components.components));
+            break;
+        }
+        case FieldComponentType::Walkability: {
+            _core->registry.ctx().emplace<components::fields::Walkability>(std::get<Walkability>(_field_components.components));
+            break;
+        }
+        default: {
+            break;
+        }
+    }
+}
+void Blueprint::_remove_component_from_context(FieldComponentType type) {
+    switch (type) {
+        case FieldComponentType::Floor: {
+            _core->registry.ctx().erase<components::fields::Floor>();
+            break;
+        }
+        case FieldComponentType::EncounterChance: {
+            _core->registry.ctx().erase<components::values::EncounterChance>();
+            break;
+        }
+        case FieldComponentType::Walkability: {
+            _core->registry.ctx().erase<components::fields::Walkability>();
+            break;
+        }
+        default: {
+            break;
+        }
+    }
+}
+
 void Blueprint::render() {
     ImGui::SetNextTreeNodeOpen(true, ImGuiCond_Once);
     if (ImGui::TreeNode("Blueprint")) {
