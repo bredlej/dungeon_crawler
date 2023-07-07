@@ -15,7 +15,7 @@ void EntityDetails::render() {
             for (const auto &[position, entity] : _core->registry.ctx().find<editor::EntitiesSelected>()->entities) {
                 bool entity_valid = _core->registry.valid(entity) && entity != entt::null;
                 if (entity_valid) {
-                    if (ImGui::TreeNode((void *) (intptr_t) i, fmt::format("({}, {})", position.x, position.y).c_str())) {
+                    if (ImGui::TreeNode((void *) (intptr_t) i, "%s", fmt::format("({}, {})", position.x, position.y).c_str())) {
                         ImGui::Spacing();
                         if (_core->registry.any_of<components::fields::Field>(entity)) {
                             _component_renderer.render_component<components::fields::Field>(entity);
