@@ -30,3 +30,23 @@ else ()
 target_link_libraries(level_editor dungeon_crawler_application)
 endif ()
 target_include_directories(level_editor PRIVATE ${EDITOR_INCLUDE_DIRS})
+if (EMSCRIPTEN AND ${WASM})
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DPLATFORM_WEB -DGRAPHICS_API_OPENGL_ES2 -s USE_GLFW=3 -s TOTAL_MEMORY=64MB -s ASSERTIONS=1 -s WASM=1 -s  ASYNCIFY ")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -DPLATFORM_WEB -DGRAPHICS_API_OPENGL_ES2 -s USE_GLFW=3 --preload-file assets -s TOTAL_MEMORY=32MB -s ASSERTIONS=1 -s WASM=1 -s ASYNCIFY ")
+    set(CMAKE_EXECUTABLE_SUFFIX ".html") # This line is used to set your executable to build with the emscripten html template so taht you can directly open it.
+    add_custom_command(TARGET level_editor
+            POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E make_directory ../docs/generated)
+    add_custom_command(TARGET level_editor
+            POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy level_editor.js ../docs/generated/level_editor.js)
+    add_custom_command(TARGET level_editor
+            POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy level_editor.wasm ../docs/generated/level_editor.wasm)
+    add_custom_command(TARGET level_editor
+            POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy level_editor.html ../docs/generated/level_editor.html)
+    add_custom_command(TARGET level_editor
+            POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy level_editor.data ../docs/generated/level_editor.data)
+endif ()
