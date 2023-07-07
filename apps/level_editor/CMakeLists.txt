@@ -23,12 +23,10 @@ set(EDITOR_INCLUDE_DIRS
         ${PROJECT_SOURCE_DIR}/apps/level_editor/views/components
         ${INCLUDE_DIR})
 
-
+add_executable(level_editor ${EDITOR_SOURCE_FILES})
 if (${WASM})
+target_link_libraries(level_editor dungeon_crawler_application glfw3)
 else ()
-    add_executable(level_editor ${EDITOR_SOURCE_FILES})
-    target_link_libraries(level_editor ${EXTRA_LIBS})
-    target_link_libraries(level_editor dungeon_crawler_application)
-    target_include_directories(level_editor PRIVATE ${EDITOR_INCLUDE_DIRS})
+target_link_libraries(level_editor dungeon_crawler_application)
 endif ()
-
+target_include_directories(level_editor PRIVATE ${EDITOR_INCLUDE_DIRS})
