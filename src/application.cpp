@@ -3,11 +3,6 @@
 //
 #include <application.hpp>
 
-void initialize_views(ViewMap &views,  std::shared_ptr<Core>& core) {
-    views[ViewMode::MainMenu] = std::make_unique<MainMenu>(MainMenu(core));
-    views[ViewMode::Dungeon] = std::make_unique<DungeonView>(core, TileMap(core, 20, 20));
-}
-
 void initialize_player(const std::shared_ptr<Core>& core) {
     const entt::entity player_entity = core->registry.create();
     core->registry.emplace<components::general::Player>(player_entity, true);
@@ -73,7 +68,7 @@ static inline void setup_imgui_colors() {
     colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
 }
 
-void _toggle_fullscreen() {
+void Application::_toggle_fullscreen() noexcept {
     if (IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT)))
     {
         if (IsWindowFullscreen())
@@ -89,27 +84,28 @@ void _toggle_fullscreen() {
     }
 }
 
-void run_raylib(ViewMap &views, ViewMode view_mode, std::shared_ptr<Core> &core) {
-    InitWindow(Config::window.width, Config::window.height, Config::title.data());
-    rlImGuiSetup(true);
+void Application::run() noexcept {
+    std::printf("Dungeon crawler is running.\n");
+
     setup_imgui_colors();
-    core->load_assets();
-    initialize_views(views, core);
-    initialize_player(core);
+    _core->load_assets();
+
+    initialize_player(_core);
 
     SetTargetFPS(144);
     while (!WindowShouldClose()) {
         _toggle_fullscreen();
-        views[view_mode]->update();
-        core->dispatcher.update();
-        views[view_mode]->render();
+        _core->dispatcher.update();
+        switch (_view_mode) {
+            case ViewMode::MainMenu:
+                main_menu_view->update();
+                main_menu_view->render();
+                break;
+            case ViewMode::Dungeon:
+                dungeon_view->update();
+                dungeon_view->render();
+                break;
+        }
     }
-    rlImGuiShutdown();
-    CloseWindow();
-}
 
-void Application::run() {
-    std::printf("Running app.\n");
-
-    run_raylib(_views, _view_mode, _core);
 }

@@ -19,7 +19,7 @@ namespace components {
     }
     namespace values {
         struct EncounterChance {
-            float fraction;
+            float chance;
         };
         struct Encounter {};
         struct Tint {
@@ -45,14 +45,14 @@ namespace components {
         };
         struct Wall {
             WallType type;
-            entt::entity field1;
-            entt::entity field2;
+            MapPosition field1;
+            MapPosition field2;
         };
         struct Visibility {
             bool is_visible;
         };
         struct Walkability {
-            bool is_walkable;
+            bool walkable;
         };
         struct InFovOfEntity {
             entt::entity entity;

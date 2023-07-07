@@ -29,10 +29,11 @@ static inline void handle_turn_direction (entt::registry &registry, WorldDirecti
 }
 
 static inline void change_position(ModXY mod, entt::registry &registry, const TileMap *tile_map, const WallMap *wall_map, components::fields::MapPosition &position) {
+    using namespace components::fields;
     entt::entity destination = tile_map->get_at(position.x + mod.x, position.y + mod.y);
-    if (registry.valid(destination) && registry.get<components::fields::Walkability>(destination).is_walkable) {
-        entt::entity wall = wall_map->get_between(tile_map->get_at(position.x, position.y), destination);
-        if (wall == entt::null || registry.get<components::fields::Walkability>(wall).is_walkable) {
+    if (registry.valid(destination) && registry.get<components::fields::Walkability>(destination).walkable) {
+        entt::entity wall = wall_map->get_between(MapPosition{position.x, position.y}, MapPosition{position.x + mod.x, position.y + mod.y});
+        if (wall == entt::null || registry.get<components::fields::Walkability>(wall).walkable) {
             components::fields::MapPosition destination_position = registry.get<components::fields::MapPosition>(destination);
             position.x = destination_position.x;
             position.y = destination_position.y;
@@ -84,7 +85,7 @@ void DungeonActions::_on_movement(const events::dungeon::Movement &movement) {
     auto *tile_encounter_chance = _core->registry.try_get<components::values::EncounterChance>(_tile_map->get_at(new_position.x, new_position.y));
     if (tile_encounter_chance) {
         auto encounter_chance = _core->registry.ctx().find<components::values::EncounterChance>();
-        _core->dispatcher.enqueue<events::dungeon::EncounterChanceChange>(encounter_chance->fraction + tile_encounter_chance->fraction);
+        _core->dispatcher.enqueue<events::dungeon::EncounterChanceChange>(encounter_chance->chance + tile_encounter_chance->chance);
     }
     if (_core->registry.ctx().contains<components::values::Encounter>()) {
         _core->registry.ctx().erase<components::values::Encounter>();

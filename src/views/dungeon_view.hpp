@@ -15,6 +15,7 @@ extern "C" {
 #include <views/ui/dungeon_ui.hpp>
 #include <views/actions/dungeon_actions.hpp>
 #include <events.hpp>
+#include <level.hpp>
 
 constexpr static Color BACKGROUND_COLOR = {0x34 /2, 0x31/2, 0x1d/2, 0xff};
 constexpr static Color FOV_COLOR = {0x48, 0x53, 0x22, 0xff};
@@ -43,10 +44,9 @@ struct POVField {
     std::array<entt::entity, static_cast<size_t>(T::SIZE)> field;
 };
 
-class DungeonView : public UIView {
+class DungeonView : public UIView<DungeonView> {
 public:
-    explicit DungeonView(std::shared_ptr<Core> &core, TileMap &&tile_map) : UIView{core}, _ui{core}, _render_texture_pov{LoadRenderTexture(320, 240)}, _render_texture_gui(LoadRenderTexture(120, 120)), _wall_map{core}, _tile_map{std::move(tile_map)} {
-        _wall_map.initialize(_tile_map);
+    explicit DungeonView(std::shared_ptr<Core> &core, Level &&level) : UIView{core}, _ui{core}, _render_texture_pov{LoadRenderTexture(320, 240)}, _render_texture_gui(LoadRenderTexture(120, 120)), _level{std::move(level)} {
         _initialize();
         std::printf("Dungeon View constructed\n");
     };
@@ -56,22 +56,21 @@ public:
     DungeonView &operator=(const DungeonView &) noexcept = delete;
     DungeonView &operator=(const DungeonView &&) noexcept = delete;
 
-    void render() override;
-    void update() override;
+    void render() noexcept override;
+    void update() noexcept override;
 private:
-    void _initialize();
-    void _render_pov();
-    void _render_minimap();
-    void _calculate_fov();
-    void _clear();
+    void _initialize() noexcept;
+    void _render_pov() noexcept;
+    void _render_minimap() noexcept;
+    void _calculate_fov() noexcept;
+    void _clear() noexcept;
     POVField<assets::dungeon_view::POVFloor> _player_fov_tile;
     POVField<assets::dungeon_view::POVWall> _player_fov_wall;
     RenderTexture _render_texture_pov;
     RenderTexture _render_texture_gui;
-    TileMap _tile_map;
-    WallMap _wall_map;
+    Level _level;
     DungeonUI _ui;
-    DungeonActions _actions{_core, &_tile_map, &_wall_map};
+    DungeonActions _actions{_core, &_level};
 };
 
 

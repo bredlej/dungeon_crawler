@@ -10,8 +10,8 @@ namespace assets {
         namespace minimap {
             constexpr const char *background = "assets/GUI/Minimap/background.png";
             constexpr const char *player_ss = "assets/GUI/Minimap/player.png";
-        }
-    }
+        }// namespace minimap
+    }    // namespace gui
     namespace beasts {
         constexpr const char *goblin_warrior = "assets/Bestiary/goblin_warrior.png";
     }
@@ -39,7 +39,7 @@ namespace assets {
                         constexpr const char *f17 = "assets/Tiles/Stratum/Ruins/Floor/01/17.png";
                         constexpr const char *f18 = "assets/Tiles/Stratum/Ruins/Floor/01/18.png";
                         constexpr const char *f19 = "assets/Tiles/Stratum/Ruins/Floor/01/19.png";
-                    }// namespace floor_01
+                    }// namespace ruins_01
                     namespace floor_02 {
                         constexpr const char *f01 = "assets/Tiles/Stratum/Ruins/Floor/02/01.png";
                         constexpr const char *f02 = "assets/Tiles/Stratum/Ruins/Floor/02/02.png";
@@ -60,7 +60,7 @@ namespace assets {
                         constexpr const char *f17 = "assets/Tiles/Stratum/Ruins/Floor/02/17.png";
                         constexpr const char *f18 = "assets/Tiles/Stratum/Ruins/Floor/02/18.png";
                         constexpr const char *f19 = "assets/Tiles/Stratum/Ruins/Floor/02/19.png";
-                    }// namespace floor_02
+                    }// namespace ruins_02
                 }    // namespace floor
                 namespace wall {
                     namespace wall_01 {
@@ -101,7 +101,10 @@ namespace assets {
                 }    // namespace wall
             }        // namespace ruins
         }            // namespace stratum
-
-    }// namespace tiles
+    }                // namespace tiles
+    namespace level_editor::tiles {
+            constexpr const char *ruins_01 = "../../assets/LevelEditor/ruins_01.png";
+            constexpr const char *ruins_02 = "../../assets/LevelEditor/ruins_02.png";
+    }
 }// namespace assets
 #endif//DUNGEON_CRAWLER_ASSET_PATHS_HPP

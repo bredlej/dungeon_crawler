@@ -331,7 +331,6 @@ void DungeonView::_calculate_fov() noexcept {
 
 void DungeonView::_clear() noexcept {
     _level.clear();
-
     _player_fov_tile.field.fill(entt::null);
     _player_fov_wall.field.fill(entt::null);
 }

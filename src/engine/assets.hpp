@@ -44,8 +44,15 @@ namespace assets {
             {"RUINS_01", FloorType::RUINS_01},
             {"RUINS_02", FloorType::RUINS_02}
     };
+    static std::unordered_map<FloorType, std::string> floor_type_to_name = {
+            {FloorType::RUINS_01, "RUINS_01"},
+            {FloorType::RUINS_02, "RUINS_02"}
+    };
     static std::unordered_map<std::string, WallType> name_to_wall_type = {
             {"RUINS_01", WallType::RUINS_01}
+    };
+    static std::unordered_map<WallType, std::string> wall_type_to_name = {
+            {WallType::RUINS_01, "RUINS_01"}
     };
     static std::unordered_map<std::string, Beast> name_to_beast_type = {
             {"GoblinWarrior", Beast::GoblinWarrior}
