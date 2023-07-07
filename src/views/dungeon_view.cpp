@@ -19,7 +19,13 @@ void DungeonView::_render_pov() noexcept {
             if (_core->registry.valid(_player_fov_tile.field[i])) {
                 const auto floor = _core->registry.try_get<components::fields::Floor>(_player_fov_tile.field[i]);
                 if (floor) {
-                    draw_floor(assets, i, floor->type, WHITE);
+                    const auto tint = _core->registry.try_get<components::values::Tint>(_player_fov_tile.field[i]);
+                    if (tint) {
+                        draw_floor(assets, i, floor->type, Color{tint->r, tint->g, tint->b, tint->a});
+                    }
+                    else {
+                        draw_floor(assets, i, floor->type, WHITE);
+                    }
                 }
                 else {
                     draw_floor(assets, i, FloorType::RUINS_01, RED);
@@ -31,7 +37,13 @@ void DungeonView::_render_pov() noexcept {
         for (const POVWall i: draw_order_walls) {
             if (_core->registry.valid(_player_fov_wall.field[static_cast<const size_t>(i)])) {
                 if (const components::fields::Wall *wall = _core->registry.try_get<components::fields::Wall>(_player_fov_wall.field[static_cast<const size_t>(i)])) {
-                    DrawTexture(assets->_textures._tiles[static_cast<POVWall>(i)][wall->type].get(), 0, 0, WHITE);
+                    const auto tint = _core->registry.try_get<components::values::Tint>(_player_fov_wall.field[static_cast<const size_t>(i)]);
+                    if (tint) {
+                        DrawTexture(assets->_textures._tiles[static_cast<POVWall>(i)][wall->type].get(), 0, 0, Color{tint->r, tint->g, tint->b, tint->a});
+                    }
+                    else {
+                        DrawTexture(assets->_textures._tiles[static_cast<POVWall>(i)][wall->type].get(), 0, 0, WHITE);
+                    }
                 }
             }
         }
@@ -226,15 +238,88 @@ static void fill_player_fov_tiles(std::array<entt::entity, SIZE> &player_fov_til
     player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F19] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x + 1 * mod.x, player_position.y) : tile_map.get_at(player_position.x, player_position.y + 1 * mod.y);
 }
 
+static inline void set_tint_on_entity(entt::registry &registry, const entt::entity entity, uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+    if (registry.valid(entity)) {
+        registry.emplace_or_replace<components::values::Tint>(entity, r, g, b, a);
+    }
+}
+
+template <size_t SIZE>
+static inline void set_tiles_tint(entt::registry &registry, const std::array<entt::entity, SIZE> &player_fov_tiles) {
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F01], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F02], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F03], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F04], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F05], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F06], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F07], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F08], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F09], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F10], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F11], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F12], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F13], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
+    
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F14], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F15], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F16], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
+}
+
+template <size_t SIZE>
+static inline void set_walls_tint(entt::registry &registry, const std::array<entt::entity, SIZE> &player_fov_walls) {
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W01_E], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W01_N], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W01_S], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W02_E], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W02_N], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W02_S], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W03_N], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W03_S], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W04_N], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W04_S], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W04_W], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W05_N], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W05_S], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W05_W], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
+
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W06_E], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W07_E], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W07_S], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W08_S], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W09_W], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W09_S], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W10_W], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
+
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W11_E], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W11_S], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W12_S], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W13_S], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W13_W], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
+
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W14_E], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W14_S], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W15_S], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W16_S], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
+    set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W16_W], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
+
+}
+
 void DungeonView::_calculate_fov() noexcept {
     _core->registry.clear<components::fields::InFovOfEntity>();
     auto player_view = _core->registry.view<components::general::Player, components::general::Direction, components::fields::MapPosition>();
+
     for (auto entity: player_view) {
         auto player_position = player_view.get<components::fields::MapPosition>(entity);
         auto player_direction = player_view.get<components::general::Direction>(entity);
 
         fill_player_fov_tiles(_player_fov_tile.field, player_position, _level.tile_map, player_direction.direction);
         fill_player_fov_walls(_player_fov_wall.field, player_position, _level.wall_map, _level.tile_map, player_direction.direction);
+
+        _core->registry.clear<components::values::Tint>();
+        set_tiles_tint(_core->registry, _player_fov_tile.field);
+        set_walls_tint(_core->registry, _player_fov_wall.field);
 
         for (entt::entity fov_tile: _player_fov_tile.field) {
             if (_core->registry.valid(fov_tile)) {
