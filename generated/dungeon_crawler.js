@@ -82,7 +82,7 @@ var REMOTE_PACKAGE_SIZE = metadata['remote_package_size'];
               num++;
             }
             total = Math.ceil(total * Module.expectedDataFileDownloads/num);
-            if (Module['setStatus']) Module['setStatus']('Downloading data... (' + loaded + '/' + total + ')');
+            if (Module['setStatus']) Module['setStatus'](`Downloading data... (${loaded}/${total})`);
           } else if (!Module.dataFileDownloads) {
             if (Module['setStatus']) Module['setStatus']('Downloading data...');
           }
@@ -126,6 +126,7 @@ Module['FS_createPath']("/", "assets", true, true);
 Module['FS_createPath']("/assets", "Bestiary", true, true);
 Module['FS_createPath']("/assets", "GUI", true, true);
 Module['FS_createPath']("/assets/GUI", "Minimap", true, true);
+Module['FS_createPath']("/assets", "LevelEditor", true, true);
 Module['FS_createPath']("/assets", "Levels", true, true);
 Module['FS_createPath']("/assets/Levels", "Ruins", true, true);
 Module['FS_createPath']("/assets", "Tiles", true, true);
@@ -155,7 +156,7 @@ Module['FS_createPath']("/assets/Tiles/Walls", "17-19", true, true);
         open: function(mode, name) {
           this.name = name;
           this.requests[name] = this;
-          Module['addRunDependency']('fp ' + this.name);
+          Module['addRunDependency'](`fp ${this.name}`);
         },
         send: function() {},
         onload: function() {
@@ -166,7 +167,7 @@ Module['FS_createPath']("/assets/Tiles/Walls", "17-19", true, true);
           var that = this;
           // canOwn this data in the filesystem, it is a slide into the heap that will never change
           Module['FS_createDataFile'](this.name, null, byteArray, true, true, true);
-          Module['removeRunDependency']('fp ' + that.name);
+          Module['removeRunDependency'](`fp ${that.name}`);
           this.requests[this.name] = null;
         }
       };
@@ -210,7 +211,7 @@ Module['FS_createPath']("/assets/Tiles/Walls", "17-19", true, true);
     }
 
     }
-    loadPackage({"files": [{"filename": "/assets/Bestiary/bestiary.json", "start": 0, "end": 107}, {"filename": "/assets/Bestiary/goblin_warrior.png", "start": 107, "end": 2037}, {"filename": "/assets/GUI/Minimap/background.png", "start": 2037, "end": 2293}, {"filename": "/assets/GUI/Minimap/player.png", "start": 2293, "end": 2513}, {"filename": "/assets/Levels/Ruins/ruins_01.json", "start": 2513, "end": 11037}, {"filename": "/assets/Tiles/Ceiling/C01.png", "start": 11037, "end": 11359}, {"filename": "/assets/Tiles/Ceiling/C02.png", "start": 11359, "end": 11662}, {"filename": "/assets/Tiles/Ceiling/C03.png", "start": 11662, "end": 11966}, {"filename": "/assets/Tiles/Ceiling/C04.png", "start": 11966, "end": 12268}, {"filename": "/assets/Tiles/Ceiling/C05.png", "start": 12268, "end": 12592}, {"filename": "/assets/Tiles/Ceiling/C06.png", "start": 12592, "end": 12908}, {"filename": "/assets/Tiles/Ceiling/C07.png", "start": 12908, "end": 13238}, {"filename": "/assets/Tiles/Ceiling/C08.png", "start": 13238, "end": 13551}, {"filename": "/assets/Tiles/Ceiling/C09.png", "start": 13551, "end": 13878}, {"filename": "/assets/Tiles/Ceiling/C10.png", "start": 13878, "end": 14192}, {"filename": "/assets/Tiles/Ceiling/C11.png", "start": 14192, "end": 14571}, {"filename": "/assets/Tiles/Ceiling/C12.png", "start": 14571, "end": 14927}, {"filename": "/assets/Tiles/Ceiling/C13.png", "start": 14927, "end": 15306}, {"filename": "/assets/Tiles/Ceiling/C14.png", "start": 15306, "end": 15722}, {"filename": "/assets/Tiles/Ceiling/C15.png", "start": 15722, "end": 16162}, {"filename": "/assets/Tiles/Ceiling/C16.png", "start": 16162, "end": 16578}, {"filename": "/assets/Tiles/Ceiling/C17.png", "start": 16578, "end": 16921}, {"filename": "/assets/Tiles/Ceiling/C18.png", "start": 16921, "end": 17282}, {"filename": "/assets/Tiles/Ceiling/C19.png", "start": 17282, "end": 17635}, {"filename": "/assets/Tiles/Floor/F01.png", "start": 17635, "end": 17938}, {"filename": "/assets/Tiles/Floor/F02.png", "start": 17938, "end": 18263}, {"filename": "/assets/Tiles/Floor/F03.png", "start": 18263, "end": 18582}, {"filename": "/assets/Tiles/Floor/F04.png", "start": 18582, "end": 18905}, {"filename": "/assets/Tiles/Floor/F05.png", "start": 18905, "end": 19208}, {"filename": "/assets/Tiles/Floor/F06.png", "start": 19208, "end": 19509}, {"filename": "/assets/Tiles/Floor/F07.png", "start": 19509, "end": 19844}, {"filename": "/assets/Tiles/Floor/F08.png", "start": 19844, "end": 20192}, {"filename": "/assets/Tiles/Floor/F09.png", "start": 20192, "end": 20524}, {"filename": "/assets/Tiles/Floor/F10.png", "start": 20524, "end": 20826}, {"filename": "/assets/Tiles/Floor/F11.png", "start": 20826, "end": 21155}, {"filename": "/assets/Tiles/Floor/F12.png", "start": 21155, "end": 21551}, {"filename": "/assets/Tiles/Floor/F13.png", "start": 21551, "end": 21880}, {"filename": "/assets/Tiles/Floor/F14.png", "start": 21880, "end": 22222}, {"filename": "/assets/Tiles/Floor/F15.png", "start": 22222, "end": 22638}, {"filename": "/assets/Tiles/Floor/F16.png", "start": 22638, "end": 22980}, {"filename": "/assets/Tiles/Floor/F17.png", "start": 22980, "end": 23322}, {"filename": "/assets/Tiles/Floor/F18.png", "start": 23322, "end": 23691}, {"filename": "/assets/Tiles/Floor/F19.png", "start": 23691, "end": 24032}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/01.png", "start": 24032, "end": 24378}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/02.png", "start": 24378, "end": 24757}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/03.png", "start": 24757, "end": 25140}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/04.png", "start": 25140, "end": 25521}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/05.png", "start": 25521, "end": 25865}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/06.png", "start": 25865, "end": 26179}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/07.png", "start": 26179, "end": 26654}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/08.png", "start": 26654, "end": 27193}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/09.png", "start": 27193, "end": 27675}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/10.png", "start": 27675, "end": 27996}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/11.png", "start": 27996, "end": 28470}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/12.png", "start": 28470, "end": 29115}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/13.png", "start": 29115, "end": 29601}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/14.png", "start": 29601, "end": 30104}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/15.png", "start": 30104, "end": 30931}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/16.png", "start": 30931, "end": 31425}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/17.png", "start": 31425, "end": 31826}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/18.png", "start": 31826, "end": 34300}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/19.png", "start": 34300, "end": 34714}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/01.png", "start": 34714, "end": 35058}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/02.png", "start": 35058, "end": 35437}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/03.png", "start": 35437, "end": 35820}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/04.png", "start": 35820, "end": 36202}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/05.png", "start": 36202, "end": 36549}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/06.png", "start": 36549, "end": 36863}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/07.png", "start": 36863, "end": 37350}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/08.png", "start": 37350, "end": 37892}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/09.png", "start": 37892, "end": 38367}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/10.png", "start": 38367, "end": 38688}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/11.png", "start": 38688, "end": 39168}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/12.png", "start": 39168, "end": 39822}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/13.png", "start": 39822, "end": 40301}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/14.png", "start": 40301, "end": 40797}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/15.png", "start": 40797, "end": 41621}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/16.png", "start": 41621, "end": 42117}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/17.png", "start": 42117, "end": 42529}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/18.png", "start": 42529, "end": 44972}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/19.png", "start": 44972, "end": 45368}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W01_E.png", "start": 45368, "end": 46429}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W01_N.png", "start": 46429, "end": 47162}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W01_S.png", "start": 47162, "end": 47989}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W02_E.png", "start": 47989, "end": 48726}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W02_N.png", "start": 48726, "end": 49489}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W02_S.png", "start": 49489, "end": 50696}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W03_N.png", "start": 50696, "end": 51488}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W03_S.png", "start": 51488, "end": 52618}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W04_N.png", "start": 52618, "end": 53382}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W04_S.png", "start": 53382, "end": 54625}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W04_W.png", "start": 54625, "end": 55370}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W05_N.png", "start": 55370, "end": 56113}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W05_S.png", "start": 56113, "end": 56989}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W05_W.png", "start": 56989, "end": 58062}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W06_E.png", "start": 58062, "end": 59013}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W07_E.png", "start": 59013, "end": 60307}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W07_S.png", "start": 60307, "end": 61845}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W08_S.png", "start": 61845, "end": 63927}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W09_S.png", "start": 63927, "end": 65571}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W09_W.png", "start": 65571, "end": 66893}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W10_W.png", "start": 66893, "end": 67889}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W11_E.png", "start": 67889, "end": 69814}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W11_S.png", "start": 69814, "end": 71625}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W12_S.png", "start": 71625, "end": 74874}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W13_S.png", "start": 74874, "end": 76845}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W13_W.png", "start": 76845, "end": 78818}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W14_E.png", "start": 78818, "end": 81665}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W14_S.png", "start": 81665, "end": 83906}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W15_S.png", "start": 83906, "end": 89033}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W16_S.png", "start": 89033, "end": 91222}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W16_W.png", "start": 91222, "end": 94141}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W17_E.png", "start": 94141, "end": 96282}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W19_W.png", "start": 96282, "end": 98529}, {"filename": "/assets/Tiles/Walls/01-05/Wall01.png", "start": 98529, "end": 98936}, {"filename": "/assets/Tiles/Walls/01-05/Wall02.png", "start": 98936, "end": 99321}, {"filename": "/assets/Tiles/Walls/01-05/Wall03.png", "start": 99321, "end": 99676}, {"filename": "/assets/Tiles/Walls/01-05/Wall04.png", "start": 99676, "end": 100036}, {"filename": "/assets/Tiles/Walls/01-05/Wall05.png", "start": 100036, "end": 100421}, {"filename": "/assets/Tiles/Walls/06-10/Wall06.png", "start": 100421, "end": 100819}, {"filename": "/assets/Tiles/Walls/06-10/Wall07.png", "start": 100819, "end": 101318}, {"filename": "/assets/Tiles/Walls/06-10/Wall08.png", "start": 101318, "end": 101721}, {"filename": "/assets/Tiles/Walls/06-10/Wall09.png", "start": 101721, "end": 102185}, {"filename": "/assets/Tiles/Walls/06-10/Wall10.png", "start": 102185, "end": 102577}, {"filename": "/assets/Tiles/Walls/11-13/Wall11.png", "start": 102577, "end": 103202}, {"filename": "/assets/Tiles/Walls/11-13/Wall12.png", "start": 103202, "end": 103673}, {"filename": "/assets/Tiles/Walls/11-13/Wall13.png", "start": 103673, "end": 104201}, {"filename": "/assets/Tiles/Walls/14-16/Wall14.png", "start": 104201, "end": 105007}, {"filename": "/assets/Tiles/Walls/14-16/Wall15.png", "start": 105007, "end": 105575}, {"filename": "/assets/Tiles/Walls/14-16/Wall16.png", "start": 105575, "end": 106238}, {"filename": "/assets/Tiles/Walls/17-19/Wall17.png", "start": 106238, "end": 106953}, {"filename": "/assets/Tiles/Walls/17-19/Wall19.png", "start": 106953, "end": 107668}], "remote_package_size": 107668});
+    loadPackage({"files": [{"filename": "/assets/Bestiary/bestiary.json", "start": 0, "end": 107}, {"filename": "/assets/Bestiary/goblin_warrior.png", "start": 107, "end": 2037}, {"filename": "/assets/GUI/Minimap/background.png", "start": 2037, "end": 2293}, {"filename": "/assets/GUI/Minimap/player.png", "start": 2293, "end": 2513}, {"filename": "/assets/LevelEditor/ruins_01.png", "start": 2513, "end": 2736}, {"filename": "/assets/LevelEditor/ruins_02.png", "start": 2736, "end": 2990}, {"filename": "/assets/Levels/Ruins/ruins_01.json", "start": 2990, "end": 11514}, {"filename": "/assets/Levels/Ruins/ruins_01_saved.json", "start": 11514, "end": 97816}, {"filename": "/assets/Tiles/Ceiling/C01.png", "start": 97816, "end": 98138}, {"filename": "/assets/Tiles/Ceiling/C02.png", "start": 98138, "end": 98441}, {"filename": "/assets/Tiles/Ceiling/C03.png", "start": 98441, "end": 98745}, {"filename": "/assets/Tiles/Ceiling/C04.png", "start": 98745, "end": 99047}, {"filename": "/assets/Tiles/Ceiling/C05.png", "start": 99047, "end": 99371}, {"filename": "/assets/Tiles/Ceiling/C06.png", "start": 99371, "end": 99687}, {"filename": "/assets/Tiles/Ceiling/C07.png", "start": 99687, "end": 100017}, {"filename": "/assets/Tiles/Ceiling/C08.png", "start": 100017, "end": 100330}, {"filename": "/assets/Tiles/Ceiling/C09.png", "start": 100330, "end": 100657}, {"filename": "/assets/Tiles/Ceiling/C10.png", "start": 100657, "end": 100971}, {"filename": "/assets/Tiles/Ceiling/C11.png", "start": 100971, "end": 101350}, {"filename": "/assets/Tiles/Ceiling/C12.png", "start": 101350, "end": 101706}, {"filename": "/assets/Tiles/Ceiling/C13.png", "start": 101706, "end": 102085}, {"filename": "/assets/Tiles/Ceiling/C14.png", "start": 102085, "end": 102501}, {"filename": "/assets/Tiles/Ceiling/C15.png", "start": 102501, "end": 102941}, {"filename": "/assets/Tiles/Ceiling/C16.png", "start": 102941, "end": 103357}, {"filename": "/assets/Tiles/Ceiling/C17.png", "start": 103357, "end": 103700}, {"filename": "/assets/Tiles/Ceiling/C18.png", "start": 103700, "end": 104061}, {"filename": "/assets/Tiles/Ceiling/C19.png", "start": 104061, "end": 104414}, {"filename": "/assets/Tiles/Floor/F01.png", "start": 104414, "end": 104717}, {"filename": "/assets/Tiles/Floor/F02.png", "start": 104717, "end": 105042}, {"filename": "/assets/Tiles/Floor/F03.png", "start": 105042, "end": 105361}, {"filename": "/assets/Tiles/Floor/F04.png", "start": 105361, "end": 105684}, {"filename": "/assets/Tiles/Floor/F05.png", "start": 105684, "end": 105987}, {"filename": "/assets/Tiles/Floor/F06.png", "start": 105987, "end": 106288}, {"filename": "/assets/Tiles/Floor/F07.png", "start": 106288, "end": 106623}, {"filename": "/assets/Tiles/Floor/F08.png", "start": 106623, "end": 106971}, {"filename": "/assets/Tiles/Floor/F09.png", "start": 106971, "end": 107303}, {"filename": "/assets/Tiles/Floor/F10.png", "start": 107303, "end": 107605}, {"filename": "/assets/Tiles/Floor/F11.png", "start": 107605, "end": 107934}, {"filename": "/assets/Tiles/Floor/F12.png", "start": 107934, "end": 108330}, {"filename": "/assets/Tiles/Floor/F13.png", "start": 108330, "end": 108659}, {"filename": "/assets/Tiles/Floor/F14.png", "start": 108659, "end": 109001}, {"filename": "/assets/Tiles/Floor/F15.png", "start": 109001, "end": 109417}, {"filename": "/assets/Tiles/Floor/F16.png", "start": 109417, "end": 109759}, {"filename": "/assets/Tiles/Floor/F17.png", "start": 109759, "end": 110101}, {"filename": "/assets/Tiles/Floor/F18.png", "start": 110101, "end": 110470}, {"filename": "/assets/Tiles/Floor/F19.png", "start": 110470, "end": 110811}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/01.png", "start": 110811, "end": 111157}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/02.png", "start": 111157, "end": 111536}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/03.png", "start": 111536, "end": 111919}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/04.png", "start": 111919, "end": 112300}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/05.png", "start": 112300, "end": 112644}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/06.png", "start": 112644, "end": 112958}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/07.png", "start": 112958, "end": 113433}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/08.png", "start": 113433, "end": 113972}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/09.png", "start": 113972, "end": 114454}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/10.png", "start": 114454, "end": 114775}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/11.png", "start": 114775, "end": 115249}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/12.png", "start": 115249, "end": 115894}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/13.png", "start": 115894, "end": 116380}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/14.png", "start": 116380, "end": 116883}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/15.png", "start": 116883, "end": 117710}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/16.png", "start": 117710, "end": 118204}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/17.png", "start": 118204, "end": 118605}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/18.png", "start": 118605, "end": 121079}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/19.png", "start": 121079, "end": 121493}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/01.png", "start": 121493, "end": 121837}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/02.png", "start": 121837, "end": 122216}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/03.png", "start": 122216, "end": 122599}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/04.png", "start": 122599, "end": 122981}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/05.png", "start": 122981, "end": 123328}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/06.png", "start": 123328, "end": 123642}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/07.png", "start": 123642, "end": 124129}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/08.png", "start": 124129, "end": 124671}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/09.png", "start": 124671, "end": 125146}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/10.png", "start": 125146, "end": 125467}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/11.png", "start": 125467, "end": 125947}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/12.png", "start": 125947, "end": 126601}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/13.png", "start": 126601, "end": 127080}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/14.png", "start": 127080, "end": 127576}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/15.png", "start": 127576, "end": 128400}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/16.png", "start": 128400, "end": 128896}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/17.png", "start": 128896, "end": 129308}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/18.png", "start": 129308, "end": 131751}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/19.png", "start": 131751, "end": 132147}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W01_E.png", "start": 132147, "end": 133208}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W01_N.png", "start": 133208, "end": 133941}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W01_S.png", "start": 133941, "end": 134768}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W02_E.png", "start": 134768, "end": 135505}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W02_N.png", "start": 135505, "end": 136268}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W02_S.png", "start": 136268, "end": 137475}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W03_N.png", "start": 137475, "end": 138267}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W03_S.png", "start": 138267, "end": 139397}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W04_N.png", "start": 139397, "end": 140161}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W04_S.png", "start": 140161, "end": 141404}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W04_W.png", "start": 141404, "end": 142149}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W05_N.png", "start": 142149, "end": 142892}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W05_S.png", "start": 142892, "end": 143768}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W05_W.png", "start": 143768, "end": 144841}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W06_E.png", "start": 144841, "end": 145792}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W07_E.png", "start": 145792, "end": 147086}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W07_S.png", "start": 147086, "end": 148624}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W08_S.png", "start": 148624, "end": 150706}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W09_S.png", "start": 150706, "end": 152350}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W09_W.png", "start": 152350, "end": 153672}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W10_W.png", "start": 153672, "end": 154668}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W11_E.png", "start": 154668, "end": 156593}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W11_S.png", "start": 156593, "end": 158404}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W12_S.png", "start": 158404, "end": 161653}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W13_S.png", "start": 161653, "end": 163624}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W13_W.png", "start": 163624, "end": 165597}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W14_E.png", "start": 165597, "end": 168444}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W14_S.png", "start": 168444, "end": 170685}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W15_S.png", "start": 170685, "end": 175812}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W16_S.png", "start": 175812, "end": 178001}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W16_W.png", "start": 178001, "end": 180920}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W17_E.png", "start": 180920, "end": 183061}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W19_W.png", "start": 183061, "end": 185308}, {"filename": "/assets/Tiles/Walls/01-05/Wall01.png", "start": 185308, "end": 185715}, {"filename": "/assets/Tiles/Walls/01-05/Wall02.png", "start": 185715, "end": 186100}, {"filename": "/assets/Tiles/Walls/01-05/Wall03.png", "start": 186100, "end": 186455}, {"filename": "/assets/Tiles/Walls/01-05/Wall04.png", "start": 186455, "end": 186815}, {"filename": "/assets/Tiles/Walls/01-05/Wall05.png", "start": 186815, "end": 187200}, {"filename": "/assets/Tiles/Walls/06-10/Wall06.png", "start": 187200, "end": 187598}, {"filename": "/assets/Tiles/Walls/06-10/Wall07.png", "start": 187598, "end": 188097}, {"filename": "/assets/Tiles/Walls/06-10/Wall08.png", "start": 188097, "end": 188500}, {"filename": "/assets/Tiles/Walls/06-10/Wall09.png", "start": 188500, "end": 188964}, {"filename": "/assets/Tiles/Walls/06-10/Wall10.png", "start": 188964, "end": 189356}, {"filename": "/assets/Tiles/Walls/11-13/Wall11.png", "start": 189356, "end": 189981}, {"filename": "/assets/Tiles/Walls/11-13/Wall12.png", "start": 189981, "end": 190452}, {"filename": "/assets/Tiles/Walls/11-13/Wall13.png", "start": 190452, "end": 190980}, {"filename": "/assets/Tiles/Walls/14-16/Wall14.png", "start": 190980, "end": 191786}, {"filename": "/assets/Tiles/Walls/14-16/Wall15.png", "start": 191786, "end": 192354}, {"filename": "/assets/Tiles/Walls/14-16/Wall16.png", "start": 192354, "end": 193017}, {"filename": "/assets/Tiles/Walls/17-19/Wall17.png", "start": 193017, "end": 193732}, {"filename": "/assets/Tiles/Walls/17-19/Wall19.png", "start": 193732, "end": 194447}], "remote_package_size": 194447});
 
   })();
 
@@ -220,13 +221,11 @@ Module['FS_createPath']("/assets/Tiles/Walls", "17-19", true, true);
     if (Module['ENVIRONMENT_IS_PTHREAD'] || Module['$ww']) Module['preRun'] = [];
     var necessaryPreJSTasks = Module['preRun'].slice();
   
-
     if (!Module['preRun']) throw 'Module.preRun should exist because file support used it; did a pre-js delete it?';
     necessaryPreJSTasks.forEach(function(task) {
       if (Module['preRun'].indexOf(task) < 0) throw 'All preRun tasks that exist before user pre-js code should remain after; did you replace Module or modify Module.preRun?';
     });
   
-
 
 // Sometimes an existing Module object exists with properties
 // meant to overwrite the default module functionality. Here
@@ -276,10 +275,10 @@ if (ENVIRONMENT_IS_NODE) {
 
   var nodeVersion = process.versions.node;
   var numericVersion = nodeVersion.split('.').slice(0, 3);
-  numericVersion = (numericVersion[0] * 10000) + (numericVersion[1] * 100) + numericVersion[2] * 1;
-  var minVersion = 101900;
-  if (numericVersion < 101900) {
-    throw new Error('This emscripten-generated code requires node v10.19.19.0 (detected v' + nodeVersion + ')');
+  numericVersion = (numericVersion[0] * 10000) + (numericVersion[1] * 100) + (numericVersion[2].split('-')[0] * 1);
+  var minVersion = 160000;
+  if (numericVersion < 160000) {
+    throw new Error('This emscripten-generated code requires node v16.0.0 (detected v' + nodeVersion + ')');
   }
 
   // `require()` is no-op in an ESM module, use `createRequire()` to construct
@@ -314,17 +313,16 @@ readBinary = (filename) => {
   return ret;
 };
 
-readAsync = (filename, onload, onerror) => {
+readAsync = (filename, onload, onerror, binary = true) => {
   // See the comment in the `read_` function.
   filename = isFileURI(filename) ? new URL(filename) : nodePath.normalize(filename);
-  fs.readFile(filename, function(err, data) {
+  fs.readFile(filename, binary ? undefined : 'utf8', (err, data) => {
     if (err) onerror(err);
-    else onload(data.buffer);
+    else onload(binary ? data.buffer : data);
   });
 };
-
 // end include: node_shell_read.js
-  if (process.argv.length > 1) {
+  if (!Module['thisProgram'] && process.argv.length > 1) {
     thisProgram = process.argv[1].replace(/\\/g, '/');
   }
 
@@ -334,29 +332,19 @@ readAsync = (filename, onload, onerror) => {
     module['exports'] = Module;
   }
 
-  process.on('uncaughtException', function(ex) {
+  process.on('uncaughtException', (ex) => {
     // suppress ExitStatus exceptions from showing an error
     if (ex !== 'unwind' && !(ex instanceof ExitStatus) && !(ex.context instanceof ExitStatus)) {
       throw ex;
     }
   });
 
-  // Without this older versions of node (< v15) will log unhandled rejections
-  // but return 0, which is not normally the desired behaviour.  This is
-  // not be needed with node v15 and about because it is now the default
-  // behaviour:
-  // See https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode
-  var nodeMajor = process.versions.node.split(".")[0];
-  if (nodeMajor < 15) {
-    process.on('unhandledRejection', function(reason) { throw reason; });
-  }
-
   quit_ = (status, toThrow) => {
     process.exitCode = status;
     throw toThrow;
   };
 
-  Module['inspect'] = function () { return '[Emscripten Module object]'; };
+  Module['inspect'] = () => '[Emscripten Module object]';
 
 } else
 if (ENVIRONMENT_IS_SHELL) {
@@ -364,12 +352,12 @@ if (ENVIRONMENT_IS_SHELL) {
   if ((typeof process == 'object' && typeof require === 'function') || typeof window == 'object' || typeof importScripts == 'function') throw new Error('not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)');
 
   if (typeof read != 'undefined') {
-    read_ = function shell_read(f) {
+    read_ = (f) => {
       return read(f);
     };
   }
 
-  readBinary = function readBinary(f) {
+  readBinary = (f) => {
     let data;
     if (typeof readbuffer == 'function') {
       return new Uint8Array(readbuffer(f));
@@ -379,12 +367,17 @@ if (ENVIRONMENT_IS_SHELL) {
     return data;
   };
 
-  readAsync = function readAsync(f, onload, onerror) {
-    setTimeout(() => onload(readBinary(f)), 0);
+  readAsync = (f, onload, onerror) => {
+    setTimeout(() => onload(readBinary(f)));
   };
 
   if (typeof clearTimeout == 'undefined') {
     globalThis.clearTimeout = (id) => {};
+  }
+
+  if (typeof setTimeout == 'undefined') {
+    // spidermonkey lacks setTimeout but we use it above in readAsync.
+    globalThis.setTimeout = (f) => (typeof f == 'function') ? f() : abort();
   }
 
   if (typeof scriptArgs != 'undefined') {
@@ -410,7 +403,7 @@ if (ENVIRONMENT_IS_SHELL) {
           if (toThrow && typeof toThrow == 'object' && toThrow.stack) {
             toLog = [toThrow, toThrow.stack];
           }
-          err('exiting due to exception: ' + toLog);
+          err(`exiting due to exception: ${toLog}`);
         }
         quit(status);
       });
@@ -496,7 +489,7 @@ read_ = (url) => {
 }
 
 var out = Module['print'] || console.log.bind(console);
-var err = Module['printErr'] || console.warn.bind(console);
+var err = Module['printErr'] || console.error.bind(console);
 
 // Merge back in the overrides
 Object.assign(Module, moduleOverrides);
@@ -586,196 +579,6 @@ function assert(condition, text) {
 // We used to include malloc/free by default in the past. Show a helpful error in
 // builds with assertions.
 
-// include: runtime_strings.js
-// runtime_strings.js: String related runtime functions that are part of both
-// MINIMAL_RUNTIME and regular runtime.
-
-var UTF8Decoder = typeof TextDecoder != 'undefined' ? new TextDecoder('utf8') : undefined;
-
-/**
- * Given a pointer 'idx' to a null-terminated UTF8-encoded string in the given
- * array that contains uint8 values, returns a copy of that string as a
- * Javascript String object.
- * heapOrArray is either a regular array, or a JavaScript typed array view.
- * @param {number} idx
- * @param {number=} maxBytesToRead
- * @return {string}
- */
-function UTF8ArrayToString(heapOrArray, idx, maxBytesToRead) {
-  var endIdx = idx + maxBytesToRead;
-  var endPtr = idx;
-  // TextDecoder needs to know the byte length in advance, it doesn't stop on
-  // null terminator by itself.  Also, use the length info to avoid running tiny
-  // strings through TextDecoder, since .subarray() allocates garbage.
-  // (As a tiny code save trick, compare endPtr against endIdx using a negation,
-  // so that undefined means Infinity)
-  while (heapOrArray[endPtr] && !(endPtr >= endIdx)) ++endPtr;
-
-  if (endPtr - idx > 16 && heapOrArray.buffer && UTF8Decoder) {
-    return UTF8Decoder.decode(heapOrArray.subarray(idx, endPtr));
-  }
-  var str = '';
-  // If building with TextDecoder, we have already computed the string length
-  // above, so test loop end condition against that
-  while (idx < endPtr) {
-    // For UTF8 byte structure, see:
-    // http://en.wikipedia.org/wiki/UTF-8#Description
-    // https://www.ietf.org/rfc/rfc2279.txt
-    // https://tools.ietf.org/html/rfc3629
-    var u0 = heapOrArray[idx++];
-    if (!(u0 & 0x80)) { str += String.fromCharCode(u0); continue; }
-    var u1 = heapOrArray[idx++] & 63;
-    if ((u0 & 0xE0) == 0xC0) { str += String.fromCharCode(((u0 & 31) << 6) | u1); continue; }
-    var u2 = heapOrArray[idx++] & 63;
-    if ((u0 & 0xF0) == 0xE0) {
-      u0 = ((u0 & 15) << 12) | (u1 << 6) | u2;
-    } else {
-      if ((u0 & 0xF8) != 0xF0) warnOnce('Invalid UTF-8 leading byte ' + ptrToString(u0) + ' encountered when deserializing a UTF-8 string in wasm memory to a JS string!');
-      u0 = ((u0 & 7) << 18) | (u1 << 12) | (u2 << 6) | (heapOrArray[idx++] & 63);
-    }
-
-    if (u0 < 0x10000) {
-      str += String.fromCharCode(u0);
-    } else {
-      var ch = u0 - 0x10000;
-      str += String.fromCharCode(0xD800 | (ch >> 10), 0xDC00 | (ch & 0x3FF));
-    }
-  }
-  return str;
-}
-
-/**
- * Given a pointer 'ptr' to a null-terminated UTF8-encoded string in the
- * emscripten HEAP, returns a copy of that string as a Javascript String object.
- *
- * @param {number} ptr
- * @param {number=} maxBytesToRead - An optional length that specifies the
- *   maximum number of bytes to read. You can omit this parameter to scan the
- *   string until the first \0 byte. If maxBytesToRead is passed, and the string
- *   at [ptr, ptr+maxBytesToReadr[ contains a null byte in the middle, then the
- *   string will cut short at that byte index (i.e. maxBytesToRead will not
- *   produce a string of exact length [ptr, ptr+maxBytesToRead[) N.B. mixing
- *   frequent uses of UTF8ToString() with and without maxBytesToRead may throw
- *   JS JIT optimizations off, so it is worth to consider consistently using one
- * @return {string}
- */
-function UTF8ToString(ptr, maxBytesToRead) {
-  assert(typeof ptr == 'number');
-  return ptr ? UTF8ArrayToString(HEAPU8, ptr, maxBytesToRead) : '';
-}
-
-/**
- * Copies the given Javascript String object 'str' to the given byte array at
- * address 'outIdx', encoded in UTF8 form and null-terminated. The copy will
- * require at most str.length*4+1 bytes of space in the HEAP.  Use the function
- * lengthBytesUTF8 to compute the exact number of bytes (excluding null
- * terminator) that this function will write.
- *
- * @param {string} str - The Javascript string to copy.
- * @param {ArrayBufferView|Array<number>} heap - The array to copy to. Each
- *                                               index in this array is assumed
- *                                               to be one 8-byte element.
- * @param {number} outIdx - The starting offset in the array to begin the copying.
- * @param {number} maxBytesToWrite - The maximum number of bytes this function
- *                                   can write to the array.  This count should
- *                                   include the null terminator, i.e. if
- *                                   maxBytesToWrite=1, only the null terminator
- *                                   will be written and nothing else.
- *                                   maxBytesToWrite=0 does not write any bytes
- *                                   to the output, not even the null
- *                                   terminator.
- * @return {number} The number of bytes written, EXCLUDING the null terminator.
- */
-function stringToUTF8Array(str, heap, outIdx, maxBytesToWrite) {
-  // Parameter maxBytesToWrite is not optional. Negative values, 0, null,
-  // undefined and false each don't write out any bytes.
-  if (!(maxBytesToWrite > 0))
-    return 0;
-
-  var startIdx = outIdx;
-  var endIdx = outIdx + maxBytesToWrite - 1; // -1 for string null terminator.
-  for (var i = 0; i < str.length; ++i) {
-    // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code
-    // unit, not a Unicode code point of the character! So decode
-    // UTF16->UTF32->UTF8.
-    // See http://unicode.org/faq/utf_bom.html#utf16-3
-    // For UTF8 byte structure, see http://en.wikipedia.org/wiki/UTF-8#Description
-    // and https://www.ietf.org/rfc/rfc2279.txt
-    // and https://tools.ietf.org/html/rfc3629
-    var u = str.charCodeAt(i); // possibly a lead surrogate
-    if (u >= 0xD800 && u <= 0xDFFF) {
-      var u1 = str.charCodeAt(++i);
-      u = 0x10000 + ((u & 0x3FF) << 10) | (u1 & 0x3FF);
-    }
-    if (u <= 0x7F) {
-      if (outIdx >= endIdx) break;
-      heap[outIdx++] = u;
-    } else if (u <= 0x7FF) {
-      if (outIdx + 1 >= endIdx) break;
-      heap[outIdx++] = 0xC0 | (u >> 6);
-      heap[outIdx++] = 0x80 | (u & 63);
-    } else if (u <= 0xFFFF) {
-      if (outIdx + 2 >= endIdx) break;
-      heap[outIdx++] = 0xE0 | (u >> 12);
-      heap[outIdx++] = 0x80 | ((u >> 6) & 63);
-      heap[outIdx++] = 0x80 | (u & 63);
-    } else {
-      if (outIdx + 3 >= endIdx) break;
-      if (u > 0x10FFFF) warnOnce('Invalid Unicode code point ' + ptrToString(u) + ' encountered when serializing a JS string to a UTF-8 string in wasm memory! (Valid unicode code points should be in range 0-0x10FFFF).');
-      heap[outIdx++] = 0xF0 | (u >> 18);
-      heap[outIdx++] = 0x80 | ((u >> 12) & 63);
-      heap[outIdx++] = 0x80 | ((u >> 6) & 63);
-      heap[outIdx++] = 0x80 | (u & 63);
-    }
-  }
-  // Null-terminate the pointer to the buffer.
-  heap[outIdx] = 0;
-  return outIdx - startIdx;
-}
-
-/**
- * Copies the given Javascript String object 'str' to the emscripten HEAP at
- * address 'outPtr', null-terminated and encoded in UTF8 form. The copy will
- * require at most str.length*4+1 bytes of space in the HEAP.
- * Use the function lengthBytesUTF8 to compute the exact number of bytes
- * (excluding null terminator) that this function will write.
- *
- * @return {number} The number of bytes written, EXCLUDING the null terminator.
- */
-function stringToUTF8(str, outPtr, maxBytesToWrite) {
-  assert(typeof maxBytesToWrite == 'number', 'stringToUTF8(str, outPtr, maxBytesToWrite) is missing the third parameter that specifies the length of the output buffer!');
-  return stringToUTF8Array(str, HEAPU8,outPtr, maxBytesToWrite);
-}
-
-/**
- * Returns the number of bytes the given Javascript string takes if encoded as a
- * UTF8 byte array, EXCLUDING the null terminator byte.
- *
- * @param {string} str - JavaScript string to operator on
- * @return {number} Length, in bytes, of the UTF8 encoded string.
- */
-function lengthBytesUTF8(str) {
-  var len = 0;
-  for (var i = 0; i < str.length; ++i) {
-    // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code
-    // unit, not a Unicode code point of the character! So decode
-    // UTF16->UTF32->UTF8.
-    // See http://unicode.org/faq/utf_bom.html#utf16-3
-    var c = str.charCodeAt(i); // possibly a lead surrogate
-    if (c <= 0x7F) {
-      len++;
-    } else if (c <= 0x7FF) {
-      len += 2;
-    } else if (c >= 0xD800 && c <= 0xDFFF) {
-      len += 4; ++i;
-    } else {
-      len += 3;
-    }
-  }
-  return len;
-}
-
-// end include: runtime_strings.js
 // Memory management
 
 var HEAP,
@@ -822,7 +625,6 @@ assert(!Module['INITIAL_MEMORY'], 'Detected runtime INITIAL_MEMORY setting.  Use
 // from the wasm module and this will be assigned once
 // the exports are available.
 var wasmTable;
-
 // end include: runtime_init_table.js
 // include: runtime_stack_check.js
 // Initializes the stack cookie. Called at the startup of main and at the startup of each thread in pthreads mode.
@@ -830,8 +632,8 @@ function writeStackCookie() {
   var max = _emscripten_stack_get_end();
   assert((max & 3) == 0);
   // If the stack ends at address zero we write our cookies 4 bytes into the
-  // stack.  This prevents interference with the (separate) address-zero check
-  // below.
+  // stack.  This prevents interference with SAFE_HEAP and ASAN which also
+  // monitor writes to address zero.
   if (max == 0) {
     max += 4;
   }
@@ -841,7 +643,7 @@ function writeStackCookie() {
   HEAPU32[((max)>>2)] = 0x02135467;
   HEAPU32[(((max)+(4))>>2)] = 0x89BACDFE;
   // Also test the global address 0 for integrity.
-  HEAPU32[0] = 0x63736d65; /* 'emsc' */
+  HEAPU32[((0)>>2)] = 1668509029;
 }
 
 function checkStackCookie() {
@@ -854,14 +656,13 @@ function checkStackCookie() {
   var cookie1 = HEAPU32[((max)>>2)];
   var cookie2 = HEAPU32[(((max)+(4))>>2)];
   if (cookie1 != 0x02135467 || cookie2 != 0x89BACDFE) {
-    abort('Stack overflow! Stack cookie has been overwritten at ' + ptrToString(max) + ', expected hex dwords 0x89BACDFE and 0x2135467, but received ' + ptrToString(cookie2) + ' ' + ptrToString(cookie1));
+    abort(`Stack overflow! Stack cookie has been overwritten at ${ptrToString(max)}, expected hex dwords 0x89BACDFE and 0x2135467, but received ${ptrToString(cookie2)} ${ptrToString(cookie1)}`);
   }
   // Also test the global address 0 for integrity.
-  if (HEAPU32[0] !== 0x63736d65 /* 'emsc' */) {
+  if (HEAPU32[((0)>>2)] != 0x63736d65 /* 'emsc' */) {
     abort('Runtime error: The application has corrupted its heap memory area (address zero)!');
   }
 }
-
 // end include: runtime_stack_check.js
 // include: runtime_assertions.js
 // Endianness check
@@ -963,7 +764,6 @@ assert(Math.imul, 'This browser does not support Math.imul(), build with LEGACY_
 assert(Math.fround, 'This browser does not support Math.fround(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill');
 assert(Math.clz32, 'This browser does not support Math.clz32(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill');
 assert(Math.trunc, 'This browser does not support Math.trunc(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill');
-
 // end include: runtime_math.js
 // A counter of dependencies for calling run(). If we need to
 // do asynchronous work before running, increment this and
@@ -997,7 +797,7 @@ function addRunDependency(id) {
     runDependencyTracking[id] = 1;
     if (runDependencyWatcher === null && typeof setInterval != 'undefined') {
       // Check for missing dependencies every few seconds
-      runDependencyWatcher = setInterval(function() {
+      runDependencyWatcher = setInterval(() => {
         if (ABORT) {
           clearInterval(runDependencyWatcher);
           runDependencyWatcher = null;
@@ -1103,7 +903,6 @@ function isDataURI(filename) {
 function isFileURI(filename) {
   return filename.startsWith('file://');
 }
-
 // end include: URIUtils.js
 /** @param {boolean=} fixedasm */
 function createExportWrapper(name, fixedasm) {
@@ -1145,7 +944,7 @@ function getBinary(file) {
 }
 
 function getBinaryPromise(binaryFile) {
-  // If we don't have the binary yet, try to to load it asynchronously.
+  // If we don't have the binary yet, try to load it asynchronously.
   // Fetch has some additional restrictions over XHR, like it can't be used on a file:// url.
   // See https://github.com/github/fetch/pull/92#issuecomment-140665932
   // Cordova or Electron apps are typically loaded from a file:// url.
@@ -1154,35 +953,33 @@ function getBinaryPromise(binaryFile) {
     if (typeof fetch == 'function'
       && !isFileURI(binaryFile)
     ) {
-      return fetch(binaryFile, { credentials: 'same-origin' }).then(function(response) {
+      return fetch(binaryFile, { credentials: 'same-origin' }).then((response) => {
         if (!response['ok']) {
           throw "failed to load wasm binary file at '" + binaryFile + "'";
         }
         return response['arrayBuffer']();
-      }).catch(function () {
-          return getBinary(binaryFile);
-      });
+      }).catch(() => getBinary(binaryFile));
     }
     else {
       if (readAsync) {
         // fetch is not available or url is file => try XHR (readAsync uses XHR internally)
-        return new Promise(function(resolve, reject) {
-          readAsync(binaryFile, function(response) { resolve(new Uint8Array(/** @type{!ArrayBuffer} */(response))) }, reject)
+        return new Promise((resolve, reject) => {
+          readAsync(binaryFile, (response) => resolve(new Uint8Array(/** @type{!ArrayBuffer} */(response))), reject)
         });
       }
     }
   }
 
   // Otherwise, getBinary should be able to get it synchronously
-  return Promise.resolve().then(function() { return getBinary(binaryFile); });
+  return Promise.resolve().then(() => getBinary(binaryFile));
 }
 
 function instantiateArrayBuffer(binaryFile, imports, receiver) {
-  return getBinaryPromise(binaryFile).then(function(binary) {
+  return getBinaryPromise(binaryFile).then((binary) => {
     return WebAssembly.instantiate(binary, imports);
-  }).then(function (instance) {
+  }).then((instance) => {
     return instance;
-  }).then(receiver, function(reason) {
+  }).then(receiver, (reason) => {
     err('failed to asynchronously prepare wasm: ' + reason);
 
     // Warn on some common problems.
@@ -1207,7 +1004,7 @@ function instantiateAsync(binary, binaryFile, imports, callback) {
       //   https://github.com/emscripten-core/emscripten/pull/16917
       !ENVIRONMENT_IS_NODE &&
       typeof fetch == 'function') {
-    return fetch(binaryFile, { credentials: 'same-origin' }).then(function(response) {
+    return fetch(binaryFile, { credentials: 'same-origin' }).then((response) => {
       // Suppress closure warning here since the upstream definition for
       // instantiateStreaming only allows Promise<Repsponse> rather than
       // an actual Response.
@@ -1263,7 +1060,6 @@ function createWasm() {
     addOnInit(Module['asm']['__wasm_call_ctors']);
 
     removeRunDependency('wasm-instantiate');
-
     return exports;
   }
   // wait for the pthread pool (if any)
@@ -1285,10 +1081,13 @@ function createWasm() {
   }
 
   // User shell pages can write their own Module.instantiateWasm = function(imports, successCallback) callback
-  // to manually instantiate the Wasm module themselves. This allows pages to run the instantiation parallel
-  // to any other async startup actions they are performing.
-  // Also pthreads and wasm workers initialize the wasm instance through this path.
+  // to manually instantiate the Wasm module themselves. This allows pages to
+  // run the instantiation parallel to any other async startup actions they are
+  // performing.
+  // Also pthreads and wasm workers initialize the wasm instance through this
+  // path.
   if (Module['instantiateWasm']) {
+
     try {
       return Module['instantiateWasm'](info, receiveInstance);
     } catch(e) {
@@ -1365,7 +1164,7 @@ function missingLibrarySymbol(sym) {
         if (!librarySymbol.startsWith('_')) {
           librarySymbol = '$' + sym;
         }
-        msg += " (e.g. -sDEFAULT_LIBRARY_FUNCS_TO_INCLUDE=" + librarySymbol + ")";
+        msg += " (e.g. -sDEFAULT_LIBRARY_FUNCS_TO_INCLUDE='" + librarySymbol + "')";
         if (isExportedByForceFilesystem(sym)) {
           msg += '. Alternatively, forcing filesystem support (-sFORCE_FILESYSTEM) can export this for you';
         }
@@ -1397,19 +1196,17 @@ function unexportedRuntimeSymbol(sym) {
 // Used by XXXXX_DEBUG settings to output debug messages.
 function dbg(text) {
   // TODO(sbc): Make this configurable somehow.  Its not always convenient for
-  // logging to show up as errors.
-  console.error(text);
+  // logging to show up as warnings.
+  console.warn.apply(console, arguments);
 }
-
 // end include: runtime_debug.js
 // === Body ===
 
 var ASM_CONSTS = {
-  251764: () => { if (document.fullscreenElement) document.exitFullscreen(); else Module.requestFullscreen(false, true); }
+  253092: () => { if (document.fullscreenElement) document.exitFullscreen(); else Module.requestFullscreen(false, true); }
 };
 function GetCanvasWidth() { return canvas.clientWidth; }
 function GetCanvasHeight() { return canvas.clientHeight; }
-
 
 
 // end include: preamble.js
@@ -1417,16 +1214,16 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   /** @constructor */
   function ExitStatus(status) {
       this.name = 'ExitStatus';
-      this.message = 'Program terminated with exit(' + status + ')';
+      this.message = `Program terminated with exit(${status})`;
       this.status = status;
     }
 
-  function callRuntimeCallbacks(callbacks) {
+  var callRuntimeCallbacks = (callbacks) => {
       while (callbacks.length > 0) {
         // Pass the module as the first argument.
         callbacks.shift()(Module);
       }
-    }
+    };
 
   
     /**
@@ -1440,18 +1237,18 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       case 'i8': return HEAP8[((ptr)>>0)];
       case 'i16': return HEAP16[((ptr)>>1)];
       case 'i32': return HEAP32[((ptr)>>2)];
-      case 'i64': return HEAP32[((ptr)>>2)];
+      case 'i64': abort('to do getValue(i64) use WASM_BIGINT');
       case 'float': return HEAPF32[((ptr)>>2)];
       case 'double': return HEAPF64[((ptr)>>3)];
       case '*': return HEAPU32[((ptr)>>2)];
-      default: abort('invalid type for getValue: ' + type);
+      default: abort(`invalid type for getValue: ${type}`);
     }
   }
 
-  function ptrToString(ptr) {
+  var ptrToString = (ptr) => {
       assert(typeof ptr === 'number');
       return '0x' + ptr.toString(16).padStart(8, '0');
-    }
+    };
 
   
     /**
@@ -1466,28 +1263,101 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       case 'i8': HEAP8[((ptr)>>0)] = value; break;
       case 'i16': HEAP16[((ptr)>>1)] = value; break;
       case 'i32': HEAP32[((ptr)>>2)] = value; break;
-      case 'i64': (tempI64 = [value>>>0,(tempDouble=value,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[((ptr)>>2)] = tempI64[0],HEAP32[(((ptr)+(4))>>2)] = tempI64[1]); break;
+      case 'i64': abort('to do setValue(i64) use WASM_BIGINT');
       case 'float': HEAPF32[((ptr)>>2)] = value; break;
       case 'double': HEAPF64[((ptr)>>3)] = value; break;
       case '*': HEAPU32[((ptr)>>2)] = value; break;
-      default: abort('invalid type for setValue: ' + type);
+      default: abort(`invalid type for setValue: ${type}`);
     }
   }
 
-  function warnOnce(text) {
+  var warnOnce = (text) => {
       if (!warnOnce.shown) warnOnce.shown = {};
       if (!warnOnce.shown[text]) {
         warnOnce.shown[text] = 1;
         if (ENVIRONMENT_IS_NODE) text = 'warning: ' + text;
         err(text);
       }
-    }
+    };
 
 
 
-  function ___assert_fail(condition, filename, line, func) {
-      abort('Assertion failed: ' + UTF8ToString(condition) + ', at: ' + [filename ? UTF8ToString(filename) : 'unknown filename', line, func ? UTF8ToString(func) : 'unknown function']);
-    }
+  var UTF8Decoder = typeof TextDecoder != 'undefined' ? new TextDecoder('utf8') : undefined;
+  
+    /**
+     * Given a pointer 'idx' to a null-terminated UTF8-encoded string in the given
+     * array that contains uint8 values, returns a copy of that string as a
+     * Javascript String object.
+     * heapOrArray is either a regular array, or a JavaScript typed array view.
+     * @param {number} idx
+     * @param {number=} maxBytesToRead
+     * @return {string}
+     */
+  var UTF8ArrayToString = (heapOrArray, idx, maxBytesToRead) => {
+      var endIdx = idx + maxBytesToRead;
+      var endPtr = idx;
+      // TextDecoder needs to know the byte length in advance, it doesn't stop on
+      // null terminator by itself.  Also, use the length info to avoid running tiny
+      // strings through TextDecoder, since .subarray() allocates garbage.
+      // (As a tiny code save trick, compare endPtr against endIdx using a negation,
+      // so that undefined means Infinity)
+      while (heapOrArray[endPtr] && !(endPtr >= endIdx)) ++endPtr;
+  
+      if (endPtr - idx > 16 && heapOrArray.buffer && UTF8Decoder) {
+        return UTF8Decoder.decode(heapOrArray.subarray(idx, endPtr));
+      }
+      var str = '';
+      // If building with TextDecoder, we have already computed the string length
+      // above, so test loop end condition against that
+      while (idx < endPtr) {
+        // For UTF8 byte structure, see:
+        // http://en.wikipedia.org/wiki/UTF-8#Description
+        // https://www.ietf.org/rfc/rfc2279.txt
+        // https://tools.ietf.org/html/rfc3629
+        var u0 = heapOrArray[idx++];
+        if (!(u0 & 0x80)) { str += String.fromCharCode(u0); continue; }
+        var u1 = heapOrArray[idx++] & 63;
+        if ((u0 & 0xE0) == 0xC0) { str += String.fromCharCode(((u0 & 31) << 6) | u1); continue; }
+        var u2 = heapOrArray[idx++] & 63;
+        if ((u0 & 0xF0) == 0xE0) {
+          u0 = ((u0 & 15) << 12) | (u1 << 6) | u2;
+        } else {
+          if ((u0 & 0xF8) != 0xF0) warnOnce('Invalid UTF-8 leading byte ' + ptrToString(u0) + ' encountered when deserializing a UTF-8 string in wasm memory to a JS string!');
+          u0 = ((u0 & 7) << 18) | (u1 << 12) | (u2 << 6) | (heapOrArray[idx++] & 63);
+        }
+  
+        if (u0 < 0x10000) {
+          str += String.fromCharCode(u0);
+        } else {
+          var ch = u0 - 0x10000;
+          str += String.fromCharCode(0xD800 | (ch >> 10), 0xDC00 | (ch & 0x3FF));
+        }
+      }
+      return str;
+    };
+  
+    /**
+     * Given a pointer 'ptr' to a null-terminated UTF8-encoded string in the
+     * emscripten HEAP, returns a copy of that string as a Javascript String object.
+     *
+     * @param {number} ptr
+     * @param {number=} maxBytesToRead - An optional length that specifies the
+     *   maximum number of bytes to read. You can omit this parameter to scan the
+     *   string until the first 0 byte. If maxBytesToRead is passed, and the string
+     *   at [ptr, ptr+maxBytesToReadr[ contains a null byte in the middle, then the
+     *   string will cut short at that byte index (i.e. maxBytesToRead will not
+     *   produce a string of exact length [ptr, ptr+maxBytesToRead[) N.B. mixing
+     *   frequent uses of UTF8ToString() with and without maxBytesToRead may throw
+     *   JS JIT optimizations off, so it is worth to consider consistently using one
+     * @return {string}
+     */
+  var UTF8ToString = (ptr, maxBytesToRead) => {
+      assert(typeof ptr == 'number');
+      return ptr ? UTF8ArrayToString(HEAPU8, ptr, maxBytesToRead) : '';
+    };
+  var ___assert_fail = (condition, filename, line, func) => {
+      abort(`Assertion failed: ${UTF8ToString(condition)}, at: ` + [filename ? UTF8ToString(filename) : 'unknown filename', line, func ? UTF8ToString(func) : 'unknown function']);
+    };
 
   /** @constructor */
   function ExceptionInfo(excPtr) {
@@ -1508,10 +1378,6 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   
       this.get_destructor = function() {
         return HEAPU32[(((this.ptr)+(8))>>2)];
-      };
-  
-      this.set_refcount = function(refcount) {
-        HEAP32[((this.ptr)>>2)] = refcount;
       };
   
       this.set_caught = function (caught) {
@@ -1537,23 +1403,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         this.set_adjusted_ptr(0);
         this.set_type(type);
         this.set_destructor(destructor);
-        this.set_refcount(0);
-        this.set_caught(false);
-        this.set_rethrown(false);
       }
-  
-      this.add_ref = function() {
-        var value = HEAP32[((this.ptr)>>2)];
-        HEAP32[((this.ptr)>>2)] = value + 1;
-      };
-  
-      // Returns true if last reference released.
-      this.release_ref = function() {
-        var prev = HEAP32[((this.ptr)>>2)];
-        HEAP32[((this.ptr)>>2)] = prev - 1;
-        assert(prev > 0);
-        return prev === 1;
-      };
   
       this.set_adjusted_ptr = function(adjustedPtr) {
         HEAPU32[(((this.ptr)+(16))>>2)] = adjustedPtr;
@@ -1589,13 +1439,13 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       info.init(type, destructor);
       exceptionLast = ptr;
       uncaughtExceptionCount++;
-      throw ptr + " - Exception catching is disabled, this exception cannot be caught. Compile with -sNO_DISABLE_EXCEPTION_CATCHING or -sEXCEPTION_CATCHING_ALLOWED=[..] to catch.";
+      assert(false, 'Exception thrown, but exception catching is not enabled. Compile with -sNO_DISABLE_EXCEPTION_CATCHING or -sEXCEPTION_CATCHING_ALLOWED=[..] to catch.');
     }
 
-  function setErrNo(value) {
+  var setErrNo = (value) => {
       HEAP32[((___errno_location())>>2)] = value;
       return value;
-    }
+    };
   
   var PATH = {isAbs:(path) => path.charAt(0) === '/',splitPath:(filename) => {
         var splitPathRe = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
@@ -1662,25 +1512,38 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         return PATH.normalize(l + '/' + r);
       }};
   
-  function getRandomDevice() {
+  var initRandomFill = () => {
       if (typeof crypto == 'object' && typeof crypto['getRandomValues'] == 'function') {
         // for modern web browsers
-        var randomBuffer = new Uint8Array(1);
-        return () => { crypto.getRandomValues(randomBuffer); return randomBuffer[0]; };
+        return (view) => crypto.getRandomValues(view);
       } else
       if (ENVIRONMENT_IS_NODE) {
         // for nodejs with or without crypto support included
         try {
           var crypto_module = require('crypto');
-          // nodejs has crypto support
-          return () => crypto_module['randomBytes'](1)[0];
+          var randomFillSync = crypto_module['randomFillSync'];
+          if (randomFillSync) {
+            // nodejs with LTS crypto support
+            return (view) => crypto_module['randomFillSync'](view);
+          }
+          // very old nodejs with the original crypto API
+          var randomBytes = crypto_module['randomBytes'];
+          return (view) => (
+            view.set(randomBytes(view.byteLength)),
+            // Return the original view to match modern native implementations.
+            view
+          );
         } catch (e) {
           // nodejs doesn't have crypto support
         }
       }
       // we couldn't find a proper implementation, as Math.random() is not suitable for /dev/random, see emscripten-core/emscripten/pull/7096
-      return () => abort("no cryptographic support found for randomDevice. consider polyfilling it if you want to use something insecure like Math.random(), e.g. put this in a --pre-js: var crypto = { getRandomValues: function(array) { for (var i = 0; i < array.length; i++) array[i] = (Math.random()*256)|0 } };");
-    }
+      abort("no cryptographic support found for randomDevice. consider polyfilling it if you want to use something insecure like Math.random(), e.g. put this in a --pre-js: var crypto = { getRandomValues: (array) => { for (var i = 0; i < array.length; i++) array[i] = (Math.random()*256)|0 } };");
+    };
+  var randomFill = (view) => {
+      // Lazily init on the first invocation.
+      return (randomFill = initRandomFill())(view);
+    };
   
   
   
@@ -1736,6 +1599,74 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }};
   
   
+  var lengthBytesUTF8 = (str) => {
+      var len = 0;
+      for (var i = 0; i < str.length; ++i) {
+        // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code
+        // unit, not a Unicode code point of the character! So decode
+        // UTF16->UTF32->UTF8.
+        // See http://unicode.org/faq/utf_bom.html#utf16-3
+        var c = str.charCodeAt(i); // possibly a lead surrogate
+        if (c <= 0x7F) {
+          len++;
+        } else if (c <= 0x7FF) {
+          len += 2;
+        } else if (c >= 0xD800 && c <= 0xDFFF) {
+          len += 4; ++i;
+        } else {
+          len += 3;
+        }
+      }
+      return len;
+    };
+  
+  var stringToUTF8Array = (str, heap, outIdx, maxBytesToWrite) => {
+      assert(typeof str === 'string');
+      // Parameter maxBytesToWrite is not optional. Negative values, 0, null,
+      // undefined and false each don't write out any bytes.
+      if (!(maxBytesToWrite > 0))
+        return 0;
+  
+      var startIdx = outIdx;
+      var endIdx = outIdx + maxBytesToWrite - 1; // -1 for string null terminator.
+      for (var i = 0; i < str.length; ++i) {
+        // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code
+        // unit, not a Unicode code point of the character! So decode
+        // UTF16->UTF32->UTF8.
+        // See http://unicode.org/faq/utf_bom.html#utf16-3
+        // For UTF8 byte structure, see http://en.wikipedia.org/wiki/UTF-8#Description
+        // and https://www.ietf.org/rfc/rfc2279.txt
+        // and https://tools.ietf.org/html/rfc3629
+        var u = str.charCodeAt(i); // possibly a lead surrogate
+        if (u >= 0xD800 && u <= 0xDFFF) {
+          var u1 = str.charCodeAt(++i);
+          u = 0x10000 + ((u & 0x3FF) << 10) | (u1 & 0x3FF);
+        }
+        if (u <= 0x7F) {
+          if (outIdx >= endIdx) break;
+          heap[outIdx++] = u;
+        } else if (u <= 0x7FF) {
+          if (outIdx + 1 >= endIdx) break;
+          heap[outIdx++] = 0xC0 | (u >> 6);
+          heap[outIdx++] = 0x80 | (u & 63);
+        } else if (u <= 0xFFFF) {
+          if (outIdx + 2 >= endIdx) break;
+          heap[outIdx++] = 0xE0 | (u >> 12);
+          heap[outIdx++] = 0x80 | ((u >> 6) & 63);
+          heap[outIdx++] = 0x80 | (u & 63);
+        } else {
+          if (outIdx + 3 >= endIdx) break;
+          if (u > 0x10FFFF) warnOnce('Invalid Unicode code point ' + ptrToString(u) + ' encountered when serializing a JS string to a UTF-8 string in wasm memory! (Valid unicode code points should be in range 0-0x10FFFF).');
+          heap[outIdx++] = 0xF0 | (u >> 18);
+          heap[outIdx++] = 0x80 | ((u >> 12) & 63);
+          heap[outIdx++] = 0x80 | ((u >> 6) & 63);
+          heap[outIdx++] = 0x80 | (u & 63);
+        }
+      }
+      // Null-terminate the pointer to the buffer.
+      heap[outIdx] = 0;
+      return outIdx - startIdx;
+    };
   /** @type {function(string, boolean=, number=)} */
   function intArrayFromString(stringy, dontAddNull, length) {
     var len = length > 0 ? length : lengthBytesUTF8(stringy)+1;
@@ -1744,6 +1675,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
     if (dontAddNull) u8array.length = numBytesWritten;
     return u8array;
   }
+  
   var TTY = {ttys:[],init:function () {
         // https://github.com/emscripten-core/emscripten/pull/1555
         // if (ENVIRONMENT_IS_NODE) {
@@ -1872,6 +1804,24 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             out(UTF8ArrayToString(tty.output, 0));
             tty.output = [];
           }
+        },ioctl_tcgets:function(tty) {
+          // typical setting
+          return {
+            c_iflag: 25856,
+            c_oflag: 5,
+            c_cflag: 191,
+            c_lflag: 35387,
+            c_cc: [
+              0x03, 0x1c, 0x7f, 0x15, 0x04, 0x00, 0x01, 0x00, 0x11, 0x13, 0x1a, 0x00,
+              0x12, 0x0f, 0x17, 0x16, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+              0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+            ]
+          };
+        },ioctl_tcsets:function(tty, optional_actions, data) {
+          // currently just ignore
+          return 0;
+        },ioctl_tiocgwinsz:function(tty) {
+          return [24, 80];
         }},default_tty1_ops:{put_char:function(tty, val) {
           if (val === null || val === 10) {
             err(UTF8ArrayToString(tty.output, 0));
@@ -1887,18 +1837,18 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }}};
   
   
-  function zeroMemory(address, size) {
+  var zeroMemory = (address, size) => {
       HEAPU8.fill(0, address, address + size);
       return address;
-    }
+    };
   
-  function alignMemory(size, alignment) {
+  var alignMemory = (size, alignment) => {
       assert(alignment, "alignment argument is required");
       return Math.ceil(size / alignment) * alignment;
-    }
-  function mmapAlloc(size) {
+    };
+  var mmapAlloc = (size) => {
       abort('internal error: mmapAlloc called but `emscripten_builtin_memalign` native symbol not exported');
-    }
+    };
   var MEMFS = {ops_table:null,mount:function(mount) {
         return MEMFS.createNode(null, '/', 16384 | 511 /* 0777 */, 0);
       },createNode:function(parent, name, mode, dev) {
@@ -2193,7 +2143,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             }
             HEAP8.set(contents, ptr);
           }
-          return { ptr: ptr, allocated: allocated };
+          return { ptr, allocated };
         },msync:function(stream, buffer, offset, length, mmapFlags) {
           MEMFS.stream_ops.write(stream, buffer, 0, length, offset, false);
           // should we check if bytesWritten and length are the same?
@@ -2201,21 +2151,92 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }}};
   
   /** @param {boolean=} noRunDep */
-  function asyncLoad(url, onload, onerror, noRunDep) {
-      var dep = !noRunDep ? getUniqueRunDependency('al ' + url) : '';
+  var asyncLoad = (url, onload, onerror, noRunDep) => {
+      var dep = !noRunDep ? getUniqueRunDependency(`al ${url}`) : '';
       readAsync(url, (arrayBuffer) => {
-        assert(arrayBuffer, 'Loading data file "' + url + '" failed (no arrayBuffer).');
+        assert(arrayBuffer, `Loading data file "${url}" failed (no arrayBuffer).`);
         onload(new Uint8Array(arrayBuffer));
         if (dep) removeRunDependency(dep);
       }, (event) => {
         if (onerror) {
           onerror();
         } else {
-          throw 'Loading data file "' + url + '" failed.';
+          throw `Loading data file "${url}" failed.`;
         }
       });
       if (dep) addRunDependency(dep);
+    };
+  
+  
+  var preloadPlugins = Module['preloadPlugins'] || [];
+  function FS_handledByPreloadPlugin(byteArray, fullname, finish, onerror) {
+      // Ensure plugins are ready.
+      if (typeof Browser != 'undefined') Browser.init();
+  
+      var handled = false;
+      preloadPlugins.forEach(function(plugin) {
+        if (handled) return;
+        if (plugin['canHandle'](fullname)) {
+          plugin['handle'](byteArray, fullname, finish, onerror);
+          handled = true;
+        }
+      });
+      return handled;
     }
+  function FS_createPreloadedFile(parent, name, url, canRead, canWrite, onload, onerror, dontCreateFile, canOwn, preFinish) {
+      // TODO we should allow people to just pass in a complete filename instead
+      // of parent and name being that we just join them anyways
+      var fullname = name ? PATH_FS.resolve(PATH.join2(parent, name)) : parent;
+      var dep = getUniqueRunDependency(`cp ${fullname}`); // might have several active requests for the same fullname
+      function processData(byteArray) {
+        function finish(byteArray) {
+          if (preFinish) preFinish();
+          if (!dontCreateFile) {
+            FS.createDataFile(parent, name, byteArray, canRead, canWrite, canOwn);
+          }
+          if (onload) onload();
+          removeRunDependency(dep);
+        }
+        if (FS_handledByPreloadPlugin(byteArray, fullname, finish, () => {
+          if (onerror) onerror();
+          removeRunDependency(dep);
+        })) {
+          return;
+        }
+        finish(byteArray);
+      }
+      addRunDependency(dep);
+      if (typeof url == 'string') {
+        asyncLoad(url, (byteArray) => processData(byteArray), onerror);
+      } else {
+        processData(url);
+      }
+    }
+  
+  function FS_modeStringToFlags(str) {
+      var flagModes = {
+        'r': 0,
+        'r+': 2,
+        'w': 512 | 64 | 1,
+        'w+': 512 | 64 | 2,
+        'a': 1024 | 64 | 1,
+        'a+': 1024 | 64 | 2,
+      };
+      var flags = flagModes[str];
+      if (typeof flags == 'undefined') {
+        throw new Error(`Unknown file open mode: ${str}`);
+      }
+      return flags;
+    }
+  
+  function FS_getMode(canRead, canWrite) {
+      var mode = 0;
+      if (canRead) mode |= 292 | 73;
+      if (canWrite) mode |= 146;
+      return mode;
+    }
+  
+  
   
   
   var ERRNO_MESSAGES = {0:"Success",1:"Arg list too long",2:"Permission denied",3:"Address already in use",4:"Address not available",5:"Address family not supported by protocol family",6:"No more processes",7:"Socket already connected",8:"Bad file number",9:"Trying to read unreadable message",10:"Mount device busy",11:"Operation canceled",12:"No children",13:"Connection aborted",14:"Connection refused",15:"Connection reset by peer",16:"File locking deadlock error",17:"Destination address required",18:"Math arg out of domain of func",19:"Quota exceeded",20:"File exists",21:"Bad address",22:"File too large",23:"Host is unreachable",24:"Identifier removed",25:"Illegal byte sequence",26:"Connection already in progress",27:"Interrupted system call",28:"Invalid argument",29:"I/O error",30:"Socket is already connected",31:"Is a directory",32:"Too many symbolic links",33:"Too many open files",34:"Too many links",35:"Message too long",36:"Multihop attempted",37:"File or path name too long",38:"Network interface is not configured",39:"Connection reset by network",40:"Network is unreachable",41:"Too many open files in system",42:"No buffer space available",43:"No such device",44:"No such file or directory",45:"Exec format error",46:"No record locks available",47:"The link has been severed",48:"Not enough core",49:"No message of desired type",50:"Protocol not available",51:"No space left on device",52:"Function not implemented",53:"Socket is not connected",54:"Not a directory",55:"Directory not empty",56:"State not recoverable",57:"Socket operation on non-socket",59:"Not a typewriter",60:"No such device or address",61:"Value too large for defined data type",62:"Previous owner died",63:"Not super-user",64:"Broken pipe",65:"Protocol error",66:"Unknown protocol",67:"Protocol wrong type for socket",68:"Math result not representable",69:"Read only file system",70:"Illegal seek",71:"No such process",72:"Stale file handle",73:"Connection timed out",74:"Text file busy",75:"Cross-device link",100:"Device not a stream",101:"Bad font file fmt",102:"Invalid slot",103:"Invalid request code",104:"No anode",105:"Block device required",106:"Channel number out of range",107:"Level 3 halted",108:"Level 3 reset",109:"Link number out of range",110:"Protocol driver not attached",111:"No CSI structure available",112:"Level 2 halted",113:"Invalid exchange",114:"Invalid request descriptor",115:"Exchange full",116:"No data (for no delay io)",117:"Timer expired",118:"Out of streams resources",119:"Machine is not on the network",120:"Package not installed",121:"The object is remote",122:"Advertise error",123:"Srmount error",124:"Communication error on send",125:"Cross mount point (not really error)",126:"Given log. name not unique",127:"f.d. invalid for this operation",128:"Remote address changed",129:"Can   access a needed shared lib",130:"Accessing a corrupted shared lib",131:".lib section in a.out corrupted",132:"Attempting to link in too many libs",133:"Attempting to exec a shared library",135:"Streams pipe error",136:"Too many users",137:"Socket type not supported",138:"Not supported",139:"Protocol family not supported",140:"Can't send after socket shutdown",141:"Too many references",142:"Host is down",148:"No medium (in tape drive)",156:"Level 2 not synchronized"};
@@ -2299,9 +2320,9 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           if (FS.isRoot(node)) {
             var mount = node.mount.mountpoint;
             if (!path) return mount;
-            return mount[mount.length-1] !== '/' ? mount + '/' + path : mount + path;
+            return mount[mount.length-1] !== '/' ? `${mount}/${path}` : mount + path;
           }
-          path = path ? node.name + '/' + path : node.name;
+          path = path ? `${node.name}/${path}` : node.name;
           node = node.parent;
         }
       },hashName:(parentid, name) => {
@@ -2370,12 +2391,6 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         return (mode & 61440) === 4096;
       },isSocket:(mode) => {
         return (mode & 49152) === 49152;
-      },flagModes:{"r":0,"r+":2,"w":577,"w+":578,"a":1089,"a+":1090},modeStringToFlags:(str) => {
-        var flags = FS.flagModes[str];
-        if (typeof flags == 'undefined') {
-          throw new Error('Unknown file open mode: ' + str);
-        }
-        return flags;
       },flagsToPermissionString:(flag) => {
         var perms = ['r', 'w', 'rw'][flag & 3];
         if ((flag & 512)) {
@@ -2444,14 +2459,20 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           }
         }
         return FS.nodePermissions(node, FS.flagsToPermissionString(flags));
-      },MAX_OPEN_FDS:4096,nextfd:(fd_start = 0, fd_end = FS.MAX_OPEN_FDS) => {
-        for (var fd = fd_start; fd <= fd_end; fd++) {
+      },MAX_OPEN_FDS:4096,nextfd:() => {
+        for (var fd = 0; fd <= FS.MAX_OPEN_FDS; fd++) {
           if (!FS.streams[fd]) {
             return fd;
           }
         }
         throw new FS.ErrnoError(33);
-      },getStream:(fd) => FS.streams[fd],createStream:(stream, fd_start, fd_end) => {
+      },getStreamChecked:(fd) => {
+        var stream = FS.getStream(fd);
+        if (!stream) {
+          throw new FS.ErrnoError(8);
+        }
+        return stream;
+      },getStream:(fd) => FS.streams[fd],createStream:(stream, fd = -1) => {
         if (!FS.FSStream) {
           FS.FSStream = /** @constructor */ function() {
             this.shared = { };
@@ -2492,7 +2513,9 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
         // clone it, so we can return an instance of FSStream
         stream = Object.assign(new FS.FSStream(), stream);
-        var fd = FS.nextfd(fd_start, fd_end);
+        if (fd == -1) {
+          fd = FS.nextfd();
+        }
         stream.fd = fd;
         FS.streams[fd] = stream;
         return stream;
@@ -2532,7 +2555,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         FS.syncFSRequests++;
   
         if (FS.syncFSRequests > 1) {
-          err('warning: ' + FS.syncFSRequests + ' FS.syncfs operations in flight at once, probably just doing extra work');
+          err(`warning: ${FS.syncFSRequests} FS.syncfs operations in flight at once, probably just doing extra work`);
         }
   
         var mounts = FS.getMounts(FS.root.mount);
@@ -2592,9 +2615,9 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
   
         var mount = {
-          type: type,
-          opts: opts,
-          mountpoint: mountpoint,
+          type,
+          opts,
+          mountpoint,
           mounts: []
         };
   
@@ -2881,10 +2904,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       },lchmod:(path, mode) => {
         FS.chmod(path, mode, true);
       },fchmod:(fd, mode) => {
-        var stream = FS.getStream(fd);
-        if (!stream) {
-          throw new FS.ErrnoError(8);
-        }
+        var stream = FS.getStreamChecked(fd);
         FS.chmod(stream.node, mode);
       },chown:(path, uid, gid, dontFollow) => {
         var node;
@@ -2904,10 +2924,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       },lchown:(path, uid, gid) => {
         FS.chown(path, uid, gid, true);
       },fchown:(fd, uid, gid) => {
-        var stream = FS.getStream(fd);
-        if (!stream) {
-          throw new FS.ErrnoError(8);
-        }
+        var stream = FS.getStreamChecked(fd);
         FS.chown(stream.node, uid, gid);
       },truncate:(path, len) => {
         if (len < 0) {
@@ -2938,10 +2955,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           timestamp: Date.now()
         });
       },ftruncate:(fd, len) => {
-        var stream = FS.getStream(fd);
-        if (!stream) {
-          throw new FS.ErrnoError(8);
-        }
+        var stream = FS.getStreamChecked(fd);
         if ((stream.flags & 2097155) === 0) {
           throw new FS.ErrnoError(28);
         }
@@ -2956,7 +2970,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         if (path === "") {
           throw new FS.ErrnoError(44);
         }
-        flags = typeof flags == 'string' ? FS.modeStringToFlags(flags) : flags;
+        flags = typeof flags == 'string' ? FS_modeStringToFlags(flags) : flags;
         mode = typeof mode == 'undefined' ? 438 /* 0666 */ : mode;
         if ((flags & 64)) {
           mode = (mode & 4095) | 32768;
@@ -3020,9 +3034,9 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   
         // register the stream with the filesystem
         var stream = FS.createStream({
-          node: node,
+          node,
           path: FS.getPath(node),  // we want the absolute path to the node
-          flags: flags,
+          flags,
           seekable: true,
           position: 0,
           stream_ops: node.stream_ops,
@@ -3175,7 +3189,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         opts.flags = opts.flags || 0;
         opts.encoding = opts.encoding || 'binary';
         if (opts.encoding !== 'utf8' && opts.encoding !== 'binary') {
-          throw new Error('Invalid encoding type "' + opts.encoding + '"');
+          throw new Error(`Invalid encoding type "${opts.encoding}"`);
         }
         var ret;
         var stream = FS.open(path, opts.flags);
@@ -3237,9 +3251,16 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         FS.mkdev('/dev/tty', FS.makedev(5, 0));
         FS.mkdev('/dev/tty1', FS.makedev(6, 0));
         // setup /dev/[u]random
-        var random_device = getRandomDevice();
-        FS.createDevice('/dev', 'random', random_device);
-        FS.createDevice('/dev', 'urandom', random_device);
+        // use a buffer to avoid overhead of individual crypto calls per byte
+        var randomBuffer = new Uint8Array(1024), randomLeft = 0;
+        var randomByte = () => {
+          if (randomLeft === 0) {
+            randomLeft = randomFill(randomBuffer).byteLength;
+          }
+          return randomBuffer[--randomLeft];
+        };
+        FS.createDevice('/dev', 'random', randomByte);
+        FS.createDevice('/dev', 'urandom', randomByte);
         // we're not going to emulate the actual shm device,
         // just create the tmp dirs that reside in it commonly
         FS.mkdir('/dev/shm');
@@ -3256,8 +3277,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             node.node_ops = {
               lookup: (parent, name) => {
                 var fd = +name;
-                var stream = FS.getStream(fd);
-                if (!stream) throw new FS.ErrnoError(8);
+                var stream = FS.getStreamChecked(fd);
                 var ret = {
                   parent: null,
                   mount: { mountpoint: 'fake' },
@@ -3299,9 +3319,9 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         var stdin = FS.open('/dev/stdin', 0);
         var stdout = FS.open('/dev/stdout', 1);
         var stderr = FS.open('/dev/stderr', 1);
-        assert(stdin.fd === 0, 'invalid handle for stdin (' + stdin.fd + ')');
-        assert(stdout.fd === 1, 'invalid handle for stdout (' + stdout.fd + ')');
-        assert(stderr.fd === 2, 'invalid handle for stderr (' + stderr.fd + ')');
+        assert(stdin.fd === 0, `invalid handle for stdin (${stdin.fd})`);
+        assert(stdout.fd === 1, `invalid handle for stdout (${stdout.fd})`);
+        assert(stderr.fd === 2, `invalid handle for stderr (${stderr.fd})`);
       },ensureErrnoError:() => {
         if (FS.ErrnoError) return;
         FS.ErrnoError = /** @this{Object} */ function ErrnoError(errno, node) {
@@ -3378,11 +3398,6 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           }
           FS.close(stream);
         }
-      },getMode:(canRead, canWrite) => {
-        var mode = 0;
-        if (canRead) mode |= 292 | 73;
-        if (canWrite) mode |= 146;
-        return mode;
       },findObject:(path, dontResolveLastLink) => {
         var ret = FS.analyzePath(path, dontResolveLastLink);
         if (!ret.exists) {
@@ -3433,7 +3448,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         return current;
       },createFile:(parent, name, properties, canRead, canWrite) => {
         var path = PATH.join2(typeof parent == 'string' ? parent : FS.getPath(parent), name);
-        var mode = FS.getMode(canRead, canWrite);
+        var mode = FS_getMode(canRead, canWrite);
         return FS.create(path, mode);
       },createDataFile:(parent, name, data, canRead, canWrite, canOwn) => {
         var path = name;
@@ -3441,7 +3456,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           parent = typeof parent == 'string' ? parent : FS.getPath(parent);
           path = name ? PATH.join2(parent, name) : parent;
         }
-        var mode = FS.getMode(canRead, canWrite);
+        var mode = FS_getMode(canRead, canWrite);
         var node = FS.create(path, mode);
         if (data) {
           if (typeof data == 'string') {
@@ -3459,7 +3474,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         return node;
       },createDevice:(parent, name, input, output) => {
         var path = PATH.join2(typeof parent == 'string' ? parent : FS.getPath(parent), name);
-        var mode = FS.getMode(!!input, !!output);
+        var mode = FS_getMode(!!input, !!output);
         if (!FS.createDevice.major) FS.createDevice.major = 64;
         var dev = FS.makedev(FS.createDevice.major++, 0);
         // Create a fake device that a set of stream ops to emulate
@@ -3690,106 +3705,10 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             throw new FS.ErrnoError(48);
           }
           writeChunks(stream, HEAP8, ptr, length, position);
-          return { ptr: ptr, allocated: true };
+          return { ptr, allocated: true };
         };
         node.stream_ops = stream_ops;
         return node;
-      },createPreloadedFile:(parent, name, url, canRead, canWrite, onload, onerror, dontCreateFile, canOwn, preFinish) => {
-        // TODO we should allow people to just pass in a complete filename instead
-        // of parent and name being that we just join them anyways
-        var fullname = name ? PATH_FS.resolve(PATH.join2(parent, name)) : parent;
-        var dep = getUniqueRunDependency('cp ' + fullname); // might have several active requests for the same fullname
-        function processData(byteArray) {
-          function finish(byteArray) {
-            if (preFinish) preFinish();
-            if (!dontCreateFile) {
-              FS.createDataFile(parent, name, byteArray, canRead, canWrite, canOwn);
-            }
-            if (onload) onload();
-            removeRunDependency(dep);
-          }
-          if (Browser.handledByPreloadPlugin(byteArray, fullname, finish, () => {
-            if (onerror) onerror();
-            removeRunDependency(dep);
-          })) {
-            return;
-          }
-          finish(byteArray);
-        }
-        addRunDependency(dep);
-        if (typeof url == 'string') {
-          asyncLoad(url, (byteArray) => processData(byteArray), onerror);
-        } else {
-          processData(url);
-        }
-      },indexedDB:() => {
-        return window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-      },DB_NAME:() => {
-        return 'EM_FS_' + window.location.pathname;
-      },DB_VERSION:20,DB_STORE_NAME:"FILE_DATA",saveFilesToDB:(paths, onload = (() => {}), onerror = (() => {})) => {
-        var indexedDB = FS.indexedDB();
-        try {
-          var openRequest = indexedDB.open(FS.DB_NAME(), FS.DB_VERSION);
-        } catch (e) {
-          return onerror(e);
-        }
-        openRequest.onupgradeneeded = () => {
-          out('creating db');
-          var db = openRequest.result;
-          db.createObjectStore(FS.DB_STORE_NAME);
-        };
-        openRequest.onsuccess = () => {
-          var db = openRequest.result;
-          var transaction = db.transaction([FS.DB_STORE_NAME], 'readwrite');
-          var files = transaction.objectStore(FS.DB_STORE_NAME);
-          var ok = 0, fail = 0, total = paths.length;
-          function finish() {
-            if (fail == 0) onload(); else onerror();
-          }
-          paths.forEach((path) => {
-            var putRequest = files.put(FS.analyzePath(path).object.contents, path);
-            putRequest.onsuccess = () => { ok++; if (ok + fail == total) finish() };
-            putRequest.onerror = () => { fail++; if (ok + fail == total) finish() };
-          });
-          transaction.onerror = onerror;
-        };
-        openRequest.onerror = onerror;
-      },loadFilesFromDB:(paths, onload = (() => {}), onerror = (() => {})) => {
-        var indexedDB = FS.indexedDB();
-        try {
-          var openRequest = indexedDB.open(FS.DB_NAME(), FS.DB_VERSION);
-        } catch (e) {
-          return onerror(e);
-        }
-        openRequest.onupgradeneeded = onerror; // no database to load from
-        openRequest.onsuccess = () => {
-          var db = openRequest.result;
-          try {
-            var transaction = db.transaction([FS.DB_STORE_NAME], 'readonly');
-          } catch(e) {
-            onerror(e);
-            return;
-          }
-          var files = transaction.objectStore(FS.DB_STORE_NAME);
-          var ok = 0, fail = 0, total = paths.length;
-          function finish() {
-            if (fail == 0) onload(); else onerror();
-          }
-          paths.forEach((path) => {
-            var getRequest = files.get(path);
-            getRequest.onsuccess = () => {
-              if (FS.analyzePath(path).exists) {
-                FS.unlink(path);
-              }
-              FS.createDataFile(PATH.dirname(path), PATH.basename(path), getRequest.result, true, true, true);
-              ok++;
-              if (ok + fail == total) finish();
-            };
-            getRequest.onerror = () => { fail++; if (ok + fail == total) finish() };
-          });
-          transaction.onerror = onerror;
-        };
-        openRequest.onerror = onerror;
       },absolutePath:() => {
         abort('FS.absolutePath has been removed; use PATH_FS.resolve instead');
       },createFolder:() => {
@@ -3803,6 +3722,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       },standardizePath:() => {
         abort('FS.standardizePath has been removed; use PATH.normalize instead');
       }};
+  
   var SYSCALLS = {DEFAULT_POLLMASK:5,calculateAt:function(dirfd, path, allowEmpty) {
         if (PATH.isAbs(path)) {
           return path;
@@ -3833,25 +3753,24 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           throw e;
         }
         HEAP32[((buf)>>2)] = stat.dev;
-        HEAP32[(((buf)+(8))>>2)] = stat.ino;
-        HEAP32[(((buf)+(12))>>2)] = stat.mode;
-        HEAPU32[(((buf)+(16))>>2)] = stat.nlink;
-        HEAP32[(((buf)+(20))>>2)] = stat.uid;
-        HEAP32[(((buf)+(24))>>2)] = stat.gid;
-        HEAP32[(((buf)+(28))>>2)] = stat.rdev;
-        (tempI64 = [stat.size>>>0,(tempDouble=stat.size,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[(((buf)+(40))>>2)] = tempI64[0],HEAP32[(((buf)+(44))>>2)] = tempI64[1]);
-        HEAP32[(((buf)+(48))>>2)] = 4096;
-        HEAP32[(((buf)+(52))>>2)] = stat.blocks;
+        HEAP32[(((buf)+(4))>>2)] = stat.mode;
+        HEAPU32[(((buf)+(8))>>2)] = stat.nlink;
+        HEAP32[(((buf)+(12))>>2)] = stat.uid;
+        HEAP32[(((buf)+(16))>>2)] = stat.gid;
+        HEAP32[(((buf)+(20))>>2)] = stat.rdev;
+        (tempI64 = [stat.size>>>0,(tempDouble=stat.size,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? (+(Math.floor((tempDouble)/4294967296.0)))>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)], HEAP32[(((buf)+(24))>>2)] = tempI64[0],HEAP32[(((buf)+(28))>>2)] = tempI64[1]);
+        HEAP32[(((buf)+(32))>>2)] = 4096;
+        HEAP32[(((buf)+(36))>>2)] = stat.blocks;
         var atime = stat.atime.getTime();
         var mtime = stat.mtime.getTime();
         var ctime = stat.ctime.getTime();
-        (tempI64 = [Math.floor(atime / 1000)>>>0,(tempDouble=Math.floor(atime / 1000),(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[(((buf)+(56))>>2)] = tempI64[0],HEAP32[(((buf)+(60))>>2)] = tempI64[1]);
-        HEAPU32[(((buf)+(64))>>2)] = (atime % 1000) * 1000;
-        (tempI64 = [Math.floor(mtime / 1000)>>>0,(tempDouble=Math.floor(mtime / 1000),(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[(((buf)+(72))>>2)] = tempI64[0],HEAP32[(((buf)+(76))>>2)] = tempI64[1]);
-        HEAPU32[(((buf)+(80))>>2)] = (mtime % 1000) * 1000;
-        (tempI64 = [Math.floor(ctime / 1000)>>>0,(tempDouble=Math.floor(ctime / 1000),(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[(((buf)+(88))>>2)] = tempI64[0],HEAP32[(((buf)+(92))>>2)] = tempI64[1]);
-        HEAPU32[(((buf)+(96))>>2)] = (ctime % 1000) * 1000;
-        (tempI64 = [stat.ino>>>0,(tempDouble=stat.ino,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[(((buf)+(104))>>2)] = tempI64[0],HEAP32[(((buf)+(108))>>2)] = tempI64[1]);
+        (tempI64 = [Math.floor(atime / 1000)>>>0,(tempDouble=Math.floor(atime / 1000),(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? (+(Math.floor((tempDouble)/4294967296.0)))>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)], HEAP32[(((buf)+(40))>>2)] = tempI64[0],HEAP32[(((buf)+(44))>>2)] = tempI64[1]);
+        HEAPU32[(((buf)+(48))>>2)] = (atime % 1000) * 1000;
+        (tempI64 = [Math.floor(mtime / 1000)>>>0,(tempDouble=Math.floor(mtime / 1000),(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? (+(Math.floor((tempDouble)/4294967296.0)))>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)], HEAP32[(((buf)+(56))>>2)] = tempI64[0],HEAP32[(((buf)+(60))>>2)] = tempI64[1]);
+        HEAPU32[(((buf)+(64))>>2)] = (mtime % 1000) * 1000;
+        (tempI64 = [Math.floor(ctime / 1000)>>>0,(tempDouble=Math.floor(ctime / 1000),(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? (+(Math.floor((tempDouble)/4294967296.0)))>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)], HEAP32[(((buf)+(72))>>2)] = tempI64[0],HEAP32[(((buf)+(76))>>2)] = tempI64[1]);
+        HEAPU32[(((buf)+(80))>>2)] = (ctime % 1000) * 1000;
+        (tempI64 = [stat.ino>>>0,(tempDouble=stat.ino,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? (+(Math.floor((tempDouble)/4294967296.0)))>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)], HEAP32[(((buf)+(88))>>2)] = tempI64[0],HEAP32[(((buf)+(92))>>2)] = tempI64[1]);
         return 0;
       },doMsync:function(addr, stream, len, flags, offset) {
         if (!FS.isFile(stream.node.mode)) {
@@ -3872,8 +3791,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         var ret = UTF8ToString(ptr);
         return ret;
       },getStreamFromFD:function(fd) {
-        var stream = FS.getStream(fd);
-        if (!stream) throw new FS.ErrnoError(8);
+        var stream = FS.getStreamChecked(fd);
         return stream;
       }};
   function ___syscall_fcntl64(fd, cmd, varargs) {
@@ -3934,6 +3852,12 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   }
   }
 
+  
+  var stringToUTF8 = (str, outPtr, maxBytesToWrite) => {
+      assert(typeof maxBytesToWrite == 'number', 'stringToUTF8(str, outPtr, maxBytesToWrite) is missing the third parameter that specifies the length of the output buffer!');
+      return stringToUTF8Array(str, HEAPU8,outPtr, maxBytesToWrite);
+    };
+  
   function ___syscall_getcwd(buf, size) {
   try {
   
@@ -3955,18 +3879,48 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   
       var stream = SYSCALLS.getStreamFromFD(fd);
       switch (op) {
-        case 21509:
+        case 21509: {
+          if (!stream.tty) return -59;
+          return 0;
+        }
         case 21505: {
           if (!stream.tty) return -59;
+          if (stream.tty.ops.ioctl_tcgets) {
+            var termios = stream.tty.ops.ioctl_tcgets(stream);
+            var argp = SYSCALLS.get();
+            HEAP32[((argp)>>2)] = termios.c_iflag || 0;
+            HEAP32[(((argp)+(4))>>2)] = termios.c_oflag || 0;
+            HEAP32[(((argp)+(8))>>2)] = termios.c_cflag || 0;
+            HEAP32[(((argp)+(12))>>2)] = termios.c_lflag || 0;
+            for (var i = 0; i < 32; i++) {
+              HEAP8[(((argp + i)+(17))>>0)] = termios.c_cc[i] || 0;
+            }
+            return 0;
+          }
           return 0;
         }
         case 21510:
         case 21511:
-        case 21512:
+        case 21512: {
+          if (!stream.tty) return -59;
+          return 0; // no-op, not actually adjusting terminal settings
+        }
         case 21506:
         case 21507:
         case 21508: {
           if (!stream.tty) return -59;
+          if (stream.tty.ops.ioctl_tcsets) {
+            var argp = SYSCALLS.get();
+            var c_iflag = HEAP32[((argp)>>2)];
+            var c_oflag = HEAP32[(((argp)+(4))>>2)];
+            var c_cflag = HEAP32[(((argp)+(8))>>2)];
+            var c_lflag = HEAP32[(((argp)+(12))>>2)];
+            var c_cc = []
+            for (var i = 0; i < 32; i++) {
+              c_cc.push(HEAP8[(((argp + i)+(17))>>0)]);
+            }
+            return stream.tty.ops.ioctl_tcsets(stream.tty, op, { c_iflag, c_oflag, c_cflag, c_lflag, c_cc });
+          }
           return 0; // no-op, not actually adjusting terminal settings
         }
         case 21519: {
@@ -3987,12 +3941,22 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           // TODO: in theory we should write to the winsize struct that gets
           // passed in, but for now musl doesn't read anything on it
           if (!stream.tty) return -59;
+          if (stream.tty.ops.ioctl_tiocgwinsz) {
+            var winsize = stream.tty.ops.ioctl_tiocgwinsz(stream.tty);
+            var argp = SYSCALLS.get();
+            HEAP16[((argp)>>1)] = winsize[0];
+            HEAP16[(((argp)+(2))>>1)] = winsize[1];
+          }
           return 0;
         }
         case 21524: {
           // TODO: technically, this ioctl call should change the window size.
           // but, since emscripten doesn't have any concept of a terminal window
           // yet, we'll just silently throw it away as we do TIOCGWINSZ
+          if (!stream.tty) return -59;
+          return 0;
+        }
+        case 21515: {
           if (!stream.tty) return -59;
           return 0;
         }
@@ -4019,16 +3983,14 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   }
 
   var nowIsMonotonic = true;;
-  function __emscripten_get_now_is_monotonic() {
-      return nowIsMonotonic;
-    }
+  var __emscripten_get_now_is_monotonic = () => nowIsMonotonic;
 
-  function _abort() {
+  var _abort = () => {
       abort('native code called abort()');
-    }
+    };
 
   var readEmAsmArgsArray = [];
-  function readEmAsmArgs(sigPtr, buf) {
+  var readEmAsmArgs = (sigPtr, buf) => {
       // Nobody should have mutated _readEmAsmArgsArray underneath us to be something else than an array.
       assert(Array.isArray(readEmAsmArgsArray));
       // The input buffer is allocated on the stack, so it must be stack-aligned.
@@ -4041,7 +4003,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       while (ch = HEAPU8[sigPtr++]) {
         var chr = String.fromCharCode(ch);
         var validChars = ['d', 'f', 'i'];
-        assert(validChars.includes(chr), 'Invalid character ' + ch + '("' + chr + '") in readEmAsmArgs! Use only [' + validChars + '], and do not specify "v" for void return argument.');
+        assert(validChars.includes(chr), `Invalid character ${ch}("${chr}") in readEmAsmArgs! Use only [${validChars}], and do not specify "v" for void return argument.`);
         // Floats are always passed as doubles, and doubles and int64s take up 8
         // bytes (two 32-bit slots) in memory, align reads to these:
         buf += (ch != 105/*i*/) & buf;
@@ -4052,26 +4014,26 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         ++buf;
       }
       return readEmAsmArgsArray;
-    }
-  function runEmAsmFunction(code, sigPtr, argbuf) {
+    };
+  var runEmAsmFunction = (code, sigPtr, argbuf) => {
       var args = readEmAsmArgs(sigPtr, argbuf);
-      if (!ASM_CONSTS.hasOwnProperty(code)) abort('No EM_ASM constant found at address ' + code);
+      if (!ASM_CONSTS.hasOwnProperty(code)) abort(`No EM_ASM constant found at address ${code}`);
       return ASM_CONSTS[code].apply(null, args);
-    }
-  function _emscripten_asm_const_int(code, sigPtr, argbuf) {
+    };
+  var _emscripten_asm_const_int = (code, sigPtr, argbuf) => {
       return runEmAsmFunction(code, sigPtr, argbuf);
-    }
+    };
 
   function _emscripten_date_now() {
       return Date.now();
     }
 
-  function withStackSave(f) {
+  var withStackSave = (f) => {
       var stack = stackSave();
       var ret = f();
       stackRestore(stack);
       return ret;
-    }
+    };
   var JSEvents = {inEventHandler:0,removeAllEventListeners:function() {
         for (var i = JSEvents.eventHandlers.length-1; i >= 0; --i) {
           JSEvents._removeHandler(i);
@@ -4100,9 +4062,9 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           }
         }
         JSEvents.deferredCalls.push({
-          targetFunction: targetFunction,
-          precedence: precedence,
-          argsList: argsList
+          targetFunction,
+          precedence,
+          argsList
         });
   
         JSEvents.deferredCalls.sort(function(x,y) { return x.precedence < y.precedence; });
@@ -4137,6 +4099,11 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         h.target.removeEventListener(h.eventTypeString, h.eventListenerFunc, h.useCapture);
         JSEvents.eventHandlers.splice(i, 1);
       },registerOrRemoveHandler:function(eventHandler) {
+        if (!eventHandler.target) {
+          err('registerOrRemoveHandler: the target element for event handler registration does not exist, when processing the following event handler registration:');
+          console.dir(eventHandler);
+          return -4;
+        }
         var jsEventHandler = function jsEventHandler(event) {
           // Increment nesting count for the event handler.
           ++JSEvents.inEventHandler;
@@ -4164,6 +4131,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
              }
           }
         }
+        return 0;
       },getNodeNameForTarget:function(target) {
         if (!target) return '';
         if (target == window) return '#window';
@@ -4251,12 +4219,11 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       return 0;
     }
 
-  var _emscripten_get_now;if (ENVIRONMENT_IS_NODE) {
-    _emscripten_get_now = () => {
-      var t = process.hrtime();
-      return t[0] * 1e3 + t[1] / 1e6;
-    };
-  } else _emscripten_get_now = () => performance.now();
+  var _emscripten_get_now;
+      // Modern environment where performance.now() is supported:
+      // N.B. a shorter form "_emscripten_get_now = performance.now;" is
+      // unfortunately not allowed even in current browsers (e.g. FF Nightly 75).
+      _emscripten_get_now = () => performance.now();
   ;
 
   function _emscripten_get_num_gamepads() {
@@ -4266,7 +4233,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       return JSEvents.lastGamepadState.length;
     }
 
-  function __webgl_enable_ANGLE_instanced_arrays(ctx) {
+  function webgl_enable_ANGLE_instanced_arrays(ctx) {
       // Extension available in WebGL 1 from Firefox 26 and Google Chrome 30 onwards. Core feature in WebGL 2.
       var ext = ctx.getExtension('ANGLE_instanced_arrays');
       if (ext) {
@@ -4277,7 +4244,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
     }
   
-  function __webgl_enable_OES_vertex_array_object(ctx) {
+  function webgl_enable_OES_vertex_array_object(ctx) {
       // Extension available in WebGL 1 from Firefox 25 and WebKit 536.28/desktop Safari 6.0.3 onwards. Core feature in WebGL 2.
       var ext = ctx.getExtension('OES_vertex_array_object');
       if (ext) {
@@ -4289,7 +4256,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
     }
   
-  function __webgl_enable_WEBGL_draw_buffers(ctx) {
+  function webgl_enable_WEBGL_draw_buffers(ctx) {
       // Extension available in WebGL 1 from Firefox 28 onwards. Core feature in WebGL 2.
       var ext = ctx.getExtension('WEBGL_draw_buffers');
       if (ext) {
@@ -4298,10 +4265,11 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
     }
   
-  function __webgl_enable_WEBGL_multi_draw(ctx) {
+  function webgl_enable_WEBGL_multi_draw(ctx) {
       // Closure is expected to be allowed to minify the '.multiDrawWebgl' property, so not accessing it quoted.
       return !!(ctx.multiDrawWebgl = ctx.getExtension('WEBGL_multi_draw'));
     }
+  
   
   var GL = {counter:1,buffers:[],programs:[],framebuffers:[],renderbuffers:[],textures:[],shaders:[],vaos:[],contexts:[],offscreenCanvases:{},queries:[],stringCache:{},unpackAlignment:4,recordError:function recordError(errorCode) {
         if (!GL.lastError) {
@@ -4352,7 +4320,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         var handle = GL.getNewId(GL.contexts);
   
         var context = {
-          handle: handle,
+          handle,
           attributes: webGLContextAttributes,
           version: webGLContextAttributes.majorVersion,
           GLctx: ctx
@@ -4390,15 +4358,15 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         // Detect the presence of a few extensions manually, this GL interop layer itself will need to know if they exist.
   
         // Extensions that are only available in WebGL 1 (the calls will be no-ops if called on a WebGL 2 context active)
-        __webgl_enable_ANGLE_instanced_arrays(GLctx);
-        __webgl_enable_OES_vertex_array_object(GLctx);
-        __webgl_enable_WEBGL_draw_buffers(GLctx);
+        webgl_enable_ANGLE_instanced_arrays(GLctx);
+        webgl_enable_OES_vertex_array_object(GLctx);
+        webgl_enable_WEBGL_draw_buffers(GLctx);
   
         {
           GLctx.disjointTimerQueryExt = GLctx.getExtension("EXT_disjoint_timer_query");
         }
   
-        __webgl_enable_WEBGL_multi_draw(GLctx);
+        webgl_enable_WEBGL_multi_draw(GLctx);
   
         // .getSupportedExtensions() can return null if context is lost, so coerce to empty array.
         var exts = GLctx.getSupportedExtensions() || [];
@@ -4410,95 +4378,154 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           }
         });
       }};
-  function _emscripten_glActiveTexture(x0) { GLctx['activeTexture'](x0) }
+  /** @suppress {duplicate } */
+  function _glActiveTexture(x0) { GLctx.activeTexture(x0) }
+  var _emscripten_glActiveTexture = _glActiveTexture;
 
-  function _emscripten_glAttachShader(program, shader) {
+  /** @suppress {duplicate } */
+  function _glAttachShader(program, shader) {
       GLctx.attachShader(GL.programs[program], GL.shaders[shader]);
     }
+  var _emscripten_glAttachShader = _glAttachShader;
 
-  function _emscripten_glBeginQueryEXT(target, id) {
+  /** @suppress {duplicate } */
+  function _glBeginQueryEXT(target, id) {
       GLctx.disjointTimerQueryExt['beginQueryEXT'](target, GL.queries[id]);
     }
+  var _emscripten_glBeginQueryEXT = _glBeginQueryEXT;
 
-  function _emscripten_glBindAttribLocation(program, index, name) {
+  
+  /** @suppress {duplicate } */
+  function _glBindAttribLocation(program, index, name) {
       GLctx.bindAttribLocation(GL.programs[program], index, UTF8ToString(name));
     }
+  var _emscripten_glBindAttribLocation = _glBindAttribLocation;
 
-  function _emscripten_glBindBuffer(target, buffer) {
+  /** @suppress {duplicate } */
+  function _glBindBuffer(target, buffer) {
   
       GLctx.bindBuffer(target, GL.buffers[buffer]);
     }
+  var _emscripten_glBindBuffer = _glBindBuffer;
 
-  function _emscripten_glBindFramebuffer(target, framebuffer) {
+  /** @suppress {duplicate } */
+  function _glBindFramebuffer(target, framebuffer) {
   
       GLctx.bindFramebuffer(target, GL.framebuffers[framebuffer]);
   
     }
+  var _emscripten_glBindFramebuffer = _glBindFramebuffer;
 
-  function _emscripten_glBindRenderbuffer(target, renderbuffer) {
+  /** @suppress {duplicate } */
+  function _glBindRenderbuffer(target, renderbuffer) {
       GLctx.bindRenderbuffer(target, GL.renderbuffers[renderbuffer]);
     }
+  var _emscripten_glBindRenderbuffer = _glBindRenderbuffer;
 
-  function _emscripten_glBindTexture(target, texture) {
+  /** @suppress {duplicate } */
+  function _glBindTexture(target, texture) {
       GLctx.bindTexture(target, GL.textures[texture]);
     }
+  var _emscripten_glBindTexture = _glBindTexture;
 
-  function _emscripten_glBindVertexArrayOES(vao) {
-      GLctx['bindVertexArray'](GL.vaos[vao]);
+  
+  /** @suppress {duplicate } */
+  function _glBindVertexArray(vao) {
+      GLctx.bindVertexArray(GL.vaos[vao]);
     }
+  /** @suppress {duplicate } */
+  var _glBindVertexArrayOES = _glBindVertexArray;
+  var _emscripten_glBindVertexArrayOES = _glBindVertexArrayOES;
 
-  function _emscripten_glBlendColor(x0, x1, x2, x3) { GLctx['blendColor'](x0, x1, x2, x3) }
+  /** @suppress {duplicate } */
+  function _glBlendColor(x0, x1, x2, x3) { GLctx.blendColor(x0, x1, x2, x3) }
+  var _emscripten_glBlendColor = _glBlendColor;
 
-  function _emscripten_glBlendEquation(x0) { GLctx['blendEquation'](x0) }
+  /** @suppress {duplicate } */
+  function _glBlendEquation(x0) { GLctx.blendEquation(x0) }
+  var _emscripten_glBlendEquation = _glBlendEquation;
 
-  function _emscripten_glBlendEquationSeparate(x0, x1) { GLctx['blendEquationSeparate'](x0, x1) }
+  /** @suppress {duplicate } */
+  function _glBlendEquationSeparate(x0, x1) { GLctx.blendEquationSeparate(x0, x1) }
+  var _emscripten_glBlendEquationSeparate = _glBlendEquationSeparate;
 
-  function _emscripten_glBlendFunc(x0, x1) { GLctx['blendFunc'](x0, x1) }
+  /** @suppress {duplicate } */
+  function _glBlendFunc(x0, x1) { GLctx.blendFunc(x0, x1) }
+  var _emscripten_glBlendFunc = _glBlendFunc;
 
-  function _emscripten_glBlendFuncSeparate(x0, x1, x2, x3) { GLctx['blendFuncSeparate'](x0, x1, x2, x3) }
+  /** @suppress {duplicate } */
+  function _glBlendFuncSeparate(x0, x1, x2, x3) { GLctx.blendFuncSeparate(x0, x1, x2, x3) }
+  var _emscripten_glBlendFuncSeparate = _glBlendFuncSeparate;
 
-  function _emscripten_glBufferData(target, size, data, usage) {
+  /** @suppress {duplicate } */
+  function _glBufferData(target, size, data, usage) {
   
         // N.b. here first form specifies a heap subarray, second form an integer size, so the ?: code here is polymorphic. It is advised to avoid
         // randomly mixing both uses in calling code, to avoid any potential JS engine JIT issues.
         GLctx.bufferData(target, data ? HEAPU8.subarray(data, data+size) : size, usage);
     }
+  var _emscripten_glBufferData = _glBufferData;
 
-  function _emscripten_glBufferSubData(target, offset, size, data) {
+  /** @suppress {duplicate } */
+  function _glBufferSubData(target, offset, size, data) {
       GLctx.bufferSubData(target, offset, HEAPU8.subarray(data, data+size));
     }
+  var _emscripten_glBufferSubData = _glBufferSubData;
 
-  function _emscripten_glCheckFramebufferStatus(x0) { return GLctx['checkFramebufferStatus'](x0) }
+  /** @suppress {duplicate } */
+  function _glCheckFramebufferStatus(x0) { return GLctx.checkFramebufferStatus(x0) }
+  var _emscripten_glCheckFramebufferStatus = _glCheckFramebufferStatus;
 
-  function _emscripten_glClear(x0) { GLctx['clear'](x0) }
+  /** @suppress {duplicate } */
+  function _glClear(x0) { GLctx.clear(x0) }
+  var _emscripten_glClear = _glClear;
 
-  function _emscripten_glClearColor(x0, x1, x2, x3) { GLctx['clearColor'](x0, x1, x2, x3) }
+  /** @suppress {duplicate } */
+  function _glClearColor(x0, x1, x2, x3) { GLctx.clearColor(x0, x1, x2, x3) }
+  var _emscripten_glClearColor = _glClearColor;
 
-  function _emscripten_glClearDepthf(x0) { GLctx['clearDepth'](x0) }
+  /** @suppress {duplicate } */
+  function _glClearDepthf(x0) { GLctx.clearDepth(x0) }
+  var _emscripten_glClearDepthf = _glClearDepthf;
 
-  function _emscripten_glClearStencil(x0) { GLctx['clearStencil'](x0) }
+  /** @suppress {duplicate } */
+  function _glClearStencil(x0) { GLctx.clearStencil(x0) }
+  var _emscripten_glClearStencil = _glClearStencil;
 
-  function _emscripten_glColorMask(red, green, blue, alpha) {
+  /** @suppress {duplicate } */
+  function _glColorMask(red, green, blue, alpha) {
       GLctx.colorMask(!!red, !!green, !!blue, !!alpha);
     }
+  var _emscripten_glColorMask = _glColorMask;
 
-  function _emscripten_glCompileShader(shader) {
+  /** @suppress {duplicate } */
+  function _glCompileShader(shader) {
       GLctx.compileShader(GL.shaders[shader]);
     }
+  var _emscripten_glCompileShader = _glCompileShader;
 
-  function _emscripten_glCompressedTexImage2D(target, level, internalFormat, width, height, border, imageSize, data) {
-      GLctx['compressedTexImage2D'](target, level, internalFormat, width, height, border, data ? HEAPU8.subarray((data), (data+imageSize)) : null);
+  /** @suppress {duplicate } */
+  function _glCompressedTexImage2D(target, level, internalFormat, width, height, border, imageSize, data) {
+      GLctx.compressedTexImage2D(target, level, internalFormat, width, height, border, data ? HEAPU8.subarray((data), (data+imageSize)) : null);
     }
+  var _emscripten_glCompressedTexImage2D = _glCompressedTexImage2D;
 
-  function _emscripten_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data) {
-      GLctx['compressedTexSubImage2D'](target, level, xoffset, yoffset, width, height, format, data ? HEAPU8.subarray((data), (data+imageSize)) : null);
+  /** @suppress {duplicate } */
+  function _glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data) {
+      GLctx.compressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, data ? HEAPU8.subarray((data), (data+imageSize)) : null);
     }
+  var _emscripten_glCompressedTexSubImage2D = _glCompressedTexSubImage2D;
 
-  function _emscripten_glCopyTexImage2D(x0, x1, x2, x3, x4, x5, x6, x7) { GLctx['copyTexImage2D'](x0, x1, x2, x3, x4, x5, x6, x7) }
+  /** @suppress {duplicate } */
+  function _glCopyTexImage2D(x0, x1, x2, x3, x4, x5, x6, x7) { GLctx.copyTexImage2D(x0, x1, x2, x3, x4, x5, x6, x7) }
+  var _emscripten_glCopyTexImage2D = _glCopyTexImage2D;
 
-  function _emscripten_glCopyTexSubImage2D(x0, x1, x2, x3, x4, x5, x6, x7) { GLctx['copyTexSubImage2D'](x0, x1, x2, x3, x4, x5, x6, x7) }
+  /** @suppress {duplicate } */
+  function _glCopyTexSubImage2D(x0, x1, x2, x3, x4, x5, x6, x7) { GLctx.copyTexSubImage2D(x0, x1, x2, x3, x4, x5, x6, x7) }
+  var _emscripten_glCopyTexSubImage2D = _glCopyTexSubImage2D;
 
-  function _emscripten_glCreateProgram() {
+  /** @suppress {duplicate } */
+  function _glCreateProgram() {
       var id = GL.getNewId(GL.programs);
       var program = GLctx.createProgram();
       // Store additional information needed for each shader program:
@@ -4509,17 +4536,23 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       GL.programs[id] = program;
       return id;
     }
+  var _emscripten_glCreateProgram = _glCreateProgram;
 
-  function _emscripten_glCreateShader(shaderType) {
+  /** @suppress {duplicate } */
+  function _glCreateShader(shaderType) {
       var id = GL.getNewId(GL.shaders);
       GL.shaders[id] = GLctx.createShader(shaderType);
   
       return id;
     }
+  var _emscripten_glCreateShader = _glCreateShader;
 
-  function _emscripten_glCullFace(x0) { GLctx['cullFace'](x0) }
+  /** @suppress {duplicate } */
+  function _glCullFace(x0) { GLctx.cullFace(x0) }
+  var _emscripten_glCullFace = _glCullFace;
 
-  function _emscripten_glDeleteBuffers(n, buffers) {
+  /** @suppress {duplicate } */
+  function _glDeleteBuffers(n, buffers) {
       for (var i = 0; i < n; i++) {
         var id = HEAP32[(((buffers)+(i*4))>>2)];
         var buffer = GL.buffers[id];
@@ -4534,8 +4567,10 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   
       }
     }
+  var _emscripten_glDeleteBuffers = _glDeleteBuffers;
 
-  function _emscripten_glDeleteFramebuffers(n, framebuffers) {
+  /** @suppress {duplicate } */
+  function _glDeleteFramebuffers(n, framebuffers) {
       for (var i = 0; i < n; ++i) {
         var id = HEAP32[(((framebuffers)+(i*4))>>2)];
         var framebuffer = GL.framebuffers[id];
@@ -4545,8 +4580,10 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         GL.framebuffers[id] = null;
       }
     }
+  var _emscripten_glDeleteFramebuffers = _glDeleteFramebuffers;
 
-  function _emscripten_glDeleteProgram(id) {
+  /** @suppress {duplicate } */
+  function _glDeleteProgram(id) {
       if (!id) return;
       var program = GL.programs[id];
       if (!program) { // glDeleteProgram actually signals an error when deleting a nonexisting object, unlike some other GL delete functions.
@@ -4557,8 +4594,10 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       program.name = 0;
       GL.programs[id] = null;
     }
+  var _emscripten_glDeleteProgram = _glDeleteProgram;
 
-  function _emscripten_glDeleteQueriesEXT(n, ids) {
+  /** @suppress {duplicate } */
+  function _glDeleteQueriesEXT(n, ids) {
       for (var i = 0; i < n; i++) {
         var id = HEAP32[(((ids)+(i*4))>>2)];
         var query = GL.queries[id];
@@ -4567,8 +4606,10 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         GL.queries[id] = null;
       }
     }
+  var _emscripten_glDeleteQueriesEXT = _glDeleteQueriesEXT;
 
-  function _emscripten_glDeleteRenderbuffers(n, renderbuffers) {
+  /** @suppress {duplicate } */
+  function _glDeleteRenderbuffers(n, renderbuffers) {
       for (var i = 0; i < n; i++) {
         var id = HEAP32[(((renderbuffers)+(i*4))>>2)];
         var renderbuffer = GL.renderbuffers[id];
@@ -4578,8 +4619,10 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         GL.renderbuffers[id] = null;
       }
     }
+  var _emscripten_glDeleteRenderbuffers = _glDeleteRenderbuffers;
 
-  function _emscripten_glDeleteShader(id) {
+  /** @suppress {duplicate } */
+  function _glDeleteShader(id) {
       if (!id) return;
       var shader = GL.shaders[id];
       if (!shader) { // glDeleteShader actually signals an error when deleting a nonexisting object, unlike some other GL delete functions.
@@ -4589,8 +4632,10 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       GLctx.deleteShader(shader);
       GL.shaders[id] = null;
     }
+  var _emscripten_glDeleteShader = _glDeleteShader;
 
-  function _emscripten_glDeleteTextures(n, textures) {
+  /** @suppress {duplicate } */
+  function _glDeleteTextures(n, textures) {
       for (var i = 0; i < n; i++) {
         var id = HEAP32[(((textures)+(i*4))>>2)];
         var texture = GL.textures[id];
@@ -4600,90 +4645,143 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         GL.textures[id] = null;
       }
     }
+  var _emscripten_glDeleteTextures = _glDeleteTextures;
 
-  function _emscripten_glDeleteVertexArraysOES(n, vaos) {
+  
+  /** @suppress {duplicate } */
+  function _glDeleteVertexArrays(n, vaos) {
       for (var i = 0; i < n; i++) {
         var id = HEAP32[(((vaos)+(i*4))>>2)];
-        GLctx['deleteVertexArray'](GL.vaos[id]);
+        GLctx.deleteVertexArray(GL.vaos[id]);
         GL.vaos[id] = null;
       }
     }
+  /** @suppress {duplicate } */
+  var _glDeleteVertexArraysOES = _glDeleteVertexArrays;
+  var _emscripten_glDeleteVertexArraysOES = _glDeleteVertexArraysOES;
 
-  function _emscripten_glDepthFunc(x0) { GLctx['depthFunc'](x0) }
+  /** @suppress {duplicate } */
+  function _glDepthFunc(x0) { GLctx.depthFunc(x0) }
+  var _emscripten_glDepthFunc = _glDepthFunc;
 
-  function _emscripten_glDepthMask(flag) {
+  /** @suppress {duplicate } */
+  function _glDepthMask(flag) {
       GLctx.depthMask(!!flag);
     }
+  var _emscripten_glDepthMask = _glDepthMask;
 
-  function _emscripten_glDepthRangef(x0, x1) { GLctx['depthRange'](x0, x1) }
+  /** @suppress {duplicate } */
+  function _glDepthRangef(x0, x1) { GLctx.depthRange(x0, x1) }
+  var _emscripten_glDepthRangef = _glDepthRangef;
 
-  function _emscripten_glDetachShader(program, shader) {
+  /** @suppress {duplicate } */
+  function _glDetachShader(program, shader) {
       GLctx.detachShader(GL.programs[program], GL.shaders[shader]);
     }
+  var _emscripten_glDetachShader = _glDetachShader;
 
-  function _emscripten_glDisable(x0) { GLctx['disable'](x0) }
+  /** @suppress {duplicate } */
+  function _glDisable(x0) { GLctx.disable(x0) }
+  var _emscripten_glDisable = _glDisable;
 
-  function _emscripten_glDisableVertexAttribArray(index) {
+  /** @suppress {duplicate } */
+  function _glDisableVertexAttribArray(index) {
       GLctx.disableVertexAttribArray(index);
     }
+  var _emscripten_glDisableVertexAttribArray = _glDisableVertexAttribArray;
 
-  function _emscripten_glDrawArrays(mode, first, count) {
+  /** @suppress {duplicate } */
+  function _glDrawArrays(mode, first, count) {
   
       GLctx.drawArrays(mode, first, count);
   
     }
+  var _emscripten_glDrawArrays = _glDrawArrays;
 
-  function _emscripten_glDrawArraysInstancedANGLE(mode, first, count, primcount) {
-      GLctx['drawArraysInstanced'](mode, first, count, primcount);
+  
+  /** @suppress {duplicate } */
+  function _glDrawArraysInstanced(mode, first, count, primcount) {
+      GLctx.drawArraysInstanced(mode, first, count, primcount);
     }
+  /** @suppress {duplicate } */
+  var _glDrawArraysInstancedANGLE = _glDrawArraysInstanced;
+  var _emscripten_glDrawArraysInstancedANGLE = _glDrawArraysInstancedANGLE;
 
+  
   var tempFixedLengthArray = [];
   
-  function _emscripten_glDrawBuffersWEBGL(n, bufs) {
+  /** @suppress {duplicate } */
+  function _glDrawBuffers(n, bufs) {
   
       var bufArray = tempFixedLengthArray[n];
       for (var i = 0; i < n; i++) {
         bufArray[i] = HEAP32[(((bufs)+(i*4))>>2)];
       }
   
-      GLctx['drawBuffers'](bufArray);
+      GLctx.drawBuffers(bufArray);
     }
+  /** @suppress {duplicate } */
+  var _glDrawBuffersWEBGL = _glDrawBuffers;
+  var _emscripten_glDrawBuffersWEBGL = _glDrawBuffersWEBGL;
 
-  function _emscripten_glDrawElements(mode, count, type, indices) {
+  /** @suppress {duplicate } */
+  function _glDrawElements(mode, count, type, indices) {
   
       GLctx.drawElements(mode, count, type, indices);
   
     }
+  var _emscripten_glDrawElements = _glDrawElements;
 
-  function _emscripten_glDrawElementsInstancedANGLE(mode, count, type, indices, primcount) {
-      GLctx['drawElementsInstanced'](mode, count, type, indices, primcount);
+  
+  /** @suppress {duplicate } */
+  function _glDrawElementsInstanced(mode, count, type, indices, primcount) {
+      GLctx.drawElementsInstanced(mode, count, type, indices, primcount);
     }
+  /** @suppress {duplicate } */
+  var _glDrawElementsInstancedANGLE = _glDrawElementsInstanced;
+  var _emscripten_glDrawElementsInstancedANGLE = _glDrawElementsInstancedANGLE;
 
-  function _emscripten_glEnable(x0) { GLctx['enable'](x0) }
+  /** @suppress {duplicate } */
+  function _glEnable(x0) { GLctx.enable(x0) }
+  var _emscripten_glEnable = _glEnable;
 
-  function _emscripten_glEnableVertexAttribArray(index) {
+  /** @suppress {duplicate } */
+  function _glEnableVertexAttribArray(index) {
       GLctx.enableVertexAttribArray(index);
     }
+  var _emscripten_glEnableVertexAttribArray = _glEnableVertexAttribArray;
 
-  function _emscripten_glEndQueryEXT(target) {
+  /** @suppress {duplicate } */
+  function _glEndQueryEXT(target) {
       GLctx.disjointTimerQueryExt['endQueryEXT'](target);
     }
+  var _emscripten_glEndQueryEXT = _glEndQueryEXT;
 
-  function _emscripten_glFinish() { GLctx['finish']() }
+  /** @suppress {duplicate } */
+  function _glFinish() { GLctx.finish() }
+  var _emscripten_glFinish = _glFinish;
 
-  function _emscripten_glFlush() { GLctx['flush']() }
+  /** @suppress {duplicate } */
+  function _glFlush() { GLctx.flush() }
+  var _emscripten_glFlush = _glFlush;
 
-  function _emscripten_glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer) {
+  /** @suppress {duplicate } */
+  function _glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer) {
       GLctx.framebufferRenderbuffer(target, attachment, renderbuffertarget,
                                          GL.renderbuffers[renderbuffer]);
     }
+  var _emscripten_glFramebufferRenderbuffer = _glFramebufferRenderbuffer;
 
-  function _emscripten_glFramebufferTexture2D(target, attachment, textarget, texture, level) {
+  /** @suppress {duplicate } */
+  function _glFramebufferTexture2D(target, attachment, textarget, texture, level) {
       GLctx.framebufferTexture2D(target, attachment, textarget,
                                       GL.textures[texture], level);
     }
+  var _emscripten_glFramebufferTexture2D = _glFramebufferTexture2D;
 
-  function _emscripten_glFrontFace(x0) { GLctx['frontFace'](x0) }
+  /** @suppress {duplicate } */
+  function _glFrontFace(x0) { GLctx.frontFace(x0) }
+  var _emscripten_glFrontFace = _glFrontFace;
 
   function __glGenObject(n, buffers, createFunction, objectTable
       ) {
@@ -4700,18 +4798,23 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
     }
   
-  function _emscripten_glGenBuffers(n, buffers) {
+  /** @suppress {duplicate } */
+  function _glGenBuffers(n, buffers) {
       __glGenObject(n, buffers, 'createBuffer', GL.buffers
         );
     }
+  var _emscripten_glGenBuffers = _glGenBuffers;
 
   
-  function _emscripten_glGenFramebuffers(n, ids) {
+  /** @suppress {duplicate } */
+  function _glGenFramebuffers(n, ids) {
       __glGenObject(n, ids, 'createFramebuffer', GL.framebuffers
         );
     }
+  var _emscripten_glGenFramebuffers = _glGenFramebuffers;
 
-  function _emscripten_glGenQueriesEXT(n, ids) {
+  /** @suppress {duplicate } */
+  function _glGenQueriesEXT(n, ids) {
       for (var i = 0; i < n; i++) {
         var query = GLctx.disjointTimerQueryExt['createQueryEXT']();
         if (!query) {
@@ -4725,27 +4828,40 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         HEAP32[(((ids)+(i*4))>>2)] = id;
       }
     }
+  var _emscripten_glGenQueriesEXT = _glGenQueriesEXT;
 
   
-  function _emscripten_glGenRenderbuffers(n, renderbuffers) {
+  /** @suppress {duplicate } */
+  function _glGenRenderbuffers(n, renderbuffers) {
       __glGenObject(n, renderbuffers, 'createRenderbuffer', GL.renderbuffers
         );
     }
+  var _emscripten_glGenRenderbuffers = _glGenRenderbuffers;
 
   
-  function _emscripten_glGenTextures(n, textures) {
+  /** @suppress {duplicate } */
+  function _glGenTextures(n, textures) {
       __glGenObject(n, textures, 'createTexture', GL.textures
         );
     }
+  var _emscripten_glGenTextures = _glGenTextures;
 
   
-  function _emscripten_glGenVertexArraysOES(n, arrays) {
+  
+  /** @suppress {duplicate } */
+  function _glGenVertexArrays(n, arrays) {
       __glGenObject(n, arrays, 'createVertexArray', GL.vaos
         );
     }
+  /** @suppress {duplicate } */
+  var _glGenVertexArraysOES = _glGenVertexArrays;
+  var _emscripten_glGenVertexArraysOES = _glGenVertexArraysOES;
 
-  function _emscripten_glGenerateMipmap(x0) { GLctx['generateMipmap'](x0) }
+  /** @suppress {duplicate } */
+  function _glGenerateMipmap(x0) { GLctx.generateMipmap(x0) }
+  var _emscripten_glGenerateMipmap = _glGenerateMipmap;
 
+  
   function __glGetActiveAttribOrUniform(funcName, program, index, bufSize, length, size, type, name) {
       program = GL.programs[program];
       var info = GLctx[funcName](program, index);
@@ -4757,16 +4873,21 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
     }
   
-  function _emscripten_glGetActiveAttrib(program, index, bufSize, length, size, type, name) {
+  /** @suppress {duplicate } */
+  function _glGetActiveAttrib(program, index, bufSize, length, size, type, name) {
       __glGetActiveAttribOrUniform('getActiveAttrib', program, index, bufSize, length, size, type, name);
     }
+  var _emscripten_glGetActiveAttrib = _glGetActiveAttrib;
 
   
-  function _emscripten_glGetActiveUniform(program, index, bufSize, length, size, type, name) {
+  /** @suppress {duplicate } */
+  function _glGetActiveUniform(program, index, bufSize, length, size, type, name) {
       __glGetActiveAttribOrUniform('getActiveUniform', program, index, bufSize, length, size, type, name);
     }
+  var _emscripten_glGetActiveUniform = _glGetActiveUniform;
 
-  function _emscripten_glGetAttachedShaders(program, maxCount, count, shaders) {
+  /** @suppress {duplicate } */
+  function _glGetAttachedShaders(program, maxCount, count, shaders) {
       var result = GLctx.getAttachedShaders(GL.programs[program]);
       var len = result.length;
       if (len > maxCount) {
@@ -4778,10 +4899,14 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         HEAP32[(((shaders)+(i*4))>>2)] = id;
       }
     }
+  var _emscripten_glGetAttachedShaders = _glGetAttachedShaders;
 
-  function _emscripten_glGetAttribLocation(program, name) {
+  
+  /** @suppress {duplicate } */
+  function _glGetAttribLocation(program, name) {
       return GLctx.getAttribLocation(GL.programs[program], UTF8ToString(name));
     }
+  var _emscripten_glGetAttribLocation = _glGetAttribLocation;
 
   function readI53FromI64(ptr) {
       return HEAPU32[ptr>>2] + HEAP32[ptr+4>>2] * 4294967296;
@@ -4898,11 +5023,14 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
     }
   
-  function _emscripten_glGetBooleanv(name_, p) {
+  /** @suppress {duplicate } */
+  function _glGetBooleanv(name_, p) {
       emscriptenWebGLGet(name_, p, 4);
     }
+  var _emscripten_glGetBooleanv = _glGetBooleanv;
 
-  function _emscripten_glGetBufferParameteriv(target, value, data) {
+  /** @suppress {duplicate } */
+  function _glGetBufferParameteriv(target, value, data) {
       if (!data) {
         // GLES2 specification does not specify how to behave if data is a null pointer. Since calling this function does not make sense
         // if data == null, issue a GL error to notify user about it.
@@ -4911,19 +5039,25 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       HEAP32[((data)>>2)] = GLctx.getBufferParameter(target, value);
     }
+  var _emscripten_glGetBufferParameteriv = _glGetBufferParameteriv;
 
-  function _emscripten_glGetError() {
+  /** @suppress {duplicate } */
+  function _glGetError() {
       var error = GLctx.getError() || GL.lastError;
       GL.lastError = 0/*GL_NO_ERROR*/;
       return error;
     }
+  var _emscripten_glGetError = _glGetError;
 
   
-  function _emscripten_glGetFloatv(name_, p) {
+  /** @suppress {duplicate } */
+  function _glGetFloatv(name_, p) {
       emscriptenWebGLGet(name_, p, 2);
     }
+  var _emscripten_glGetFloatv = _glGetFloatv;
 
-  function _emscripten_glGetFramebufferAttachmentParameteriv(target, attachment, pname, params) {
+  /** @suppress {duplicate } */
+  function _glGetFramebufferAttachmentParameteriv(target, attachment, pname, params) {
       var result = GLctx.getFramebufferAttachmentParameter(target, attachment, pname);
       if (result instanceof WebGLRenderbuffer ||
           result instanceof WebGLTexture) {
@@ -4931,20 +5065,26 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       HEAP32[((params)>>2)] = result;
     }
+  var _emscripten_glGetFramebufferAttachmentParameteriv = _glGetFramebufferAttachmentParameteriv;
 
   
-  function _emscripten_glGetIntegerv(name_, p) {
+  /** @suppress {duplicate } */
+  function _glGetIntegerv(name_, p) {
       emscriptenWebGLGet(name_, p, 0);
     }
+  var _emscripten_glGetIntegerv = _glGetIntegerv;
 
-  function _emscripten_glGetProgramInfoLog(program, maxLength, length, infoLog) {
+  /** @suppress {duplicate } */
+  function _glGetProgramInfoLog(program, maxLength, length, infoLog) {
       var log = GLctx.getProgramInfoLog(GL.programs[program]);
       if (log === null) log = '(unknown error)';
       var numBytesWrittenExclNull = (maxLength > 0 && infoLog) ? stringToUTF8(log, infoLog, maxLength) : 0;
       if (length) HEAP32[((length)>>2)] = numBytesWrittenExclNull;
     }
+  var _emscripten_glGetProgramInfoLog = _glGetProgramInfoLog;
 
-  function _emscripten_glGetProgramiv(program, pname, p) {
+  /** @suppress {duplicate } */
+  function _glGetProgramiv(program, pname, p) {
       if (!p) {
         // GLES2 specification does not specify how to behave if p is a null pointer. Since calling this function does not make sense
         // if p == null, issue a GL error to notify user about it.
@@ -4988,9 +5128,11 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         HEAP32[((p)>>2)] = GLctx.getProgramParameter(program, pname);
       }
     }
+  var _emscripten_glGetProgramiv = _glGetProgramiv;
 
   
-  function _emscripten_glGetQueryObjecti64vEXT(id, pname, params) {
+  /** @suppress {duplicate } */
+  function _glGetQueryObjecti64vEXT(id, pname, params) {
       if (!params) {
         // GLES2 specification does not specify how to behave if params is a null pointer. Since calling this function does not make sense
         // if p == null, issue a GL error to notify user about it.
@@ -5010,8 +5152,10 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       writeI53ToI64(params, ret);
     }
+  var _emscripten_glGetQueryObjecti64vEXT = _glGetQueryObjecti64vEXT;
 
-  function _emscripten_glGetQueryObjectivEXT(id, pname, params) {
+  /** @suppress {duplicate } */
+  function _glGetQueryObjectivEXT(id, pname, params) {
       if (!params) {
         // GLES2 specification does not specify how to behave if params is a null pointer. Since calling this function does not make sense
         // if p == null, issue a GL error to notify user about it.
@@ -5028,48 +5172,20 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       HEAP32[((params)>>2)] = ret;
     }
+  var _emscripten_glGetQueryObjectivEXT = _glGetQueryObjectivEXT;
 
   
-  function _emscripten_glGetQueryObjectui64vEXT(id, pname, params) {
-      if (!params) {
-        // GLES2 specification does not specify how to behave if params is a null pointer. Since calling this function does not make sense
-        // if p == null, issue a GL error to notify user about it.
-        GL.recordError(0x501 /* GL_INVALID_VALUE */);
-        return;
-      }
-      var query = GL.queries[id];
-      var param;
-      {
-        param = GLctx.disjointTimerQueryExt['getQueryObjectEXT'](query, pname);
-      }
-      var ret;
-      if (typeof param == 'boolean') {
-        ret = param ? 1 : 0;
-      } else {
-        ret = param;
-      }
-      writeI53ToI64(params, ret);
-    }
+  /** @suppress {duplicate } */
+  var _glGetQueryObjectui64vEXT = _glGetQueryObjecti64vEXT;
+  var _emscripten_glGetQueryObjectui64vEXT = _glGetQueryObjectui64vEXT;
 
-  function _emscripten_glGetQueryObjectuivEXT(id, pname, params) {
-      if (!params) {
-        // GLES2 specification does not specify how to behave if params is a null pointer. Since calling this function does not make sense
-        // if p == null, issue a GL error to notify user about it.
-        GL.recordError(0x501 /* GL_INVALID_VALUE */);
-        return;
-      }
-      var query = GL.queries[id];
-      var param = GLctx.disjointTimerQueryExt['getQueryObjectEXT'](query, pname);
-      var ret;
-      if (typeof param == 'boolean') {
-        ret = param ? 1 : 0;
-      } else {
-        ret = param;
-      }
-      HEAP32[((params)>>2)] = ret;
-    }
+  
+  /** @suppress {duplicate } */
+  var _glGetQueryObjectuivEXT = _glGetQueryObjectivEXT;
+  var _emscripten_glGetQueryObjectuivEXT = _glGetQueryObjectuivEXT;
 
-  function _emscripten_glGetQueryivEXT(target, pname, params) {
+  /** @suppress {duplicate } */
+  function _glGetQueryivEXT(target, pname, params) {
       if (!params) {
         // GLES2 specification does not specify how to behave if params is a null pointer. Since calling this function does not make sense
         // if p == null, issue a GL error to notify user about it.
@@ -5078,8 +5194,10 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       HEAP32[((params)>>2)] = GLctx.disjointTimerQueryExt['getQueryEXT'](target, pname);
     }
+  var _emscripten_glGetQueryivEXT = _glGetQueryivEXT;
 
-  function _emscripten_glGetRenderbufferParameteriv(target, pname, params) {
+  /** @suppress {duplicate } */
+  function _glGetRenderbufferParameteriv(target, pname, params) {
       if (!params) {
         // GLES2 specification does not specify how to behave if params is a null pointer. Since calling this function does not make sense
         // if params == null, issue a GL error to notify user about it.
@@ -5088,29 +5206,38 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       HEAP32[((params)>>2)] = GLctx.getRenderbufferParameter(target, pname);
     }
+  var _emscripten_glGetRenderbufferParameteriv = _glGetRenderbufferParameteriv;
 
-  function _emscripten_glGetShaderInfoLog(shader, maxLength, length, infoLog) {
+  
+  /** @suppress {duplicate } */
+  function _glGetShaderInfoLog(shader, maxLength, length, infoLog) {
       var log = GLctx.getShaderInfoLog(GL.shaders[shader]);
       if (log === null) log = '(unknown error)';
       var numBytesWrittenExclNull = (maxLength > 0 && infoLog) ? stringToUTF8(log, infoLog, maxLength) : 0;
       if (length) HEAP32[((length)>>2)] = numBytesWrittenExclNull;
     }
+  var _emscripten_glGetShaderInfoLog = _glGetShaderInfoLog;
 
-  function _emscripten_glGetShaderPrecisionFormat(shaderType, precisionType, range, precision) {
+  /** @suppress {duplicate } */
+  function _glGetShaderPrecisionFormat(shaderType, precisionType, range, precision) {
       var result = GLctx.getShaderPrecisionFormat(shaderType, precisionType);
       HEAP32[((range)>>2)] = result.rangeMin;
       HEAP32[(((range)+(4))>>2)] = result.rangeMax;
       HEAP32[((precision)>>2)] = result.precision;
     }
+  var _emscripten_glGetShaderPrecisionFormat = _glGetShaderPrecisionFormat;
 
-  function _emscripten_glGetShaderSource(shader, bufSize, length, source) {
+  /** @suppress {duplicate } */
+  function _glGetShaderSource(shader, bufSize, length, source) {
       var result = GLctx.getShaderSource(GL.shaders[shader]);
       if (!result) return; // If an error occurs, nothing will be written to length or source.
       var numBytesWrittenExclNull = (bufSize > 0 && source) ? stringToUTF8(result, source, bufSize) : 0;
       if (length) HEAP32[((length)>>2)] = numBytesWrittenExclNull;
     }
+  var _emscripten_glGetShaderSource = _glGetShaderSource;
 
-  function _emscripten_glGetShaderiv(shader, pname, p) {
+  /** @suppress {duplicate } */
+  function _glGetShaderiv(shader, pname, p) {
       if (!p) {
         // GLES2 specification does not specify how to behave if p is a null pointer. Since calling this function does not make sense
         // if p == null, issue a GL error to notify user about it.
@@ -5136,15 +5263,19 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         HEAP32[((p)>>2)] = GLctx.getShaderParameter(GL.shaders[shader], pname);
       }
     }
+  var _emscripten_glGetShaderiv = _glGetShaderiv;
 
-  function stringToNewUTF8(jsString) {
-      var length = lengthBytesUTF8(jsString)+1;
-      var cString = _malloc(length);
-      stringToUTF8(jsString, cString, length);
-      return cString;
-    }
   
-  function _emscripten_glGetString(name_) {
+  
+  var stringToNewUTF8 = (str) => {
+      var size = lengthBytesUTF8(str) + 1;
+      var ret = _malloc(size);
+      if (ret) stringToUTF8(str, ret, size);
+      return ret;
+    };
+  
+  /** @suppress {duplicate } */
+  function _glGetString(name_) {
       var ret = GL.stringCache[name_];
       if (!ret) {
         switch (name_) {
@@ -5191,8 +5322,10 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       return ret;
     }
+  var _emscripten_glGetString = _glGetString;
 
-  function _emscripten_glGetTexParameterfv(target, pname, params) {
+  /** @suppress {duplicate } */
+  function _glGetTexParameterfv(target, pname, params) {
       if (!params) {
         // GLES2 specification does not specify how to behave if params is a null pointer. Since calling this function does not make sense
         // if p == null, issue a GL error to notify user about it.
@@ -5201,8 +5334,10 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       HEAPF32[((params)>>2)] = GLctx.getTexParameter(target, pname);
     }
+  var _emscripten_glGetTexParameterfv = _glGetTexParameterfv;
 
-  function _emscripten_glGetTexParameteriv(target, pname, params) {
+  /** @suppress {duplicate } */
+  function _glGetTexParameteriv(target, pname, params) {
       if (!params) {
         // GLES2 specification does not specify how to behave if params is a null pointer. Since calling this function does not make sense
         // if p == null, issue a GL error to notify user about it.
@@ -5211,11 +5346,10 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       HEAP32[((params)>>2)] = GLctx.getTexParameter(target, pname);
     }
+  var _emscripten_glGetTexParameteriv = _glGetTexParameteriv;
 
   /** @suppress {checkTypes} */
-  function jstoi_q(str) {
-      return parseInt(str);
-    }
+  var jstoi_q = (str) => parseInt(str);
   
   /** @noinline */
   function webglGetLeftBracePos(name) {
@@ -5263,7 +5397,9 @@ function GetCanvasHeight() { return canvas.clientHeight; }
     }
   
   
-  function _emscripten_glGetUniformLocation(program, name) {
+  
+  /** @suppress {duplicate } */
+  function _glGetUniformLocation(program, name) {
   
       name = UTF8ToString(name);
   
@@ -5305,6 +5441,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       return -1;
     }
+  var _emscripten_glGetUniformLocation = _glGetUniformLocation;
 
   function webglGetUniformLocation(location) {
       var p = GLctx.currentProgram;
@@ -5352,16 +5489,21 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
     }
   
-  function _emscripten_glGetUniformfv(program, location, params) {
+  /** @suppress {duplicate } */
+  function _glGetUniformfv(program, location, params) {
       emscriptenWebGLGetUniform(program, location, params, 2);
     }
+  var _emscripten_glGetUniformfv = _glGetUniformfv;
 
   
-  function _emscripten_glGetUniformiv(program, location, params) {
+  /** @suppress {duplicate } */
+  function _glGetUniformiv(program, location, params) {
       emscriptenWebGLGetUniform(program, location, params, 0);
     }
+  var _emscripten_glGetUniformiv = _glGetUniformiv;
 
-  function _emscripten_glGetVertexAttribPointerv(index, pname, pointer) {
+  /** @suppress {duplicate } */
+  function _glGetVertexAttribPointerv(index, pname, pointer) {
       if (!pointer) {
         // GLES2 specification does not specify how to behave if pointer is a null pointer. Since calling this function does not make sense
         // if pointer == null, issue a GL error to notify user about it.
@@ -5370,6 +5512,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       HEAP32[((pointer)>>2)] = GLctx.getVertexAttribOffset(index, pname);
     }
+  var _emscripten_glGetVertexAttribPointerv = _glGetVertexAttribPointerv;
 
   /** @suppress{checkTypes} */
   function emscriptenWebGLGetVertexAttrib(index, pname, params, type) {
@@ -5399,75 +5542,105 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
     }
   
-  function _emscripten_glGetVertexAttribfv(index, pname, params) {
+  /** @suppress {duplicate } */
+  function _glGetVertexAttribfv(index, pname, params) {
       // N.B. This function may only be called if the vertex attribute was specified using the function glVertexAttrib*f(),
       // otherwise the results are undefined. (GLES3 spec 6.1.12)
       emscriptenWebGLGetVertexAttrib(index, pname, params, 2);
     }
+  var _emscripten_glGetVertexAttribfv = _glGetVertexAttribfv;
 
   
-  function _emscripten_glGetVertexAttribiv(index, pname, params) {
+  /** @suppress {duplicate } */
+  function _glGetVertexAttribiv(index, pname, params) {
       // N.B. This function may only be called if the vertex attribute was specified using the function glVertexAttrib*f(),
       // otherwise the results are undefined. (GLES3 spec 6.1.12)
       emscriptenWebGLGetVertexAttrib(index, pname, params, 5);
     }
+  var _emscripten_glGetVertexAttribiv = _glGetVertexAttribiv;
 
-  function _emscripten_glHint(x0, x1) { GLctx['hint'](x0, x1) }
+  /** @suppress {duplicate } */
+  function _glHint(x0, x1) { GLctx.hint(x0, x1) }
+  var _emscripten_glHint = _glHint;
 
-  function _emscripten_glIsBuffer(buffer) {
+  /** @suppress {duplicate } */
+  function _glIsBuffer(buffer) {
       var b = GL.buffers[buffer];
       if (!b) return 0;
       return GLctx.isBuffer(b);
     }
+  var _emscripten_glIsBuffer = _glIsBuffer;
 
-  function _emscripten_glIsEnabled(x0) { return GLctx['isEnabled'](x0) }
+  /** @suppress {duplicate } */
+  function _glIsEnabled(x0) { return GLctx.isEnabled(x0) }
+  var _emscripten_glIsEnabled = _glIsEnabled;
 
-  function _emscripten_glIsFramebuffer(framebuffer) {
+  /** @suppress {duplicate } */
+  function _glIsFramebuffer(framebuffer) {
       var fb = GL.framebuffers[framebuffer];
       if (!fb) return 0;
       return GLctx.isFramebuffer(fb);
     }
+  var _emscripten_glIsFramebuffer = _glIsFramebuffer;
 
-  function _emscripten_glIsProgram(program) {
+  /** @suppress {duplicate } */
+  function _glIsProgram(program) {
       program = GL.programs[program];
       if (!program) return 0;
       return GLctx.isProgram(program);
     }
+  var _emscripten_glIsProgram = _glIsProgram;
 
-  function _emscripten_glIsQueryEXT(id) {
+  /** @suppress {duplicate } */
+  function _glIsQueryEXT(id) {
       var query = GL.queries[id];
       if (!query) return 0;
       return GLctx.disjointTimerQueryExt['isQueryEXT'](query);
     }
+  var _emscripten_glIsQueryEXT = _glIsQueryEXT;
 
-  function _emscripten_glIsRenderbuffer(renderbuffer) {
+  /** @suppress {duplicate } */
+  function _glIsRenderbuffer(renderbuffer) {
       var rb = GL.renderbuffers[renderbuffer];
       if (!rb) return 0;
       return GLctx.isRenderbuffer(rb);
     }
+  var _emscripten_glIsRenderbuffer = _glIsRenderbuffer;
 
-  function _emscripten_glIsShader(shader) {
+  /** @suppress {duplicate } */
+  function _glIsShader(shader) {
       var s = GL.shaders[shader];
       if (!s) return 0;
       return GLctx.isShader(s);
     }
+  var _emscripten_glIsShader = _glIsShader;
 
-  function _emscripten_glIsTexture(id) {
+  /** @suppress {duplicate } */
+  function _glIsTexture(id) {
       var texture = GL.textures[id];
       if (!texture) return 0;
       return GLctx.isTexture(texture);
     }
+  var _emscripten_glIsTexture = _glIsTexture;
 
-  function _emscripten_glIsVertexArrayOES(array) {
+  
+  /** @suppress {duplicate } */
+  function _glIsVertexArray(array) {
   
       var vao = GL.vaos[array];
       if (!vao) return 0;
-      return GLctx['isVertexArray'](vao);
+      return GLctx.isVertexArray(vao);
     }
+  /** @suppress {duplicate } */
+  var _glIsVertexArrayOES = _glIsVertexArray;
+  var _emscripten_glIsVertexArrayOES = _glIsVertexArrayOES;
 
-  function _emscripten_glLineWidth(x0) { GLctx['lineWidth'](x0) }
+  /** @suppress {duplicate } */
+  function _glLineWidth(x0) { GLctx.lineWidth(x0) }
+  var _emscripten_glLineWidth = _glLineWidth;
 
-  function _emscripten_glLinkProgram(program) {
+  /** @suppress {duplicate } */
+  function _glLinkProgram(program) {
       program = GL.programs[program];
       GLctx.linkProgram(program);
       // Invalidate earlier computed uniform->ID mappings, those have now become stale
@@ -5475,19 +5648,26 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       program.uniformSizeAndIdsByName = {};
   
     }
+  var _emscripten_glLinkProgram = _glLinkProgram;
 
-  function _emscripten_glPixelStorei(pname, param) {
+  /** @suppress {duplicate } */
+  function _glPixelStorei(pname, param) {
       if (pname == 0xCF5 /* GL_UNPACK_ALIGNMENT */) {
         GL.unpackAlignment = param;
       }
       GLctx.pixelStorei(pname, param);
     }
+  var _emscripten_glPixelStorei = _glPixelStorei;
 
-  function _emscripten_glPolygonOffset(x0, x1) { GLctx['polygonOffset'](x0, x1) }
+  /** @suppress {duplicate } */
+  function _glPolygonOffset(x0, x1) { GLctx.polygonOffset(x0, x1) }
+  var _emscripten_glPolygonOffset = _glPolygonOffset;
 
-  function _emscripten_glQueryCounterEXT(id, target) {
+  /** @suppress {duplicate } */
+  function _glQueryCounterEXT(id, target) {
       GLctx.disjointTimerQueryExt['queryCounterEXT'](GL.queries[id], target);
     }
+  var _emscripten_glQueryCounterEXT = _glQueryCounterEXT;
 
   function computeUnpackAlignedImageSize(width, height, sizePerPixel, alignment) {
       function roundedToNextMultipleOf(x, y) {
@@ -5498,7 +5678,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       return height * alignedRowSize;
     }
   
-  function __colorChannelsInGlTextureFormat(format) {
+  function colorChannelsInGlTextureFormat(format) {
       // Micro-optimizations for size: map format to size by subtracting smallest enum value (0x1902) from all values first.
       // Also omit the most common size value (1) from the list, which is assumed by formats not on the list.
       var colorChannels = {
@@ -5543,12 +5723,13 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       var heap = heapObjectForWebGLType(type);
       var shift = heapAccessShiftForWebGLHeap(heap);
       var byteSize = 1<<shift;
-      var sizePerPixel = __colorChannelsInGlTextureFormat(format) * byteSize;
+      var sizePerPixel = colorChannelsInGlTextureFormat(format) * byteSize;
       var bytes = computeUnpackAlignedImageSize(width, height, sizePerPixel, GL.unpackAlignment);
       return heap.subarray(pixels >> shift, pixels + bytes >> shift);
     }
   
-  function _emscripten_glReadPixels(x, y, width, height, format, type, pixels) {
+  /** @suppress {duplicate } */
+  function _glReadPixels(x, y, width, height, format, type, pixels) {
       var pixelData = emscriptenWebGLGetTexPixelData(type, format, width, height, pixels, format);
       if (!pixelData) {
         GL.recordError(0x500/*GL_INVALID_ENUM*/);
@@ -5556,76 +5737,116 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       GLctx.readPixels(x, y, width, height, format, type, pixelData);
     }
+  var _emscripten_glReadPixels = _glReadPixels;
 
-  function _emscripten_glReleaseShaderCompiler() {
+  /** @suppress {duplicate } */
+  function _glReleaseShaderCompiler() {
       // NOP (as allowed by GLES 2.0 spec)
     }
+  var _emscripten_glReleaseShaderCompiler = _glReleaseShaderCompiler;
 
-  function _emscripten_glRenderbufferStorage(x0, x1, x2, x3) { GLctx['renderbufferStorage'](x0, x1, x2, x3) }
+  /** @suppress {duplicate } */
+  function _glRenderbufferStorage(x0, x1, x2, x3) { GLctx.renderbufferStorage(x0, x1, x2, x3) }
+  var _emscripten_glRenderbufferStorage = _glRenderbufferStorage;
 
-  function _emscripten_glSampleCoverage(value, invert) {
+  /** @suppress {duplicate } */
+  function _glSampleCoverage(value, invert) {
       GLctx.sampleCoverage(value, !!invert);
     }
+  var _emscripten_glSampleCoverage = _glSampleCoverage;
 
-  function _emscripten_glScissor(x0, x1, x2, x3) { GLctx['scissor'](x0, x1, x2, x3) }
+  /** @suppress {duplicate } */
+  function _glScissor(x0, x1, x2, x3) { GLctx.scissor(x0, x1, x2, x3) }
+  var _emscripten_glScissor = _glScissor;
 
-  function _emscripten_glShaderBinary() {
+  /** @suppress {duplicate } */
+  function _glShaderBinary(count, shaders, binaryformat, binary, length) {
       GL.recordError(0x500/*GL_INVALID_ENUM*/);
     }
+  var _emscripten_glShaderBinary = _glShaderBinary;
 
-  function _emscripten_glShaderSource(shader, count, string, length) {
+  /** @suppress {duplicate } */
+  function _glShaderSource(shader, count, string, length) {
       var source = GL.getSource(shader, count, string, length);
   
       GLctx.shaderSource(GL.shaders[shader], source);
     }
+  var _emscripten_glShaderSource = _glShaderSource;
 
-  function _emscripten_glStencilFunc(x0, x1, x2) { GLctx['stencilFunc'](x0, x1, x2) }
+  /** @suppress {duplicate } */
+  function _glStencilFunc(x0, x1, x2) { GLctx.stencilFunc(x0, x1, x2) }
+  var _emscripten_glStencilFunc = _glStencilFunc;
 
-  function _emscripten_glStencilFuncSeparate(x0, x1, x2, x3) { GLctx['stencilFuncSeparate'](x0, x1, x2, x3) }
+  /** @suppress {duplicate } */
+  function _glStencilFuncSeparate(x0, x1, x2, x3) { GLctx.stencilFuncSeparate(x0, x1, x2, x3) }
+  var _emscripten_glStencilFuncSeparate = _glStencilFuncSeparate;
 
-  function _emscripten_glStencilMask(x0) { GLctx['stencilMask'](x0) }
+  /** @suppress {duplicate } */
+  function _glStencilMask(x0) { GLctx.stencilMask(x0) }
+  var _emscripten_glStencilMask = _glStencilMask;
 
-  function _emscripten_glStencilMaskSeparate(x0, x1) { GLctx['stencilMaskSeparate'](x0, x1) }
+  /** @suppress {duplicate } */
+  function _glStencilMaskSeparate(x0, x1) { GLctx.stencilMaskSeparate(x0, x1) }
+  var _emscripten_glStencilMaskSeparate = _glStencilMaskSeparate;
 
-  function _emscripten_glStencilOp(x0, x1, x2) { GLctx['stencilOp'](x0, x1, x2) }
+  /** @suppress {duplicate } */
+  function _glStencilOp(x0, x1, x2) { GLctx.stencilOp(x0, x1, x2) }
+  var _emscripten_glStencilOp = _glStencilOp;
 
-  function _emscripten_glStencilOpSeparate(x0, x1, x2, x3) { GLctx['stencilOpSeparate'](x0, x1, x2, x3) }
+  /** @suppress {duplicate } */
+  function _glStencilOpSeparate(x0, x1, x2, x3) { GLctx.stencilOpSeparate(x0, x1, x2, x3) }
+  var _emscripten_glStencilOpSeparate = _glStencilOpSeparate;
 
   
-  function _emscripten_glTexImage2D(target, level, internalFormat, width, height, border, format, type, pixels) {
+  /** @suppress {duplicate } */
+  function _glTexImage2D(target, level, internalFormat, width, height, border, format, type, pixels) {
       GLctx.texImage2D(target, level, internalFormat, width, height, border, format, type, pixels ? emscriptenWebGLGetTexPixelData(type, format, width, height, pixels, internalFormat) : null);
     }
+  var _emscripten_glTexImage2D = _glTexImage2D;
 
-  function _emscripten_glTexParameterf(x0, x1, x2) { GLctx['texParameterf'](x0, x1, x2) }
+  /** @suppress {duplicate } */
+  function _glTexParameterf(x0, x1, x2) { GLctx.texParameterf(x0, x1, x2) }
+  var _emscripten_glTexParameterf = _glTexParameterf;
 
-  function _emscripten_glTexParameterfv(target, pname, params) {
+  /** @suppress {duplicate } */
+  function _glTexParameterfv(target, pname, params) {
       var param = HEAPF32[((params)>>2)];
       GLctx.texParameterf(target, pname, param);
     }
+  var _emscripten_glTexParameterfv = _glTexParameterfv;
 
-  function _emscripten_glTexParameteri(x0, x1, x2) { GLctx['texParameteri'](x0, x1, x2) }
+  /** @suppress {duplicate } */
+  function _glTexParameteri(x0, x1, x2) { GLctx.texParameteri(x0, x1, x2) }
+  var _emscripten_glTexParameteri = _glTexParameteri;
 
-  function _emscripten_glTexParameteriv(target, pname, params) {
+  /** @suppress {duplicate } */
+  function _glTexParameteriv(target, pname, params) {
       var param = HEAP32[((params)>>2)];
       GLctx.texParameteri(target, pname, param);
     }
+  var _emscripten_glTexParameteriv = _glTexParameteriv;
 
   
-  function _emscripten_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels) {
+  /** @suppress {duplicate } */
+  function _glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels) {
       var pixelData = null;
       if (pixels) pixelData = emscriptenWebGLGetTexPixelData(type, format, width, height, pixels, 0);
       GLctx.texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixelData);
     }
+  var _emscripten_glTexSubImage2D = _glTexSubImage2D;
 
   
-  function _emscripten_glUniform1f(location, v0) {
+  /** @suppress {duplicate } */
+  function _glUniform1f(location, v0) {
       GLctx.uniform1f(webglGetUniformLocation(location), v0);
     }
+  var _emscripten_glUniform1f = _glUniform1f;
 
   
   var miniTempWebGLFloatBuffers = [];
   
-  function _emscripten_glUniform1fv(location, count, value) {
+  /** @suppress {duplicate } */
+  function _glUniform1fv(location, count, value) {
   
       if (count <= 288) {
         // avoid allocation when uploading few enough uniforms
@@ -5639,20 +5860,24 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       GLctx.uniform1fv(webglGetUniformLocation(location), view);
     }
+  var _emscripten_glUniform1fv = _glUniform1fv;
 
   
-  function _emscripten_glUniform1i(location, v0) {
+  /** @suppress {duplicate } */
+  function _glUniform1i(location, v0) {
       GLctx.uniform1i(webglGetUniformLocation(location), v0);
     }
+  var _emscripten_glUniform1i = _glUniform1i;
 
   
-  var __miniTempWebGLIntBuffers = [];
+  var miniTempWebGLIntBuffers = [];
   
-  function _emscripten_glUniform1iv(location, count, value) {
+  /** @suppress {duplicate } */
+  function _glUniform1iv(location, count, value) {
   
       if (count <= 288) {
         // avoid allocation when uploading few enough uniforms
-        var view = __miniTempWebGLIntBuffers[count-1];
+        var view = miniTempWebGLIntBuffers[count-1];
         for (var i = 0; i < count; ++i) {
           view[i] = HEAP32[(((value)+(4*i))>>2)];
         }
@@ -5662,15 +5887,19 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       GLctx.uniform1iv(webglGetUniformLocation(location), view);
     }
+  var _emscripten_glUniform1iv = _glUniform1iv;
 
   
-  function _emscripten_glUniform2f(location, v0, v1) {
+  /** @suppress {duplicate } */
+  function _glUniform2f(location, v0, v1) {
       GLctx.uniform2f(webglGetUniformLocation(location), v0, v1);
     }
+  var _emscripten_glUniform2f = _glUniform2f;
 
   
   
-  function _emscripten_glUniform2fv(location, count, value) {
+  /** @suppress {duplicate } */
+  function _glUniform2fv(location, count, value) {
   
       if (count <= 144) {
         // avoid allocation when uploading few enough uniforms
@@ -5685,19 +5914,23 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       GLctx.uniform2fv(webglGetUniformLocation(location), view);
     }
+  var _emscripten_glUniform2fv = _glUniform2fv;
 
   
-  function _emscripten_glUniform2i(location, v0, v1) {
+  /** @suppress {duplicate } */
+  function _glUniform2i(location, v0, v1) {
       GLctx.uniform2i(webglGetUniformLocation(location), v0, v1);
     }
+  var _emscripten_glUniform2i = _glUniform2i;
 
   
   
-  function _emscripten_glUniform2iv(location, count, value) {
+  /** @suppress {duplicate } */
+  function _glUniform2iv(location, count, value) {
   
       if (count <= 144) {
         // avoid allocation when uploading few enough uniforms
-        var view = __miniTempWebGLIntBuffers[2*count-1];
+        var view = miniTempWebGLIntBuffers[2*count-1];
         for (var i = 0; i < 2*count; i += 2) {
           view[i] = HEAP32[(((value)+(4*i))>>2)];
           view[i+1] = HEAP32[(((value)+(4*i+4))>>2)];
@@ -5708,15 +5941,19 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       GLctx.uniform2iv(webglGetUniformLocation(location), view);
     }
+  var _emscripten_glUniform2iv = _glUniform2iv;
 
   
-  function _emscripten_glUniform3f(location, v0, v1, v2) {
+  /** @suppress {duplicate } */
+  function _glUniform3f(location, v0, v1, v2) {
       GLctx.uniform3f(webglGetUniformLocation(location), v0, v1, v2);
     }
+  var _emscripten_glUniform3f = _glUniform3f;
 
   
   
-  function _emscripten_glUniform3fv(location, count, value) {
+  /** @suppress {duplicate } */
+  function _glUniform3fv(location, count, value) {
   
       if (count <= 96) {
         // avoid allocation when uploading few enough uniforms
@@ -5732,19 +5969,23 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       GLctx.uniform3fv(webglGetUniformLocation(location), view);
     }
+  var _emscripten_glUniform3fv = _glUniform3fv;
 
   
-  function _emscripten_glUniform3i(location, v0, v1, v2) {
+  /** @suppress {duplicate } */
+  function _glUniform3i(location, v0, v1, v2) {
       GLctx.uniform3i(webglGetUniformLocation(location), v0, v1, v2);
     }
+  var _emscripten_glUniform3i = _glUniform3i;
 
   
   
-  function _emscripten_glUniform3iv(location, count, value) {
+  /** @suppress {duplicate } */
+  function _glUniform3iv(location, count, value) {
   
       if (count <= 96) {
         // avoid allocation when uploading few enough uniforms
-        var view = __miniTempWebGLIntBuffers[3*count-1];
+        var view = miniTempWebGLIntBuffers[3*count-1];
         for (var i = 0; i < 3*count; i += 3) {
           view[i] = HEAP32[(((value)+(4*i))>>2)];
           view[i+1] = HEAP32[(((value)+(4*i+4))>>2)];
@@ -5756,15 +5997,19 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       GLctx.uniform3iv(webglGetUniformLocation(location), view);
     }
+  var _emscripten_glUniform3iv = _glUniform3iv;
 
   
-  function _emscripten_glUniform4f(location, v0, v1, v2, v3) {
+  /** @suppress {duplicate } */
+  function _glUniform4f(location, v0, v1, v2, v3) {
       GLctx.uniform4f(webglGetUniformLocation(location), v0, v1, v2, v3);
     }
+  var _emscripten_glUniform4f = _glUniform4f;
 
   
   
-  function _emscripten_glUniform4fv(location, count, value) {
+  /** @suppress {duplicate } */
+  function _glUniform4fv(location, count, value) {
   
       if (count <= 72) {
         // avoid allocation when uploading few enough uniforms
@@ -5785,19 +6030,23 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       GLctx.uniform4fv(webglGetUniformLocation(location), view);
     }
+  var _emscripten_glUniform4fv = _glUniform4fv;
 
   
-  function _emscripten_glUniform4i(location, v0, v1, v2, v3) {
+  /** @suppress {duplicate } */
+  function _glUniform4i(location, v0, v1, v2, v3) {
       GLctx.uniform4i(webglGetUniformLocation(location), v0, v1, v2, v3);
     }
+  var _emscripten_glUniform4i = _glUniform4i;
 
   
   
-  function _emscripten_glUniform4iv(location, count, value) {
+  /** @suppress {duplicate } */
+  function _glUniform4iv(location, count, value) {
   
       if (count <= 72) {
         // avoid allocation when uploading few enough uniforms
-        var view = __miniTempWebGLIntBuffers[4*count-1];
+        var view = miniTempWebGLIntBuffers[4*count-1];
         for (var i = 0; i < 4*count; i += 4) {
           view[i] = HEAP32[(((value)+(4*i))>>2)];
           view[i+1] = HEAP32[(((value)+(4*i+4))>>2)];
@@ -5810,10 +6059,12 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       GLctx.uniform4iv(webglGetUniformLocation(location), view);
     }
+  var _emscripten_glUniform4iv = _glUniform4iv;
 
   
   
-  function _emscripten_glUniformMatrix2fv(location, count, transpose, value) {
+  /** @suppress {duplicate } */
+  function _glUniformMatrix2fv(location, count, transpose, value) {
   
       if (count <= 72) {
         // avoid allocation when uploading few enough uniforms
@@ -5830,10 +6081,12 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       GLctx.uniformMatrix2fv(webglGetUniformLocation(location), !!transpose, view);
     }
+  var _emscripten_glUniformMatrix2fv = _glUniformMatrix2fv;
 
   
   
-  function _emscripten_glUniformMatrix3fv(location, count, transpose, value) {
+  /** @suppress {duplicate } */
+  function _glUniformMatrix3fv(location, count, transpose, value) {
   
       if (count <= 32) {
         // avoid allocation when uploading few enough uniforms
@@ -5855,10 +6108,12 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       GLctx.uniformMatrix3fv(webglGetUniformLocation(location), !!transpose, view);
     }
+  var _emscripten_glUniformMatrix3fv = _glUniformMatrix3fv;
 
   
   
-  function _emscripten_glUniformMatrix4fv(location, count, transpose, value) {
+  /** @suppress {duplicate } */
+  function _glUniformMatrix4fv(location, count, transpose, value) {
   
       if (count <= 18) {
         // avoid allocation when uploading few enough uniforms
@@ -5891,77 +6146,104 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
       GLctx.uniformMatrix4fv(webglGetUniformLocation(location), !!transpose, view);
     }
+  var _emscripten_glUniformMatrix4fv = _glUniformMatrix4fv;
 
-  function _emscripten_glUseProgram(program) {
+  /** @suppress {duplicate } */
+  function _glUseProgram(program) {
       program = GL.programs[program];
       GLctx.useProgram(program);
       // Record the currently active program so that we can access the uniform
       // mapping table of that program.
       GLctx.currentProgram = program;
     }
+  var _emscripten_glUseProgram = _glUseProgram;
 
-  function _emscripten_glValidateProgram(program) {
+  /** @suppress {duplicate } */
+  function _glValidateProgram(program) {
       GLctx.validateProgram(GL.programs[program]);
     }
+  var _emscripten_glValidateProgram = _glValidateProgram;
 
-  function _emscripten_glVertexAttrib1f(x0, x1) { GLctx['vertexAttrib1f'](x0, x1) }
+  /** @suppress {duplicate } */
+  function _glVertexAttrib1f(x0, x1) { GLctx.vertexAttrib1f(x0, x1) }
+  var _emscripten_glVertexAttrib1f = _glVertexAttrib1f;
 
-  function _emscripten_glVertexAttrib1fv(index, v) {
+  /** @suppress {duplicate } */
+  function _glVertexAttrib1fv(index, v) {
   
       GLctx.vertexAttrib1f(index, HEAPF32[v>>2]);
     }
+  var _emscripten_glVertexAttrib1fv = _glVertexAttrib1fv;
 
-  function _emscripten_glVertexAttrib2f(x0, x1, x2) { GLctx['vertexAttrib2f'](x0, x1, x2) }
+  /** @suppress {duplicate } */
+  function _glVertexAttrib2f(x0, x1, x2) { GLctx.vertexAttrib2f(x0, x1, x2) }
+  var _emscripten_glVertexAttrib2f = _glVertexAttrib2f;
 
-  function _emscripten_glVertexAttrib2fv(index, v) {
+  /** @suppress {duplicate } */
+  function _glVertexAttrib2fv(index, v) {
   
       GLctx.vertexAttrib2f(index, HEAPF32[v>>2], HEAPF32[v+4>>2]);
     }
+  var _emscripten_glVertexAttrib2fv = _glVertexAttrib2fv;
 
-  function _emscripten_glVertexAttrib3f(x0, x1, x2, x3) { GLctx['vertexAttrib3f'](x0, x1, x2, x3) }
+  /** @suppress {duplicate } */
+  function _glVertexAttrib3f(x0, x1, x2, x3) { GLctx.vertexAttrib3f(x0, x1, x2, x3) }
+  var _emscripten_glVertexAttrib3f = _glVertexAttrib3f;
 
-  function _emscripten_glVertexAttrib3fv(index, v) {
+  /** @suppress {duplicate } */
+  function _glVertexAttrib3fv(index, v) {
   
       GLctx.vertexAttrib3f(index, HEAPF32[v>>2], HEAPF32[v+4>>2], HEAPF32[v+8>>2]);
     }
+  var _emscripten_glVertexAttrib3fv = _glVertexAttrib3fv;
 
-  function _emscripten_glVertexAttrib4f(x0, x1, x2, x3, x4) { GLctx['vertexAttrib4f'](x0, x1, x2, x3, x4) }
+  /** @suppress {duplicate } */
+  function _glVertexAttrib4f(x0, x1, x2, x3, x4) { GLctx.vertexAttrib4f(x0, x1, x2, x3, x4) }
+  var _emscripten_glVertexAttrib4f = _glVertexAttrib4f;
 
-  function _emscripten_glVertexAttrib4fv(index, v) {
+  /** @suppress {duplicate } */
+  function _glVertexAttrib4fv(index, v) {
   
       GLctx.vertexAttrib4f(index, HEAPF32[v>>2], HEAPF32[v+4>>2], HEAPF32[v+8>>2], HEAPF32[v+12>>2]);
     }
+  var _emscripten_glVertexAttrib4fv = _glVertexAttrib4fv;
 
-  function _emscripten_glVertexAttribDivisorANGLE(index, divisor) {
-      GLctx['vertexAttribDivisor'](index, divisor);
+  
+  /** @suppress {duplicate } */
+  function _glVertexAttribDivisor(index, divisor) {
+      GLctx.vertexAttribDivisor(index, divisor);
     }
+  /** @suppress {duplicate } */
+  var _glVertexAttribDivisorANGLE = _glVertexAttribDivisor;
+  var _emscripten_glVertexAttribDivisorANGLE = _glVertexAttribDivisorANGLE;
 
-  function _emscripten_glVertexAttribPointer(index, size, type, normalized, stride, ptr) {
+  /** @suppress {duplicate } */
+  function _glVertexAttribPointer(index, size, type, normalized, stride, ptr) {
       GLctx.vertexAttribPointer(index, size, type, !!normalized, stride, ptr);
     }
+  var _emscripten_glVertexAttribPointer = _glVertexAttribPointer;
 
-  function _emscripten_glViewport(x0, x1, x2, x3) { GLctx['viewport'](x0, x1, x2, x3) }
+  /** @suppress {duplicate } */
+  function _glViewport(x0, x1, x2, x3) { GLctx.viewport(x0, x1, x2, x3) }
+  var _emscripten_glViewport = _glViewport;
 
-  function _emscripten_memcpy_big(dest, src, num) {
-      HEAPU8.copyWithin(dest, src, src + num);
-    }
+  var _emscripten_memcpy_big = (dest, src, num) => HEAPU8.copyWithin(dest, src, src + num);
 
-  function getHeapMax() {
-      return HEAPU8.length;
-    }
+  var getHeapMax = () =>
+      HEAPU8.length;
   
-  function abortOnCannotGrowMemory(requestedSize) {
-      abort('Cannot enlarge memory arrays to size ' + requestedSize + ' bytes (OOM). Either (1) compile with -sINITIAL_MEMORY=X with X higher than the current value ' + HEAP8.length + ', (2) compile with -sALLOW_MEMORY_GROWTH which allows increasing the size at runtime, or (3) if you want malloc to return NULL (0) instead of this abort, compile with -sABORTING_MALLOC=0');
-    }
-  function _emscripten_resize_heap(requestedSize) {
+  var abortOnCannotGrowMemory = (requestedSize) => {
+      abort(`Cannot enlarge memory arrays to size ${requestedSize} bytes (OOM). Either (1) compile with -sINITIAL_MEMORY=X with X higher than the current value ${HEAP8.length}, (2) compile with -sALLOW_MEMORY_GROWTH which allows increasing the size at runtime, or (3) if you want malloc to return NULL (0) instead of this abort, compile with -sABORTING_MALLOC=0`);
+    };
+  var _emscripten_resize_heap = (requestedSize) => {
       var oldSize = HEAPU8.length;
       requestedSize = requestedSize >>> 0;
       abortOnCannotGrowMemory(requestedSize);
-    }
+    };
 
-  function _emscripten_run_script(ptr) {
+  var _emscripten_run_script = (ptr) => {
       eval(UTF8ToString(ptr));
-    }
+    };
 
   function _emscripten_sample_gamepad_data() {
       return (JSEvents.lastGamepadState = (navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : null)))
@@ -6008,7 +6290,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   
     }
   
-  function registerMouseEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
+  
+  var registerMouseEventCallback = function(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
       if (!JSEvents.mouseEvent) JSEvents.mouseEvent = _malloc( 72 );
       target = findEventTarget(target);
   
@@ -6020,23 +6303,23 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       };
   
       var eventHandler = {
-        target: target,
+        target,
         allowsDeferredCalls: eventTypeString != 'mousemove' && eventTypeString != 'mouseenter' && eventTypeString != 'mouseleave', // Mouse move events do not allow fullscreen/pointer lock requests to be handled in them!
-        eventTypeString: eventTypeString,
-        callbackfunc: callbackfunc,
+        eventTypeString,
+        callbackfunc,
         handlerFunc: mouseEventHandlerFunc,
-        useCapture: useCapture
+        useCapture
       };
-      JSEvents.registerOrRemoveHandler(eventHandler);
-    }
+      return JSEvents.registerOrRemoveHandler(eventHandler);
+    };
   function _emscripten_set_click_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
-      registerMouseEventCallback(target, userData, useCapture, callbackfunc, 4, "click", targetThread);
-      return 0;
+      return registerMouseEventCallback(target, userData, useCapture, callbackfunc, 4, "click", targetThread);
     }
 
   
   
-  function registerGamepadEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
+  
+  var registerGamepadEventCallback = function(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
       if (!JSEvents.gamepadEvent) JSEvents.gamepadEvent = _malloc( 1432 );
   
       var gamepadEventHandlerFunc = function(e = event) {
@@ -6049,25 +6332,24 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       var eventHandler = {
         target: findEventTarget(target),
         allowsDeferredCalls: true,
-        eventTypeString: eventTypeString,
-        callbackfunc: callbackfunc,
+        eventTypeString,
+        callbackfunc,
         handlerFunc: gamepadEventHandlerFunc,
-        useCapture: useCapture
+        useCapture
       };
-      JSEvents.registerOrRemoveHandler(eventHandler);
-    }
+      return JSEvents.registerOrRemoveHandler(eventHandler);
+    };
   function _emscripten_set_gamepadconnected_callback_on_thread(userData, useCapture, callbackfunc, targetThread) {
       if (!navigator.getGamepads && !navigator.webkitGetGamepads) return -1;
-      registerGamepadEventCallback(2, userData, useCapture, callbackfunc, 26, "gamepadconnected", targetThread);
-      return 0;
+      return registerGamepadEventCallback(2, userData, useCapture, callbackfunc, 26, "gamepadconnected", targetThread);
     }
 
   function _emscripten_set_gamepaddisconnected_callback_on_thread(userData, useCapture, callbackfunc, targetThread) {
       if (!navigator.getGamepads && !navigator.webkitGetGamepads) return -1;
-      registerGamepadEventCallback(2, userData, useCapture, callbackfunc, 27, "gamepaddisconnected", targetThread);
-      return 0;
+      return registerGamepadEventCallback(2, userData, useCapture, callbackfunc, 27, "gamepaddisconnected", targetThread);
     }
 
+  
   
   function registerUiEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
       if (!JSEvents.uiEvent) JSEvents.uiEvent = _malloc( 36 );
@@ -6101,19 +6383,19 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       };
   
       var eventHandler = {
-        target: target,
-        eventTypeString: eventTypeString,
-        callbackfunc: callbackfunc,
+        target,
+        eventTypeString,
+        callbackfunc,
         handlerFunc: uiEventHandlerFunc,
-        useCapture: useCapture
+        useCapture
       };
-      JSEvents.registerOrRemoveHandler(eventHandler);
+      return JSEvents.registerOrRemoveHandler(eventHandler);
     }
   function _emscripten_set_resize_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
-      registerUiEventCallback(target, userData, useCapture, callbackfunc, 10, "resize", targetThread);
-      return 0;
+      return registerUiEventCallback(target, userData, useCapture, callbackfunc, 10, "resize", targetThread);
     }
 
+  
   
   
   function registerTouchEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
@@ -6182,36 +6464,32 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       };
   
       var eventHandler = {
-        target: target,
+        target,
         allowsDeferredCalls: eventTypeString == 'touchstart' || eventTypeString == 'touchend',
-        eventTypeString: eventTypeString,
-        callbackfunc: callbackfunc,
+        eventTypeString,
+        callbackfunc,
         handlerFunc: touchEventHandlerFunc,
-        useCapture: useCapture
+        useCapture
       };
-      JSEvents.registerOrRemoveHandler(eventHandler);
+      return JSEvents.registerOrRemoveHandler(eventHandler);
     }
   function _emscripten_set_touchcancel_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
-      registerTouchEventCallback(target, userData, useCapture, callbackfunc, 25, "touchcancel", targetThread);
-      return 0;
+      return registerTouchEventCallback(target, userData, useCapture, callbackfunc, 25, "touchcancel", targetThread);
     }
 
   function _emscripten_set_touchend_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
-      registerTouchEventCallback(target, userData, useCapture, callbackfunc, 23, "touchend", targetThread);
-      return 0;
+      return registerTouchEventCallback(target, userData, useCapture, callbackfunc, 23, "touchend", targetThread);
     }
 
   function _emscripten_set_touchmove_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
-      registerTouchEventCallback(target, userData, useCapture, callbackfunc, 24, "touchmove", targetThread);
-      return 0;
+      return registerTouchEventCallback(target, userData, useCapture, callbackfunc, 24, "touchmove", targetThread);
     }
 
   function _emscripten_set_touchstart_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
-      registerTouchEventCallback(target, userData, useCapture, callbackfunc, 22, "touchstart", targetThread);
-      return 0;
+      return registerTouchEventCallback(target, userData, useCapture, callbackfunc, 22, "touchstart", targetThread);
     }
 
-  function handleException(e) {
+  var handleException = (e) => {
       // Certain exception types we do not treat as errors since they are used for
       // internal control flow.
       // 1. ExitStatus, which is thrown by exit()
@@ -6223,38 +6501,39 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       checkStackCookie();
       if (e instanceof WebAssembly.RuntimeError) {
         if (_emscripten_stack_get_current() <= 0) {
-          err('Stack overflow detected.  You can try increasing -sSTACK_SIZE (currently set to ' + 65536 + ')');
+          err('Stack overflow detected.  You can try increasing -sSTACK_SIZE (currently set to 65536)');
         }
       }
       quit_(1, e);
-    }
+    };
   
   
-  function _proc_exit(code) {
+  var _proc_exit = (code) => {
       EXITSTATUS = code;
       if (!keepRuntimeAlive()) {
         if (Module['onExit']) Module['onExit'](code);
         ABORT = true;
       }
       quit_(code, new ExitStatus(code));
-    }
+    };
+  /** @suppress {duplicate } */
   /** @param {boolean|number=} implicit */
-  function exitJS(status, implicit) {
+  var exitJS = (status, implicit) => {
       EXITSTATUS = status;
   
       checkUnflushedContent();
   
       // if exit() was called explicitly, warn the user if the runtime isn't actually being shut down
       if (keepRuntimeAlive() && !implicit) {
-        var msg = 'program exited (with status: ' + status + '), but keepRuntimeAlive() is set (counter=' + runtimeKeepaliveCounter + ') due to an async operation, so halting execution but not exiting the runtime or preventing further async execution (you can use emscripten_force_exit, if you want to force a true shutdown)';
+        var msg = `program exited (with status: ${status}), but keepRuntimeAlive() is set (counter=${runtimeKeepaliveCounter}) due to an async operation, so halting execution but not exiting the runtime or preventing further async execution (you can use emscripten_force_exit, if you want to force a true shutdown)`;
         err(msg);
       }
   
       _proc_exit(status);
-    }
+    };
   var _exit = exitJS;
   
-  function maybeExit() {
+  var maybeExit = () => {
       if (!keepRuntimeAlive()) {
         try {
           _exit(EXITSTATUS);
@@ -6262,8 +6541,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           handleException(e);
         }
       }
-    }
-  function callUserCallback(func) {
+    };
+  var callUserCallback = (func) => {
       if (ABORT) {
         err('user callback triggered after runtime exited or application aborted.  Ignoring.');
         return;
@@ -6274,29 +6553,30 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       } catch (e) {
         handleException(e);
       }
-    }
+    };
   /** @param {number=} timeout */
-  function safeSetTimeout(func, timeout) {
+  var safeSetTimeout = (func, timeout) => {
       
-      return setTimeout(function() {
+      return setTimeout(() => {
         
         callUserCallback(func);
       }, timeout);
-    }
-  function _emscripten_sleep(ms) {
+    };
+  var _emscripten_sleep = function(ms) {
       // emscripten_sleep() does not return a value, but we still need a |return|
       // here for stack switching support (ASYNCIFY=2). In that mode this function
       // returns a Promise instead of nothing, and that Promise is what tells the
       // wasm VM to pause the stack.
       return Asyncify.handleSleep((wakeUp) => safeSetTimeout(wakeUp, ms));
-    }
+    };
+  _emscripten_sleep.isAsync = true;
 
   var ENV = {};
   
-  function getExecutableName() {
+  var getExecutableName = () => {
       return thisProgram || './this.program';
-    }
-  function getEnvStrings() {
+    };
+  var getEnvStrings = () => {
       if (!getEnvStrings.strings) {
         // Default values.
         // Browser language detection #8751
@@ -6320,36 +6600,35 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
         var strings = [];
         for (var x in env) {
-          strings.push(x + '=' + env[x]);
+          strings.push(`${x}=${env[x]}`);
         }
         getEnvStrings.strings = strings;
       }
       return getEnvStrings.strings;
-    }
+    };
   
-  /** @param {boolean=} dontAddNull */
-  function writeAsciiToMemory(str, buffer, dontAddNull) {
+  var stringToAscii = (str, buffer) => {
       for (var i = 0; i < str.length; ++i) {
         assert(str.charCodeAt(i) === (str.charCodeAt(i) & 0xff));
         HEAP8[((buffer++)>>0)] = str.charCodeAt(i);
       }
-      // Null-terminate the pointer to the HEAP.
-      if (!dontAddNull) HEAP8[((buffer)>>0)] = 0;
-    }
+      // Null-terminate the string
+      HEAP8[((buffer)>>0)] = 0;
+    };
   
-  function _environ_get(__environ, environ_buf) {
+  var _environ_get = (__environ, environ_buf) => {
       var bufSize = 0;
       getEnvStrings().forEach(function(string, i) {
         var ptr = environ_buf + bufSize;
         HEAPU32[(((__environ)+(i*4))>>2)] = ptr;
-        writeAsciiToMemory(string, ptr);
+        stringToAscii(string, ptr);
         bufSize += string.length + 1;
       });
       return 0;
-    }
+    };
 
   
-  function _environ_sizes_get(penviron_count, penviron_buf_size) {
+  var _environ_sizes_get = (penviron_count, penviron_buf_size) => {
       var strings = getEnvStrings();
       HEAPU32[((penviron_count)>>2)] = strings.length;
       var bufSize = 0;
@@ -6358,7 +6637,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       });
       HEAPU32[((penviron_buf_size)>>2)] = bufSize;
       return 0;
-    }
+    };
 
 
   function _fd_close(fd) {
@@ -6374,7 +6653,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   }
 
   /** @param {number=} offset */
-  function doReadv(stream, iov, iovcnt, offset) {
+  var doReadv = (stream, iov, iovcnt, offset) => {
       var ret = 0;
       for (var i = 0; i < iovcnt; i++) {
         var ptr = HEAPU32[((iov)>>2)];
@@ -6389,7 +6668,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
       }
       return ret;
-    }
+    };
   
   function _fd_read(fd, iov, iovcnt, pnum) {
   try {
@@ -6413,13 +6692,14 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   
   
   
+  
   function _fd_seek(fd, offset_low, offset_high, whence, newOffset) {
   try {
   
       var offset = convertI32PairToI53Checked(offset_low, offset_high); if (isNaN(offset)) return 61;
       var stream = SYSCALLS.getStreamFromFD(fd);
       FS.llseek(stream, offset, whence);
-      (tempI64 = [stream.position>>>0,(tempDouble=stream.position,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[((newOffset)>>2)] = tempI64[0],HEAP32[(((newOffset)+(4))>>2)] = tempI64[1]);
+      (tempI64 = [stream.position>>>0,(tempDouble=stream.position,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? (+(Math.floor((tempDouble)/4294967296.0)))>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)], HEAP32[((newOffset)>>2)] = tempI64[0],HEAP32[(((newOffset)+(4))>>2)] = tempI64[1]);
       if (stream.getdents && offset === 0 && whence === 0) stream.getdents = null; // reset readdir state
       return 0;
     } catch (e) {
@@ -6429,7 +6709,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   }
 
   /** @param {number=} offset */
-  function doWritev(stream, iov, iovcnt, offset) {
+  var doWritev = (stream, iov, iovcnt, offset) => {
       var ret = 0;
       for (var i = 0; i < iovcnt; i++) {
         var ptr = HEAPU32[((iov)>>2)];
@@ -6443,7 +6723,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
       }
       return ret;
-    }
+    };
   
   function _fd_write(fd, iov, iovcnt, pnum) {
   try {
@@ -6458,493 +6738,65 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   }
   }
 
-  function _glActiveTexture(x0) { GLctx['activeTexture'](x0) }
 
-  function _glAttachShader(program, shader) {
-      GLctx.attachShader(GL.programs[program], GL.shaders[shader]);
-    }
 
-  function _glBindAttribLocation(program, index, name) {
-      GLctx.bindAttribLocation(GL.programs[program], index, UTF8ToString(name));
-    }
 
-  function _glBindBuffer(target, buffer) {
-  
-      GLctx.bindBuffer(target, GL.buffers[buffer]);
-    }
 
-  function _glBindFramebuffer(target, framebuffer) {
-  
-      GLctx.bindFramebuffer(target, GL.framebuffers[framebuffer]);
-  
-    }
 
-  function _glBindRenderbuffer(target, renderbuffer) {
-      GLctx.bindRenderbuffer(target, GL.renderbuffers[renderbuffer]);
-    }
 
-  function _glBindTexture(target, texture) {
-      GLctx.bindTexture(target, GL.textures[texture]);
-    }
 
-  function _glBlendFunc(x0, x1) { GLctx['blendFunc'](x0, x1) }
 
-  function _glBufferData(target, size, data, usage) {
-  
-        // N.b. here first form specifies a heap subarray, second form an integer size, so the ?: code here is polymorphic. It is advised to avoid
-        // randomly mixing both uses in calling code, to avoid any potential JS engine JIT issues.
-        GLctx.bufferData(target, data ? HEAPU8.subarray(data, data+size) : size, usage);
-    }
 
-  function _glBufferSubData(target, offset, size, data) {
-      GLctx.bufferSubData(target, offset, HEAPU8.subarray(data, data+size));
-    }
 
-  function _glCheckFramebufferStatus(x0) { return GLctx['checkFramebufferStatus'](x0) }
 
-  function _glClear(x0) { GLctx['clear'](x0) }
 
-  function _glClearColor(x0, x1, x2, x3) { GLctx['clearColor'](x0, x1, x2, x3) }
 
-  function _glClearDepthf(x0) { GLctx['clearDepth'](x0) }
 
-  function _glCompileShader(shader) {
-      GLctx.compileShader(GL.shaders[shader]);
-    }
 
-  function _glCompressedTexImage2D(target, level, internalFormat, width, height, border, imageSize, data) {
-      GLctx['compressedTexImage2D'](target, level, internalFormat, width, height, border, data ? HEAPU8.subarray((data), (data+imageSize)) : null);
-    }
 
-  function _glCreateProgram() {
-      var id = GL.getNewId(GL.programs);
-      var program = GLctx.createProgram();
-      // Store additional information needed for each shader program:
-      program.name = id;
-      // Lazy cache results of glGetProgramiv(GL_ACTIVE_UNIFORM_MAX_LENGTH/GL_ACTIVE_ATTRIBUTE_MAX_LENGTH/GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH)
-      program.maxUniformLength = program.maxAttributeLength = program.maxUniformBlockNameLength = 0;
-      program.uniformIdCounter = 1;
-      GL.programs[id] = program;
-      return id;
-    }
 
-  function _glCreateShader(shaderType) {
-      var id = GL.getNewId(GL.shaders);
-      GL.shaders[id] = GLctx.createShader(shaderType);
-  
-      return id;
-    }
 
-  function _glCullFace(x0) { GLctx['cullFace'](x0) }
 
-  function _glDeleteBuffers(n, buffers) {
-      for (var i = 0; i < n; i++) {
-        var id = HEAP32[(((buffers)+(i*4))>>2)];
-        var buffer = GL.buffers[id];
-  
-        // From spec: "glDeleteBuffers silently ignores 0's and names that do not
-        // correspond to existing buffer objects."
-        if (!buffer) continue;
-  
-        GLctx.deleteBuffer(buffer);
-        buffer.name = 0;
-        GL.buffers[id] = null;
-  
-      }
-    }
 
-  function _glDeleteProgram(id) {
-      if (!id) return;
-      var program = GL.programs[id];
-      if (!program) { // glDeleteProgram actually signals an error when deleting a nonexisting object, unlike some other GL delete functions.
-        GL.recordError(0x501 /* GL_INVALID_VALUE */);
-        return;
-      }
-      GLctx.deleteProgram(program);
-      program.name = 0;
-      GL.programs[id] = null;
-    }
 
-  function _glDeleteShader(id) {
-      if (!id) return;
-      var shader = GL.shaders[id];
-      if (!shader) { // glDeleteShader actually signals an error when deleting a nonexisting object, unlike some other GL delete functions.
-        GL.recordError(0x501 /* GL_INVALID_VALUE */);
-        return;
-      }
-      GLctx.deleteShader(shader);
-      GL.shaders[id] = null;
-    }
 
-  function _glDeleteTextures(n, textures) {
-      for (var i = 0; i < n; i++) {
-        var id = HEAP32[(((textures)+(i*4))>>2)];
-        var texture = GL.textures[id];
-        if (!texture) continue; // GL spec: "glDeleteTextures silently ignores 0s and names that do not correspond to existing textures".
-        GLctx.deleteTexture(texture);
-        texture.name = 0;
-        GL.textures[id] = null;
-      }
-    }
 
-  function _glDepthFunc(x0) { GLctx['depthFunc'](x0) }
 
-  function _glDetachShader(program, shader) {
-      GLctx.detachShader(GL.programs[program], GL.shaders[shader]);
-    }
 
-  function _glDisable(x0) { GLctx['disable'](x0) }
 
-  function _glDisableVertexAttribArray(index) {
-      GLctx.disableVertexAttribArray(index);
-    }
 
-  function _glDrawArrays(mode, first, count) {
-  
-      GLctx.drawArrays(mode, first, count);
-  
-    }
 
-  function _glDrawElements(mode, count, type, indices) {
-  
-      GLctx.drawElements(mode, count, type, indices);
-  
-    }
 
-  function _glEnable(x0) { GLctx['enable'](x0) }
 
-  function _glEnableVertexAttribArray(index) {
-      GLctx.enableVertexAttribArray(index);
-    }
 
-  function _glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer) {
-      GLctx.framebufferRenderbuffer(target, attachment, renderbuffertarget,
-                                         GL.renderbuffers[renderbuffer]);
-    }
 
-  function _glFramebufferTexture2D(target, attachment, textarget, texture, level) {
-      GLctx.framebufferTexture2D(target, attachment, textarget,
-                                      GL.textures[texture], level);
-    }
 
-  function _glFrontFace(x0) { GLctx['frontFace'](x0) }
 
-  
-  function _glGenBuffers(n, buffers) {
-      __glGenObject(n, buffers, 'createBuffer', GL.buffers
-        );
-    }
 
-  
-  function _glGenFramebuffers(n, ids) {
-      __glGenObject(n, ids, 'createFramebuffer', GL.framebuffers
-        );
-    }
 
-  
-  function _glGenRenderbuffers(n, renderbuffers) {
-      __glGenObject(n, renderbuffers, 'createRenderbuffer', GL.renderbuffers
-        );
-    }
 
-  
-  function _glGenTextures(n, textures) {
-      __glGenObject(n, textures, 'createTexture', GL.textures
-        );
-    }
 
-  function _glGetAttribLocation(program, name) {
-      return GLctx.getAttribLocation(GL.programs[program], UTF8ToString(name));
-    }
 
-  
-  function _glGetFloatv(name_, p) {
-      emscriptenWebGLGet(name_, p, 2);
-    }
 
-  function _glGetProgramInfoLog(program, maxLength, length, infoLog) {
-      var log = GLctx.getProgramInfoLog(GL.programs[program]);
-      if (log === null) log = '(unknown error)';
-      var numBytesWrittenExclNull = (maxLength > 0 && infoLog) ? stringToUTF8(log, infoLog, maxLength) : 0;
-      if (length) HEAP32[((length)>>2)] = numBytesWrittenExclNull;
-    }
 
-  function _glGetProgramiv(program, pname, p) {
-      if (!p) {
-        // GLES2 specification does not specify how to behave if p is a null pointer. Since calling this function does not make sense
-        // if p == null, issue a GL error to notify user about it.
-        GL.recordError(0x501 /* GL_INVALID_VALUE */);
-        return;
-      }
-  
-      if (program >= GL.counter) {
-        GL.recordError(0x501 /* GL_INVALID_VALUE */);
-        return;
-      }
-  
-      program = GL.programs[program];
-  
-      if (pname == 0x8B84) { // GL_INFO_LOG_LENGTH
-        var log = GLctx.getProgramInfoLog(program);
-        if (log === null) log = '(unknown error)';
-        HEAP32[((p)>>2)] = log.length + 1;
-      } else if (pname == 0x8B87 /* GL_ACTIVE_UNIFORM_MAX_LENGTH */) {
-        if (!program.maxUniformLength) {
-          for (var i = 0; i < GLctx.getProgramParameter(program, 0x8B86/*GL_ACTIVE_UNIFORMS*/); ++i) {
-            program.maxUniformLength = Math.max(program.maxUniformLength, GLctx.getActiveUniform(program, i).name.length+1);
-          }
-        }
-        HEAP32[((p)>>2)] = program.maxUniformLength;
-      } else if (pname == 0x8B8A /* GL_ACTIVE_ATTRIBUTE_MAX_LENGTH */) {
-        if (!program.maxAttributeLength) {
-          for (var i = 0; i < GLctx.getProgramParameter(program, 0x8B89/*GL_ACTIVE_ATTRIBUTES*/); ++i) {
-            program.maxAttributeLength = Math.max(program.maxAttributeLength, GLctx.getActiveAttrib(program, i).name.length+1);
-          }
-        }
-        HEAP32[((p)>>2)] = program.maxAttributeLength;
-      } else if (pname == 0x8A35 /* GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH */) {
-        if (!program.maxUniformBlockNameLength) {
-          for (var i = 0; i < GLctx.getProgramParameter(program, 0x8A36/*GL_ACTIVE_UNIFORM_BLOCKS*/); ++i) {
-            program.maxUniformBlockNameLength = Math.max(program.maxUniformBlockNameLength, GLctx.getActiveUniformBlockName(program, i).length+1);
-          }
-        }
-        HEAP32[((p)>>2)] = program.maxUniformBlockNameLength;
-      } else {
-        HEAP32[((p)>>2)] = GLctx.getProgramParameter(program, pname);
-      }
-    }
 
-  function _glGetShaderInfoLog(shader, maxLength, length, infoLog) {
-      var log = GLctx.getShaderInfoLog(GL.shaders[shader]);
-      if (log === null) log = '(unknown error)';
-      var numBytesWrittenExclNull = (maxLength > 0 && infoLog) ? stringToUTF8(log, infoLog, maxLength) : 0;
-      if (length) HEAP32[((length)>>2)] = numBytesWrittenExclNull;
-    }
 
-  function _glGetShaderiv(shader, pname, p) {
-      if (!p) {
-        // GLES2 specification does not specify how to behave if p is a null pointer. Since calling this function does not make sense
-        // if p == null, issue a GL error to notify user about it.
-        GL.recordError(0x501 /* GL_INVALID_VALUE */);
-        return;
-      }
-      if (pname == 0x8B84) { // GL_INFO_LOG_LENGTH
-        var log = GLctx.getShaderInfoLog(GL.shaders[shader]);
-        if (log === null) log = '(unknown error)';
-        // The GLES2 specification says that if the shader has an empty info log,
-        // a value of 0 is returned. Otherwise the log has a null char appended.
-        // (An empty string is falsey, so we can just check that instead of
-        // looking at log.length.)
-        var logLength = log ? log.length + 1 : 0;
-        HEAP32[((p)>>2)] = logLength;
-      } else if (pname == 0x8B88) { // GL_SHADER_SOURCE_LENGTH
-        var source = GLctx.getShaderSource(GL.shaders[shader]);
-        // source may be a null, or the empty string, both of which are falsey
-        // values that we report a 0 length for.
-        var sourceLength = source ? source.length + 1 : 0;
-        HEAP32[((p)>>2)] = sourceLength;
-      } else {
-        HEAP32[((p)>>2)] = GLctx.getShaderParameter(GL.shaders[shader], pname);
-      }
-    }
 
-  
-  function _glGetString(name_) {
-      var ret = GL.stringCache[name_];
-      if (!ret) {
-        switch (name_) {
-          case 0x1F03 /* GL_EXTENSIONS */:
-            var exts = GLctx.getSupportedExtensions() || []; // .getSupportedExtensions() can return null if context is lost, so coerce to empty array.
-            exts = exts.concat(exts.map(function(e) { return "GL_" + e; }));
-            ret = stringToNewUTF8(exts.join(' '));
-            break;
-          case 0x1F00 /* GL_VENDOR */:
-          case 0x1F01 /* GL_RENDERER */:
-          case 0x9245 /* UNMASKED_VENDOR_WEBGL */:
-          case 0x9246 /* UNMASKED_RENDERER_WEBGL */:
-            var s = GLctx.getParameter(name_);
-            if (!s) {
-              GL.recordError(0x500/*GL_INVALID_ENUM*/);
-            }
-            ret = s && stringToNewUTF8(s);
-            break;
-  
-          case 0x1F02 /* GL_VERSION */:
-            var glVersion = GLctx.getParameter(0x1F02 /*GL_VERSION*/);
-            // return GLES version string corresponding to the version of the WebGL context
-            {
-              glVersion = 'OpenGL ES 2.0 (' + glVersion + ')';
-            }
-            ret = stringToNewUTF8(glVersion);
-            break;
-          case 0x8B8C /* GL_SHADING_LANGUAGE_VERSION */:
-            var glslVersion = GLctx.getParameter(0x8B8C /*GL_SHADING_LANGUAGE_VERSION*/);
-            // extract the version number 'N.M' from the string 'WebGL GLSL ES N.M ...'
-            var ver_re = /^WebGL GLSL ES ([0-9]\.[0-9][0-9]?)(?:$| .*)/;
-            var ver_num = glslVersion.match(ver_re);
-            if (ver_num !== null) {
-              if (ver_num[1].length == 3) ver_num[1] = ver_num[1] + '0'; // ensure minor version has 2 digits
-              glslVersion = 'OpenGL ES GLSL ES ' + ver_num[1] + ' (' + glslVersion + ')';
-            }
-            ret = stringToNewUTF8(glslVersion);
-            break;
-          default:
-            GL.recordError(0x500/*GL_INVALID_ENUM*/);
-            // fall through
-        }
-        GL.stringCache[name_] = ret;
-      }
-      return ret;
-    }
 
-  
-  
-  
-  function _glGetUniformLocation(program, name) {
-  
-      name = UTF8ToString(name);
-  
-      if (program = GL.programs[program]) {
-        webglPrepareUniformLocationsBeforeFirstUse(program);
-        var uniformLocsById = program.uniformLocsById; // Maps GLuint -> WebGLUniformLocation
-        var arrayIndex = 0;
-        var uniformBaseName = name;
-  
-        // Invariant: when populating integer IDs for uniform locations, we must maintain the precondition that
-        // arrays reside in contiguous addresses, i.e. for a 'vec4 colors[10];', colors[4] must be at location colors[0]+4.
-        // However, user might call glGetUniformLocation(program, "colors") for an array, so we cannot discover based on the user
-        // input arguments whether the uniform we are dealing with is an array. The only way to discover which uniforms are arrays
-        // is to enumerate over all the active uniforms in the program.
-        var leftBrace = webglGetLeftBracePos(name);
-  
-        // If user passed an array accessor "[index]", parse the array index off the accessor.
-        if (leftBrace > 0) {
-          arrayIndex = jstoi_q(name.slice(leftBrace + 1)) >>> 0; // "index]", coerce parseInt(']') with >>>0 to treat "foo[]" as "foo[0]" and foo[-1] as unsigned out-of-bounds.
-          uniformBaseName = name.slice(0, leftBrace);
-        }
-  
-        // Have we cached the location of this uniform before?
-        var sizeAndId = program.uniformSizeAndIdsByName[uniformBaseName]; // A pair [array length, GLint of the uniform location]
-  
-        // If an uniform with this name exists, and if its index is within the array limits (if it's even an array),
-        // query the WebGLlocation, or return an existing cached location.
-        if (sizeAndId && arrayIndex < sizeAndId[0]) {
-          arrayIndex += sizeAndId[1]; // Add the base location of the uniform to the array index offset.
-          if ((uniformLocsById[arrayIndex] = uniformLocsById[arrayIndex] || GLctx.getUniformLocation(program, name))) {
-            return arrayIndex;
-          }
-        }
-      }
-      else {
-        // N.b. we are currently unable to distinguish between GL program IDs that never existed vs GL program IDs that have been deleted,
-        // so report GL_INVALID_VALUE in both cases.
-        GL.recordError(0x501 /* GL_INVALID_VALUE */);
-      }
-      return -1;
-    }
 
-  function _glLinkProgram(program) {
-      program = GL.programs[program];
-      GLctx.linkProgram(program);
-      // Invalidate earlier computed uniform->ID mappings, those have now become stale
-      program.uniformLocsById = 0; // Mark as null-like so that glGetUniformLocation() knows to populate this again.
-      program.uniformSizeAndIdsByName = {};
-  
-    }
 
-  function _glPixelStorei(pname, param) {
-      if (pname == 0xCF5 /* GL_UNPACK_ALIGNMENT */) {
-        GL.unpackAlignment = param;
-      }
-      GLctx.pixelStorei(pname, param);
-    }
 
-  
-  function _glReadPixels(x, y, width, height, format, type, pixels) {
-      var pixelData = emscriptenWebGLGetTexPixelData(type, format, width, height, pixels, format);
-      if (!pixelData) {
-        GL.recordError(0x500/*GL_INVALID_ENUM*/);
-        return;
-      }
-      GLctx.readPixels(x, y, width, height, format, type, pixelData);
-    }
 
-  function _glRenderbufferStorage(x0, x1, x2, x3) { GLctx['renderbufferStorage'](x0, x1, x2, x3) }
 
-  function _glScissor(x0, x1, x2, x3) { GLctx['scissor'](x0, x1, x2, x3) }
 
-  function _glShaderSource(shader, count, string, length) {
-      var source = GL.getSource(shader, count, string, length);
-  
-      GLctx.shaderSource(GL.shaders[shader], source);
-    }
 
-  
-  function _glTexImage2D(target, level, internalFormat, width, height, border, format, type, pixels) {
-      GLctx.texImage2D(target, level, internalFormat, width, height, border, format, type, pixels ? emscriptenWebGLGetTexPixelData(type, format, width, height, pixels, internalFormat) : null);
-    }
 
-  function _glTexParameteri(x0, x1, x2) { GLctx['texParameteri'](x0, x1, x2) }
 
-  
-  function _glUniform1i(location, v0) {
-      GLctx.uniform1i(webglGetUniformLocation(location), v0);
-    }
 
-  
-  function _glUniform4f(location, v0, v1, v2, v3) {
-      GLctx.uniform4f(webglGetUniformLocation(location), v0, v1, v2, v3);
-    }
 
-  
-  
-  function _glUniformMatrix4fv(location, count, transpose, value) {
-  
-      if (count <= 18) {
-        // avoid allocation when uploading few enough uniforms
-        var view = miniTempWebGLFloatBuffers[16*count-1];
-        // hoist the heap out of the loop for size and for pthreads+growth.
-        var heap = HEAPF32;
-        value >>= 2;
-        for (var i = 0; i < 16 * count; i += 16) {
-          var dst = value + i;
-          view[i] = heap[dst];
-          view[i + 1] = heap[dst + 1];
-          view[i + 2] = heap[dst + 2];
-          view[i + 3] = heap[dst + 3];
-          view[i + 4] = heap[dst + 4];
-          view[i + 5] = heap[dst + 5];
-          view[i + 6] = heap[dst + 6];
-          view[i + 7] = heap[dst + 7];
-          view[i + 8] = heap[dst + 8];
-          view[i + 9] = heap[dst + 9];
-          view[i + 10] = heap[dst + 10];
-          view[i + 11] = heap[dst + 11];
-          view[i + 12] = heap[dst + 12];
-          view[i + 13] = heap[dst + 13];
-          view[i + 14] = heap[dst + 14];
-          view[i + 15] = heap[dst + 15];
-        }
-      } else
-      {
-        var view = HEAPF32.subarray((value)>>2, (value+count*64)>>2);
-      }
-      GLctx.uniformMatrix4fv(webglGetUniformLocation(location), !!transpose, view);
-    }
 
-  function _glUseProgram(program) {
-      program = GL.programs[program];
-      GLctx.useProgram(program);
-      // Record the currently active program so that we can access the uniform
-      // mapping table of that program.
-      GLctx.currentProgram = program;
-    }
 
-  function _glVertexAttribPointer(index, size, type, normalized, stride, ptr) {
-      GLctx.vertexAttribPointer(index, size, type, !!normalized, stride, ptr);
-    }
 
-  function _glViewport(x0, x1, x2, x3) { GLctx['viewport'](x0, x1, x2, x3) }
 
   
   
@@ -6961,18 +6813,18 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         
         Browser.mainLoop.running = true;
       }
-      if (mode == 0 /*EM_TIMING_SETTIMEOUT*/) {
+      if (mode == 0) {
         Browser.mainLoop.scheduler = function Browser_mainLoop_scheduler_setTimeout() {
           var timeUntilNextTick = Math.max(0, Browser.mainLoop.tickStartTime + value - _emscripten_get_now())|0;
           setTimeout(Browser.mainLoop.runner, timeUntilNextTick); // doing this each time means that on exception, we stop
         };
         Browser.mainLoop.method = 'timeout';
-      } else if (mode == 1 /*EM_TIMING_RAF*/) {
+      } else if (mode == 1) {
         Browser.mainLoop.scheduler = function Browser_mainLoop_scheduler_rAF() {
           Browser.requestAnimationFrame(Browser.mainLoop.runner);
         };
         Browser.mainLoop.method = 'rAF';
-      } else if (mode == 2 /*EM_TIMING_SETIMMEDIATE*/) {
+      } else if (mode == 2) {
         if (typeof setImmediate == 'undefined') {
           // Emulate setImmediate. (note: not a complete polyfill, we don't emulate clearImmediate() to keep code size to minimum, since not needed)
           var setImmediates = [];
@@ -7063,11 +6915,11 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   
         // Implement very basic swap interval control
         Browser.mainLoop.currentFrameNumber = Browser.mainLoop.currentFrameNumber + 1 | 0;
-        if (Browser.mainLoop.timingMode == 1/*EM_TIMING_RAF*/ && Browser.mainLoop.timingValue > 1 && Browser.mainLoop.currentFrameNumber % Browser.mainLoop.timingValue != 0) {
+        if (Browser.mainLoop.timingMode == 1 && Browser.mainLoop.timingValue > 1 && Browser.mainLoop.currentFrameNumber % Browser.mainLoop.timingValue != 0) {
           // Not the scheduled time to render this frame - skip.
           Browser.mainLoop.scheduler();
           return;
-        } else if (Browser.mainLoop.timingMode == 0/*EM_TIMING_SETTIMEOUT*/) {
+        } else if (Browser.mainLoop.timingMode == 0) {
           Browser.mainLoop.tickStartTime = _emscripten_get_now();
         }
   
@@ -7096,8 +6948,12 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
   
       if (!noSetTiming) {
-        if (fps && fps > 0) _emscripten_set_main_loop_timing(0/*EM_TIMING_SETTIMEOUT*/, 1000.0 / fps);
-        else _emscripten_set_main_loop_timing(1/*EM_TIMING_RAF*/, 1); // Do rAF by rendering each frame (no decimating)
+        if (fps && fps > 0) {
+          _emscripten_set_main_loop_timing(0, 1000.0 / fps);
+        } else {
+          // Do rAF by rendering each frame (no decimating)
+          _emscripten_set_main_loop_timing(1, 1);
+        }
   
         Browser.mainLoop.scheduler();
       }
@@ -7106,6 +6962,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         throw 'unwind';
       }
     }
+  
   
   
   
@@ -7151,27 +7008,11 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           callUserCallback(func);
           if (Module['postMainLoop']) Module['postMainLoop']();
         }},isFullscreen:false,pointerLock:false,moduleContextCreatedCallbacks:[],workers:[],init:function() {
-        if (!Module["preloadPlugins"]) Module["preloadPlugins"] = []; // needs to exist even in workers
-  
         if (Browser.initted) return;
         Browser.initted = true;
   
-        try {
-          new Blob();
-          Browser.hasBlobConstructor = true;
-        } catch(e) {
-          Browser.hasBlobConstructor = false;
-          err("warning: no blob constructor, cannot create blobs with mimetypes");
-        }
-        Browser.BlobBuilder = typeof MozBlobBuilder != "undefined" ? MozBlobBuilder : (typeof WebKitBlobBuilder != "undefined" ? WebKitBlobBuilder : (!Browser.hasBlobConstructor ? err("warning: no BlobBuilder") : null));
-        Browser.URLObject = typeof window != "undefined" ? (window.URL ? window.URL : window.webkitURL) : undefined;
-        if (!Module.noImageDecoding && typeof Browser.URLObject == 'undefined') {
-          err("warning: Browser does not support creating object URLs. Built-in browser image decoding will not be available.");
-          Module.noImageDecoding = true;
-        }
-  
         // Support for plugins that can process preloaded files. You can add more of these to
-        // your app by creating and appending to Module.preloadPlugins.
+        // your app by creating and appending to preloadPlugins.
         //
         // Each plugin is asked if it can handle a file based on the file's name. If it can,
         // it is given the file's raw data. When it is done, it calls a callback with the file's
@@ -7183,24 +7024,12 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           return !Module.noImageDecoding && /\.(jpg|jpeg|png|bmp)$/i.test(name);
         };
         imagePlugin['handle'] = function imagePlugin_handle(byteArray, name, onload, onerror) {
-          var b = null;
-          if (Browser.hasBlobConstructor) {
-            try {
-              b = new Blob([byteArray], { type: Browser.getMimetype(name) });
-              if (b.size !== byteArray.length) { // Safari bug #118630
-                // Safari's Blob can only take an ArrayBuffer
-                b = new Blob([(new Uint8Array(byteArray)).buffer], { type: Browser.getMimetype(name) });
-              }
-            } catch(e) {
-              warnOnce('Blob constructor present but fails: ' + e + '; falling back to blob builder');
-            }
+          var b = new Blob([byteArray], { type: Browser.getMimetype(name) });
+          if (b.size !== byteArray.length) { // Safari bug #118630
+            // Safari's Blob can only take an ArrayBuffer
+            b = new Blob([(new Uint8Array(byteArray)).buffer], { type: Browser.getMimetype(name) });
           }
-          if (!b) {
-            var bb = new Browser.BlobBuilder();
-            bb.append((new Uint8Array(byteArray)).buffer); // we need to pass a buffer, and must copy the array to get the right data range
-            b = bb.getBlob();
-          }
-          var url = Browser.URLObject.createObjectURL(b);
+          var url = URL.createObjectURL(b);
           assert(typeof url == 'string', 'createObjectURL must return a url as a string');
           var img = new Image();
           img.onload = () => {
@@ -7211,7 +7040,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             var ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0);
             preloadedImages[name] = canvas;
-            Browser.URLObject.revokeObjectURL(url);
+            URL.revokeObjectURL(url);
             if (onload) onload(byteArray);
           };
           img.onerror = (event) => {
@@ -7220,7 +7049,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           };
           img.src = url;
         };
-        Module['preloadPlugins'].push(imagePlugin);
+        preloadPlugins.push(imagePlugin);
   
         var audioPlugin = {};
         audioPlugin['canHandle'] = function audioPlugin_canHandle(name) {
@@ -7240,56 +7069,48 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             preloadedAudios[name] = new Audio(); // empty shim
             if (onerror) onerror();
           }
-          if (Browser.hasBlobConstructor) {
-            try {
-              var b = new Blob([byteArray], { type: Browser.getMimetype(name) });
-            } catch(e) {
-              return fail();
-            }
-            var url = Browser.URLObject.createObjectURL(b); // XXX we never revoke this!
-            assert(typeof url == 'string', 'createObjectURL must return a url as a string');
-            var audio = new Audio();
-            audio.addEventListener('canplaythrough', () => finish(audio), false); // use addEventListener due to chromium bug 124926
-            audio.onerror = function audio_onerror(event) {
-              if (done) return;
-              err('warning: browser could not fully decode audio ' + name + ', trying slower base64 approach');
-              function encode64(data) {
-                var BASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-                var PAD = '=';
-                var ret = '';
-                var leftchar = 0;
-                var leftbits = 0;
-                for (var i = 0; i < data.length; i++) {
-                  leftchar = (leftchar << 8) | data[i];
-                  leftbits += 8;
-                  while (leftbits >= 6) {
-                    var curr = (leftchar >> (leftbits-6)) & 0x3f;
-                    leftbits -= 6;
-                    ret += BASE[curr];
-                  }
+          var b = new Blob([byteArray], { type: Browser.getMimetype(name) });
+          var url = URL.createObjectURL(b); // XXX we never revoke this!
+          assert(typeof url == 'string', 'createObjectURL must return a url as a string');
+          var audio = new Audio();
+          audio.addEventListener('canplaythrough', () => finish(audio), false); // use addEventListener due to chromium bug 124926
+          audio.onerror = function audio_onerror(event) {
+            if (done) return;
+            err('warning: browser could not fully decode audio ' + name + ', trying slower base64 approach');
+            function encode64(data) {
+              var BASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+              var PAD = '=';
+              var ret = '';
+              var leftchar = 0;
+              var leftbits = 0;
+              for (var i = 0; i < data.length; i++) {
+                leftchar = (leftchar << 8) | data[i];
+                leftbits += 8;
+                while (leftbits >= 6) {
+                  var curr = (leftchar >> (leftbits-6)) & 0x3f;
+                  leftbits -= 6;
+                  ret += BASE[curr];
                 }
-                if (leftbits == 2) {
-                  ret += BASE[(leftchar&3) << 4];
-                  ret += PAD + PAD;
-                } else if (leftbits == 4) {
-                  ret += BASE[(leftchar&0xf) << 2];
-                  ret += PAD;
-                }
-                return ret;
               }
-              audio.src = 'data:audio/x-' + name.substr(-3) + ';base64,' + encode64(byteArray);
-              finish(audio); // we don't wait for confirmation this worked - but it's worth trying
-            };
-            audio.src = url;
-            // workaround for chrome bug 124926 - we do not always get oncanplaythrough or onerror
-            safeSetTimeout(function() {
-              finish(audio); // try to use it even though it is not necessarily ready to play
-            }, 10000);
-          } else {
-            return fail();
-          }
+              if (leftbits == 2) {
+                ret += BASE[(leftchar&3) << 4];
+                ret += PAD + PAD;
+              } else if (leftbits == 4) {
+                ret += BASE[(leftchar&0xf) << 2];
+                ret += PAD;
+              }
+              return ret;
+            }
+            audio.src = 'data:audio/x-' + name.substr(-3) + ';base64,' + encode64(byteArray);
+            finish(audio); // we don't wait for confirmation this worked - but it's worth trying
+          };
+          audio.src = url;
+          // workaround for chrome bug 124926 - we do not always get oncanplaythrough or onerror
+          safeSetTimeout(() => {
+            finish(audio); // try to use it even though it is not necessarily ready to play
+          }, 10000);
         };
-        Module['preloadPlugins'].push(audioPlugin);
+        preloadPlugins.push(audioPlugin);
   
         // Canvas event setup
   
@@ -7330,19 +7151,6 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             }, false);
           }
         }
-      },handledByPreloadPlugin:function(byteArray, fullname, finish, onerror) {
-        // Ensure plugins are ready.
-        Browser.init();
-  
-        var handled = false;
-        Module['preloadPlugins'].forEach(function(plugin) {
-          if (handled) return;
-          if (plugin['canHandle'](fullname)) {
-            plugin['handle'](byteArray, fullname, finish, onerror);
-            handled = true;
-          }
-        });
-        return handled;
       },createContext:function(/** @type {HTMLCanvasElement} */ canvas, useWebGL, setInModule, webGLContextAttributes) {
         if (useWebGL && Module.ctx && canvas == Module.canvas) return Module.ctx; // no need to recreate GL context if it's already been created for this canvas.
   
@@ -7383,7 +7191,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           Module.ctx = ctx;
           if (useWebGL) GL.makeContextCurrent(contextHandle);
           Module.useWebGL = useWebGL;
-          Browser.moduleContextCreatedCallbacks.forEach(function(callback) { callback() });
+          Browser.moduleContextCreatedCallbacks.forEach((callback) => callback());
           Browser.init();
         }
         return ctx;
@@ -7459,7 +7267,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
                   document['mozCancelFullScreen'] ||
                   document['msExitFullscreen'] ||
                   document['webkitCancelFullScreen'] ||
-            (function() {});
+            (() => {});
         CFS.apply(document, []);
         return true;
       },nextRAF:0,fakeRequestAnimationFrame:function(func) {
@@ -7488,7 +7296,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         return safeSetTimeout(func, timeout);
       },safeRequestAnimationFrame:function(func) {
         
-        return Browser.requestAnimationFrame(function() {
+        return Browser.requestAnimationFrame(() => {
           
           callUserCallback(func);
         });
@@ -7633,9 +7441,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
       },resizeListeners:[],updateResizeListeners:function() {
         var canvas = Module['canvas'];
-        Browser.resizeListeners.forEach(function(listener) {
-          listener(canvas.width, canvas.height);
-        });
+        Browser.resizeListeners.forEach((listener) => listener(canvas.width, canvas.height));
       },setCanvasSize:function(width, height, noUpdates) {
         var canvas = Module['canvas'];
         Browser.updateCanvasDimensions(canvas, width, height);
@@ -7749,12 +7555,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         this.userptr = null;
       }
   
-  function allocateUTF8(str) {
-      var size = lengthBytesUTF8(str) + 1;
-      var ret = _malloc(size);
-      if (ret) stringToUTF8Array(str, HEAP8, ret, size);
-      return ret;
-    }
+  
   
   
   var GLFW = {WindowFromId:function(id) {
@@ -7913,10 +7714,11 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         var repeat = status && GLFW.active.keys[key];
         GLFW.active.keys[key] = status;
         GLFW.active.domKeys[keyCode] = status;
-        if (!GLFW.active.keyFunc) return;
   
-        if (repeat) status = 2; // GLFW_REPEAT
-        ((a1, a2, a3, a4, a5) => dynCall_viiiii.apply(null, [GLFW.active.keyFunc, a1, a2, a3, a4, a5]))(GLFW.active.id, key, keyCode, status, GLFW.getModBits(GLFW.active));
+        if (GLFW.active.keyFunc) {
+          if (repeat) status = 2; // GLFW_REPEAT
+          ((a1, a2, a3, a4, a5) => dynCall_viiiii.apply(null, [GLFW.active.keyFunc, a1, a2, a3, a4, a5]))(GLFW.active.id, key, keyCode, status, GLFW.getModBits(GLFW.active));
+        }
       },onGamepadConnected:function(event) {
         GLFW.refreshJoysticks();
       },onGamepadDisconnected:function(event) {
@@ -7947,7 +7749,9 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   
         if (event.target != Module["canvas"] || !GLFW.active.cursorPosFunc) return;
   
-        ((a1, a2, a3) => dynCall_vidd.apply(null, [GLFW.active.cursorPosFunc, a1, a2, a3]))(GLFW.active.id, Browser.mouseX, Browser.mouseY);
+        if (GLFW.active.cursorPosFunc) {
+          ((a1, a2, a3) => dynCall_vidd.apply(null, [GLFW.active.cursorPosFunc, a1, a2, a3]))(GLFW.active.id, Browser.mouseX, Browser.mouseY);
+        }
       },DOMToGLFWMouseButton:function(event) {
         // DOM and glfw have different button codes.
         // See http://www.w3schools.com/jsref/event_button.asp.
@@ -7963,15 +7767,19 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       },onMouseenter:function(event) {
         if (!GLFW.active) return;
   
-        if (event.target != Module["canvas"] || !GLFW.active.cursorEnterFunc) return;
+        if (event.target != Module["canvas"]) return;
   
-        ((a1, a2) => dynCall_vii.apply(null, [GLFW.active.cursorEnterFunc, a1, a2]))(GLFW.active.id, 1);
+        if (GLFW.active.cursorEnterFunc) {
+          ((a1, a2) => dynCall_vii.apply(null, [GLFW.active.cursorEnterFunc, a1, a2]))(GLFW.active.id, 1);
+        }
       },onMouseleave:function(event) {
         if (!GLFW.active) return;
   
-        if (event.target != Module["canvas"] || !GLFW.active.cursorEnterFunc) return;
+        if (event.target != Module["canvas"]) return;
   
-        ((a1, a2) => dynCall_vii.apply(null, [GLFW.active.cursorEnterFunc, a1, a2]))(GLFW.active.id, 0);
+        if (GLFW.active.cursorEnterFunc) {
+          ((a1, a2) => dynCall_vii.apply(null, [GLFW.active.cursorEnterFunc, a1, a2]))(GLFW.active.id, 0);
+        }
       },onMouseButtonChanged:function(event, status) {
         if (!GLFW.active) return;
   
@@ -7990,9 +7798,9 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           GLFW.active.buttons &= ~(1 << eventButton);
         }
   
-        if (!GLFW.active.mouseButtonFunc) return;
-  
-        ((a1, a2, a3, a4) => dynCall_viiii.apply(null, [GLFW.active.mouseButtonFunc, a1, a2, a3, a4]))(GLFW.active.id, eventButton, status, GLFW.getModBits(GLFW.active));
+        if (GLFW.active.mouseButtonFunc) {
+          ((a1, a2, a3, a4) => dynCall_viiii.apply(null, [GLFW.active.mouseButtonFunc, a1, a2, a3, a4]))(GLFW.active.id, eventButton, status, GLFW.getModBits(GLFW.active));
+        }
       },onMouseButtonDown:function(event) {
         if (!GLFW.active) return;
         GLFW.onMouseButtonChanged(event, 1); // GLFW_PRESS
@@ -8006,7 +7814,6 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         GLFW.wheelPos += delta;
   
         if (!GLFW.active || !GLFW.active.scrollFunc || event.target != Module['canvas']) return;
-  
         var sx = 0;
         var sy = delta;
         if (event.type == 'mousewheel') {
@@ -8062,20 +7869,22 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       },onWindowSizeChanged:function() {
         if (!GLFW.active) return;
   
-        if (!GLFW.active.windowSizeFunc) return;
-  
-        ((a1, a2, a3) => dynCall_viii.apply(null, [GLFW.active.windowSizeFunc, a1, a2, a3]))(GLFW.active.id, GLFW.active.width, GLFW.active.height);
+        if (GLFW.active.windowSizeFunc) {
+          ((a1, a2, a3) => dynCall_viii.apply(null, [GLFW.active.windowSizeFunc, a1, a2, a3]))(GLFW.active.id, GLFW.active.width, GLFW.active.height);
+        }
       },onFramebufferSizeChanged:function() {
         if (!GLFW.active) return;
   
-        if (!GLFW.active.framebufferSizeFunc) return;
-  
-        ((a1, a2, a3) => dynCall_viii.apply(null, [GLFW.active.framebufferSizeFunc, a1, a2, a3]))(GLFW.active.id, GLFW.active.width, GLFW.active.height);
+        if (GLFW.active.framebufferSizeFunc) {
+          ((a1, a2, a3) => dynCall_viii.apply(null, [GLFW.active.framebufferSizeFunc, a1, a2, a3]))(GLFW.active.id, GLFW.active.width, GLFW.active.height);
+        }
       },onWindowContentScaleChanged:function(scale) {
         GLFW.scale = scale;
         if (!GLFW.active) return;
   
-        ((a1, a2, a3) => dynCall_viff.apply(null, [GLFW.active.windowContentScaleFunc, a1, a2, a3]))(GLFW.active.id, GLFW.scale, GLFW.scale);
+        if (GLFW.active.windowContentScaleFunc) {
+          ((a1, a2, a3) => dynCall_viff.apply(null, [GLFW.active.windowContentScaleFunc, a1, a2, a3]))(GLFW.active.id, GLFW.scale, GLFW.scale);
+        }
       },getTime:function() {
         return _emscripten_get_now() / 1000;
       },setWindowTitle:function(winid, title) {
@@ -8102,7 +7911,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
               if (!GLFW.joys[joy]) {
                 out('glfw joystick connected:',joy);
                 GLFW.joys[joy] = {
-                  id: allocateUTF8(gamepad.id),
+                  id: stringToNewUTF8(gamepad.id),
                   buttonsCount: gamepad.buttons.length,
                   axesCount: gamepad.axes.length,
                   buttons: _malloc(gamepad.buttons.length),
@@ -8214,7 +8023,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           };
           reader.readAsArrayBuffer(file);
   
-          var filename = allocateUTF8(path);
+          var filename = stringToNewUTF8(path);
           filenamesArray.push(filename);
           HEAPU32[((filenames + i*4)>>2)] = filename;
         }
@@ -8373,9 +8182,9 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           }
         }
   
-        if (!win.windowSizeFunc) return;
-  
-        ((a1, a2, a3) => dynCall_viii.apply(null, [win.windowSizeFunc, a1, a2, a3]))(win.id, width, height);
+        if (win.windowSizeFunc) {
+          ((a1, a2, a3) => dynCall_viii.apply(null, [win.windowSizeFunc, a1, a2, a3]))(win.id, width, height);
+        }
       },createWindow:function(width, height, title, monitor, share) {
         var i, id;
         for (i = 0; i < GLFW.windows.length && GLFW.windows[i] !== null; i++) {
@@ -8433,8 +8242,9 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         var win = GLFW.WindowFromId(winid);
         if (!win) return;
   
-        if (win.windowCloseFunc)
+        if (win.windowCloseFunc) {
           ((a1) => dynCall_vi.apply(null, [win.windowCloseFunc, a1]))(win.id);
+        }
   
         GLFW.windows[win.id - 1] = null;
         if (GLFW.active.id == win.id)
@@ -8509,6 +8319,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   function _emscripten_get_device_pixel_ratio() {
       return (typeof devicePixelRatio == 'number' && devicePixelRatio) || 1.0;
     }
+  
+  
   
   function _glfwInit() {
       if (GLFW.windows) return 1; // GL_TRUE
@@ -8633,8 +8445,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   
   function _glfwSwapInterval(interval) {
       interval = Math.abs(interval); // GLFW uses negative values to enable GLX_EXT_swap_control_tear, which we don't have, so just treat negative and positive the same.
-      if (interval == 0) _emscripten_set_main_loop_timing(0/*EM_TIMING_SETTIMEOUT*/, 0);
-      else _emscripten_set_main_loop_timing(1/*EM_TIMING_RAF*/, interval);
+      if (interval == 0) _emscripten_set_main_loop_timing(0, 0);
+      else _emscripten_set_main_loop_timing(1, interval);
     }
 
   function _glfwTerminate() {
@@ -8667,28 +8479,28 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       GLFW.hints[target] = hint;
     }
 
-  function __isLeapYear(year) {
+  var isLeapYear = (year) => {
         return year%4 === 0 && (year%100 !== 0 || year%400 === 0);
-    }
+    };
   
-  function __arraySum(array, index) {
+  var arraySum = (array, index) => {
       var sum = 0;
       for (var i = 0; i <= index; sum += array[i++]) {
         // no-op
       }
       return sum;
-    }
+    };
   
   
-  var __MONTH_DAYS_LEAP = [31,29,31,30,31,30,31,31,30,31,30,31];
+  var MONTH_DAYS_LEAP = [31,29,31,30,31,30,31,31,30,31,30,31];
   
-  var __MONTH_DAYS_REGULAR = [31,28,31,30,31,30,31,31,30,31,30,31];
-  function __addDays(date, days) {
+  var MONTH_DAYS_REGULAR = [31,28,31,30,31,30,31,31,30,31,30,31];
+  var addDays = (date, days) => {
       var newDate = new Date(date.getTime());
       while (days > 0) {
-        var leap = __isLeapYear(newDate.getFullYear());
+        var leap = isLeapYear(newDate.getFullYear());
         var currentMonth = newDate.getMonth();
-        var daysInCurrentMonth = (leap ? __MONTH_DAYS_LEAP : __MONTH_DAYS_REGULAR)[currentMonth];
+        var daysInCurrentMonth = (leap ? MONTH_DAYS_LEAP : MONTH_DAYS_REGULAR)[currentMonth];
   
         if (days > daysInCurrentMonth-newDate.getDate()) {
           // we spill over to next month
@@ -8708,16 +8520,17 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
   
       return newDate;
-    }
+    };
   
   
   
   
-  function writeArrayToMemory(array, buffer) {
+  var writeArrayToMemory = (array, buffer) => {
       assert(array.length >= 0, 'writeArrayToMemory array must have a length (should be an array or typed array)')
       HEAP8.set(array, buffer);
-    }
-  function _strftime(s, maxsize, format, tm) {
+    };
+  
+  var _strftime = (s, maxsize, format, tm) => {
       // size_t strftime(char *restrict s, size_t maxsize, const char *restrict format, const struct tm *restrict timeptr);
       // http://pubs.opengroup.org/onlinepubs/009695399/functions/strftime.html
   
@@ -8824,7 +8637,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
   
       function getWeekBasedYear(date) {
-          var thisDate = __addDays(new Date(date.tm_year+1900, 0, 1), date.tm_yday);
+          var thisDate = addDays(new Date(date.tm_year+1900, 0, 1), date.tm_yday);
   
           var janFourthThisYear = new Date(thisDate.getFullYear(), 0, 4);
           var janFourthNextYear = new Date(thisDate.getFullYear()+1, 0, 4);
@@ -8843,29 +8656,17 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       }
   
       var EXPANSION_RULES_2 = {
-        '%a': function(date) {
-          return WEEKDAYS[date.tm_wday].substring(0,3);
-        },
-        '%A': function(date) {
-          return WEEKDAYS[date.tm_wday];
-        },
-        '%b': function(date) {
-          return MONTHS[date.tm_mon].substring(0,3);
-        },
-        '%B': function(date) {
-          return MONTHS[date.tm_mon];
-        },
-        '%C': function(date) {
+        '%a': (date) => WEEKDAYS[date.tm_wday].substring(0,3) ,
+        '%A': (date) => WEEKDAYS[date.tm_wday],
+        '%b': (date) => MONTHS[date.tm_mon].substring(0,3),
+        '%B': (date) => MONTHS[date.tm_mon],
+        '%C': (date) => {
           var year = date.tm_year+1900;
           return leadingNulls((year/100)|0,2);
         },
-        '%d': function(date) {
-          return leadingNulls(date.tm_mday, 2);
-        },
-        '%e': function(date) {
-          return leadingSomething(date.tm_mday, 2, ' ');
-        },
-        '%g': function(date) {
+        '%d': (date) => leadingNulls(date.tm_mday, 2),
+        '%e': (date) => leadingSomething(date.tm_mday, 2, ' '),
+        '%g': (date) => {
           // %g, %G, and %V give values according to the ISO 8601:2000 standard week-based year.
           // In this system, weeks begin on a Monday and week 1 of the year is the week that includes
           // January 4th, which is also the week that includes the first Thursday of the year, and
@@ -8878,51 +8679,35 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   
           return getWeekBasedYear(date).toString().substring(2);
         },
-        '%G': function(date) {
-          return getWeekBasedYear(date);
-        },
-        '%H': function(date) {
-          return leadingNulls(date.tm_hour, 2);
-        },
-        '%I': function(date) {
+        '%G': (date) => getWeekBasedYear(date),
+        '%H': (date) => leadingNulls(date.tm_hour, 2),
+        '%I': (date) => {
           var twelveHour = date.tm_hour;
           if (twelveHour == 0) twelveHour = 12;
           else if (twelveHour > 12) twelveHour -= 12;
           return leadingNulls(twelveHour, 2);
         },
-        '%j': function(date) {
+        '%j': (date) => {
           // Day of the year (001-366)
-          return leadingNulls(date.tm_mday+__arraySum(__isLeapYear(date.tm_year+1900) ? __MONTH_DAYS_LEAP : __MONTH_DAYS_REGULAR, date.tm_mon-1), 3);
+          return leadingNulls(date.tm_mday + arraySum(isLeapYear(date.tm_year+1900) ? MONTH_DAYS_LEAP : MONTH_DAYS_REGULAR, date.tm_mon-1), 3);
         },
-        '%m': function(date) {
-          return leadingNulls(date.tm_mon+1, 2);
-        },
-        '%M': function(date) {
-          return leadingNulls(date.tm_min, 2);
-        },
-        '%n': function() {
-          return '\n';
-        },
-        '%p': function(date) {
+        '%m': (date) => leadingNulls(date.tm_mon+1, 2),
+        '%M': (date) => leadingNulls(date.tm_min, 2),
+        '%n': () => '\n',
+        '%p': (date) => {
           if (date.tm_hour >= 0 && date.tm_hour < 12) {
             return 'AM';
           }
           return 'PM';
         },
-        '%S': function(date) {
-          return leadingNulls(date.tm_sec, 2);
-        },
-        '%t': function() {
-          return '\t';
-        },
-        '%u': function(date) {
-          return date.tm_wday || 7;
-        },
-        '%U': function(date) {
+        '%S': (date) => leadingNulls(date.tm_sec, 2),
+        '%t': () => '\t',
+        '%u': (date) => date.tm_wday || 7,
+        '%U': (date) => {
           var days = date.tm_yday + 7 - date.tm_wday;
           return leadingNulls(Math.floor(days / 7), 2);
         },
-        '%V': function(date) {
+        '%V': (date) => {
           // Replaced by the week number of the year (Monday as the first day of the week)
           // as a decimal number [01,53]. If the week containing 1 January has four
           // or more days in the new year, then it is considered week 1.
@@ -8939,34 +8724,30 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             // If 31 December of prev year a Thursday, or Friday of a
             // leap year, then the prev year has 53 weeks.
             var dec31 = (date.tm_wday + 7 - date.tm_yday - 1) % 7;
-            if (dec31 == 4 || (dec31 == 5 && __isLeapYear(date.tm_year%400-1))) {
+            if (dec31 == 4 || (dec31 == 5 && isLeapYear(date.tm_year%400-1))) {
               val++;
             }
           } else if (val == 53) {
             // If 1 January is not a Thursday, and not a Wednesday of a
             // leap year, then this year has only 52 weeks.
             var jan1 = (date.tm_wday + 371 - date.tm_yday) % 7;
-            if (jan1 != 4 && (jan1 != 3 || !__isLeapYear(date.tm_year)))
+            if (jan1 != 4 && (jan1 != 3 || !isLeapYear(date.tm_year)))
               val = 1;
           }
           return leadingNulls(val, 2);
         },
-        '%w': function(date) {
-          return date.tm_wday;
-        },
-        '%W': function(date) {
+        '%w': (date) => date.tm_wday,
+        '%W': (date) => {
           var days = date.tm_yday + 7 - ((date.tm_wday + 6) % 7);
           return leadingNulls(Math.floor(days / 7), 2);
         },
-        '%y': function(date) {
+        '%y': (date) => {
           // Replaced by the last two digits of the year as a decimal number [00,99]. [ tm_year]
           return (date.tm_year+1900).toString().substring(2);
         },
-        '%Y': function(date) {
-          // Replaced by the year as a decimal number (for example, 1997). [ tm_year]
-          return date.tm_year+1900;
-        },
-        '%z': function(date) {
+        // Replaced by the year as a decimal number (for example, 1997). [ tm_year]
+        '%Y': (date) => date.tm_year+1900,
+        '%z': (date) => {
           // Replaced by the offset from UTC in the ISO 8601:2000 standard format ( +hhmm or -hhmm ).
           // For example, "-0430" means 4 hours 30 minutes behind UTC (west of Greenwich).
           var off = date.tm_gmtoff;
@@ -8976,12 +8757,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           off = (off / 60)*100 + (off % 60);
           return (ahead ? '+' : '-') + String("0000" + off).slice(-4);
         },
-        '%Z': function(date) {
-          return date.tm_zone;
-        },
-        '%%': function() {
-          return '%';
-        }
+        '%Z': (date) => date.tm_zone,
+        '%%': () => '%'
       };
   
       // Replace %% with a pair of NULLs (which cannot occur in a C string), then
@@ -9001,10 +8778,10 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   
       writeArrayToMemory(bytes, s);
       return bytes.length-1;
-    }
-  function _strftime_l(s, maxsize, format, tm, loc) {
+    };
+  var _strftime_l = (s, maxsize, format, tm, loc) => {
       return _strftime(s, maxsize, format, tm); // no locale support yet
-    }
+    };
 
 
 
@@ -9019,10 +8796,10 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   
   
   function sigToWasmTypes(sig) {
+      assert(!sig.includes('j'), 'i64 not permitted in function signatures when WASM_BIGINT is disabled');
       var typeNames = {
         'i': 'i32',
-        // i64 values will be split into two i32s.
-        'j': 'i32',
+        'j': 'i64',
         'f': 'f32',
         'd': 'f64',
         'p': 'i32',
@@ -9034,30 +8811,30 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       for (var i = 1; i < sig.length; ++i) {
         assert(sig[i] in typeNames, 'invalid signature char: ' + sig[i]);
         type.parameters.push(typeNames[sig[i]]);
-        if (sig[i] === 'j') {
-          type.parameters.push('i32');
-        }
       }
       return type;
     }
   
-  function runtimeKeepalivePush() {
+  var runtimeKeepalivePush = () => {
       runtimeKeepaliveCounter += 1;
-    }
+    };
   
-  function runtimeKeepalivePop() {
+  var runtimeKeepalivePop = () => {
       assert(runtimeKeepaliveCounter > 0);
       runtimeKeepaliveCounter -= 1;
-    }
+    };
+  
+  
   var Asyncify = {instrumentWasmImports:function(imports) {
-        var ASYNCIFY_IMPORTS = ["invoke_*","emscripten_sleep","emscripten_wget","emscripten_wget_data","emscripten_idb_load","emscripten_idb_store","emscripten_idb_delete","emscripten_idb_exists","emscripten_idb_load_blob","emscripten_idb_store_blob","SDL_Delay","emscripten_scan_registers","emscripten_lazy_load_code","emscripten_fiber_swap","__load_secondary_module","fd_sync","__wasi_fd_sync","_emval_await","_dlopen_js","__asyncjs__*"];
+        var importPatterns = [/^invoke_.*$/,/^fd_sync$/,/^__wasi_fd_sync$/,/^__asyncjs__.*$/,/^emscripten_promise_await$/,/^emscripten_idb_load$/,/^emscripten_idb_store$/,/^emscripten_idb_delete$/,/^emscripten_idb_exists$/,/^emscripten_idb_load_blob$/,/^emscripten_idb_store_blob$/,/^emscripten_sleep$/,/^emscripten_wget$/,/^emscripten_wget_data$/,/^emscripten_scan_registers$/,/^emscripten_lazy_load_code$/,/^_load_secondary_module$/,/^emscripten_fiber_swap$/,/^SDL_Delay$/];
+  
         for (var x in imports) {
           (function(x) {
             var original = imports[x];
             var sig = original.sig;
             if (typeof original == 'function') {
-              var isAsyncifyImport = ASYNCIFY_IMPORTS.indexOf(x) >= 0 ||
-                                     x.startsWith('__asyncjs__');
+              var isAsyncifyImport = original.isAsync ||
+                                     importPatterns.some(pattern => !!x.match(pattern));
               imports[x] = function() {
                 var originalAsyncifyState = Asyncify.state;
                 try {
@@ -9079,7 +8856,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
                       !isAsyncifyImport &&
                       !changedToDisabled &&
                       !ignoredInvoke) {
-                    throw new Error('import ' + x + ' was not in ASYNCIFY_IMPORTS, but changed the state');
+                    throw new Error(`import ${x} was not in ASYNCIFY_IMPORTS, but changed the state`);
                   }
                 }
               };
@@ -9139,10 +8916,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         assert(Asyncify.currData, 'Tried to wait for an async operation when none is in progress.');
         assert(!Asyncify.asyncPromiseHandlers, 'Cannot have multiple async operations in flight at once');
         return new Promise((resolve, reject) => {
-          Asyncify.asyncPromiseHandlers = {
-            resolve: resolve,
-            reject: reject
-          };
+          Asyncify.asyncPromiseHandlers = { resolve, reject };
         });
       },allocateData:function() {
         // An asyncify data structure has three fields:
@@ -9261,7 +9035,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           // Call all sleep callbacks now that the sleep-resume is all done.
           Asyncify.sleepCallbacks.forEach((func) => callUserCallback(func));
         } else {
-          abort('invalid state: ' + Asyncify.state);
+          abort(`invalid state: ${Asyncify.state}`);
         }
         return Asyncify.handleSleepReturnValue;
       },handleAsync:function(startAsync) {
@@ -9270,6 +9044,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           startAsync().then(wakeUp);
         });
       }};
+
 
   var FSNode = /** @constructor */ function(parent, name, mode, rdev) {
     if (!parent) {
@@ -9316,6 +9091,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
    }
   });
   FS.FSNode = FSNode;
+  FS.createPreloadedFile = FS_createPreloadedFile;
   FS.staticInit();Module["FS_createPath"] = FS.createPath;Module["FS_createDataFile"] = FS.createDataFile;Module["FS_createPreloadedFile"] = FS.createPreloadedFile;Module["FS_unlink"] = FS.unlink;Module["FS_createLazyFile"] = FS.createLazyFile;Module["FS_createDevice"] = FS.createDevice;;
 ERRNO_CODES = {
       'EPERM': 63,
@@ -9447,9 +9223,9 @@ var miniTempWebGLFloatBuffersStorage = new Float32Array(288);
   miniTempWebGLFloatBuffers[i] = miniTempWebGLFloatBuffersStorage.subarray(0, i+1);
   }
   ;
-var __miniTempWebGLIntBuffersStorage = new Int32Array(288);
+var miniTempWebGLIntBuffersStorage = new Int32Array(288);
   for (/**@suppress{duplicate}*/var i = 0; i < 288; ++i) {
-  __miniTempWebGLIntBuffers[i] = __miniTempWebGLIntBuffersStorage.subarray(0, i+1);
+  miniTempWebGLIntBuffers[i] = miniTempWebGLIntBuffersStorage.subarray(0, i+1);
   }
   ;
 
@@ -9464,80 +9240,6 @@ var __miniTempWebGLIntBuffersStorage = new Int32Array(288);
       Module["createContext"] = function Module_createContext(canvas, useWebGL, setInModule, webGLContextAttributes) { return Browser.createContext(canvas, useWebGL, setInModule, webGLContextAttributes) };
       var preloadedImages = {};
       var preloadedAudios = {};;
-// include: base64Utils.js
-// Copied from https://github.com/strophe/strophejs/blob/e06d027/src/polyfills.js#L149
-
-// This code was written by Tyler Akins and has been placed in the
-// public domain.  It would be nice if you left this header intact.
-// Base64 code from Tyler Akins -- http://rumkin.com
-
-/**
- * Decodes a base64 string.
- * @param {string} input The string to decode.
- */
-var decodeBase64 = typeof atob == 'function' ? atob : function (input) {
-  var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-
-  var output = '';
-  var chr1, chr2, chr3;
-  var enc1, enc2, enc3, enc4;
-  var i = 0;
-  // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
-  input = input.replace(/[^A-Za-z0-9\+\/\=]/g, '');
-  do {
-    enc1 = keyStr.indexOf(input.charAt(i++));
-    enc2 = keyStr.indexOf(input.charAt(i++));
-    enc3 = keyStr.indexOf(input.charAt(i++));
-    enc4 = keyStr.indexOf(input.charAt(i++));
-
-    chr1 = (enc1 << 2) | (enc2 >> 4);
-    chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
-    chr3 = ((enc3 & 3) << 6) | enc4;
-
-    output = output + String.fromCharCode(chr1);
-
-    if (enc3 !== 64) {
-      output = output + String.fromCharCode(chr2);
-    }
-    if (enc4 !== 64) {
-      output = output + String.fromCharCode(chr3);
-    }
-  } while (i < input.length);
-  return output;
-};
-
-// Converts a string of base64 into a byte array.
-// Throws error on invalid input.
-function intArrayFromBase64(s) {
-  if (typeof ENVIRONMENT_IS_NODE == 'boolean' && ENVIRONMENT_IS_NODE) {
-    var buf = Buffer.from(s, 'base64');
-    return new Uint8Array(buf['buffer'], buf['byteOffset'], buf['byteLength']);
-  }
-
-  try {
-    var decoded = decodeBase64(s);
-    var bytes = new Uint8Array(decoded.length);
-    for (var i = 0 ; i < decoded.length ; ++i) {
-      bytes[i] = decoded.charCodeAt(i);
-    }
-    return bytes;
-  } catch (_) {
-    throw new Error('Converting base64 string to bytes failed.');
-  }
-}
-
-// If filename is a base64 data URI, parses and returns data (Buffer on node,
-// Uint8Array otherwise). If filename is not a base64 data URI, returns undefined.
-function tryParseAsDataURI(filename) {
-  if (!isDataURI(filename)) {
-    return;
-  }
-
-  return intArrayFromBase64(filename.slice(dataURIPrefix.length));
-}
-
-
-// end include: base64Utils.js
 function checkIncomingModuleAPI() {
   ignoredModuleProp('fetchSettings');
 }
@@ -9843,8 +9545,6 @@ var _free = createExportWrapper("free");
 /** @type {function(...*):?} */
 var _fflush = Module["_fflush"] = createExportWrapper("fflush");
 /** @type {function(...*):?} */
-var ___dl_seterr = createExportWrapper("__dl_seterr");
-/** @type {function(...*):?} */
 var _emscripten_stack_init = function() {
   return (_emscripten_stack_init = Module["asm"]["emscripten_stack_init"]).apply(null, arguments);
 };
@@ -9891,13 +9591,13 @@ var dynCall_iii = Module["dynCall_iii"] = createExportWrapper("dynCall_iii");
 /** @type {function(...*):?} */
 var dynCall_iiii = Module["dynCall_iiii"] = createExportWrapper("dynCall_iiii");
 /** @type {function(...*):?} */
-var dynCall_v = Module["dynCall_v"] = createExportWrapper("dynCall_v");
-/** @type {function(...*):?} */
 var dynCall_viii = Module["dynCall_viii"] = createExportWrapper("dynCall_viii");
 /** @type {function(...*):?} */
 var dynCall_viiiii = Module["dynCall_viiiii"] = createExportWrapper("dynCall_viiiii");
 /** @type {function(...*):?} */
 var dynCall_vii = Module["dynCall_vii"] = createExportWrapper("dynCall_vii");
+/** @type {function(...*):?} */
+var dynCall_v = Module["dynCall_v"] = createExportWrapper("dynCall_v");
 /** @type {function(...*):?} */
 var dynCall_vif = Module["dynCall_vif"] = createExportWrapper("dynCall_vif");
 /** @type {function(...*):?} */
@@ -9964,22 +9664,54 @@ var _asyncify_stop_unwind = createExportWrapper("asyncify_stop_unwind");
 var _asyncify_start_rewind = createExportWrapper("asyncify_start_rewind");
 /** @type {function(...*):?} */
 var _asyncify_stop_rewind = createExportWrapper("asyncify_stop_rewind");
-var ___start_em_js = Module['___start_em_js'] = 251867;
-var ___stop_em_js = Module['___stop_em_js'] = 251942;
+var ___start_em_js = Module['___start_em_js'] = 253195;
+var ___stop_em_js = Module['___stop_em_js'] = 253270;
 
 // include: postamble.js
 // === Auto-generated postamble setup entry stuff ===
 
+// include: base64Utils.js
+// Converts a string of base64 into a byte array.
+// Throws error on invalid input.
+function intArrayFromBase64(s) {
+  if (typeof ENVIRONMENT_IS_NODE != 'undefined' && ENVIRONMENT_IS_NODE) {
+    var buf = Buffer.from(s, 'base64');
+    return new Uint8Array(buf['buffer'], buf['byteOffset'], buf['byteLength']);
+  }
+
+  try {
+    var decoded = atob(s);
+    var bytes = new Uint8Array(decoded.length);
+    for (var i = 0 ; i < decoded.length ; ++i) {
+      bytes[i] = decoded.charCodeAt(i);
+    }
+    return bytes;
+  } catch (_) {
+    throw new Error('Converting base64 string to bytes failed.');
+  }
+}
+
+// If filename is a base64 data URI, parses and returns data (Buffer on node,
+// Uint8Array otherwise). If filename is not a base64 data URI, returns undefined.
+function tryParseAsDataURI(filename) {
+  if (!isDataURI(filename)) {
+    return;
+  }
+
+  return intArrayFromBase64(filename.slice(dataURIPrefix.length));
+}
+// end include: base64Utils.js
 Module["addRunDependency"] = addRunDependency;
 Module["removeRunDependency"] = removeRunDependency;
 Module["FS_createPath"] = FS.createPath;
 Module["FS_createDataFile"] = FS.createDataFile;
-Module["FS_createPreloadedFile"] = FS.createPreloadedFile;
 Module["FS_createLazyFile"] = FS.createLazyFile;
 Module["FS_createDevice"] = FS.createDevice;
 Module["FS_unlink"] = FS.unlink;
+Module["FS_createPreloadedFile"] = FS.createPreloadedFile;
 var missingLibrarySymbols = [
-  'emscripten_realloc_buffer',
+  'growMemory',
+  'ydayFromDate',
   'inetPton4',
   'inetNtop4',
   'inetPton6',
@@ -9988,6 +9720,8 @@ var missingLibrarySymbols = [
   'writeSockaddr',
   'getHostByName',
   'traverseStack',
+  'getCallstack',
+  'emscriptenLog',
   'convertPCtoSourceLocation',
   'runMainThreadEmAsm',
   'jstoi_s',
@@ -10027,17 +9761,13 @@ var missingLibrarySymbols = [
   'formatString',
   'intArrayToString',
   'AsciiToString',
-  'stringToAscii',
   'UTF16ToString',
   'stringToUTF16',
   'lengthBytesUTF16',
   'UTF32ToString',
   'stringToUTF32',
   'lengthBytesUTF32',
-  'allocateUTF8OnStack',
-  'writeStringToMemory',
-  'getSocketFromFD',
-  'getSocketAddress',
+  'stringToUTF8OnStack',
   'registerKeyEventCallback',
   'registerWheelEventCallback',
   'registerFocusEventCallback',
@@ -10073,33 +9803,34 @@ var missingLibrarySymbols = [
   'jsStackTrace',
   'stackTrace',
   'checkWasiClock',
+  'wasiRightsToMuslOFlags',
+  'wasiOFlagsToMuslOFlags',
   'createDyncallWrapper',
   'setImmediateWrapped',
   'clearImmediateWrapped',
   'polyfillSetImmediate',
   'getPromise',
   'makePromise',
+  'idsToPromises',
   'makePromiseCallback',
-  'exception_addRef',
-  'exception_decRef',
+  'getSocketFromFD',
+  'getSocketAddress',
   '_setNetworkCallback',
   'writeGLArray',
+  'registerWebGlEventCallback',
   'SDL_unicode',
   'SDL_ttfContext',
   'SDL_audio',
   'ALLOC_NORMAL',
   'ALLOC_STACK',
   'allocate',
+  'writeStringToMemory',
+  'writeAsciiToMemory',
 ];
 missingLibrarySymbols.forEach(missingLibrarySymbol)
 
 var unexportedSymbols = [
   'run',
-  'UTF8ArrayToString',
-  'UTF8ToString',
-  'stringToUTF8Array',
-  'stringToUTF8',
-  'lengthBytesUTF8',
   'addOnPreRun',
   'addOnInit',
   'addOnPreMain',
@@ -10122,18 +9853,25 @@ var unexportedSymbols = [
   'checkStackCookie',
   'ptrToString',
   'zeroMemory',
-  'stringToNewUTF8',
   'exitJS',
   'getHeapMax',
   'abortOnCannotGrowMemory',
   'ENV',
+  'MONTH_DAYS_REGULAR',
+  'MONTH_DAYS_LEAP',
+  'MONTH_DAYS_REGULAR_CUMULATIVE',
+  'MONTH_DAYS_LEAP_CUMULATIVE',
+  'isLeapYear',
+  'arraySum',
+  'addDays',
   'ERRNO_CODES',
   'ERRNO_MESSAGES',
   'setErrNo',
   'DNS',
   'Protocols',
   'Sockets',
-  'getRandomDevice',
+  'initRandomFill',
+  'randomFill',
   'timers',
   'warnOnce',
   'UNWIND_CACHE',
@@ -10162,12 +9900,17 @@ var unexportedSymbols = [
   'getValue',
   'PATH',
   'PATH_FS',
+  'UTF8Decoder',
+  'UTF8ArrayToString',
+  'UTF8ToString',
+  'stringToUTF8Array',
+  'stringToUTF8',
+  'lengthBytesUTF8',
   'intArrayFromString',
+  'stringToAscii',
   'UTF16Decoder',
-  'allocateUTF8',
+  'stringToNewUTF8',
   'writeArrayToMemory',
-  'writeAsciiToMemory',
-  'SYSCALLS',
   'JSEvents',
   'specialHTMLTargets',
   'maybeCStringToJsString',
@@ -10188,7 +9931,6 @@ var unexportedSymbols = [
   'getEnvStrings',
   'doReadv',
   'doWritev',
-  'dlopenMissingError',
   'promiseMap',
   'uncaughtExceptionCount',
   'exceptionLast',
@@ -10197,6 +9939,10 @@ var unexportedSymbols = [
   'Browser',
   'setMainLoop',
   'wget',
+  'SYSCALLS',
+  'preloadPlugins',
+  'FS_modeStringToFlags',
+  'FS_getMode',
   'FS',
   'MEMFS',
   'TTY',
@@ -10204,29 +9950,40 @@ var unexportedSymbols = [
   'SOCKFS',
   'tempFixedLengthArray',
   'miniTempWebGLFloatBuffers',
+  'miniTempWebGLIntBuffers',
   'heapObjectForWebGLType',
   'heapAccessShiftForWebGLHeap',
+  'webgl_enable_ANGLE_instanced_arrays',
+  'webgl_enable_OES_vertex_array_object',
+  'webgl_enable_WEBGL_draw_buffers',
+  'webgl_enable_WEBGL_multi_draw',
   'GL',
   'emscriptenWebGLGet',
   'computeUnpackAlignedImageSize',
+  'colorChannelsInGlTextureFormat',
   'emscriptenWebGLGetTexPixelData',
+  '__glGenObject',
   'emscriptenWebGLGetUniform',
   'webglGetUniformLocation',
   'webglPrepareUniformLocationsBeforeFirstUse',
   'webglGetLeftBracePos',
   'emscriptenWebGLGetVertexAttrib',
+  '__glGetActiveAttribOrUniform',
+  'emscripten_webgl_power_preferences',
   'AL',
-  'SDL',
-  'SDL_gfx',
   'GLUT',
   'EGL',
-  'GLFW_Window',
-  'GLFW',
   'GLEW',
   'IDBStore',
   'runAndAbortIfError',
   'Asyncify',
   'Fibers',
+  'SDL',
+  'SDL_gfx',
+  'GLFW_Window',
+  'GLFW',
+  'allocateUTF8',
+  'allocateUTF8OnStack',
 ];
 unexportedSymbols.forEach(unexportedRuntimeSymbol);
 
