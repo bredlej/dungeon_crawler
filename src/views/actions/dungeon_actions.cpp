@@ -28,13 +28,13 @@ static inline void handle_turn_direction (entt::registry &registry, WorldDirecti
     registry.ctx().emplace<events::dungeon::RecalculateFov>();
 }
 
-static inline void change_position(ModXY mod, entt::registry &registry, const TileMap *tile_map, const WallMap *wall_map, components::fields::MapPosition &position) {
-    using namespace components::fields;
+static inline void change_position(ModXY mod, entt::registry &registry, const TileMap *tile_map, const WallMap *wall_map, components::tiles::MapPosition &position) {
+    using namespace components::tiles;
     entt::entity destination = tile_map->get_at(position.x + mod.x, position.y + mod.y);
-    if (registry.valid(destination) && registry.get<components::fields::Walkability>(destination).walkable) {
+    if (registry.valid(destination) && registry.get<components::tiles::Walkability>(destination).walkable) {
         entt::entity wall = wall_map->get_between(MapPosition{position.x, position.y}, MapPosition{position.x + mod.x, position.y + mod.y});
-        if (wall == entt::null || registry.get<components::fields::Walkability>(wall).walkable) {
-            components::fields::MapPosition destination_position = registry.get<components::fields::MapPosition>(destination);
+        if (wall == entt::null || registry.get<components::tiles::Walkability>(wall).walkable) {
+            components::tiles::MapPosition destination_position = registry.get<components::tiles::MapPosition>(destination);
             position.x = destination_position.x;
             position.y = destination_position.y;
         }
@@ -42,10 +42,10 @@ static inline void change_position(ModXY mod, entt::registry &registry, const Ti
 }
 
 static inline void handle_movement (entt::registry &registry, entt::dispatcher &dispatcher, const TileMap *tile_map, const WallMap *wall_map, ModXY mod_north, ModXY mod_south, ModXY mod_west, ModXY mod_east) {
-    auto view = registry.view<components::general::Player, components::fields::MapPosition, components::general::Direction>();
+    auto view = registry.view<components::general::Player, components::tiles::MapPosition, components::general::Direction>();
     for (auto entity: view) {
-        auto &position = registry.get<components::fields::MapPosition>(entity);
-        auto old_position = registry.get<components::fields::MapPosition>(entity);
+        auto &position = registry.get<components::tiles::MapPosition>(entity);
+        auto old_position = registry.get<components::tiles::MapPosition>(entity);
         auto direction = registry.get<components::general::Direction>(entity);
         switch (direction.direction) {
             case WorldDirection::NORTH: change_position(mod_north, registry, tile_map, wall_map, position); break;
@@ -81,7 +81,7 @@ void DungeonActions::move_right() {
 }
 
 void DungeonActions::_on_movement(const events::dungeon::Movement &movement) {
-    components::fields::MapPosition new_position = _core->registry.get<components::fields::MapPosition>(movement.to);
+    components::tiles::MapPosition new_position = _core->registry.get<components::tiles::MapPosition>(movement.to);
     auto *tile_encounter_chance = _core->registry.try_get<components::values::EncounterChance>(_tile_map->get_at(new_position.x, new_position.y));
     if (tile_encounter_chance) {
         auto encounter_chance = _core->registry.ctx().find<components::values::EncounterChance>();

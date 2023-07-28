@@ -3,9 +3,9 @@
 //
 #include <ecs/wall_map.hpp>
 
-entt::entity WallMap::get_between(components::fields::MapPosition field1, components::fields::MapPosition field2) const noexcept {
+entt::entity WallMap::get_between(components::tiles::MapPosition field1, components::tiles::MapPosition field2) const noexcept {
     entt::entity result{entt::null};
-    _core->registry.view<components::fields::Wall>().each([&result, field1, field2](entt::entity entity, const components::fields::Wall &wall) {
+    _core->registry.view<components::tiles::Wall>().each([&result, field1, field2](entt::entity entity, const components::tiles::Wall &wall) {
         if ((wall.field1.x == field1.x && wall.field1.y == field1.y && wall.field2.x == field2.x && wall.field2.y == field2.y) ||
             (wall.field1.x == field2.x && wall.field1.y == field2.y && wall.field2.x == field1.x && wall.field2.y == field1.y)) {
             result = entity;
@@ -16,14 +16,14 @@ entt::entity WallMap::get_between(components::fields::MapPosition field1, compon
 
 void WallMap::place_wall_at(const TileMap &tile_map, int32_t x, int32_t y, WallType wall_type) {
     auto tile_entity = tile_map.get_at(x,y);
-    _core->registry.emplace_or_replace<components::fields::Walkability>(tile_entity, false);
+    _core->registry.emplace_or_replace<components::tiles::Walkability>(tile_entity, false);
     auto tile_neighbours = tile_map.get_neighbours_of(x, y);
     for (NeighbourTile neighbour_tile : tile_neighbours) {
-        components::fields::MapPosition neighbour_position = _core->registry.get<components::fields::MapPosition>(neighbour_tile.entity);
-        if (get_between(components::fields::MapPosition{x, y}, neighbour_position) == entt::null) {
+        components::tiles::MapPosition neighbour_position = _core->registry.get<components::tiles::MapPosition>(neighbour_tile.entity);
+        if (get_between(components::tiles::MapPosition{x, y}, neighbour_position) == entt::null) {
             entt::entity wall_entity = _core->registry.create();
-            _core->registry.emplace_or_replace<components::fields::Wall>(wall_entity, wall_type, components::fields::MapPosition{x, y}, neighbour_position);
-            _core->registry.emplace_or_replace<components::fields::Walkability>(wall_entity, false);
+            _core->registry.emplace_or_replace<components::tiles::Wall>(wall_entity, wall_type, components::tiles::MapPosition{x, y}, neighbour_position);
+            _core->registry.emplace_or_replace<components::tiles::Walkability>(wall_entity, false);
             _walls.emplace_back(WallEntity{wall_entity});
         }
     }
@@ -64,12 +64,12 @@ void WallMap::from_json(const TileMap &tile_map, const nlohmann::json &json) {
     using namespace level_schema;
     for (const auto &wall: json[names[types::walls]]) {
         WallType wall_type = assets::name_to_wall_type[wall[names[types::wall]]];
-        components::fields::MapPosition field1_pos = {wall[names[types::between]][0], wall[names[types::between]][1]};
-        components::fields::MapPosition field2_pos = {wall[names[types::between]][2], wall[names[types::between]][3]};
+        components::tiles::MapPosition field1_pos = {wall[names[types::between]][0], wall[names[types::between]][1]};
+        components::tiles::MapPosition field2_pos = {wall[names[types::between]][2], wall[names[types::between]][3]};
         if (get_between(field1_pos, field2_pos) == entt::null) {
             entt::entity wall_entity = _core->registry.create();
-            _core->registry.emplace_or_replace<components::fields::Wall>(wall_entity, wall_type, field1_pos, field2_pos);
-            _core->registry.emplace_or_replace<components::fields::Walkability>(wall_entity, false);
+            _core->registry.emplace_or_replace<components::tiles::Wall>(wall_entity, wall_type, field1_pos, field2_pos);
+            _core->registry.emplace_or_replace<components::tiles::Walkability>(wall_entity, false);
             _walls.emplace_back(WallEntity{wall_entity});
         }
     }
@@ -78,7 +78,7 @@ void WallMap::to_json(nlohmann::json &json) {
     using namespace level_schema;
     json[names[types::walls]] = nlohmann::json::array();
     for (const auto &wall: _walls) {
-        auto &wall_component = _core->registry.get<components::fields::Wall>(wall.entity);
+        auto &wall_component = _core->registry.get<components::tiles::Wall>(wall.entity);
         // clang-format off
         json[names[types::walls]].push_back({
             {names[types::wall], assets::wall_type_to_name[wall_component.type]},

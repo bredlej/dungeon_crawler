@@ -29,12 +29,12 @@ namespace components {
             uint8_t a;
         };
     }
-    namespace fields {
+    namespace tiles {
         struct MapPosition {
             int32_t x;
             int32_t y;
         };
-        struct Field {
+        struct TileId {
             int id;
         };
         struct Floor {
@@ -47,6 +47,11 @@ namespace components {
             WallType type;
             MapPosition field1;
             MapPosition field2;
+        };
+        struct Door {
+            DoorType typeClosed;
+            DoorType typeOpened;
+            DoorStateType state;
         };
         struct Visibility {
             bool is_visible;

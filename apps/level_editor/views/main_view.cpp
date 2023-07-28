@@ -14,7 +14,7 @@ void MainView::render() noexcept {
     _file_operations.render();
     _level_list.render();
     _edit_mode.render();
-    _blueprint.render();
+    _blueprint.render_and_update();
     _entity_details.render();
 
     ImGui::End();

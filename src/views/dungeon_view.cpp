@@ -17,7 +17,7 @@ void DungeonView::_render_pov() noexcept {
     if (assets::Assets *assets = _core->get_assets()) {
         for (size_t i = 0; i < _player_fov_tile.field.size(); i++) {
             if (_core->registry.valid(_player_fov_tile.field[i])) {
-                const auto floor = _core->registry.try_get<components::fields::Floor>(_player_fov_tile.field[i]);
+                const auto floor = _core->registry.try_get<components::tiles::Floor>(_player_fov_tile.field[i]);
                 if (floor) {
                     const auto tint = _core->registry.try_get<components::values::Tint>(_player_fov_tile.field[i]);
                     if (tint) {
@@ -36,7 +36,7 @@ void DungeonView::_render_pov() noexcept {
         }
         for (const POVWall i: draw_order_walls) {
             if (_core->registry.valid(_player_fov_wall.field[static_cast<const size_t>(i)])) {
-                if (const components::fields::Wall *wall = _core->registry.try_get<components::fields::Wall>(_player_fov_wall.field[static_cast<const size_t>(i)])) {
+                if (const components::tiles::Wall *wall = _core->registry.try_get<components::tiles::Wall>(_player_fov_wall.field[static_cast<const size_t>(i)])) {
                     const auto tint = _core->registry.try_get<components::values::Tint>(_player_fov_wall.field[static_cast<const size_t>(i)]);
                     if (tint) {
                         DrawTexture(assets->_textures._tiles[static_cast<POVWall>(i)][wall->type].get(), 0, 0, Color{tint->r, tint->g, tint->b, tint->a});
@@ -54,7 +54,7 @@ void DungeonView::_render_pov() noexcept {
     EndTextureMode();
 }
 
-static inline void minimap_draw_player_frame(const Texture2D &texture, const Rectangle &frame, components::fields::MapPosition &position, ModXY offset) {
+static inline void minimap_draw_player_frame(const Texture2D &texture, const Rectangle &frame, components::tiles::MapPosition &position, ModXY offset) {
     DrawTextureRec(texture, frame, Vector2{static_cast<float>(position.x * MINIMAP_GRID_SIZE + offset.x), static_cast<float>(position.y * MINIMAP_GRID_SIZE + offset.y)}, WHITE);
 }
 
@@ -66,8 +66,8 @@ void DungeonView::_render_minimap() noexcept {
     ModXY offset {10,10};
     for (auto tile: _level.tile_map._tiles) {
         if (_core->registry.valid(tile.entity)) {
-            components::fields::MapPosition position = _core->registry.get<components::fields::MapPosition>(tile.entity);
-            auto *tile_in_fov = _core->registry.try_get<components::fields::InFovOfEntity>(tile.entity);
+            components::tiles::MapPosition position = _core->registry.get<components::tiles::MapPosition>(tile.entity);
+            auto *tile_in_fov = _core->registry.try_get<components::tiles::InFovOfEntity>(tile.entity);
             if (tile_in_fov) {
                 DrawRectangle(position.x * MINIMAP_GRID_SIZE + offset.x, position.y * MINIMAP_GRID_SIZE +offset.y, MINIMAP_GRID_SIZE, MINIMAP_GRID_SIZE, FOV_COLOR);
             }
@@ -76,9 +76,9 @@ void DungeonView::_render_minimap() noexcept {
             }
         }
     }
-    auto player_view = _core->registry.view<components::general::Player, components::general::Direction, components::fields::MapPosition>();
+    auto player_view = _core->registry.view<components::general::Player, components::general::Direction, components::tiles::MapPosition>();
     Texture2D player_texture = _core->get_assets()->_textures._gui[assets::dungeon_view::GUI::MiniMap::Player].get();
-    player_view.each([&](const entt::entity entity, const components::general::Player player, components::general::Direction direction, components::fields::MapPosition position) {
+    player_view.each([&](const entt::entity entity, const components::general::Player player, components::general::Direction direction, components::tiles::MapPosition position) {
         switch (direction.direction) {
             case WorldDirection::NORTH: minimap_draw_player_frame(player_texture, {0,0,5,5}, position, offset); break;
             case WorldDirection::EAST: minimap_draw_player_frame(player_texture, {5,0,5,5}, position, offset); break;
@@ -87,9 +87,9 @@ void DungeonView::_render_minimap() noexcept {
         }
     });
     for (WallEntity wall: _level.wall_map._walls) {
-        components::fields::Wall wall_component = _core->registry.get<components::fields::Wall>(wall.entity);
-        components::fields::MapPosition field1_position = wall_component.field1;
-        components::fields::MapPosition field2_position = wall_component.field2;
+        components::tiles::Wall wall_component = _core->registry.get<components::tiles::Wall>(wall.entity);
+        components::tiles::MapPosition field1_position = wall_component.field1;
+        components::tiles::MapPosition field2_position = wall_component.field2;
         if (field1_position.x == field2_position.x) {
             DrawLine(field1_position.x * MINIMAP_GRID_SIZE + offset.x, std::max(field1_position.y, field2_position.y) * MINIMAP_GRID_SIZE + offset.y, field1_position.x * MINIMAP_GRID_SIZE + offset.x + MINIMAP_GRID_SIZE, std::max(field1_position.y, field2_position.y) * 5 + offset.y, WALL_COLOR);
         }
@@ -170,8 +170,8 @@ void DungeonView::update() noexcept {
 }
 
 template<size_t AMOUNT_WALLS_IN_FOV>
-static void fill_player_fov_walls(std::array<entt::entity, AMOUNT_WALLS_IN_FOV> &player_fov_walls, const components::fields::MapPosition player_position, const WallMap &wall_map, const TileMap &tile_map, const WorldDirection direction) {
-    using namespace components::fields;
+static void fill_player_fov_walls(std::array<entt::entity, AMOUNT_WALLS_IN_FOV> &player_fov_walls, const components::tiles::MapPosition player_position, const WallMap &wall_map, const TileMap &tile_map, const WorldDirection direction) {
+    using namespace components::tiles;
     ModXY mod = (direction == WorldDirection::NORTH || direction == WorldDirection::EAST) ? ModXY{1, 1} : ModXY{-1, -1};
     // 01 - 05
     player_fov_walls[(size_t) assets::dungeon_view::POVWall::W01_N] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x - 2 * mod.x, player_position.y - 4 * mod.y}, MapPosition{player_position.x - 2 * mod.x, player_position.y - 5 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 4 * mod.x, player_position.y - 2 * mod.y}, MapPosition{player_position.x + 5 * mod.x, player_position.y - 2 * mod.y});
@@ -214,7 +214,7 @@ static void fill_player_fov_walls(std::array<entt::entity, AMOUNT_WALLS_IN_FOV> 
 }
 
 template <size_t SIZE>
-static void fill_player_fov_tiles(std::array<entt::entity, SIZE> &player_fov_tiles, const components::fields::MapPosition player_position, const TileMap &tile_map, const WorldDirection direction) {
+static void fill_player_fov_tiles(std::array<entt::entity, SIZE> &player_fov_tiles, const components::tiles::MapPosition player_position, const TileMap &tile_map, const WorldDirection direction) {
     ModXY mod = (direction == WorldDirection::NORTH || direction == WorldDirection::EAST) ? ModXY{1, 1} : ModXY{-1, -1};
     
     player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F01] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x - 2 * mod.x, player_position.y - 4 * mod.y) : tile_map.get_at(player_position.x + 4 * mod.x, player_position.y - 2 * mod.y);
@@ -307,11 +307,11 @@ static inline void set_walls_tint(entt::registry &registry, const std::array<ent
 }
 
 void DungeonView::_calculate_fov() noexcept {
-    _core->registry.clear<components::fields::InFovOfEntity>();
-    auto player_view = _core->registry.view<components::general::Player, components::general::Direction, components::fields::MapPosition>();
+    _core->registry.clear<components::tiles::InFovOfEntity>();
+    auto player_view = _core->registry.view<components::general::Player, components::general::Direction, components::tiles::MapPosition>();
 
     for (auto entity: player_view) {
-        auto player_position = player_view.get<components::fields::MapPosition>(entity);
+        auto player_position = player_view.get<components::tiles::MapPosition>(entity);
         auto player_direction = player_view.get<components::general::Direction>(entity);
 
         fill_player_fov_tiles(_player_fov_tile.field, player_position, _level.tile_map, player_direction.direction);
@@ -323,7 +323,7 @@ void DungeonView::_calculate_fov() noexcept {
 
         for (entt::entity fov_tile: _player_fov_tile.field) {
             if (_core->registry.valid(fov_tile)) {
-                _core->registry.emplace_or_replace<components::fields::InFovOfEntity>(fov_tile, entity);
+                _core->registry.emplace_or_replace<components::tiles::InFovOfEntity>(fov_tile, entity);
             }
         }
     }

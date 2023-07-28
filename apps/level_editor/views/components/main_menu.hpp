@@ -14,7 +14,7 @@ class MainMenu {
 public:
     explicit MainMenu() = default;
     ~MainMenu() = default;
-    static void render();
+    static void render() noexcept;
     void update();
 };
 #endif//DUNGEON_CRAWLER_MAIN_MENU_HPP

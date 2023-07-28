@@ -52,7 +52,15 @@ namespace assets {
             {"RUINS_01", WallType::RUINS_01}
     };
     static std::unordered_map<WallType, std::string> wall_type_to_name = {
-            {WallType::RUINS_01, "RUINS_01"}
+            {WallType::RUINS_01, "RUINS_01"},
+    };
+    static std::unordered_map<DoorType, std::string> door_type_to_name = {
+            {DoorType::RUINS_01_CLOSED, "RUINS_01_CLOSED"},
+            {DoorType::RUINS_01_OPEN, "RUINS_01_OPEN"},
+    };
+    static std::unordered_map<DoorStateType, std::string> door_state_type_to_name = {
+            {DoorStateType::OPEN, "Open"},
+            {DoorStateType::CLOSED, "Closed"},
     };
     static std::unordered_map<std::string, Beast> name_to_beast_type = {
             {"GoblinWarrior", Beast::GoblinWarrior}

@@ -17,8 +17,8 @@ void EntityDetails::render() {
                 if (entity_valid) {
                     if (ImGui::TreeNode((void *) (intptr_t) i, "%s", fmt::format("({}, {})", position.x, position.y).c_str())) {
                         ImGui::Spacing();
-                        if (_core->registry.any_of<components::fields::Field>(entity)) {
-                            _component_renderer.render_component<components::fields::Field>(entity);
+                        if (_core->registry.any_of<components::tiles::TileId>(entity)) {
+                            _component_renderer.render_component<components::tiles::TileId>(entity);
                         }
                         ImGui::TreePop();
                     }
