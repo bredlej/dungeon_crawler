@@ -455,11 +455,15 @@ void MapView::draw_door(const std::pair<MapPosition, MapPosition>& fields, int d
  */
 void MapView::draw_wall(const std::pair<MapPosition, MapPosition>& fields, int wall_thickness, const Color& color) const {
     const auto& [field1, field2] = fields;
-    const bool is_horizontal = (field1.x < field2.x && field1.y == field2.y) || (field1.x > field2.x && field1.y == field2.y);
-    const Rectangle draw_params = is_horizontal ? Rectangle{(field2.x * _cell_size + _offset.x) - 2, field2.y * _cell_size + _offset.y, static_cast<float>(wall_thickness), _cell_size}
-                                                : Rectangle{field2.x * _cell_size + _offset.x, (field2.y * _cell_size + _offset.y) - 2, _cell_size, static_cast<float>(wall_thickness)};
-
-    DrawRectangleLinesEx(draw_params, wall_thickness, color);
+    if (field1.x < field2.x && field1.y == field2.y) {
+        DrawLineEx({field2.x * _cell_size + _offset.x, field2.y * _cell_size + _offset.y}, {field2.x * _cell_size + _offset.x, field2.y * _cell_size + _offset.y + _cell_size}, wall_thickness, color);
+    } else if (field1.x > field2.x && field1.y == field2.y) {
+        DrawLineEx({field1.x * _cell_size + _offset.x, field1.y * _cell_size + _offset.y}, {field1.x * _cell_size + _offset.x, field1.y * _cell_size + _offset.y + _cell_size}, wall_thickness, color);
+    } else if (field1.x == field2.x && field1.y < field2.y) {
+        DrawLineEx({field1.x * _cell_size + _offset.x, field2.y * _cell_size + _offset.y}, {field1.x * _cell_size + _offset.x + _cell_size, field2.y * _cell_size + _offset.y}, wall_thickness, color);
+    } else if (field1.x == field2.x && field1.y > field2.y) {
+        DrawLineEx({field1.x * _cell_size + _offset.x, field1.y * _cell_size + _offset.y}, {field1.x * _cell_size + _offset.x + _cell_size, field1.y * _cell_size + _offset.y}, wall_thickness, color);
+    }
 }
 
 /**

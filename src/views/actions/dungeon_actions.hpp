@@ -33,6 +33,7 @@ private:
     void _initialize();
     void _on_movement(const events::dungeon::Movement &movement);
     void _on_encounter_chance_changed(events::dungeon::EncounterChanceChange);
+    void _on_open_door(const events::dungeon::OpenDoor &open_door_event);
     const TileMap *_tile_map;
     const WallMap *_wall_map;
     std::shared_ptr<Core> _core;

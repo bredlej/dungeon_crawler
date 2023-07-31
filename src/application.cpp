@@ -91,6 +91,9 @@ void Application::run() noexcept {
     _core->load_assets();
 
     initialize_player(_core);
+    auto level = Level(_core, TileMap(_core, 20, 20));
+    level.load("assets/levels/ruins/ruins0001.json");
+    dungeon_view = std::make_unique<DungeonView>(_core, std::move(level));
 
     SetTargetFPS(144);
     while (!WindowShouldClose()) {

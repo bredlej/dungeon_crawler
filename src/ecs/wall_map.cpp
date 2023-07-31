@@ -76,6 +76,9 @@ void WallMap::from_json(const TileMap &tile_map, const nlohmann::json &json) {
                 auto door_open_type = assets::name_to_door_type[wall[names[types::door]][names[types::type_opened]]];
                 auto door_state = assets::name_to_door_state_type[wall[names[types::door]][names[types::state]]];
                 _core->registry.emplace_or_replace<components::tiles::Door>(wall_entity, door_closed_type, door_open_type, door_state);
+                if (door_state == DoorStateType::OPEN) {
+                    _core->registry.emplace_or_replace<components::tiles::Walkability>(wall_entity, true);
+                }
             }
         }
     }

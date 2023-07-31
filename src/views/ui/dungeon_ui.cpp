@@ -38,7 +38,6 @@ void DungeonUI::_render_movement_buttons() {
     if (ImGui::Begin("Movement", &_bottom_window_visible, window_flags)) {
         if (ImGui::Button("LT", button_sz)) {
             _core->dispatcher.enqueue(events::dungeon::TurnLeft {});
-            _core->game_log.message("Turn left.\n");
         };
         ImGui::SameLine();
         if (ImGui::Button("UP", button_sz)) {

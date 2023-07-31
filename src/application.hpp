@@ -34,7 +34,6 @@ enum class ViewMode {
 class Application {
 public:
     explicit Application() noexcept : _view_mode{ViewMode::Dungeon}, _core{std::make_shared<Core>()} {
-        dungeon_view = std::make_unique<DungeonView>(_core, Level(_core, TileMap(_core, 20, 20)));
         main_menu_view = std::make_unique<MainMenu>(_core);
     };
     Application(const Application &) noexcept = delete;
