@@ -7,7 +7,7 @@ void initialize_player(const std::shared_ptr<Core>& core) {
     const entt::entity player_entity = core->registry.create();
     core->registry.emplace<components::general::Player>(player_entity, true);
     core->registry.emplace<components::general::Direction>(player_entity, WorldDirection::EAST);
-    core->registry.emplace<components::fields::MapPosition>(player_entity, 1, 1);
+    core->registry.emplace<components::tiles::MapPosition>(player_entity, 1, 1);
 }
 
 static inline void setup_imgui_colors() {
@@ -91,6 +91,9 @@ void Application::run() noexcept {
     _core->load_assets();
 
     initialize_player(_core);
+    auto level = Level(_core, TileMap(_core, 20, 20));
+    level.load("assets/levels/ruins/ruins0001.json");
+    dungeon_view = std::make_unique<DungeonView>(_core, std::move(level));
 
     SetTargetFPS(144);
     while (!WindowShouldClose()) {

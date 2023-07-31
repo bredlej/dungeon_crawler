@@ -17,6 +17,12 @@ enum class CeilingType {
 enum class WallType {
     RUINS_01
 };
+enum class DoorType {
+    RUINS_01_CLOSED, RUINS_01_OPEN
+};
+enum class DoorStateType {
+    CLOSED, OPEN
+};
 enum class WorldDirection {
     NORTH, EAST, WEST, SOUTH
 };

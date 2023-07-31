@@ -4,60 +4,164 @@
 
 #include <views/dungeon_view.hpp>
 
+/**
+ * \fn void DungeonView::_initialize() noexcept
+ * \brief Initializes the DungeonView object.
+ *
+ * This function initializes the DungeonView object by setting the encounter chance to 0.00f.
+ *
+ * \note This function is noexcept.
+ */
 void DungeonView::_initialize() noexcept{
     _core->registry.ctx().emplace<components::values::EncounterChance>(0.00f);
 }
+/**
+ * @brief Draw a floor tile with a specified type and tint.
+ *
+ * This function draws a floor tile onto the screen with a specified type and tint color.
+ * The floor tile is obtained from the assets by index and floor type, and it is drawn at
+ * position (0, 0) on the screen with the specified tint color.
+ *
+ * @param assets A pointer to the assets instance.
+ * @param index The index of the floor tile.
+ * @param floor_type The type of the floor tile.
+ * @param tint The tint color to be applied to the floor tile.
+ */
 static inline void draw_floor(assets::Assets *assets, const size_t index, const FloorType floor_type, const Color tint) {
     DrawTexture(assets->_textures._tiles[static_cast<POVFloor>(index)][floor_type].get(), 0, 0, tint);
 }
 
-void DungeonView::_render_pov() noexcept {
+/**
+ * @brief Renders the point of view (POV) of the dungeon view.
+ *
+ * This function uses the render texture `_render_texture_pov` to render the POV of the dungeon view. It clears the background with the `BACKGROUND_COLOR` defined constant. It then calls several private rendering functions to render different elements of the POV, such as tiles, walls, and encounters, using the assets obtained from the core.
+ *
+ * @note This function assumes that the `_core` member variable of the DungeonView class is set and valid.
+ * @note This function must be called within a rendering context.
+ * @note This function does not return any value.
+ *
+ * @sa _render_tiles, _render_walls, _render_encounter
+ */
+void DungeonView::_render_pov() noexcept
+{
     BeginTextureMode(_render_texture_pov);
     ClearBackground(BACKGROUND_COLOR);
-    if (assets::Assets *assets = _core->get_assets()) {
-        for (size_t i = 0; i < _player_fov_tile.field.size(); i++) {
-            if (_core->registry.valid(_player_fov_tile.field[i])) {
-                const auto floor = _core->registry.try_get<components::fields::Floor>(_player_fov_tile.field[i]);
-                if (floor) {
-                    const auto tint = _core->registry.try_get<components::values::Tint>(_player_fov_tile.field[i]);
-                    if (tint) {
-                        draw_floor(assets, i, floor->type, Color{tint->r, tint->g, tint->b, tint->a});
-                    }
-                    else {
-                        draw_floor(assets, i, floor->type, WHITE);
-                    }
-                }
-                else {
-                    draw_floor(assets, i, FloorType::RUINS_01, RED);
-                }
-            } else {
-                draw_floor(assets, i, FloorType::RUINS_01, RED);
-            }
-        }
-        for (const POVWall i: draw_order_walls) {
-            if (_core->registry.valid(_player_fov_wall.field[static_cast<const size_t>(i)])) {
-                if (const components::fields::Wall *wall = _core->registry.try_get<components::fields::Wall>(_player_fov_wall.field[static_cast<const size_t>(i)])) {
-                    const auto tint = _core->registry.try_get<components::values::Tint>(_player_fov_wall.field[static_cast<const size_t>(i)]);
-                    if (tint) {
-                        DrawTexture(assets->_textures._tiles[static_cast<POVWall>(i)][wall->type].get(), 0, 0, Color{tint->r, tint->g, tint->b, tint->a});
-                    }
-                    else {
-                        DrawTexture(assets->_textures._tiles[static_cast<POVWall>(i)][wall->type].get(), 0, 0, WHITE);
-                    }
-                }
-            }
-        }
-        if (_core->registry.ctx().contains<components::values::Encounter>()) {
-            DrawTexture(assets->_textures._beasts[Beast::GoblinWarrior].get(), 140, 55, WHITE);
-        }
+
+    if (assets::Assets *assets = _core->get_assets())
+    {
+        _render_tiles(assets);
+        _render_walls(assets);
+        _render_encounter(assets);
     }
+
     EndTextureMode();
 }
 
-static inline void minimap_draw_player_frame(const Texture2D &texture, const Rectangle &frame, components::fields::MapPosition &position, ModXY offset) {
+/**
+ * Renders the tiles of the dungeon view.
+ *
+ * This function iterates over the tiles in the player's field of view and renders them using the given assets. Each tile
+ * can have a floor type and a fill color. If a tile entity is valid in the core registry, its floor type and fill color
+ * will be used for rendering. Otherwise, the default floor type and fill color will be used.
+ *
+ * @param assets A pointer to the assets used for rendering.
+ */
+void DungeonView::_render_tiles(assets::Assets *assets) noexcept
+{
+    for (size_t i = 0; i < _player_fov_tile.field.size(); i++)
+    {
+        const auto floor_entity = _player_fov_tile.field[i];
+        const Color defaultColor = _core->registry.valid(floor_entity) ? WHITE : RED;
+        const FloorType defaultFloorType = FloorType::RUINS_01;
+        Color fillColor = defaultColor;
+        FloorType floorType = defaultFloorType;
+
+        if (_core->registry.valid(floor_entity)){
+            if(const auto floor = _core->registry.try_get<components::tiles::Floor>(_player_fov_tile.field[i]))
+            {
+                const auto tint = _core->registry.try_get<components::values::Tint>(_player_fov_tile.field[i]);
+                fillColor = tint ? Color{tint->r, tint->g, tint->b, tint->a} : defaultColor;
+                floorType = floor->type;
+            }
+            else {
+                fillColor = RED;
+            }
+        }
+
+        draw_floor(assets, i, floorType, fillColor);
+    }
+}
+
+/**
+ * Renders the walls in the dungeon view.
+ *
+ * @param assets A pointer to the assets object containing wall textures.
+ */
+void DungeonView::_render_walls(assets::Assets *assets) noexcept
+{
+    for (const POVWall i: draw_order_walls)
+    {
+        const auto index = static_cast<const size_t>(i);
+        if (_core->registry.valid(_player_fov_wall.field[index]))
+        {
+            const auto wall = _core->registry.try_get<components::tiles::Wall>(_player_fov_wall.field[index]);
+            const auto tint = _core->registry.try_get<components::values::Tint>(_player_fov_wall.field[index]);
+            const auto door = _core->registry.try_get<components::tiles::Door>(_player_fov_wall.field[index]);
+
+            const Color fillColor = tint ? Color{tint->r, tint->g, tint->b, tint->a} : WHITE;
+            if (door)
+            {
+                const auto& doorTexture = assets->_textures._tiles[i][door->state == DoorStateType::CLOSED ? door->type_closed : door->type_opened];
+                DrawTexture(doorTexture.get(), 0, 0, fillColor);
+            }
+            else if (wall)
+            {
+                const auto& wallTexture = assets->_textures._tiles[i][wall->type];
+                DrawTexture(wallTexture.get(), 0, 0, fillColor);
+            }
+        }
+    }
+}
+
+/**
+ * @brief Renders the encounter on the dungeon view.
+ *
+ * This function checks if there is an encounter in the current context of the dungeon view.
+ * If an encounter exists, it draws the texture of a Goblin Warrior at the specified position.
+ *
+ * @param assets A pointer to the assets object that provides the required textures.
+ */
+void DungeonView::_render_encounter(assets::Assets *assets) noexcept
+{
+    if (_core->registry.ctx().contains<components::values::Encounter>())
+    {
+        DrawTexture(assets->_textures._beasts[Beast::GoblinWarrior].get(), 140, 55, WHITE);
+    }
+}
+
+/**
+ * @brief Draws the player frame on the minimap.
+ *
+ * This function takes a texture and a frame rectangle as input and draws the player frame on the minimap
+ * based on the specified position and offset values.
+ *
+ * @param texture The texture to be used for drawing the player frame.
+ * @param frame The rectangle defining the frame to be drawn from the texture.
+ * @param position The position of the player on the minimap grid.
+ * @param offset The offset to be applied to the player frame position on the minimap.
+ * @return void
+ */
+static inline void minimap_draw_player_frame(const Texture2D &texture, const Rectangle &frame, components::tiles::MapPosition &position, ModXY offset) {
     DrawTextureRec(texture, frame, Vector2{static_cast<float>(position.x * MINIMAP_GRID_SIZE + offset.x), static_cast<float>(position.y * MINIMAP_GRID_SIZE + offset.y)}, WHITE);
 }
 
+/**
+ * @brief Render the minimap on the render texture.
+ *
+ * This function renders the minimap on the render texture _render_texture_gui.
+ * It draws the background image of the minimap, highlights the tiles that are in the field of view,
+ * draws the player character on the minimap, and draws walls on the minimap.
+ */
 void DungeonView::_render_minimap() noexcept {
 
     BeginTextureMode(_render_texture_gui);
@@ -66,8 +170,8 @@ void DungeonView::_render_minimap() noexcept {
     ModXY offset {10,10};
     for (auto tile: _level.tile_map._tiles) {
         if (_core->registry.valid(tile.entity)) {
-            components::fields::MapPosition position = _core->registry.get<components::fields::MapPosition>(tile.entity);
-            auto *tile_in_fov = _core->registry.try_get<components::fields::InFovOfEntity>(tile.entity);
+            components::tiles::MapPosition position = _core->registry.get<components::tiles::MapPosition>(tile.entity);
+            auto *tile_in_fov = _core->registry.try_get<components::tiles::InFovOfEntity>(tile.entity);
             if (tile_in_fov) {
                 DrawRectangle(position.x * MINIMAP_GRID_SIZE + offset.x, position.y * MINIMAP_GRID_SIZE +offset.y, MINIMAP_GRID_SIZE, MINIMAP_GRID_SIZE, FOV_COLOR);
             }
@@ -76,9 +180,9 @@ void DungeonView::_render_minimap() noexcept {
             }
         }
     }
-    auto player_view = _core->registry.view<components::general::Player, components::general::Direction, components::fields::MapPosition>();
+    auto player_view = _core->registry.view<components::general::Player, components::general::Direction, components::tiles::MapPosition>();
     Texture2D player_texture = _core->get_assets()->_textures._gui[assets::dungeon_view::GUI::MiniMap::Player].get();
-    player_view.each([&](const entt::entity entity, const components::general::Player player, components::general::Direction direction, components::fields::MapPosition position) {
+    player_view.each([&](const entt::entity entity, const components::general::Player player, components::general::Direction direction, components::tiles::MapPosition position) {
         switch (direction.direction) {
             case WorldDirection::NORTH: minimap_draw_player_frame(player_texture, {0,0,5,5}, position, offset); break;
             case WorldDirection::EAST: minimap_draw_player_frame(player_texture, {5,0,5,5}, position, offset); break;
@@ -87,19 +191,46 @@ void DungeonView::_render_minimap() noexcept {
         }
     });
     for (WallEntity wall: _level.wall_map._walls) {
-        components::fields::Wall wall_component = _core->registry.get<components::fields::Wall>(wall.entity);
-        components::fields::MapPosition field1_position = wall_component.field1;
-        components::fields::MapPosition field2_position = wall_component.field2;
+        components::tiles::Wall wall_component = _core->registry.get<components::tiles::Wall>(wall.entity);
+        components::tiles::MapPosition field1_position = wall_component.field1;
+        components::tiles::MapPosition field2_position = wall_component.field2;
         if (field1_position.x == field2_position.x) {
-            DrawLine(field1_position.x * MINIMAP_GRID_SIZE + offset.x, std::max(field1_position.y, field2_position.y) * MINIMAP_GRID_SIZE + offset.y, field1_position.x * MINIMAP_GRID_SIZE + offset.x + MINIMAP_GRID_SIZE, std::max(field1_position.y, field2_position.y) * 5 + offset.y, WALL_COLOR);
+            if (auto *door = _core->registry.try_get<components::tiles::Door>(wall.entity)){
+                switch (door->state) {
+                    case DoorStateType::OPEN: DrawLine(field1_position.x * MINIMAP_GRID_SIZE + offset.x, std::max(field1_position.y, field2_position.y) * MINIMAP_GRID_SIZE + offset.y, field1_position.x * MINIMAP_GRID_SIZE + offset.x + MINIMAP_GRID_SIZE, std::max(field1_position.y, field2_position.y) * 5 + offset.y, palette::green); break;
+                    case DoorStateType::CLOSED: DrawLine(field1_position.x * MINIMAP_GRID_SIZE + offset.x, std::max(field1_position.y, field2_position.y) * MINIMAP_GRID_SIZE + offset.y, field1_position.x * MINIMAP_GRID_SIZE + offset.x + MINIMAP_GRID_SIZE, std::max(field1_position.y, field2_position.y) * 5 + offset.y, palette::red); break;
+                }
+            }
+            else {
+                DrawLine(field1_position.x * MINIMAP_GRID_SIZE + offset.x, std::max(field1_position.y, field2_position.y) * MINIMAP_GRID_SIZE + offset.y, field1_position.x * MINIMAP_GRID_SIZE + offset.x + MINIMAP_GRID_SIZE, std::max(field1_position.y, field2_position.y) * 5 + offset.y, WALL_COLOR);
+            }
         }
         else if (field1_position.y == field2_position.y) {
-            DrawLine(std::max(field1_position.x, field2_position.x) * MINIMAP_GRID_SIZE + offset.x, field1_position.y * MINIMAP_GRID_SIZE + offset.y, std::max(field1_position.x, field2_position.x) * MINIMAP_GRID_SIZE + offset.x, field1_position.y * MINIMAP_GRID_SIZE + offset.y + MINIMAP_GRID_SIZE, WALL_COLOR);
+            if (auto *door = _core->registry.try_get<components::tiles::Door>(wall.entity)){
+                switch (door->state) {
+                    case DoorStateType::OPEN: DrawLine(std::max(field1_position.x, field2_position.x) * MINIMAP_GRID_SIZE + offset.x, field1_position.y * MINIMAP_GRID_SIZE + offset.y, std::max(field1_position.x, field2_position.x) * MINIMAP_GRID_SIZE + offset.x, field1_position.y * MINIMAP_GRID_SIZE + offset.y + MINIMAP_GRID_SIZE, palette::green); break;
+                    case DoorStateType::CLOSED: DrawLine(std::max(field1_position.x, field2_position.x) * MINIMAP_GRID_SIZE + offset.x, field1_position.y * MINIMAP_GRID_SIZE + offset.y, std::max(field1_position.x, field2_position.x) * MINIMAP_GRID_SIZE + offset.x, field1_position.y * MINIMAP_GRID_SIZE + offset.y + MINIMAP_GRID_SIZE, palette::red); break;
+                }
+            }
+            else {
+                DrawLine(std::max(field1_position.x, field2_position.x) * MINIMAP_GRID_SIZE + offset.x, field1_position.y * MINIMAP_GRID_SIZE + offset.y, std::max(field1_position.x, field2_position.x) * MINIMAP_GRID_SIZE + offset.x, field1_position.y * MINIMAP_GRID_SIZE + offset.y + MINIMAP_GRID_SIZE, WALL_COLOR);
+            }
         }
     }
     EndTextureMode();
 }
 
+/**
+ * \fn static inline void render_texture(const Texture &texture, const Rectangle &dimension)
+ * \brief Renders a texture on the screen.
+ *
+ * This function renders a texture on the screen using the given dimension and color.
+ *
+ * \param texture The texture to render.
+ * \param dimension The dimension of the rendered texture on the screen.
+ *
+ * \return None.
+ */
 static inline void render_texture(const Texture &texture, const Rectangle &dimension) {
     DrawTexturePro(texture,
                    Rectangle{0.0f, 0.0f, (float) texture.width, (float) -texture.height},
@@ -109,6 +240,23 @@ static inline void render_texture(const Texture &texture, const Rectangle &dimen
                    WHITE);
 }
 
+/**
+ * @brief Renders the dungeon view.
+ *
+ * This function is responsible for rendering the dungeon view by performing the following steps:
+ *
+ * 1. Begins drawing on the screen.
+ * 2. Clears the background with the color BLACK.
+ * 3. Renders the point-of-view (POV) of the dungeon.
+ * 4. Renders the minimap of the dungeon.
+ * 5. Defines the dimensions for the POV and GUI textures based on the window size.
+ * 6. Renders the POV texture on the screen, using the appropriate dimensions based on whether the window is in fullscreen mode or not.
+ * 7. Renders the GUI texture on the screen, using the appropriate dimensions based on whether the window is in fullscreen mode or not.
+ * 8. Renders the user interface.
+ * 9. Ends the drawing process.
+ *
+ * This function does not throw any exceptions.
+ */
 void DungeonView::render() noexcept {
     BeginDrawing();
     ClearBackground(BLACK);
@@ -122,6 +270,17 @@ void DungeonView::render() noexcept {
     EndDrawing();
 }
 
+/**
+ * @brief Updates the DungeonView.
+ *
+ * This function is called to update the DungeonView. It handles various user input and dispatches relevant events
+ * to the core dispatcher. It also performs certain operations like calculating Field of View (FOV) and loading/saving
+ * levels.
+ *
+ * @note This function is meant to be called continuously in a game loop to update the view.
+ *
+ * @note This function is noexcept, meaning it does not throw any exceptions.
+ */
 void DungeonView::update() noexcept {
     static bool after_first_update = false;
     static bool recalculate_fov = true;
@@ -148,7 +307,7 @@ void DungeonView::update() noexcept {
     if (IsKeyPressed(KEY_L)) {
         try {
             _clear();
-            _level.load("assets/Levels/Ruins/ruins_02_saved.json");
+            _level.load("assets/Levels/Ruins/ruins0001.json");
             _calculate_fov();
         }
         catch (std::exception &e) {
@@ -169,9 +328,12 @@ void DungeonView::update() noexcept {
     after_first_update = true;
 }
 
+/**
+*
+*/
 template<size_t AMOUNT_WALLS_IN_FOV>
-static void fill_player_fov_walls(std::array<entt::entity, AMOUNT_WALLS_IN_FOV> &player_fov_walls, const components::fields::MapPosition player_position, const WallMap &wall_map, const TileMap &tile_map, const WorldDirection direction) {
-    using namespace components::fields;
+static void fill_player_fov_walls(std::array<entt::entity, AMOUNT_WALLS_IN_FOV> &player_fov_walls, const components::tiles::MapPosition player_position, const WallMap &wall_map, const TileMap &tile_map, const WorldDirection direction) {
+    using namespace components::tiles;
     ModXY mod = (direction == WorldDirection::NORTH || direction == WorldDirection::EAST) ? ModXY{1, 1} : ModXY{-1, -1};
     // 01 - 05
     player_fov_walls[(size_t) assets::dungeon_view::POVWall::W01_N] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x - 2 * mod.x, player_position.y - 4 * mod.y}, MapPosition{player_position.x - 2 * mod.x, player_position.y - 5 * mod.y}) : wall_map.get_between(MapPosition{player_position.x + 4 * mod.x, player_position.y - 2 * mod.y}, MapPosition{player_position.x + 5 * mod.x, player_position.y - 2 * mod.y});
@@ -213,8 +375,20 @@ static void fill_player_fov_walls(std::array<entt::entity, AMOUNT_WALLS_IN_FOV> 
     player_fov_walls[(size_t) assets::dungeon_view::POVWall::W19_W] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? wall_map.get_between(MapPosition{player_position.x, player_position.y}, MapPosition{player_position.x + 1 * mod.x, player_position.y}) : wall_map.get_between(MapPosition{player_position.x, player_position.y}, MapPosition{player_position.x, player_position.y + 1 * mod.y});
 }
 
+/**
+ * @brief Fills the player's field of view tiles based on their current position and direction.
+ *
+ * This function fills the given array `player_fov_tiles` with the tiles that are in the player's field of view.
+ * The player's field of view is determined by their current position, direction, and the tile map.
+ *
+ * @tparam SIZE The size of the `player_fov_tiles` array.
+ * @param player_fov_tiles Reference to the array to store the player's field of view tiles.
+ * @param player_position The current position of the player.
+ * @param tile_map The tile map containing the dungeon layout.
+ * @param direction The current direction the player is facing.
+ */
 template <size_t SIZE>
-static void fill_player_fov_tiles(std::array<entt::entity, SIZE> &player_fov_tiles, const components::fields::MapPosition player_position, const TileMap &tile_map, const WorldDirection direction) {
+static void fill_player_fov_tiles(std::array<entt::entity, SIZE> &player_fov_tiles, const components::tiles::MapPosition player_position, const TileMap &tile_map, const WorldDirection direction) {
     ModXY mod = (direction == WorldDirection::NORTH || direction == WorldDirection::EAST) ? ModXY{1, 1} : ModXY{-1, -1};
     
     player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F01] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x - 2 * mod.x, player_position.y - 4 * mod.y) : tile_map.get_at(player_position.x + 4 * mod.x, player_position.y - 2 * mod.y);
@@ -238,6 +412,26 @@ static void fill_player_fov_tiles(std::array<entt::entity, SIZE> &player_fov_til
     player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F19] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x + 1 * mod.x, player_position.y) : tile_map.get_at(player_position.x, player_position.y + 1 * mod.y);
 }
 
+/**
+ *
+ * @brief Set the tint on an entity.
+ *
+ * This function sets the tint for a given entity in the specified registry. The tint is represented by the
+ * color channels (r, g, b, a), where r represents the red channel, g represents the green channel,
+ * b represents the blue channel, and a represents the alpha channel.
+ *
+ * @param registry The registry in which the entity exists.
+ * @param entity The entity for which to set the tint.
+ * @param r The red channel value for the tint.
+ * @param g The green channel value for the tint.
+ * @param b The blue channel value for the tint.
+ * @param a The alpha channel value for the tint.
+ *
+ * @return void
+ *
+ * @sa entt::registry, components::values::Tint
+ *
+ */
 static inline void set_tint_on_entity(entt::registry &registry, const entt::entity entity, uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
     if (registry.valid(entity)) {
         registry.emplace_or_replace<components::values::Tint>(entity, r, g, b, a);
@@ -267,6 +461,24 @@ static inline void set_tiles_tint(entt::registry &registry, const std::array<ent
     set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F16], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
 }
 
+/**
+ * @brief Sets the tint on a set of walls in the dungeon view.
+ *
+ * This function sets the tint on a set of walls in the dungeon view based on the player's field of view (FOV).
+ * The function takes an entt::registry object and an array of entity IDs representing the walls in the player's FOV.
+ *
+ * @tparam SIZE The number of walls in the player's FOV.
+ * @param registry The entt::registry object containing the wall entities.
+ * @param player_fov_walls The array of entity IDs representing the walls in the player's FOV.
+ *
+ * @note This function assumes that `set_tint_on_entity` is a valid function that takes the following parameters in the order specified:
+ *       - entt::registry& - The registry object.
+ *       - entt::entity - The entity ID.
+ *       - float - The red tint value.
+ *       - float - The green tint value.
+ *       - float - The blue tint value.
+ *       - float - The alpha tint value.
+ */
 template <size_t SIZE>
 static inline void set_walls_tint(entt::registry &registry, const std::array<entt::entity, SIZE> &player_fov_walls) {
     set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W01_E], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
@@ -306,12 +518,40 @@ static inline void set_walls_tint(entt::registry &registry, const std::array<ent
 
 }
 
+/**
+ * This function calculates the Field of View (FOV) for the player entity.
+ * It clears the "InFovOfEntity" component from all entities in the registry.
+ * It then retrieves the player entity's position and direction from the registry.
+ * The FOV tiles and walls are filled based on the player's position, direction, tile map, and wall map.
+ * The tint of the tiles and walls is set accordingly using the registry and FOV fields.
+ * Finally, the "InFovOfEntity" component is added or replaced for each FOV tile.
+ *
+ * @note This function assumes that the player entity and relevant components exist in the registry.
+ * @note The "tile_map" and "wall_map" fields must be set before calling this function.
+ * @note The "field" fields of "_player_fov_tile" and "_player_fov_wall" must be initialized as empty containers.
+ * @note The Registry class must have a clear() method that clears components by type.
+ * @note The Registry class must have methods to retrieve and modify components from entities.
+ * @note The set_tiles_tint() and set_walls_tint() functions must be defined and implemented.
+ * @note The "valid()" and "emplace_or_replace()" methods must be available for the registry entities.
+ *
+ * @see components::tiles::InFovOfEntity
+ * @see components::general::Player
+ * @see components::general::Direction
+ * @see components::tiles::MapPosition
+ * @see components::values::Tint
+ * @see fill_player_fov_tiles()
+ * @see fill_player_fov_walls()
+ * @see set_tiles_tint()
+ * @see set_walls_tint()
+ *
+ * @return None
+ */
 void DungeonView::_calculate_fov() noexcept {
-    _core->registry.clear<components::fields::InFovOfEntity>();
-    auto player_view = _core->registry.view<components::general::Player, components::general::Direction, components::fields::MapPosition>();
+    _core->registry.clear<components::tiles::InFovOfEntity>();
+    auto player_view = _core->registry.view<components::general::Player, components::general::Direction, components::tiles::MapPosition>();
 
     for (auto entity: player_view) {
-        auto player_position = player_view.get<components::fields::MapPosition>(entity);
+        auto player_position = player_view.get<components::tiles::MapPosition>(entity);
         auto player_direction = player_view.get<components::general::Direction>(entity);
 
         fill_player_fov_tiles(_player_fov_tile.field, player_position, _level.tile_map, player_direction.direction);
@@ -323,12 +563,22 @@ void DungeonView::_calculate_fov() noexcept {
 
         for (entt::entity fov_tile: _player_fov_tile.field) {
             if (_core->registry.valid(fov_tile)) {
-                _core->registry.emplace_or_replace<components::fields::InFovOfEntity>(fov_tile, entity);
+                _core->registry.emplace_or_replace<components::tiles::InFovOfEntity>(fov_tile, entity);
             }
         }
     }
 }
 
+/**
+ * @brief Clears the dungeon state.
+ *
+ * This function clears the dungeon state by resetting the level, player FOV tile,
+ * and player FOV wall fields to entt::null.
+ *
+ * @note This function is noexcept, meaning it does not throw any exceptions.
+ *
+ * @see DungeonView::_level, DungeonView::_player_fov_tile, DungeonView::_player_fov_wall
+ */
 void DungeonView::_clear() noexcept {
     _level.clear();
     _player_fov_tile.field.fill(entt::null);

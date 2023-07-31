@@ -3,37 +3,13 @@
 //
 #include <component_renderer.hpp>
 
-template<>
-void ComponentRenderer::render_component<components::fields::Floor>(entt::entity entity) {
-    components::fields::Floor *floor = _core->registry.try_get<components::fields::Floor>(entity);
-    if (floor) {
-        const auto label = fmt::format("Floor type##{}", static_cast<int32_t>(entity));
-        const auto hidden_label = fmt::format("##floor_type{}", static_cast<int32_t>(entity));
-        if (ImGui::TreeNode(label.c_str())) {
-            if (ImGui::BeginCombo(hidden_label.c_str(), assets::floor_type_to_name[floor->type].c_str())) {
-                for (auto &floor_type: assets::floor_type_to_name) {
-                    bool is_selected = (floor_type.first == floor->type);
-                    if (ImGui::Selectable(floor_type.second.c_str(), is_selected)) {
-                        floor->type = floor_type.first;
-                    }
-                    if (is_selected) {
-                        ImGui::SetItemDefaultFocus();
-                    }
-                }
-                ImGui::EndCombo();
-            }
-            ImGui::TreePop();
-        }
-    }
-}
-
-template<>
-void ComponentRenderer::render_component<components::fields::Floor>(components::fields::Floor &component) {
-    if (ImGui::BeginCombo("Floor type", assets::floor_type_to_name[component.type].c_str())) {
-        for (auto &floor_type: assets::floor_type_to_name) {
-            bool is_selected = (floor_type.first == component.type);
-            if (ImGui::Selectable(floor_type.second.c_str(), is_selected)) {
-                component.type = floor_type.first;
+template<typename MAP, typename TYPE>
+static void render_combo(const char* label, MAP map, TYPE &type) {
+    if (ImGui::BeginCombo(label, map[type].c_str())) {
+        for (auto &map_type: map) {
+            bool is_selected = (map_type.first == type);
+            if (ImGui::Selectable(map_type.second.c_str(), is_selected)) {
+                type = map_type.first;
             }
             if (is_selected) {
                 ImGui::SetItemDefaultFocus();
@@ -41,6 +17,24 @@ void ComponentRenderer::render_component<components::fields::Floor>(components::
         }
         ImGui::EndCombo();
     }
+}
+
+template<>
+void ComponentRenderer::render_component<components::tiles::Floor>(entt::entity entity) {
+    components::tiles::Floor *floor = _core->registry.try_get<components::tiles::Floor>(entity);
+    if (floor) {
+        const auto label = fmt::format("Floor type##{}", static_cast<int32_t>(entity));
+        const auto hidden_label = fmt::format("##floor_type{}", static_cast<int32_t>(entity));
+        if (ImGui::TreeNode(label.c_str())) {
+            render_combo(hidden_label.c_str(), assets::floor_type_to_name, floor->type);
+            ImGui::TreePop();
+        }
+    }
+}
+
+template <>
+void ComponentRenderer::render_component<components::tiles::Wall>(components::tiles::Wall &component) {
+    render_combo("Wall type", assets::wall_type_to_name, component.type);
 }
 
 template<>
@@ -63,8 +57,8 @@ void ComponentRenderer::render_component<components::values::EncounterChance>(co
 }
 
 template<>
-void ComponentRenderer::render_component<components::fields::Walkability>(entt::entity entity) {
-    components::fields::Walkability *walkability = _core->registry.try_get<components::fields::Walkability>(entity);
+void ComponentRenderer::render_component<components::tiles::Walkability>(entt::entity entity) {
+    components::tiles::Walkability *walkability = _core->registry.try_get<components::tiles::Walkability>(entity);
     if (walkability) {
         const auto label = fmt::format("Walkable##{}", static_cast<int32_t>(entity));
         const auto hidden_label = fmt::format("##walkable{}", static_cast<int32_t>(entity));
@@ -77,16 +71,44 @@ void ComponentRenderer::render_component<components::fields::Walkability>(entt::
 }
 
 template<>
-void ComponentRenderer::render_component<components::fields::Walkability>(components::fields::Walkability &component) {
+void ComponentRenderer::render_component<components::tiles::Walkability>(components::tiles::Walkability &component) {
     ImGui::Checkbox("Walkable", &component.walkable);
 }
 
 template<>
-void ComponentRenderer::render_component<components::fields::Field>(entt::entity entity) {
-    components::fields::Field *field = _core->registry.try_get<components::fields::Field>(entity);
+void ComponentRenderer::render_component<components::tiles::TileId>(entt::entity entity) {
+    components::tiles::TileId *field = _core->registry.try_get<components::tiles::TileId>(entity);
     if (field) {
-        render_component<components::fields::Floor>(entity);
-        render_component<components::fields::Walkability>(entity);
+        render_component<components::tiles::Floor>(entity);
+        render_component<components::tiles::Walkability>(entity);
         render_component<components::values::EncounterChance>(entity);
+    }
+}
+
+template<>
+void ComponentRenderer::render_component<components::tiles::Floor>(components::tiles::Floor &component) {
+    render_combo("Floor type", assets::floor_type_to_name, component.type);
+}
+
+template <>
+void ComponentRenderer::render_component<components::tiles::Door>(components::tiles::Door& component) {
+    render_combo("Closed", assets::door_type_to_name, component.type_closed);
+    render_combo("Opened", assets::door_type_to_name, component.type_opened);
+    render_combo("State", assets::door_state_type_to_name, component.state);
+}
+
+template<>
+void ComponentRenderer::render_component<components::tiles::Door>(entt::entity entity) {
+    components::tiles::Door *door = _core->registry.try_get<components::tiles::Door>(entity);
+    if (door) {
+        render_component<components::tiles::Door>(*(door));
+    }
+}
+
+template<>
+void ComponentRenderer::render_component<components::tiles::Wall>(entt::entity entity) {
+    components::tiles::Wall *wall = _core->registry.try_get<components::tiles::Wall>(entity);
+    if (wall) {
+        render_component<components::tiles::Wall>(*(wall));
     }
 }

@@ -22,7 +22,7 @@ public:
     WallMap(WallMap &&other) noexcept = default;
     WallMap &operator=(const WallMap &other) noexcept = delete;
     std::vector<WallEntity> _walls;
-    [[nodiscard]] entt::entity get_between(components::fields::MapPosition field1, components::fields::MapPosition field2) const noexcept;
+    [[nodiscard]] entt::entity get_between(components::tiles::MapPosition field1, components::tiles::MapPosition field2) const noexcept;
     void initialize(const TileMap&);
     void place_wall_at(const TileMap &tile_map, int32_t x, int32_t y, WallType wall_type);
     void from_json(const TileMap &tile_map, const nlohmann::json &json);

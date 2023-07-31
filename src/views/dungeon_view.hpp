@@ -61,6 +61,9 @@ public:
 private:
     void _initialize() noexcept;
     void _render_pov() noexcept;
+    void _render_tiles(assets::Assets *assets) noexcept;
+    void _render_walls(assets::Assets *assets) noexcept;
+    void _render_encounter(assets::Assets *assets) noexcept;
     void _render_minimap() noexcept;
     void _calculate_fov() noexcept;
     void _clear() noexcept;

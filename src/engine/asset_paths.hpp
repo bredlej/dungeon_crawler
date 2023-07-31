@@ -99,6 +99,78 @@ namespace assets {
                         constexpr const char *w19_w = "assets/Tiles/Stratum/Ruins/Wall/W19_W.png";
                     }// namespace wall_01
                 }    // namespace wall
+                namespace door_01 {
+                    constexpr const char *d01c_e = "assets/Tiles/Stratum/Ruins/Door/D01C_E.png";
+                    constexpr const char *d01c_n = "assets/Tiles/Stratum/Ruins/Door/D01C_N.png";
+                    constexpr const char *d01c_s = "assets/Tiles/Stratum/Ruins/Door/D01C_S.png";
+                    constexpr const char *d01o_e = "assets/Tiles/Stratum/Ruins/Door/D01O_E.png";
+                    constexpr const char *d01o_n = "assets/Tiles/Stratum/Ruins/Door/D01O_N.png";
+                    constexpr const char *d01o_s = "assets/Tiles/Stratum/Ruins/Door/D01O_S.png";
+                    constexpr const char *d02c_e = "assets/Tiles/Stratum/Ruins/Door/D02C_E.png";
+                    constexpr const char *d02c_n = "assets/Tiles/Stratum/Ruins/Door/D02C_N.png";
+                    constexpr const char *d02c_s = "assets/Tiles/Stratum/Ruins/Door/D02C_S.png";
+                    constexpr const char *d02o_e = "assets/Tiles/Stratum/Ruins/Door/D02O_E.png";
+                    constexpr const char *d02o_n = "assets/Tiles/Stratum/Ruins/Door/D02O_N.png";
+                    constexpr const char *d02o_s = "assets/Tiles/Stratum/Ruins/Door/D02O_S.png";
+                    constexpr const char *d03c_n = "assets/Tiles/Stratum/Ruins/Door/D03C_N.png";
+                    constexpr const char *d03c_s = "assets/Tiles/Stratum/Ruins/Door/D03C_S.png";
+                    constexpr const char *d03o_n = "assets/Tiles/Stratum/Ruins/Door/D03O_N.png";
+                    constexpr const char *d03o_s = "assets/Tiles/Stratum/Ruins/Door/D03O_S.png";
+                    constexpr const char *d04c_w = "assets/Tiles/Stratum/Ruins/Door/D04C_W.png";
+                    constexpr const char *d04c_s = "assets/Tiles/Stratum/Ruins/Door/D04C_S.png";
+                    constexpr const char *d04c_n = "assets/Tiles/Stratum/Ruins/Door/D04C_N.png";
+                    constexpr const char *d04o_w = "assets/Tiles/Stratum/Ruins/Door/D04O_W.png";
+                    constexpr const char *d04o_s = "assets/Tiles/Stratum/Ruins/Door/D04O_S.png";
+                    constexpr const char *d04o_n = "assets/Tiles/Stratum/Ruins/Door/D04O_N.png";
+                    constexpr const char *d05c_w = "assets/Tiles/Stratum/Ruins/Door/D05C_W.png";
+                    constexpr const char *d05c_s = "assets/Tiles/Stratum/Ruins/Door/D05C_S.png";
+                    constexpr const char *d05c_n = "assets/Tiles/Stratum/Ruins/Door/D05C_N.png";
+                    constexpr const char *d05o_w = "assets/Tiles/Stratum/Ruins/Door/D05O_W.png";
+                    constexpr const char *d05o_s = "assets/Tiles/Stratum/Ruins/Door/D05O_S.png";
+                    constexpr const char *d05o_n = "assets/Tiles/Stratum/Ruins/Door/D05O_N.png";
+
+                    constexpr const char *d06c_e = "assets/Tiles/Stratum/Ruins/Door/D06C_E.png";
+                    constexpr const char *d06o_e = "assets/Tiles/Stratum/Ruins/Door/D06O_E.png";
+                    constexpr const char *d07c_e = "assets/Tiles/Stratum/Ruins/Door/D07C_E.png";
+                    constexpr const char *d07c_s = "assets/Tiles/Stratum/Ruins/Door/D07C_S.png";
+                    constexpr const char *d07o_e = "assets/Tiles/Stratum/Ruins/Door/D07O_E.png";
+                    constexpr const char *d07o_s = "assets/Tiles/Stratum/Ruins/Door/D07O_S.png";
+                    constexpr const char *d08c_s = "assets/Tiles/Stratum/Ruins/Door/D08C_S.png";
+                    constexpr const char *d08o_s = "assets/Tiles/Stratum/Ruins/Door/D08O_S.png";
+                    constexpr const char *d09c_w = "assets/Tiles/Stratum/Ruins/Door/D09C_W.png";
+                    constexpr const char *d09c_s = "assets/Tiles/Stratum/Ruins/Door/D09C_S.png";
+                    constexpr const char *d09o_w = "assets/Tiles/Stratum/Ruins/Door/D09O_W.png";
+                    constexpr const char *d09o_s = "assets/Tiles/Stratum/Ruins/Door/D09O_S.png";
+                    constexpr const char *d10c_w = "assets/Tiles/Stratum/Ruins/Door/D10C_W.png";
+                    constexpr const char *d10o_w = "assets/Tiles/Stratum/Ruins/Door/D10O_W.png";
+
+                    constexpr const char *d11c_e = "assets/Tiles/Stratum/Ruins/Door/D11C_E.png";
+                    constexpr const char *d11c_s = "assets/Tiles/Stratum/Ruins/Door/D11C_S.png";
+                    constexpr const char *d11o_e = "assets/Tiles/Stratum/Ruins/Door/D11O_E.png";
+                    constexpr const char *d11o_s = "assets/Tiles/Stratum/Ruins/Door/D11O_S.png";
+                    constexpr const char *d12c_s = "assets/Tiles/Stratum/Ruins/Door/D12C_S.png";
+                    constexpr const char *d12o_s = "assets/Tiles/Stratum/Ruins/Door/D12O_S.png";
+                    constexpr const char *d13c_w = "assets/Tiles/Stratum/Ruins/Door/D13C_W.png";
+                    constexpr const char *d13c_s = "assets/Tiles/Stratum/Ruins/Door/D13C_S.png";
+                    constexpr const char *d13o_w = "assets/Tiles/Stratum/Ruins/Door/D13O_W.png";
+                    constexpr const char *d13o_s = "assets/Tiles/Stratum/Ruins/Door/D13O_S.png";
+
+                    constexpr const char *d14c_e = "assets/Tiles/Stratum/Ruins/Door/D14C_E.png";
+                    constexpr const char *d14c_s = "assets/Tiles/Stratum/Ruins/Door/D14C_S.png";
+                    constexpr const char *d14o_e = "assets/Tiles/Stratum/Ruins/Door/D14O_E.png";
+                    constexpr const char *d14o_s = "assets/Tiles/Stratum/Ruins/Door/D14O_S.png";
+                    constexpr const char *d15c_s = "assets/Tiles/Stratum/Ruins/Door/D15C_S.png";
+                    constexpr const char *d15o_s = "assets/Tiles/Stratum/Ruins/Door/D15O_S.png";
+                    constexpr const char *d16c_w = "assets/Tiles/Stratum/Ruins/Door/D16C_W.png";
+                    constexpr const char *d16c_s = "assets/Tiles/Stratum/Ruins/Door/D16C_S.png";
+                    constexpr const char *d16o_w = "assets/Tiles/Stratum/Ruins/Door/D16O_W.png";
+                    constexpr const char *d16o_s = "assets/Tiles/Stratum/Ruins/Door/D16O_S.png";
+
+                    constexpr const char *d17c_e = "assets/Tiles/Stratum/Ruins/Door/D17C_E.png";
+                    constexpr const char *d17o_e = "assets/Tiles/Stratum/Ruins/Door/D17O_E.png";
+                    constexpr const char *d19c_w = "assets/Tiles/Stratum/Ruins/Door/D19C_W.png";
+                    constexpr const char *d19o_w = "assets/Tiles/Stratum/Ruins/Door/D19O_W.png";
+                }
             }        // namespace ruins
         }            // namespace stratum
     }                // namespace tiles

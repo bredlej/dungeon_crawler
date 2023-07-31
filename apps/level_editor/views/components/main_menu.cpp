@@ -2,7 +2,7 @@
 // Created by Patryk Szczypień on 05/04/2023.
 //
 #include <main_menu.hpp>
-void MainMenu::render() {
+void MainMenu::render() noexcept {
     if (ImGui::BeginMainMenuBar()){
         if (ImGui::BeginMenu("File")){
             if (ImGui::MenuItem("New", "Ctrl+N")){}

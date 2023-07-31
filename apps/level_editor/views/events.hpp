@@ -36,43 +36,47 @@ namespace editor {
         std::string message;
     };
     struct MapPositionSelected {
-        std::vector<components::fields::MapPosition> positions;
+        std::vector<components::tiles::MapPosition> positions;
     };
     struct MapPositionHovered {
-        components::fields::MapPosition position;
+        components::tiles::MapPosition position;
     };
     struct RectangleSelected {
         Rectangle selection;
     };
     struct ClearSelection {};
 
-    struct PaintTile {
+    struct TilePlacement {
         int32_t x;
         int32_t y;
     };
 
     template<typename Component>
-    struct PlaceComponent{
+    struct PlaceTileComponent {
         Component component;
-        std::vector<components::fields::MapPosition> *positions;
+        std::vector<components::tiles::MapPosition> *positions;
+    };
+    template<typename Component>
+    struct PlaceWallComponent {
+        Component component;
+        std::vector<std::pair<components::tiles::MapPosition, components::tiles::MapPosition>> *positions;
     };
 
     struct EntitiesSelected {
-        std::vector<std::pair<components::fields::MapPosition, entt::entity>> entities;
+        std::vector<std::pair<components::tiles::MapPosition, entt::entity>> entities;
     };
 
     struct WallSelected {
-        components::fields::MapPosition position1;
-        components::fields::MapPosition position2;
+        std::vector<std::pair<components::tiles::MapPosition, components::tiles::MapPosition>> positions;
     };
     struct WallRemoved {
-        components::fields::MapPosition position1;
-        components::fields::MapPosition position2;
+        components::tiles::MapPosition position1;
+        components::tiles::MapPosition position2;
     };
     struct WallAdded {
         WallType type;
-        components::fields::MapPosition position1;
-        components::fields::MapPosition position2;
+        components::tiles::MapPosition position1;
+        components::tiles::MapPosition position2;
     };
     struct RemoveAllSelectedEntities {};
     struct ToggleShowDemo {};

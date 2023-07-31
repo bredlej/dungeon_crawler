@@ -1,0 +1,3891 @@
+{
+    "size_x": 20,
+    "size_y": 20,
+    "player_spawn": {"x": 1, "y": 1, "direction": "SOUTH"},
+    "tiles": [
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": false
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_02",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ],
+        [
+            {
+                "floor": "RUINS_01",
+                "walkable": true
+            }
+        ]
+    ],
+    "walls": [
+        {
+            "between": [
+                8,
+                0,
+                7,
+                0
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                9,
+                0,
+                9,
+                1
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                10,
+                0,
+                10,
+                1
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                11,
+                0,
+                11,
+                1
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                12,
+                0,
+                12,
+                1
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                0,
+                14,
+                0
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                1,
+                7,
+                1
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                1,
+                9,
+                1
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                1,
+                12,
+                1
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                1,
+                14,
+                1
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                2,
+                2,
+                1,
+                2
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                2,
+                2,
+                2,
+                1
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                3,
+                2,
+                3,
+                1
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                3,
+                2,
+                3,
+                3
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                4,
+                2,
+                4,
+                1
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                4,
+                2,
+                4,
+                3
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                5,
+                2,
+                5,
+                1
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                5,
+                2,
+                5,
+                3
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                6,
+                2,
+                6,
+                1
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                6,
+                2,
+                6,
+                3
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                7,
+                2,
+                7,
+                1
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                7,
+                2,
+                7,
+                3
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                2,
+                9,
+                2
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                2,
+                8,
+                3
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                2,
+                12,
+                2
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                2,
+                14,
+                2
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                2,
+                3,
+                1,
+                3
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                2,
+                3,
+                3,
+                3
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                11,
+                3,
+                10,
+                3
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                11,
+                3,
+                11,
+                2
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                12,
+                3,
+                12,
+                2
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                2,
+                4,
+                1,
+                4
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                2,
+                4,
+                3,
+                4
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                4,
+                4,
+                3,
+                4
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                4,
+                4,
+                4,
+                3
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                5,
+                4,
+                5,
+                3
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                5,
+                4,
+                5,
+                5
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                6,
+                4,
+                6,
+                3
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                6,
+                4,
+                6,
+                5
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                7,
+                4,
+                7,
+                3
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                7,
+                4,
+                7,
+                5
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                4,
+                9,
+                4
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                4,
+                8,
+                3
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                10,
+                4,
+                9,
+                4
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                10,
+                4,
+                10,
+                3
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                12,
+                4,
+                13,
+                4
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                2,
+                5,
+                1,
+                5
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                2,
+                5,
+                3,
+                5
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                4,
+                5,
+                3,
+                5
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                4,
+                5,
+                5,
+                5
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                5,
+                7,
+                5
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                5,
+                9,
+                5
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                10,
+                5,
+                9,
+                5
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                12,
+                5,
+                13,
+                5
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                2,
+                6,
+                1,
+                6
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                2,
+                6,
+                2,
+                7
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                3,
+                6,
+                3,
+                5
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                3,
+                6,
+                3,
+                7
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                4,
+                6,
+                5,
+                6
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                4,
+                6,
+                4,
+                7
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                6,
+                7,
+                6
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                6,
+                9,
+                6
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                10,
+                6,
+                9,
+                6
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                12,
+                6,
+                13,
+                6
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                6,
+                7,
+                5,
+                7
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                6,
+                7,
+                6,
+                6
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                7,
+                7,
+                7
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                7,
+                9,
+                7
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                10,
+                7,
+                9,
+                7
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                10,
+                7,
+                10,
+                8
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                11,
+                7,
+                11,
+                8
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                12,
+                7,
+                13,
+                7
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                12,
+                7,
+                12,
+                8
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                6,
+                8,
+                5,
+                8
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                6,
+                8,
+                6,
+                9
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                7,
+                8,
+                7,
+                7
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                7,
+                8,
+                7,
+                9
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                8,
+                9,
+                8
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                8,
+                8,
+                9
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                11,
+                9,
+                10,
+                9
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                11,
+                9,
+                11,
+                8
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                12,
+                9,
+                13,
+                9
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                12,
+                9,
+                12,
+                8
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                12,
+                9,
+                12,
+                10
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                6,
+                10,
+                5,
+                10
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                6,
+                10,
+                6,
+                9
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                7,
+                10,
+                7,
+                9
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                7,
+                10,
+                7,
+                11
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                10,
+                9,
+                10
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                10,
+                8,
+                9
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                10,
+                10,
+                9,
+                10
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                10,
+                10,
+                10,
+                9
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                11,
+                10,
+                12,
+                10
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                11,
+                10,
+                11,
+                11
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                6,
+                11,
+                5,
+                11
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                6,
+                11,
+                7,
+                11
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                6,
+                11,
+                6,
+                12
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                11,
+                7,
+                11
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                11,
+                9,
+                11
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                10,
+                11,
+                9,
+                11
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                10,
+                11,
+                11,
+                11
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                12,
+                7,
+                12
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                12,
+                9,
+                12
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                10,
+                12,
+                9,
+                12
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                10,
+                12,
+                10,
+                13
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                11,
+                12,
+                11,
+                11
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                11,
+                12,
+                11,
+                13
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                12,
+                12,
+                12,
+                11
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                12,
+                12,
+                12,
+                13
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                12,
+                14,
+                12
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                12,
+                13,
+                11
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                13,
+                7,
+                13
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                13,
+                9,
+                13
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                13,
+                12,
+                13
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                13,
+                14,
+                13
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                14,
+                7,
+                14
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                14,
+                8,
+                15
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                9,
+                14,
+                9,
+                13
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                10,
+                14,
+                10,
+                13
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                10,
+                14,
+                10,
+                15
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                11,
+                14,
+                12,
+                14
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                11,
+                14,
+                11,
+                13
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                11,
+                14,
+                11,
+                15
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                14,
+                12,
+                14
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                14,
+                14,
+                14
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                9,
+                15,
+                8,
+                15
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                9,
+                15,
+                10,
+                15
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                15,
+                12,
+                15
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                15,
+                14,
+                15
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                9,
+                16,
+                8,
+                16
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                9,
+                16,
+                10,
+                16
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                11,
+                16,
+                10,
+                16
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                11,
+                16,
+                11,
+                15
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                12,
+                16,
+                12,
+                15
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                12,
+                16,
+                12,
+                17
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                16,
+                14,
+                16
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                16,
+                13,
+                17
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                9,
+                17,
+                8,
+                17
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                9,
+                17,
+                9,
+                18
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                10,
+                17,
+                10,
+                16
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                10,
+                17,
+                10,
+                18
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                11,
+                17,
+                12,
+                17
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                11,
+                17,
+                11,
+                18
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                3,
+                13,
+                4
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                3,
+                14,
+                3
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                6,
+                7,
+                7,
+                7
+            ],
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                5,
+                11,
+                5,
+                12
+            ],
+            "door": {
+                "state": "Closed",
+                "type_closed": "RUINS_01_CLOSED",
+                "type_opened": "RUINS_01_OPEN"
+            },
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                9,
+                9,
+                9
+            ],
+            "door": {
+                "state": "Closed",
+                "type_closed": "RUINS_01_CLOSED",
+                "type_opened": "RUINS_01_OPEN"
+            },
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                10,
+                8,
+                11
+            ],
+            "door": {
+                "state": "Open",
+                "type_closed": "RUINS_01_CLOSED",
+                "type_opened": "RUINS_01_OPEN"
+            },
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                7,
+                14,
+                7,
+                15
+            ],
+            "door": {
+                "state": "Open",
+                "type_closed": "RUINS_01_CLOSED",
+                "type_opened": "RUINS_01_OPEN"
+            },
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                14,
+                9,
+                14
+            ],
+            "door": {
+                "state": "Open",
+                "type_closed": "RUINS_01_CLOSED",
+                "type_opened": "RUINS_01_OPEN"
+            },
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                17,
+                8,
+                18
+            ],
+            "door": {
+                "state": "Closed",
+                "type_closed": "RUINS_01_CLOSED",
+                "type_opened": "RUINS_01_OPEN"
+            },
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                11,
+                16,
+                12,
+                16
+            ],
+            "door": {
+                "state": "Closed",
+                "type_closed": "RUINS_01_CLOSED",
+                "type_opened": "RUINS_01_OPEN"
+            },
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                14,
+                13,
+                15
+            ],
+            "door": {
+                "state": "Open",
+                "type_closed": "RUINS_01_CLOSED",
+                "type_opened": "RUINS_01_OPEN"
+            },
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                13,
+                11,
+                14,
+                11
+            ],
+            "door": {
+                "state": "Open",
+                "type_closed": "RUINS_01_CLOSED",
+                "type_opened": "RUINS_01_OPEN"
+            },
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                10,
+                12,
+                11,
+                12
+            ],
+            "door": {
+                "state": "Open",
+                "type_closed": "RUINS_01_CLOSED",
+                "type_opened": "RUINS_01_OPEN"
+            },
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                12,
+                8,
+                13,
+                8
+            ],
+            "door": {
+                "state": "Open",
+                "type_closed": "RUINS_01_CLOSED",
+                "type_opened": "RUINS_01_OPEN"
+            },
+            "wall": "RUINS_01"
+        },
+        {
+            "between": [
+                8,
+                4,
+                8,
+                5
+            ],
+            "door": {
+                "state": "Open",
+                "type_closed": "RUINS_01_CLOSED",
+                "type_opened": "RUINS_01_OPEN"
+            },
+            "wall": "RUINS_01"
+        }
+    ]
+}

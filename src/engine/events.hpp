@@ -16,6 +16,10 @@ namespace events::dungeon {
     struct MoveBack {};
     struct MoveLeft {};
     struct MoveRight {};
+    struct OpenDoor {
+        entt::entity who;
+        entt::entity door;
+    };
     struct Movement {
         entt::entity who;
         entt::entity from;
