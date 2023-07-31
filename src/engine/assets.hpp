@@ -58,9 +58,17 @@ namespace assets {
             {DoorType::RUINS_01_CLOSED, "RUINS_01_CLOSED"},
             {DoorType::RUINS_01_OPEN, "RUINS_01_OPEN"},
     };
+    static std::unordered_map<std::string, DoorType> name_to_door_type = {
+            {"RUINS_01_CLOSED", DoorType::RUINS_01_CLOSED},
+            {"RUINS_01_OPEN", DoorType::RUINS_01_OPEN},
+    };
     static std::unordered_map<DoorStateType, std::string> door_state_type_to_name = {
             {DoorStateType::OPEN, "Open"},
             {DoorStateType::CLOSED, "Closed"},
+    };
+    static std::unordered_map<std::string, DoorStateType> name_to_door_state_type = {
+            {"Open", DoorStateType::OPEN},
+            {"Closed", DoorStateType::CLOSED},
     };
     static std::unordered_map<std::string, Beast> name_to_beast_type = {
             {"GoblinWarrior", Beast::GoblinWarrior}

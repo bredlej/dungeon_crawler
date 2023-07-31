@@ -71,6 +71,12 @@ void WallMap::from_json(const TileMap &tile_map, const nlohmann::json &json) {
             _core->registry.emplace_or_replace<components::tiles::Wall>(wall_entity, wall_type, field1_pos, field2_pos);
             _core->registry.emplace_or_replace<components::tiles::Walkability>(wall_entity, false);
             _walls.emplace_back(WallEntity{wall_entity});
+            if (wall.contains(names[types::door])) {
+                auto door_closed_type = assets::name_to_door_type[wall[names[types::door]][names[types::type_closed]]];
+                auto door_open_type = assets::name_to_door_type[wall[names[types::door]][names[types::type_opened]]];
+                auto door_state = assets::name_to_door_state_type[wall[names[types::door]][names[types::state]]];
+                _core->registry.emplace_or_replace<components::tiles::Door>(wall_entity, door_closed_type, door_open_type, door_state);
+            }
         }
     }
 }
@@ -79,6 +85,7 @@ void WallMap::to_json(nlohmann::json &json) {
     json[names[types::walls]] = nlohmann::json::array();
     for (const auto &wall: _walls) {
         auto &wall_component = _core->registry.get<components::tiles::Wall>(wall.entity);
+        auto door_component = _core->registry.try_get<components::tiles::Door>(wall.entity);
         // clang-format off
         json[names[types::walls]].push_back({
             {names[types::wall], assets::wall_type_to_name[wall_component.type]},
@@ -87,8 +94,17 @@ void WallMap::to_json(nlohmann::json &json) {
                 wall_component.field1.y,
                 wall_component.field2.x,
                 wall_component.field2.y
-            }}
+            }},
         });
+        if (door_component) {
+            json[names[types::walls]].back().push_back({
+                names[types::door], {
+                    {names[types::type_opened], assets::door_type_to_name[door_component->type_opened]},
+                    {names[types::type_closed], assets::door_type_to_name[door_component->type_closed]},
+                    {names[types::state], assets::door_state_type_to_name[door_component->state]},
+                }
+            });
+        }
         // clang-format on
     }
 }

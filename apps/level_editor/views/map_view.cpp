@@ -455,12 +455,11 @@ void MapView::draw_door(const std::pair<MapPosition, MapPosition>& fields, int d
  */
 void MapView::draw_wall(const std::pair<MapPosition, MapPosition>& fields, int wall_thickness, const Color& color) const {
     const auto& [field1, field2] = fields;
-    const auto start_position = Vector2{field1.x * _cell_size + _offset.x, field1.y * _cell_size + _offset.y};
-    const auto end_position = field1.y == field2.y
-                                      ? Vector2{field2.x * _cell_size + _offset.x, field2.y * _cell_size + _offset.y + _cell_size}
-                                      : Vector2{field2.x * _cell_size + _offset.x + _cell_size, field2.y * _cell_size + _offset.y};
+    const bool is_horizontal = (field1.x < field2.x && field1.y == field2.y) || (field1.x > field2.x && field1.y == field2.y);
+    const Rectangle draw_params = is_horizontal ? Rectangle{(field2.x * _cell_size + _offset.x) - 2, field2.y * _cell_size + _offset.y, static_cast<float>(wall_thickness), _cell_size}
+                                                : Rectangle{field2.x * _cell_size + _offset.x, (field2.y * _cell_size + _offset.y) - 2, _cell_size, static_cast<float>(wall_thickness)};
 
-    DrawLineEx(start_position, end_position, wall_thickness, color);
+    DrawRectangleLinesEx(draw_params, wall_thickness, color);
 }
 
 /**
@@ -726,7 +725,7 @@ void MapView::_place_door(editor::PlaceWallComponent<Door> event) {
             _level.wall_map._walls.emplace_back(WallEntity{wall});
             _core->registry.emplace<components::tiles::Wall>(wall, WallType::RUINS_01, wall_selected.first, wall_selected.second);
         }
-        _core->registry.emplace_or_replace<components::tiles::Door>(wall, event.component.typeClosed, event.component.typeOpened, event.component.state);
+        _core->registry.emplace_or_replace<components::tiles::Door>(wall, event.component.type_closed, event.component.type_opened, event.component.state);
     }
 }
 

@@ -49,8 +49,8 @@ namespace components {
             MapPosition field2;
         };
         struct Door {
-            DoorType typeClosed;
-            DoorType typeOpened;
+            DoorType type_closed;
+            DoorType type_opened;
             DoorStateType state;
         };
         struct Visibility {

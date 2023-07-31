@@ -92,8 +92,8 @@ void ComponentRenderer::render_component<components::tiles::Floor>(components::t
 
 template <>
 void ComponentRenderer::render_component<components::tiles::Door>(components::tiles::Door& component) {
-    render_combo("Closed", assets::door_type_to_name, component.typeClosed);
-    render_combo("Opened", assets::door_type_to_name, component.typeOpened);
+    render_combo("Closed", assets::door_type_to_name, component.type_closed);
+    render_combo("Opened", assets::door_type_to_name, component.type_opened);
     render_combo("State", assets::door_state_type_to_name, component.state);
 }
 
