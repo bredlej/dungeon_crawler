@@ -134,6 +134,7 @@ Module['FS_createPath']("/assets/Tiles", "Ceiling", true, true);
 Module['FS_createPath']("/assets/Tiles", "Floor", true, true);
 Module['FS_createPath']("/assets/Tiles", "Stratum", true, true);
 Module['FS_createPath']("/assets/Tiles/Stratum", "Ruins", true, true);
+Module['FS_createPath']("/assets/Tiles/Stratum/Ruins", "Door", true, true);
 Module['FS_createPath']("/assets/Tiles/Stratum/Ruins", "Floor", true, true);
 Module['FS_createPath']("/assets/Tiles/Stratum/Ruins/Floor", "01", true, true);
 Module['FS_createPath']("/assets/Tiles/Stratum/Ruins/Floor", "02", true, true);
@@ -211,7 +212,7 @@ Module['FS_createPath']("/assets/Tiles/Walls", "17-19", true, true);
     }
 
     }
-    loadPackage({"files": [{"filename": "/assets/Bestiary/bestiary.json", "start": 0, "end": 107}, {"filename": "/assets/Bestiary/goblin_warrior.png", "start": 107, "end": 2037}, {"filename": "/assets/GUI/Minimap/background.png", "start": 2037, "end": 2293}, {"filename": "/assets/GUI/Minimap/player.png", "start": 2293, "end": 2513}, {"filename": "/assets/LevelEditor/ruins_01.png", "start": 2513, "end": 2736}, {"filename": "/assets/LevelEditor/ruins_02.png", "start": 2736, "end": 2990}, {"filename": "/assets/Levels/Ruins/ruins_01.json", "start": 2990, "end": 11514}, {"filename": "/assets/Levels/Ruins/ruins_01_saved.json", "start": 11514, "end": 97816}, {"filename": "/assets/Tiles/Ceiling/C01.png", "start": 97816, "end": 98138}, {"filename": "/assets/Tiles/Ceiling/C02.png", "start": 98138, "end": 98441}, {"filename": "/assets/Tiles/Ceiling/C03.png", "start": 98441, "end": 98745}, {"filename": "/assets/Tiles/Ceiling/C04.png", "start": 98745, "end": 99047}, {"filename": "/assets/Tiles/Ceiling/C05.png", "start": 99047, "end": 99371}, {"filename": "/assets/Tiles/Ceiling/C06.png", "start": 99371, "end": 99687}, {"filename": "/assets/Tiles/Ceiling/C07.png", "start": 99687, "end": 100017}, {"filename": "/assets/Tiles/Ceiling/C08.png", "start": 100017, "end": 100330}, {"filename": "/assets/Tiles/Ceiling/C09.png", "start": 100330, "end": 100657}, {"filename": "/assets/Tiles/Ceiling/C10.png", "start": 100657, "end": 100971}, {"filename": "/assets/Tiles/Ceiling/C11.png", "start": 100971, "end": 101350}, {"filename": "/assets/Tiles/Ceiling/C12.png", "start": 101350, "end": 101706}, {"filename": "/assets/Tiles/Ceiling/C13.png", "start": 101706, "end": 102085}, {"filename": "/assets/Tiles/Ceiling/C14.png", "start": 102085, "end": 102501}, {"filename": "/assets/Tiles/Ceiling/C15.png", "start": 102501, "end": 102941}, {"filename": "/assets/Tiles/Ceiling/C16.png", "start": 102941, "end": 103357}, {"filename": "/assets/Tiles/Ceiling/C17.png", "start": 103357, "end": 103700}, {"filename": "/assets/Tiles/Ceiling/C18.png", "start": 103700, "end": 104061}, {"filename": "/assets/Tiles/Ceiling/C19.png", "start": 104061, "end": 104414}, {"filename": "/assets/Tiles/Floor/F01.png", "start": 104414, "end": 104717}, {"filename": "/assets/Tiles/Floor/F02.png", "start": 104717, "end": 105042}, {"filename": "/assets/Tiles/Floor/F03.png", "start": 105042, "end": 105361}, {"filename": "/assets/Tiles/Floor/F04.png", "start": 105361, "end": 105684}, {"filename": "/assets/Tiles/Floor/F05.png", "start": 105684, "end": 105987}, {"filename": "/assets/Tiles/Floor/F06.png", "start": 105987, "end": 106288}, {"filename": "/assets/Tiles/Floor/F07.png", "start": 106288, "end": 106623}, {"filename": "/assets/Tiles/Floor/F08.png", "start": 106623, "end": 106971}, {"filename": "/assets/Tiles/Floor/F09.png", "start": 106971, "end": 107303}, {"filename": "/assets/Tiles/Floor/F10.png", "start": 107303, "end": 107605}, {"filename": "/assets/Tiles/Floor/F11.png", "start": 107605, "end": 107934}, {"filename": "/assets/Tiles/Floor/F12.png", "start": 107934, "end": 108330}, {"filename": "/assets/Tiles/Floor/F13.png", "start": 108330, "end": 108659}, {"filename": "/assets/Tiles/Floor/F14.png", "start": 108659, "end": 109001}, {"filename": "/assets/Tiles/Floor/F15.png", "start": 109001, "end": 109417}, {"filename": "/assets/Tiles/Floor/F16.png", "start": 109417, "end": 109759}, {"filename": "/assets/Tiles/Floor/F17.png", "start": 109759, "end": 110101}, {"filename": "/assets/Tiles/Floor/F18.png", "start": 110101, "end": 110470}, {"filename": "/assets/Tiles/Floor/F19.png", "start": 110470, "end": 110811}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/01.png", "start": 110811, "end": 111157}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/02.png", "start": 111157, "end": 111536}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/03.png", "start": 111536, "end": 111919}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/04.png", "start": 111919, "end": 112300}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/05.png", "start": 112300, "end": 112644}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/06.png", "start": 112644, "end": 112958}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/07.png", "start": 112958, "end": 113433}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/08.png", "start": 113433, "end": 113972}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/09.png", "start": 113972, "end": 114454}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/10.png", "start": 114454, "end": 114775}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/11.png", "start": 114775, "end": 115249}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/12.png", "start": 115249, "end": 115894}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/13.png", "start": 115894, "end": 116380}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/14.png", "start": 116380, "end": 116883}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/15.png", "start": 116883, "end": 117710}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/16.png", "start": 117710, "end": 118204}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/17.png", "start": 118204, "end": 118605}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/18.png", "start": 118605, "end": 121079}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/19.png", "start": 121079, "end": 121493}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/01.png", "start": 121493, "end": 121837}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/02.png", "start": 121837, "end": 122216}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/03.png", "start": 122216, "end": 122599}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/04.png", "start": 122599, "end": 122981}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/05.png", "start": 122981, "end": 123328}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/06.png", "start": 123328, "end": 123642}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/07.png", "start": 123642, "end": 124129}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/08.png", "start": 124129, "end": 124671}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/09.png", "start": 124671, "end": 125146}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/10.png", "start": 125146, "end": 125467}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/11.png", "start": 125467, "end": 125947}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/12.png", "start": 125947, "end": 126601}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/13.png", "start": 126601, "end": 127080}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/14.png", "start": 127080, "end": 127576}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/15.png", "start": 127576, "end": 128400}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/16.png", "start": 128400, "end": 128896}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/17.png", "start": 128896, "end": 129308}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/18.png", "start": 129308, "end": 131751}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/19.png", "start": 131751, "end": 132147}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W01_E.png", "start": 132147, "end": 133208}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W01_N.png", "start": 133208, "end": 133941}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W01_S.png", "start": 133941, "end": 134768}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W02_E.png", "start": 134768, "end": 135505}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W02_N.png", "start": 135505, "end": 136268}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W02_S.png", "start": 136268, "end": 137475}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W03_N.png", "start": 137475, "end": 138267}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W03_S.png", "start": 138267, "end": 139397}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W04_N.png", "start": 139397, "end": 140161}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W04_S.png", "start": 140161, "end": 141404}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W04_W.png", "start": 141404, "end": 142149}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W05_N.png", "start": 142149, "end": 142892}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W05_S.png", "start": 142892, "end": 143768}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W05_W.png", "start": 143768, "end": 144841}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W06_E.png", "start": 144841, "end": 145792}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W07_E.png", "start": 145792, "end": 147086}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W07_S.png", "start": 147086, "end": 148624}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W08_S.png", "start": 148624, "end": 150706}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W09_S.png", "start": 150706, "end": 152350}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W09_W.png", "start": 152350, "end": 153672}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W10_W.png", "start": 153672, "end": 154668}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W11_E.png", "start": 154668, "end": 156593}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W11_S.png", "start": 156593, "end": 158404}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W12_S.png", "start": 158404, "end": 161653}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W13_S.png", "start": 161653, "end": 163624}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W13_W.png", "start": 163624, "end": 165597}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W14_E.png", "start": 165597, "end": 168444}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W14_S.png", "start": 168444, "end": 170685}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W15_S.png", "start": 170685, "end": 175812}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W16_S.png", "start": 175812, "end": 178001}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W16_W.png", "start": 178001, "end": 180920}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W17_E.png", "start": 180920, "end": 183061}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W19_W.png", "start": 183061, "end": 185308}, {"filename": "/assets/Tiles/Walls/01-05/Wall01.png", "start": 185308, "end": 185715}, {"filename": "/assets/Tiles/Walls/01-05/Wall02.png", "start": 185715, "end": 186100}, {"filename": "/assets/Tiles/Walls/01-05/Wall03.png", "start": 186100, "end": 186455}, {"filename": "/assets/Tiles/Walls/01-05/Wall04.png", "start": 186455, "end": 186815}, {"filename": "/assets/Tiles/Walls/01-05/Wall05.png", "start": 186815, "end": 187200}, {"filename": "/assets/Tiles/Walls/06-10/Wall06.png", "start": 187200, "end": 187598}, {"filename": "/assets/Tiles/Walls/06-10/Wall07.png", "start": 187598, "end": 188097}, {"filename": "/assets/Tiles/Walls/06-10/Wall08.png", "start": 188097, "end": 188500}, {"filename": "/assets/Tiles/Walls/06-10/Wall09.png", "start": 188500, "end": 188964}, {"filename": "/assets/Tiles/Walls/06-10/Wall10.png", "start": 188964, "end": 189356}, {"filename": "/assets/Tiles/Walls/11-13/Wall11.png", "start": 189356, "end": 189981}, {"filename": "/assets/Tiles/Walls/11-13/Wall12.png", "start": 189981, "end": 190452}, {"filename": "/assets/Tiles/Walls/11-13/Wall13.png", "start": 190452, "end": 190980}, {"filename": "/assets/Tiles/Walls/14-16/Wall14.png", "start": 190980, "end": 191786}, {"filename": "/assets/Tiles/Walls/14-16/Wall15.png", "start": 191786, "end": 192354}, {"filename": "/assets/Tiles/Walls/14-16/Wall16.png", "start": 192354, "end": 193017}, {"filename": "/assets/Tiles/Walls/17-19/Wall17.png", "start": 193017, "end": 193732}, {"filename": "/assets/Tiles/Walls/17-19/Wall19.png", "start": 193732, "end": 194447}], "remote_package_size": 194447});
+    loadPackage({"files": [{"filename": "/assets/Bestiary/bestiary.json", "start": 0, "end": 107}, {"filename": "/assets/Bestiary/goblin_warrior.png", "start": 107, "end": 2037}, {"filename": "/assets/GUI/Minimap/background.png", "start": 2037, "end": 2293}, {"filename": "/assets/GUI/Minimap/player.png", "start": 2293, "end": 2513}, {"filename": "/assets/LevelEditor/ruins_01.png", "start": 2513, "end": 2736}, {"filename": "/assets/LevelEditor/ruins_02.png", "start": 2736, "end": 2990}, {"filename": "/assets/Levels/Ruins/ruins0001.json", "start": 2990, "end": 50080}, {"filename": "/assets/Levels/Ruins/ruins_01.json", "start": 50080, "end": 58604}, {"filename": "/assets/Levels/Ruins/ruins_01_saved.json", "start": 58604, "end": 144906}, {"filename": "/assets/Levels/Ruins/ruins_02_doors.json", "start": 144906, "end": 221389}, {"filename": "/assets/Levels/Ruins/ruins_03_doors.json", "start": 221389, "end": 295114}, {"filename": "/assets/Tiles/Ceiling/C01.png", "start": 295114, "end": 295436}, {"filename": "/assets/Tiles/Ceiling/C02.png", "start": 295436, "end": 295739}, {"filename": "/assets/Tiles/Ceiling/C03.png", "start": 295739, "end": 296043}, {"filename": "/assets/Tiles/Ceiling/C04.png", "start": 296043, "end": 296345}, {"filename": "/assets/Tiles/Ceiling/C05.png", "start": 296345, "end": 296669}, {"filename": "/assets/Tiles/Ceiling/C06.png", "start": 296669, "end": 296985}, {"filename": "/assets/Tiles/Ceiling/C07.png", "start": 296985, "end": 297315}, {"filename": "/assets/Tiles/Ceiling/C08.png", "start": 297315, "end": 297628}, {"filename": "/assets/Tiles/Ceiling/C09.png", "start": 297628, "end": 297955}, {"filename": "/assets/Tiles/Ceiling/C10.png", "start": 297955, "end": 298269}, {"filename": "/assets/Tiles/Ceiling/C11.png", "start": 298269, "end": 298648}, {"filename": "/assets/Tiles/Ceiling/C12.png", "start": 298648, "end": 299004}, {"filename": "/assets/Tiles/Ceiling/C13.png", "start": 299004, "end": 299383}, {"filename": "/assets/Tiles/Ceiling/C14.png", "start": 299383, "end": 299799}, {"filename": "/assets/Tiles/Ceiling/C15.png", "start": 299799, "end": 300239}, {"filename": "/assets/Tiles/Ceiling/C16.png", "start": 300239, "end": 300655}, {"filename": "/assets/Tiles/Ceiling/C17.png", "start": 300655, "end": 300998}, {"filename": "/assets/Tiles/Ceiling/C18.png", "start": 300998, "end": 301359}, {"filename": "/assets/Tiles/Ceiling/C19.png", "start": 301359, "end": 301712}, {"filename": "/assets/Tiles/Floor/F01.png", "start": 301712, "end": 302015}, {"filename": "/assets/Tiles/Floor/F02.png", "start": 302015, "end": 302340}, {"filename": "/assets/Tiles/Floor/F03.png", "start": 302340, "end": 302659}, {"filename": "/assets/Tiles/Floor/F04.png", "start": 302659, "end": 302982}, {"filename": "/assets/Tiles/Floor/F05.png", "start": 302982, "end": 303285}, {"filename": "/assets/Tiles/Floor/F06.png", "start": 303285, "end": 303586}, {"filename": "/assets/Tiles/Floor/F07.png", "start": 303586, "end": 303921}, {"filename": "/assets/Tiles/Floor/F08.png", "start": 303921, "end": 304269}, {"filename": "/assets/Tiles/Floor/F09.png", "start": 304269, "end": 304601}, {"filename": "/assets/Tiles/Floor/F10.png", "start": 304601, "end": 304903}, {"filename": "/assets/Tiles/Floor/F11.png", "start": 304903, "end": 305232}, {"filename": "/assets/Tiles/Floor/F12.png", "start": 305232, "end": 305628}, {"filename": "/assets/Tiles/Floor/F13.png", "start": 305628, "end": 305957}, {"filename": "/assets/Tiles/Floor/F14.png", "start": 305957, "end": 306299}, {"filename": "/assets/Tiles/Floor/F15.png", "start": 306299, "end": 306715}, {"filename": "/assets/Tiles/Floor/F16.png", "start": 306715, "end": 307057}, {"filename": "/assets/Tiles/Floor/F17.png", "start": 307057, "end": 307399}, {"filename": "/assets/Tiles/Floor/F18.png", "start": 307399, "end": 307768}, {"filename": "/assets/Tiles/Floor/F19.png", "start": 307768, "end": 308109}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D01C_E.png", "start": 308109, "end": 309326}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D01C_N.png", "start": 309326, "end": 310159}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D01C_S.png", "start": 310159, "end": 311121}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D01O_E.png", "start": 311121, "end": 312207}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D01O_N.png", "start": 312207, "end": 312952}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D01O_S.png", "start": 312952, "end": 313823}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D02C_E.png", "start": 313823, "end": 314587}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D02C_N.png", "start": 314587, "end": 315461}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D02C_S.png", "start": 315461, "end": 316958}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D02O_E.png", "start": 316958, "end": 317679}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D02O_N.png", "start": 317679, "end": 318461}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D02O_S.png", "start": 318461, "end": 319849}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D03C_N.png", "start": 319849, "end": 320722}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D03C_S.png", "start": 320722, "end": 322073}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D03O_N.png", "start": 322073, "end": 322864}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D03O_S.png", "start": 322864, "end": 324104}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D04C_N.png", "start": 324104, "end": 324976}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D04C_S.png", "start": 324976, "end": 326498}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D04C_W.png", "start": 326498, "end": 327268}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D04O_N.png", "start": 327268, "end": 328051}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D04O_S.png", "start": 328051, "end": 329448}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D04O_W.png", "start": 329448, "end": 330183}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D05C_N.png", "start": 330183, "end": 331026}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D05C_S.png", "start": 331026, "end": 332021}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D05C_W.png", "start": 332021, "end": 333234}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D05O_N.png", "start": 333234, "end": 333994}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D05O_S.png", "start": 333994, "end": 334877}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D05O_W.png", "start": 334877, "end": 335968}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D06C_E.png", "start": 335968, "end": 337062}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D06O_E.png", "start": 337062, "end": 338008}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D07C_E.png", "start": 338008, "end": 339427}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D07C_S.png", "start": 339427, "end": 341572}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D07O_E.png", "start": 341572, "end": 342850}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D07O_S.png", "start": 342850, "end": 344663}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D08C_S.png", "start": 344663, "end": 347289}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D08O_S.png", "start": 347289, "end": 349584}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D09C_S.png", "start": 349584, "end": 351753}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D09C_W.png", "start": 351753, "end": 353197}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D09O_S.png", "start": 353197, "end": 355031}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D09O_W.png", "start": 355031, "end": 356345}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D10C_W.png", "start": 356345, "end": 357440}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D10O_W.png", "start": 357440, "end": 358400}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D11C_E.png", "start": 358400, "end": 360508}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D11C_S.png", "start": 360508, "end": 362713}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D11O_E.png", "start": 362713, "end": 364648}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D11O_S.png", "start": 364648, "end": 366727}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D12C_S.png", "start": 366727, "end": 370865}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D12O_S.png", "start": 370865, "end": 374526}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D13C_S.png", "start": 374526, "end": 376746}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D13C_W.png", "start": 376746, "end": 378881}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D13O_S.png", "start": 378881, "end": 380998}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D13O_W.png", "start": 380998, "end": 382978}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D14C_E.png", "start": 382978, "end": 386081}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D14C_S.png", "start": 386081, "end": 388326}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D14O_E.png", "start": 388326, "end": 391155}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D14O_S.png", "start": 391155, "end": 393400}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D15C_S.png", "start": 393400, "end": 399821}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D15O_S.png", "start": 399821, "end": 405444}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D16C_S.png", "start": 405444, "end": 407717}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D16C_W.png", "start": 407717, "end": 410756}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D16O_S.png", "start": 410756, "end": 413029}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D16O_W.png", "start": 413029, "end": 415811}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D17C_E.png", "start": 415811, "end": 418069}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D17O_E.png", "start": 418069, "end": 420188}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D19C_W.png", "start": 420188, "end": 422363}, {"filename": "/assets/Tiles/Stratum/Ruins/Door/D19O_W.png", "start": 422363, "end": 424461}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/01.png", "start": 424461, "end": 424807}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/02.png", "start": 424807, "end": 425186}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/03.png", "start": 425186, "end": 425569}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/04.png", "start": 425569, "end": 425950}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/05.png", "start": 425950, "end": 426294}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/06.png", "start": 426294, "end": 426608}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/07.png", "start": 426608, "end": 427083}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/08.png", "start": 427083, "end": 427622}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/09.png", "start": 427622, "end": 428104}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/10.png", "start": 428104, "end": 428425}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/11.png", "start": 428425, "end": 428899}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/12.png", "start": 428899, "end": 429544}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/13.png", "start": 429544, "end": 430030}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/14.png", "start": 430030, "end": 430533}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/15.png", "start": 430533, "end": 431360}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/16.png", "start": 431360, "end": 431854}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/17.png", "start": 431854, "end": 432255}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/18.png", "start": 432255, "end": 434729}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/01/19.png", "start": 434729, "end": 435143}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/01.png", "start": 435143, "end": 435487}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/02.png", "start": 435487, "end": 435866}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/03.png", "start": 435866, "end": 436249}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/04.png", "start": 436249, "end": 436631}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/05.png", "start": 436631, "end": 436978}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/06.png", "start": 436978, "end": 437292}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/07.png", "start": 437292, "end": 437779}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/08.png", "start": 437779, "end": 438321}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/09.png", "start": 438321, "end": 438796}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/10.png", "start": 438796, "end": 439117}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/11.png", "start": 439117, "end": 439597}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/12.png", "start": 439597, "end": 440251}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/13.png", "start": 440251, "end": 440730}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/14.png", "start": 440730, "end": 441226}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/15.png", "start": 441226, "end": 442050}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/16.png", "start": 442050, "end": 442546}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/17.png", "start": 442546, "end": 442958}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/18.png", "start": 442958, "end": 445401}, {"filename": "/assets/Tiles/Stratum/Ruins/Floor/02/19.png", "start": 445401, "end": 445797}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W01_E.png", "start": 445797, "end": 446858}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W01_N.png", "start": 446858, "end": 447591}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W01_S.png", "start": 447591, "end": 448418}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W02_E.png", "start": 448418, "end": 449155}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W02_N.png", "start": 449155, "end": 449918}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W02_S.png", "start": 449918, "end": 451125}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W03_N.png", "start": 451125, "end": 451917}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W03_S.png", "start": 451917, "end": 453047}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W04_N.png", "start": 453047, "end": 453811}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W04_S.png", "start": 453811, "end": 455054}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W04_W.png", "start": 455054, "end": 455799}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W05_N.png", "start": 455799, "end": 456542}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W05_S.png", "start": 456542, "end": 457418}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W05_W.png", "start": 457418, "end": 458491}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W06_E.png", "start": 458491, "end": 459442}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W07_E.png", "start": 459442, "end": 460736}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W07_S.png", "start": 460736, "end": 462274}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W08_S.png", "start": 462274, "end": 464356}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W09_S.png", "start": 464356, "end": 466000}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W09_W.png", "start": 466000, "end": 467322}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W10_W.png", "start": 467322, "end": 468318}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W11_E.png", "start": 468318, "end": 470243}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W11_S.png", "start": 470243, "end": 472054}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W12_S.png", "start": 472054, "end": 475303}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W13_S.png", "start": 475303, "end": 477274}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W13_W.png", "start": 477274, "end": 479247}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W14_E.png", "start": 479247, "end": 482094}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W14_S.png", "start": 482094, "end": 484335}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W15_S.png", "start": 484335, "end": 489462}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W16_S.png", "start": 489462, "end": 491651}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W16_W.png", "start": 491651, "end": 494570}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W17_E.png", "start": 494570, "end": 496711}, {"filename": "/assets/Tiles/Stratum/Ruins/Wall/W19_W.png", "start": 496711, "end": 498958}, {"filename": "/assets/Tiles/Walls/01-05/Wall01.png", "start": 498958, "end": 499365}, {"filename": "/assets/Tiles/Walls/01-05/Wall02.png", "start": 499365, "end": 499750}, {"filename": "/assets/Tiles/Walls/01-05/Wall03.png", "start": 499750, "end": 500105}, {"filename": "/assets/Tiles/Walls/01-05/Wall04.png", "start": 500105, "end": 500465}, {"filename": "/assets/Tiles/Walls/01-05/Wall05.png", "start": 500465, "end": 500850}, {"filename": "/assets/Tiles/Walls/06-10/Wall06.png", "start": 500850, "end": 501248}, {"filename": "/assets/Tiles/Walls/06-10/Wall07.png", "start": 501248, "end": 501747}, {"filename": "/assets/Tiles/Walls/06-10/Wall08.png", "start": 501747, "end": 502150}, {"filename": "/assets/Tiles/Walls/06-10/Wall09.png", "start": 502150, "end": 502614}, {"filename": "/assets/Tiles/Walls/06-10/Wall10.png", "start": 502614, "end": 503006}, {"filename": "/assets/Tiles/Walls/11-13/Wall11.png", "start": 503006, "end": 503631}, {"filename": "/assets/Tiles/Walls/11-13/Wall12.png", "start": 503631, "end": 504102}, {"filename": "/assets/Tiles/Walls/11-13/Wall13.png", "start": 504102, "end": 504630}, {"filename": "/assets/Tiles/Walls/14-16/Wall14.png", "start": 504630, "end": 505436}, {"filename": "/assets/Tiles/Walls/14-16/Wall15.png", "start": 505436, "end": 506004}, {"filename": "/assets/Tiles/Walls/14-16/Wall16.png", "start": 506004, "end": 506667}, {"filename": "/assets/Tiles/Walls/17-19/Wall17.png", "start": 506667, "end": 507382}, {"filename": "/assets/Tiles/Walls/17-19/Wall19.png", "start": 507382, "end": 508097}], "remote_package_size": 508097});
 
   })();
 
@@ -352,17 +353,14 @@ if (ENVIRONMENT_IS_SHELL) {
   if ((typeof process == 'object' && typeof require === 'function') || typeof window == 'object' || typeof importScripts == 'function') throw new Error('not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)');
 
   if (typeof read != 'undefined') {
-    read_ = (f) => {
-      return read(f);
-    };
+    read_ = read;
   }
 
   readBinary = (f) => {
-    let data;
     if (typeof readbuffer == 'function') {
       return new Uint8Array(readbuffer(f));
     }
-    data = read(f, 'binary');
+    let data = read(f, 'binary');
     assert(typeof data == 'object');
     return data;
   };
@@ -448,19 +446,19 @@ if (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) {
   {
 // include: web_or_worker_shell_read.js
 read_ = (url) => {
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', url, false);
-      xhr.send(null);
-      return xhr.responseText;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, false);
+    xhr.send(null);
+    return xhr.responseText;
   }
 
   if (ENVIRONMENT_IS_WORKER) {
     readBinary = (url) => {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url, false);
-        xhr.responseType = 'arraybuffer';
-        xhr.send(null);
-        return new Uint8Array(/** @type{!ArrayBuffer} */(xhr.response));
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', url, false);
+      xhr.responseType = 'arraybuffer';
+      xhr.send(null);
+      return new Uint8Array(/** @type{!ArrayBuffer} */(xhr.response));
     };
   }
 
@@ -520,6 +518,7 @@ assert(typeof Module['readAsync'] == 'undefined', 'Module.readAsync option was r
 assert(typeof Module['readBinary'] == 'undefined', 'Module.readBinary option was removed (modify readBinary in JS)');
 assert(typeof Module['setWindowTitle'] == 'undefined', 'Module.setWindowTitle option was removed (modify setWindowTitle in JS)');
 assert(typeof Module['TOTAL_MEMORY'] == 'undefined', 'Module.TOTAL_MEMORY has been renamed Module.INITIAL_MEMORY');
+legacyModuleProp('asm', 'wasmExports');
 legacyModuleProp('read', 'read_');
 legacyModuleProp('readAsync', 'readAsync');
 legacyModuleProp('readBinary', 'readBinary');
@@ -555,6 +554,7 @@ if (typeof WebAssembly != 'object') {
 // Wasm globals
 
 var wasmMemory;
+var wasmExports;
 
 //========================================
 // Runtime essentials
@@ -904,19 +904,12 @@ function isFileURI(filename) {
   return filename.startsWith('file://');
 }
 // end include: URIUtils.js
-/** @param {boolean=} fixedasm */
-function createExportWrapper(name, fixedasm) {
+function createExportWrapper(name) {
   return function() {
-    var displayName = name;
-    var asm = fixedasm;
-    if (!fixedasm) {
-      asm = Module['asm'];
-    }
-    assert(runtimeInitialized, 'native function `' + displayName + '` called before runtime initialization');
-    if (!asm[name]) {
-      assert(asm[name], 'exported native function `' + displayName + '` not found');
-    }
-    return asm[name].apply(null, arguments);
+    assert(runtimeInitialized, `native function \`${name}\` called before runtime initialization`);
+    var f = wasmExports[name];
+    assert(f, `exported native function \`${name}\` not found`);
+    return f.apply(null, arguments);
   };
 }
 
@@ -928,19 +921,14 @@ var wasmBinaryFile;
     wasmBinaryFile = locateFile(wasmBinaryFile);
   }
 
-function getBinary(file) {
-  try {
-    if (file == wasmBinaryFile && wasmBinary) {
-      return new Uint8Array(wasmBinary);
-    }
-    if (readBinary) {
-      return readBinary(file);
-    }
-    throw "both async and sync fetching of the wasm failed";
+function getBinarySync(file) {
+  if (file == wasmBinaryFile && wasmBinary) {
+    return new Uint8Array(wasmBinary);
   }
-  catch (err) {
-    abort(err);
+  if (readBinary) {
+    return readBinary(file);
   }
+  throw "both async and sync fetching of the wasm failed";
 }
 
 function getBinaryPromise(binaryFile) {
@@ -949,7 +937,8 @@ function getBinaryPromise(binaryFile) {
   // See https://github.com/github/fetch/pull/92#issuecomment-140665932
   // Cordova or Electron apps are typically loaded from a file:// url.
   // So use fetch if it is available and the url is not a file, otherwise fall back to XHR.
-  if (!wasmBinary && (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER)) {
+  if (!wasmBinary
+      && (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER)) {
     if (typeof fetch == 'function'
       && !isFileURI(binaryFile)
     ) {
@@ -958,20 +947,18 @@ function getBinaryPromise(binaryFile) {
           throw "failed to load wasm binary file at '" + binaryFile + "'";
         }
         return response['arrayBuffer']();
-      }).catch(() => getBinary(binaryFile));
+      }).catch(() => getBinarySync(binaryFile));
     }
-    else {
-      if (readAsync) {
-        // fetch is not available or url is file => try XHR (readAsync uses XHR internally)
-        return new Promise((resolve, reject) => {
-          readAsync(binaryFile, (response) => resolve(new Uint8Array(/** @type{!ArrayBuffer} */(response))), reject)
-        });
-      }
+    else if (readAsync) {
+      // fetch is not available or url is file => try XHR (readAsync uses XHR internally)
+      return new Promise((resolve, reject) => {
+        readAsync(binaryFile, (response) => resolve(new Uint8Array(/** @type{!ArrayBuffer} */(response))), reject)
+      });
     }
   }
 
-  // Otherwise, getBinary should be able to get it synchronously
-  return Promise.resolve().then(() => getBinary(binaryFile));
+  // Otherwise, getBinarySync should be able to get it synchronously
+  return Promise.resolve().then(() => getBinarySync(binaryFile));
 }
 
 function instantiateArrayBuffer(binaryFile, imports, receiver) {
@@ -1022,9 +1009,8 @@ function instantiateAsync(binary, binaryFile, imports, callback) {
           return instantiateArrayBuffer(binaryFile, imports, callback);
         });
     });
-  } else {
-    return instantiateArrayBuffer(binaryFile, imports, callback);
   }
+  return instantiateArrayBuffer(binaryFile, imports, callback);
 }
 
 // Create the wasm instance.
@@ -1044,9 +1030,11 @@ function createWasm() {
 
     exports = Asyncify.instrumentWasmExports(exports);
 
-    Module['asm'] = exports;
+    wasmExports = exports;
+    
 
-    wasmMemory = Module['asm']['memory'];
+    wasmMemory = wasmExports['memory'];
+    
     assert(wasmMemory, "memory not found in wasm exports");
     // This assertion doesn't hold when emscripten is run in --post-link
     // mode.
@@ -1054,10 +1042,11 @@ function createWasm() {
     //assert(wasmMemory.buffer.byteLength === 33554432);
     updateMemoryViews();
 
-    wasmTable = Module['asm']['__indirect_function_table'];
+    wasmTable = wasmExports['__indirect_function_table'];
+    
     assert(wasmTable, "table not found in wasm exports");
 
-    addOnInit(Module['asm']['__wasm_call_ctors']);
+    addOnInit(wasmExports['__wasm_call_ctors']);
 
     removeRunDependency('wasm-instantiate');
     return exports;
@@ -1105,12 +1094,14 @@ var tempDouble;
 var tempI64;
 
 // include: runtime_debug.js
-function legacyModuleProp(prop, newName) {
+function legacyModuleProp(prop, newName, incomming=true) {
   if (!Object.getOwnPropertyDescriptor(Module, prop)) {
     Object.defineProperty(Module, prop, {
       configurable: true,
-      get: function() {
-        abort('Module.' + prop + ' has been replaced with plain ' + newName + ' (the initial value can be provided on Module, but after startup the value is only looked for on a local variable of that name)');
+      get() {
+        let extra = incomming ? ' (the initial value can be provided on Module, but after startup the value is only looked for on a local variable of that name)' : '';
+        abort(`\`Module.${prop}\` has been replaced by \`${newName}\`` + extra);
+
       }
     });
   }
@@ -1118,7 +1109,7 @@ function legacyModuleProp(prop, newName) {
 
 function ignoredModuleProp(prop) {
   if (Object.getOwnPropertyDescriptor(Module, prop)) {
-    abort('`Module.' + prop + '` was supplied but `' + prop + '` not included in INCOMING_MODULE_JS_API');
+    abort(`\`Module.${prop}\` was supplied but \`${prop}\` not included in INCOMING_MODULE_JS_API`);
   }
 }
 
@@ -1139,7 +1130,7 @@ function missingGlobal(sym, msg) {
   if (typeof globalThis !== 'undefined') {
     Object.defineProperty(globalThis, sym, {
       configurable: true,
-      get: function() {
+      get() {
         warnOnce('`' + sym + '` is not longer defined by emscripten. ' + msg);
         return undefined;
       }
@@ -1153,7 +1144,7 @@ function missingLibrarySymbol(sym) {
   if (typeof globalThis !== 'undefined' && !Object.getOwnPropertyDescriptor(globalThis, sym)) {
     Object.defineProperty(globalThis, sym, {
       configurable: true,
-      get: function() {
+      get() {
         // Can't `abort()` here because it would break code that does runtime
         // checks.  e.g. `if (typeof SDL === 'undefined')`.
         var msg = '`' + sym + '` is a library symbol and not included by default; add it to your library.js __deps or to DEFAULT_LIBRARY_FUNCS_TO_INCLUDE on the command line';
@@ -1182,8 +1173,8 @@ function unexportedRuntimeSymbol(sym) {
   if (!Object.getOwnPropertyDescriptor(Module, sym)) {
     Object.defineProperty(Module, sym, {
       configurable: true,
-      get: function() {
-        var msg = "'" + sym + "' was not exported. add it to EXPORTED_RUNTIME_METHODS (see the FAQ)";
+      get() {
+        var msg = "'" + sym + "' was not exported. add it to EXPORTED_RUNTIME_METHODS (see the Emscripten FAQ)";
         if (isExportedByForceFilesystem(sym)) {
           msg += '. Alternatively, forcing filesystem support (-sFORCE_FILESYSTEM) can export this for you';
         }
@@ -1203,7 +1194,7 @@ function dbg(text) {
 // === Body ===
 
 var ASM_CONSTS = {
-  253092: () => { if (document.fullscreenElement) document.exitFullscreen(); else Module.requestFullscreen(false, true); }
+  257812: () => { if (document.fullscreenElement) document.exitFullscreen(); else Module.requestFullscreen(false, true); }
 };
 function GetCanvasWidth() { return canvas.clientWidth; }
 function GetCanvasHeight() { return canvas.clientHeight; }
@@ -1247,6 +1238,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
 
   var ptrToString = (ptr) => {
       assert(typeof ptr === 'number');
+      // With CAN_ADDRESS_2GB or MEMORY64, pointers are already unsigned.
+      ptr >>>= 0;
       return '0x' + ptr.toString(16).padStart(8, '0');
     };
 
@@ -1279,8 +1272,6 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         err(text);
       }
     };
-
-
 
   var UTF8Decoder = typeof TextDecoder != 'undefined' ? new TextDecoder('utf8') : undefined;
   
@@ -1447,10 +1438,13 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       return value;
     };
   
-  var PATH = {isAbs:(path) => path.charAt(0) === '/',splitPath:(filename) => {
+  var PATH = {
+  isAbs:(path) => path.charAt(0) === '/',
+  splitPath:(filename) => {
         var splitPathRe = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
         return splitPathRe.exec(filename).slice(1);
-      },normalizeArray:(parts, allowAboveRoot) => {
+      },
+  normalizeArray:(parts, allowAboveRoot) => {
         // if the path tries to go above the root, `up` ends up > 0
         var up = 0;
         for (var i = parts.length - 1; i >= 0; i--) {
@@ -1472,7 +1466,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           }
         }
         return parts;
-      },normalize:(path) => {
+      },
+  normalize:(path) => {
         var isAbsolute = PATH.isAbs(path),
             trailingSlash = path.substr(-1) === '/';
         // Normalize the path
@@ -1484,7 +1479,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           path += '/';
         }
         return (isAbsolute ? '/' : '') + path;
-      },dirname:(path) => {
+      },
+  dirname:(path) => {
         var result = PATH.splitPath(path),
             root = result[0],
             dir = result[1];
@@ -1497,7 +1493,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           dir = dir.substr(0, dir.length - 1);
         }
         return root + dir;
-      },basename:(path) => {
+      },
+  basename:(path) => {
         // EMSCRIPTEN return '/'' for '/', not an empty string
         if (path === '/') return '/';
         path = PATH.normalize(path);
@@ -1505,12 +1502,15 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         var lastSlash = path.lastIndexOf('/');
         if (lastSlash === -1) return path;
         return path.substr(lastSlash+1);
-      },join:function() {
+      },
+  join:function() {
         var paths = Array.prototype.slice.call(arguments);
         return PATH.normalize(paths.join('/'));
-      },join2:(l, r) => {
+      },
+  join2:(l, r) => {
         return PATH.normalize(l + '/' + r);
-      }};
+      },
+  };
   
   var initRandomFill = () => {
       if (typeof crypto == 'object' && typeof crypto['getRandomValues'] == 'function') {
@@ -1547,7 +1547,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   
   
   
-  var PATH_FS = {resolve:function() {
+  var PATH_FS = {
+  resolve:function() {
         var resolvedPath = '',
           resolvedAbsolute = false;
         for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
@@ -1565,7 +1566,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         // handle relative paths to be safe (might happen when process.cwd() fails)
         resolvedPath = PATH.normalizeArray(resolvedPath.split('/').filter((p) => !!p), !resolvedAbsolute).join('/');
         return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
-      },relative:(from, to) => {
+      },
+  relative:(from, to) => {
         from = PATH_FS.resolve(from).substr(1);
         to = PATH_FS.resolve(to).substr(1);
         function trim(arr) {
@@ -1596,8 +1598,12 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
         outputParts = outputParts.concat(toParts.slice(samePartsLength));
         return outputParts.join('/');
-      }};
+      },
+  };
   
+  
+  
+  var FS_stdin_getChar_buffer = [];
   
   var lengthBytesUTF8 = (str) => {
       var len = 0;
@@ -1675,8 +1681,63 @@ function GetCanvasHeight() { return canvas.clientHeight; }
     if (dontAddNull) u8array.length = numBytesWritten;
     return u8array;
   }
+  var FS_stdin_getChar = () => {
+      if (!FS_stdin_getChar_buffer.length) {
+        var result = null;
+        if (ENVIRONMENT_IS_NODE) {
+          // we will read data by chunks of BUFSIZE
+          var BUFSIZE = 256;
+          var buf = Buffer.alloc(BUFSIZE);
+          var bytesRead = 0;
   
-  var TTY = {ttys:[],init:function () {
+          // For some reason we must suppress a closure warning here, even though
+          // fd definitely exists on process.stdin, and is even the proper way to
+          // get the fd of stdin,
+          // https://github.com/nodejs/help/issues/2136#issuecomment-523649904
+          // This started to happen after moving this logic out of library_tty.js,
+          // so it is related to the surrounding code in some unclear manner.
+          /** @suppress {missingProperties} */
+          var fd = process.stdin.fd;
+  
+          try {
+            bytesRead = fs.readSync(fd, buf, 0, BUFSIZE, -1);
+          } catch(e) {
+            // Cross-platform differences: on Windows, reading EOF throws an exception, but on other OSes,
+            // reading EOF returns 0. Uniformize behavior by treating the EOF exception to return 0.
+            if (e.toString().includes('EOF')) bytesRead = 0;
+            else throw e;
+          }
+  
+          if (bytesRead > 0) {
+            result = buf.slice(0, bytesRead).toString('utf-8');
+          } else {
+            result = null;
+          }
+        } else
+        if (typeof window != 'undefined' &&
+          typeof window.prompt == 'function') {
+          // Browser.
+          result = window.prompt('Input: ');  // returns null on cancel
+          if (result !== null) {
+            result += '\n';
+          }
+        } else if (typeof readline == 'function') {
+          // Command line.
+          result = readline();
+          if (result !== null) {
+            result += '\n';
+          }
+        }
+        if (!result) {
+          return null;
+        }
+        FS_stdin_getChar_buffer = intArrayFromString(result, true);
+      }
+      return FS_stdin_getChar_buffer.shift();
+    };
+  var TTY = {
+  ttys:[],
+  init:function () {
         // https://github.com/emscripten-core/emscripten/pull/1555
         // if (ENVIRONMENT_IS_NODE) {
         //   // currently, FS.init does not distinguish if process.stdin is a file or TTY
@@ -1685,7 +1746,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         //   // with text files until FS.init can be refactored.
         //   process.stdin.setEncoding('utf8');
         // }
-      },shutdown:function() {
+      },
+  shutdown:function() {
         // https://github.com/emscripten-core/emscripten/pull/1555
         // if (ENVIRONMENT_IS_NODE) {
         //   // inolen: any idea as to why node -e 'process.stdin.read()' wouldn't exit immediately (with process.stdin being a tty)?
@@ -1695,22 +1757,28 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         //   // isaacs: do process.stdin.pause() and i'd think it'd probably close the pending call
         //   process.stdin.pause();
         // }
-      },register:function(dev, ops) {
+      },
+  register:function(dev, ops) {
         TTY.ttys[dev] = { input: [], output: [], ops: ops };
         FS.registerDevice(dev, TTY.stream_ops);
-      },stream_ops:{open:function(stream) {
+      },
+  stream_ops:{
+  open:function(stream) {
           var tty = TTY.ttys[stream.node.rdev];
           if (!tty) {
             throw new FS.ErrnoError(43);
           }
           stream.tty = tty;
           stream.seekable = false;
-        },close:function(stream) {
+        },
+  close:function(stream) {
           // flush any pending line data
           stream.tty.ops.fsync(stream.tty);
-        },fsync:function(stream) {
+        },
+  fsync:function(stream) {
           stream.tty.ops.fsync(stream.tty);
-        },read:function(stream, buffer, offset, length, pos /* ignored */) {
+        },
+  read:function(stream, buffer, offset, length, pos /* ignored */) {
           if (!stream.tty || !stream.tty.ops.get_char) {
             throw new FS.ErrnoError(60);
           }
@@ -1733,7 +1801,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             stream.node.timestamp = Date.now();
           }
           return bytesRead;
-        },write:function(stream, buffer, offset, length, pos) {
+        },
+  write:function(stream, buffer, offset, length, pos) {
           if (!stream.tty || !stream.tty.ops.put_char) {
             throw new FS.ErrnoError(60);
           }
@@ -1748,63 +1817,27 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             stream.node.timestamp = Date.now();
           }
           return i;
-        }},default_tty_ops:{get_char:function(tty) {
-          if (!tty.input.length) {
-            var result = null;
-            if (ENVIRONMENT_IS_NODE) {
-              // we will read data by chunks of BUFSIZE
-              var BUFSIZE = 256;
-              var buf = Buffer.alloc(BUFSIZE);
-              var bytesRead = 0;
-  
-              try {
-                bytesRead = fs.readSync(process.stdin.fd, buf, 0, BUFSIZE, -1);
-              } catch(e) {
-                // Cross-platform differences: on Windows, reading EOF throws an exception, but on other OSes,
-                // reading EOF returns 0. Uniformize behavior by treating the EOF exception to return 0.
-                if (e.toString().includes('EOF')) bytesRead = 0;
-                else throw e;
-              }
-  
-              if (bytesRead > 0) {
-                result = buf.slice(0, bytesRead).toString('utf-8');
-              } else {
-                result = null;
-              }
-            } else
-            if (typeof window != 'undefined' &&
-              typeof window.prompt == 'function') {
-              // Browser.
-              result = window.prompt('Input: ');  // returns null on cancel
-              if (result !== null) {
-                result += '\n';
-              }
-            } else if (typeof readline == 'function') {
-              // Command line.
-              result = readline();
-              if (result !== null) {
-                result += '\n';
-              }
-            }
-            if (!result) {
-              return null;
-            }
-            tty.input = intArrayFromString(result, true);
-          }
-          return tty.input.shift();
-        },put_char:function(tty, val) {
+        },
+  },
+  default_tty_ops:{
+  get_char:function(tty) {
+          return FS_stdin_getChar();
+        },
+  put_char:function(tty, val) {
           if (val === null || val === 10) {
             out(UTF8ArrayToString(tty.output, 0));
             tty.output = [];
           } else {
             if (val != 0) tty.output.push(val); // val == 0 would cut text output off in the middle.
           }
-        },fsync:function(tty) {
+        },
+  fsync:function(tty) {
           if (tty.output && tty.output.length > 0) {
             out(UTF8ArrayToString(tty.output, 0));
             tty.output = [];
           }
-        },ioctl_tcgets:function(tty) {
+        },
+  ioctl_tcgets:function(tty) {
           // typical setting
           return {
             c_iflag: 25856,
@@ -1817,24 +1850,32 @@ function GetCanvasHeight() { return canvas.clientHeight; }
               0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
             ]
           };
-        },ioctl_tcsets:function(tty, optional_actions, data) {
+        },
+  ioctl_tcsets:function(tty, optional_actions, data) {
           // currently just ignore
           return 0;
-        },ioctl_tiocgwinsz:function(tty) {
+        },
+  ioctl_tiocgwinsz:function(tty) {
           return [24, 80];
-        }},default_tty1_ops:{put_char:function(tty, val) {
+        },
+  },
+  default_tty1_ops:{
+  put_char:function(tty, val) {
           if (val === null || val === 10) {
             err(UTF8ArrayToString(tty.output, 0));
             tty.output = [];
           } else {
             if (val != 0) tty.output.push(val);
           }
-        },fsync:function(tty) {
+        },
+  fsync:function(tty) {
           if (tty.output && tty.output.length > 0) {
             err(UTF8ArrayToString(tty.output, 0));
             tty.output = [];
           }
-        }}};
+        },
+  },
+  };
   
   
   var zeroMemory = (address, size) => {
@@ -1849,9 +1890,12 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   var mmapAlloc = (size) => {
       abort('internal error: mmapAlloc called but `emscripten_builtin_memalign` native symbol not exported');
     };
-  var MEMFS = {ops_table:null,mount:function(mount) {
+  var MEMFS = {
+  ops_table:null,
+  mount(mount) {
         return MEMFS.createNode(null, '/', 16384 | 511 /* 0777 */, 0);
-      },createNode:function(parent, name, mode, dev) {
+      },
+  createNode(parent, name, mode, dev) {
         if (FS.isBlkdev(mode) || FS.isFIFO(mode)) {
           // no supported
           throw new FS.ErrnoError(63);
@@ -1932,11 +1976,13 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           parent.timestamp = node.timestamp;
         }
         return node;
-      },getFileDataAsTypedArray:function(node) {
+      },
+  getFileDataAsTypedArray(node) {
         if (!node.contents) return new Uint8Array(0);
         if (node.contents.subarray) return node.contents.subarray(0, node.usedBytes); // Make sure to not return excess unused bytes.
         return new Uint8Array(node.contents);
-      },expandFileStorage:function(node, newCapacity) {
+      },
+  expandFileStorage(node, newCapacity) {
         var prevCapacity = node.contents ? node.contents.length : 0;
         if (prevCapacity >= newCapacity) return; // No need to expand, the storage was already large enough.
         // Don't expand strictly to the given requested limit if it's only a very small increase, but instead geometrically grow capacity.
@@ -1948,7 +1994,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         var oldContents = node.contents;
         node.contents = new Uint8Array(newCapacity); // Allocate new storage.
         if (node.usedBytes > 0) node.contents.set(oldContents.subarray(0, node.usedBytes), 0); // Copy old data over to the new storage.
-      },resizeFileStorage:function(node, newSize) {
+      },
+  resizeFileStorage(node, newSize) {
         if (node.usedBytes == newSize) return;
         if (newSize == 0) {
           node.contents = null; // Fully decommit when requesting a resize to zero.
@@ -1961,7 +2008,9 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           }
           node.usedBytes = newSize;
         }
-      },node_ops:{getattr:function(node) {
+      },
+  node_ops:{
+  getattr(node) {
           var attr = {};
           // device numbers reuse inode numbers.
           attr.dev = FS.isChrdev(node.mode) ? node.id : 1;
@@ -1988,7 +2037,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           attr.blksize = 4096;
           attr.blocks = Math.ceil(attr.size / attr.blksize);
           return attr;
-        },setattr:function(node, attr) {
+        },
+  setattr(node, attr) {
           if (attr.mode !== undefined) {
             node.mode = attr.mode;
           }
@@ -1998,11 +2048,14 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           if (attr.size !== undefined) {
             MEMFS.resizeFileStorage(node, attr.size);
           }
-        },lookup:function(parent, name) {
+        },
+  lookup(parent, name) {
           throw FS.genericErrors[44];
-        },mknod:function(parent, name, mode, dev) {
+        },
+  mknod(parent, name, mode, dev) {
           return MEMFS.createNode(parent, name, mode, dev);
-        },rename:function(old_node, new_dir, new_name) {
+        },
+  rename(old_node, new_dir, new_name) {
           // if we're overwriting a directory at new_name, make sure it's empty.
           if (FS.isDir(old_node.mode)) {
             var new_node;
@@ -2023,17 +2076,20 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           new_dir.contents[new_name] = old_node;
           new_dir.timestamp = old_node.parent.timestamp;
           old_node.parent = new_dir;
-        },unlink:function(parent, name) {
+        },
+  unlink(parent, name) {
           delete parent.contents[name];
           parent.timestamp = Date.now();
-        },rmdir:function(parent, name) {
+        },
+  rmdir(parent, name) {
           var node = FS.lookupNode(parent, name);
           for (var i in node.contents) {
             throw new FS.ErrnoError(55);
           }
           delete parent.contents[name];
           parent.timestamp = Date.now();
-        },readdir:function(node) {
+        },
+  readdir(node) {
           var entries = ['.', '..'];
           for (var key in node.contents) {
             if (!node.contents.hasOwnProperty(key)) {
@@ -2042,16 +2098,21 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             entries.push(key);
           }
           return entries;
-        },symlink:function(parent, newname, oldpath) {
+        },
+  symlink(parent, newname, oldpath) {
           var node = MEMFS.createNode(parent, newname, 511 /* 0777 */ | 40960, 0);
           node.link = oldpath;
           return node;
-        },readlink:function(node) {
+        },
+  readlink(node) {
           if (!FS.isLink(node.mode)) {
             throw new FS.ErrnoError(28);
           }
           return node.link;
-        }},stream_ops:{read:function(stream, buffer, offset, length, position) {
+        },
+  },
+  stream_ops:{
+  read(stream, buffer, offset, length, position) {
           var contents = stream.node.contents;
           if (position >= stream.node.usedBytes) return 0;
           var size = Math.min(stream.node.usedBytes - position, length);
@@ -2062,7 +2123,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             for (var i = 0; i < size; i++) buffer[offset + i] = contents[position + i];
           }
           return size;
-        },write:function(stream, buffer, offset, length, position, canOwn) {
+        },
+  write(stream, buffer, offset, length, position, canOwn) {
           // The data buffer should be a typed array view
           assert(!(buffer instanceof ArrayBuffer));
   
@@ -2098,7 +2160,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           }
           node.usedBytes = Math.max(node.usedBytes, position + length);
           return length;
-        },llseek:function(stream, offset, whence) {
+        },
+  llseek(stream, offset, whence) {
           var position = offset;
           if (whence === 1) {
             position += stream.position;
@@ -2111,10 +2174,12 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             throw new FS.ErrnoError(28);
           }
           return position;
-        },allocate:function(stream, offset, length) {
+        },
+  allocate(stream, offset, length) {
           MEMFS.expandFileStorage(stream.node, offset + length);
           stream.node.usedBytes = Math.max(stream.node.usedBytes, offset + length);
-        },mmap:function(stream, length, position, prot, flags) {
+        },
+  mmap(stream, length, position, prot, flags) {
           if (!FS.isFile(stream.node.mode)) {
             throw new FS.ErrnoError(43);
           }
@@ -2144,11 +2209,14 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             HEAP8.set(contents, ptr);
           }
           return { ptr, allocated };
-        },msync:function(stream, buffer, offset, length, mmapFlags) {
+        },
+  msync(stream, buffer, offset, length, mmapFlags) {
           MEMFS.stream_ops.write(stream, buffer, 0, length, offset, false);
           // should we check if bytesWritten and length are the same?
           return 0;
-        }}};
+        },
+  },
+  };
   
   /** @param {boolean=} noRunDep */
   var asyncLoad = (url, onload, onerror, noRunDep) => {
@@ -2239,9 +2307,130 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   
   
   
-  var ERRNO_MESSAGES = {0:"Success",1:"Arg list too long",2:"Permission denied",3:"Address already in use",4:"Address not available",5:"Address family not supported by protocol family",6:"No more processes",7:"Socket already connected",8:"Bad file number",9:"Trying to read unreadable message",10:"Mount device busy",11:"Operation canceled",12:"No children",13:"Connection aborted",14:"Connection refused",15:"Connection reset by peer",16:"File locking deadlock error",17:"Destination address required",18:"Math arg out of domain of func",19:"Quota exceeded",20:"File exists",21:"Bad address",22:"File too large",23:"Host is unreachable",24:"Identifier removed",25:"Illegal byte sequence",26:"Connection already in progress",27:"Interrupted system call",28:"Invalid argument",29:"I/O error",30:"Socket is already connected",31:"Is a directory",32:"Too many symbolic links",33:"Too many open files",34:"Too many links",35:"Message too long",36:"Multihop attempted",37:"File or path name too long",38:"Network interface is not configured",39:"Connection reset by network",40:"Network is unreachable",41:"Too many open files in system",42:"No buffer space available",43:"No such device",44:"No such file or directory",45:"Exec format error",46:"No record locks available",47:"The link has been severed",48:"Not enough core",49:"No message of desired type",50:"Protocol not available",51:"No space left on device",52:"Function not implemented",53:"Socket is not connected",54:"Not a directory",55:"Directory not empty",56:"State not recoverable",57:"Socket operation on non-socket",59:"Not a typewriter",60:"No such device or address",61:"Value too large for defined data type",62:"Previous owner died",63:"Not super-user",64:"Broken pipe",65:"Protocol error",66:"Unknown protocol",67:"Protocol wrong type for socket",68:"Math result not representable",69:"Read only file system",70:"Illegal seek",71:"No such process",72:"Stale file handle",73:"Connection timed out",74:"Text file busy",75:"Cross-device link",100:"Device not a stream",101:"Bad font file fmt",102:"Invalid slot",103:"Invalid request code",104:"No anode",105:"Block device required",106:"Channel number out of range",107:"Level 3 halted",108:"Level 3 reset",109:"Link number out of range",110:"Protocol driver not attached",111:"No CSI structure available",112:"Level 2 halted",113:"Invalid exchange",114:"Invalid request descriptor",115:"Exchange full",116:"No data (for no delay io)",117:"Timer expired",118:"Out of streams resources",119:"Machine is not on the network",120:"Package not installed",121:"The object is remote",122:"Advertise error",123:"Srmount error",124:"Communication error on send",125:"Cross mount point (not really error)",126:"Given log. name not unique",127:"f.d. invalid for this operation",128:"Remote address changed",129:"Can   access a needed shared lib",130:"Accessing a corrupted shared lib",131:".lib section in a.out corrupted",132:"Attempting to link in too many libs",133:"Attempting to exec a shared library",135:"Streams pipe error",136:"Too many users",137:"Socket type not supported",138:"Not supported",139:"Protocol family not supported",140:"Can't send after socket shutdown",141:"Too many references",142:"Host is down",148:"No medium (in tape drive)",156:"Level 2 not synchronized"};
+  var ERRNO_MESSAGES = {
+  0:"Success",
+  1:"Arg list too long",
+  2:"Permission denied",
+  3:"Address already in use",
+  4:"Address not available",
+  5:"Address family not supported by protocol family",
+  6:"No more processes",
+  7:"Socket already connected",
+  8:"Bad file number",
+  9:"Trying to read unreadable message",
+  10:"Mount device busy",
+  11:"Operation canceled",
+  12:"No children",
+  13:"Connection aborted",
+  14:"Connection refused",
+  15:"Connection reset by peer",
+  16:"File locking deadlock error",
+  17:"Destination address required",
+  18:"Math arg out of domain of func",
+  19:"Quota exceeded",
+  20:"File exists",
+  21:"Bad address",
+  22:"File too large",
+  23:"Host is unreachable",
+  24:"Identifier removed",
+  25:"Illegal byte sequence",
+  26:"Connection already in progress",
+  27:"Interrupted system call",
+  28:"Invalid argument",
+  29:"I/O error",
+  30:"Socket is already connected",
+  31:"Is a directory",
+  32:"Too many symbolic links",
+  33:"Too many open files",
+  34:"Too many links",
+  35:"Message too long",
+  36:"Multihop attempted",
+  37:"File or path name too long",
+  38:"Network interface is not configured",
+  39:"Connection reset by network",
+  40:"Network is unreachable",
+  41:"Too many open files in system",
+  42:"No buffer space available",
+  43:"No such device",
+  44:"No such file or directory",
+  45:"Exec format error",
+  46:"No record locks available",
+  47:"The link has been severed",
+  48:"Not enough core",
+  49:"No message of desired type",
+  50:"Protocol not available",
+  51:"No space left on device",
+  52:"Function not implemented",
+  53:"Socket is not connected",
+  54:"Not a directory",
+  55:"Directory not empty",
+  56:"State not recoverable",
+  57:"Socket operation on non-socket",
+  59:"Not a typewriter",
+  60:"No such device or address",
+  61:"Value too large for defined data type",
+  62:"Previous owner died",
+  63:"Not super-user",
+  64:"Broken pipe",
+  65:"Protocol error",
+  66:"Unknown protocol",
+  67:"Protocol wrong type for socket",
+  68:"Math result not representable",
+  69:"Read only file system",
+  70:"Illegal seek",
+  71:"No such process",
+  72:"Stale file handle",
+  73:"Connection timed out",
+  74:"Text file busy",
+  75:"Cross-device link",
+  100:"Device not a stream",
+  101:"Bad font file fmt",
+  102:"Invalid slot",
+  103:"Invalid request code",
+  104:"No anode",
+  105:"Block device required",
+  106:"Channel number out of range",
+  107:"Level 3 halted",
+  108:"Level 3 reset",
+  109:"Link number out of range",
+  110:"Protocol driver not attached",
+  111:"No CSI structure available",
+  112:"Level 2 halted",
+  113:"Invalid exchange",
+  114:"Invalid request descriptor",
+  115:"Exchange full",
+  116:"No data (for no delay io)",
+  117:"Timer expired",
+  118:"Out of streams resources",
+  119:"Machine is not on the network",
+  120:"Package not installed",
+  121:"The object is remote",
+  122:"Advertise error",
+  123:"Srmount error",
+  124:"Communication error on send",
+  125:"Cross mount point (not really error)",
+  126:"Given log. name not unique",
+  127:"f.d. invalid for this operation",
+  128:"Remote address changed",
+  129:"Can   access a needed shared lib",
+  130:"Accessing a corrupted shared lib",
+  131:".lib section in a.out corrupted",
+  132:"Attempting to link in too many libs",
+  133:"Attempting to exec a shared library",
+  135:"Streams pipe error",
+  136:"Too many users",
+  137:"Socket type not supported",
+  138:"Not supported",
+  139:"Protocol family not supported",
+  140:"Can't send after socket shutdown",
+  141:"Too many references",
+  142:"Host is down",
+  148:"No medium (in tape drive)",
+  156:"Level 2 not synchronized",
+  };
   
-  var ERRNO_CODES = {};
+  var ERRNO_CODES = {
+  };
   
   function demangle(func) {
       warnOnce('warning: build with -sDEMANGLE_SUPPORT to link in libcxxabi demangling');
@@ -2256,7 +2445,23 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           return x === y ? x : (y + ' [' + x + ']');
         });
     }
-  var FS = {root:null,mounts:[],devices:{},streams:[],nextInode:1,nameTable:null,currentPath:"/",initialized:false,ignorePermissions:true,ErrnoError:null,genericErrors:{},filesystems:null,syncFSRequests:0,lookupPath:(path, opts = {}) => {
+  var FS = {
+  root:null,
+  mounts:[],
+  devices:{
+  },
+  streams:[],
+  nextInode:1,
+  nameTable:null,
+  currentPath:"/",
+  initialized:false,
+  ignorePermissions:true,
+  ErrnoError:null,
+  genericErrors:{
+  },
+  filesystems:null,
+  syncFSRequests:0,
+  lookupPath:(path, opts = {}) => {
         path = PATH_FS.resolve(path);
   
         if (!path) return { path: '', node: null };
@@ -2314,7 +2519,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
   
         return { path: current_path, node: current };
-      },getPath:(node) => {
+      },
+  getPath:(node) => {
         var path;
         while (true) {
           if (FS.isRoot(node)) {
@@ -2325,18 +2531,21 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           path = path ? `${node.name}/${path}` : node.name;
           node = node.parent;
         }
-      },hashName:(parentid, name) => {
+      },
+  hashName:(parentid, name) => {
         var hash = 0;
   
         for (var i = 0; i < name.length; i++) {
           hash = ((hash << 5) - hash + name.charCodeAt(i)) | 0;
         }
         return ((parentid + hash) >>> 0) % FS.nameTable.length;
-      },hashAddNode:(node) => {
+      },
+  hashAddNode:(node) => {
         var hash = FS.hashName(node.parent.id, node.name);
         node.name_next = FS.nameTable[hash];
         FS.nameTable[hash] = node;
-      },hashRemoveNode:(node) => {
+      },
+  hashRemoveNode:(node) => {
         var hash = FS.hashName(node.parent.id, node.name);
         if (FS.nameTable[hash] === node) {
           FS.nameTable[hash] = node.name_next;
@@ -2350,7 +2559,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             current = current.name_next;
           }
         }
-      },lookupNode:(parent, name) => {
+      },
+  lookupNode:(parent, name) => {
         var errCode = FS.mayLookup(parent);
         if (errCode) {
           throw new FS.ErrnoError(errCode, parent);
@@ -2364,40 +2574,53 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
         // if we failed to find it in the cache, call into the VFS
         return FS.lookup(parent, name);
-      },createNode:(parent, name, mode, rdev) => {
+      },
+  createNode:(parent, name, mode, rdev) => {
         assert(typeof parent == 'object')
         var node = new FS.FSNode(parent, name, mode, rdev);
   
         FS.hashAddNode(node);
   
         return node;
-      },destroyNode:(node) => {
+      },
+  destroyNode:(node) => {
         FS.hashRemoveNode(node);
-      },isRoot:(node) => {
+      },
+  isRoot:(node) => {
         return node === node.parent;
-      },isMountpoint:(node) => {
+      },
+  isMountpoint:(node) => {
         return !!node.mounted;
-      },isFile:(mode) => {
+      },
+  isFile:(mode) => {
         return (mode & 61440) === 32768;
-      },isDir:(mode) => {
+      },
+  isDir:(mode) => {
         return (mode & 61440) === 16384;
-      },isLink:(mode) => {
+      },
+  isLink:(mode) => {
         return (mode & 61440) === 40960;
-      },isChrdev:(mode) => {
+      },
+  isChrdev:(mode) => {
         return (mode & 61440) === 8192;
-      },isBlkdev:(mode) => {
+      },
+  isBlkdev:(mode) => {
         return (mode & 61440) === 24576;
-      },isFIFO:(mode) => {
+      },
+  isFIFO:(mode) => {
         return (mode & 61440) === 4096;
-      },isSocket:(mode) => {
+      },
+  isSocket:(mode) => {
         return (mode & 49152) === 49152;
-      },flagsToPermissionString:(flag) => {
+      },
+  flagsToPermissionString:(flag) => {
         var perms = ['r', 'w', 'rw'][flag & 3];
         if ((flag & 512)) {
           perms += 'w';
         }
         return perms;
-      },nodePermissions:(node, perms) => {
+      },
+  nodePermissions:(node, perms) => {
         if (FS.ignorePermissions) {
           return 0;
         }
@@ -2410,19 +2633,22 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           return 2;
         }
         return 0;
-      },mayLookup:(dir) => {
+      },
+  mayLookup:(dir) => {
         var errCode = FS.nodePermissions(dir, 'x');
         if (errCode) return errCode;
         if (!dir.node_ops.lookup) return 2;
         return 0;
-      },mayCreate:(dir, name) => {
+      },
+  mayCreate:(dir, name) => {
         try {
           var node = FS.lookupNode(dir, name);
           return 20;
         } catch (e) {
         }
         return FS.nodePermissions(dir, 'wx');
-      },mayDelete:(dir, name, isdir) => {
+      },
+  mayDelete:(dir, name, isdir) => {
         var node;
         try {
           node = FS.lookupNode(dir, name);
@@ -2446,7 +2672,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           }
         }
         return 0;
-      },mayOpen:(node, flags) => {
+      },
+  mayOpen:(node, flags) => {
         if (!node) {
           return 44;
         }
@@ -2459,20 +2686,25 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           }
         }
         return FS.nodePermissions(node, FS.flagsToPermissionString(flags));
-      },MAX_OPEN_FDS:4096,nextfd:() => {
+      },
+  MAX_OPEN_FDS:4096,
+  nextfd:() => {
         for (var fd = 0; fd <= FS.MAX_OPEN_FDS; fd++) {
           if (!FS.streams[fd]) {
             return fd;
           }
         }
         throw new FS.ErrnoError(33);
-      },getStreamChecked:(fd) => {
+      },
+  getStreamChecked:(fd) => {
         var stream = FS.getStream(fd);
         if (!stream) {
           throw new FS.ErrnoError(8);
         }
         return stream;
-      },getStream:(fd) => FS.streams[fd],createStream:(stream, fd = -1) => {
+      },
+  getStream:(fd) => FS.streams[fd],
+  createStream:(stream, fd = -1) => {
         if (!FS.FSStream) {
           FS.FSStream = /** @constructor */ function() {
             this.shared = { };
@@ -2481,33 +2713,33 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           Object.defineProperties(FS.FSStream.prototype, {
             object: {
               /** @this {FS.FSStream} */
-              get: function() { return this.node; },
+              get() { return this.node; },
               /** @this {FS.FSStream} */
-              set: function(val) { this.node = val; }
+              set(val) { this.node = val; }
             },
             isRead: {
               /** @this {FS.FSStream} */
-              get: function() { return (this.flags & 2097155) !== 1; }
+              get() { return (this.flags & 2097155) !== 1; }
             },
             isWrite: {
               /** @this {FS.FSStream} */
-              get: function() { return (this.flags & 2097155) !== 0; }
+              get() { return (this.flags & 2097155) !== 0; }
             },
             isAppend: {
               /** @this {FS.FSStream} */
-              get: function() { return (this.flags & 1024); }
+              get() { return (this.flags & 1024); }
             },
             flags: {
               /** @this {FS.FSStream} */
-              get: function() { return this.shared.flags; },
+              get() { return this.shared.flags; },
               /** @this {FS.FSStream} */
-              set: function(val) { this.shared.flags = val; },
+              set(val) { this.shared.flags = val; },
             },
             position : {
               /** @this {FS.FSStream} */
-              get: function() { return this.shared.position; },
+              get() { return this.shared.position; },
               /** @this {FS.FSStream} */
-              set: function(val) { this.shared.position = val; },
+              set(val) { this.shared.position = val; },
             },
           });
         }
@@ -2519,9 +2751,12 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         stream.fd = fd;
         FS.streams[fd] = stream;
         return stream;
-      },closeStream:(fd) => {
+      },
+  closeStream:(fd) => {
         FS.streams[fd] = null;
-      },chrdev_stream_ops:{open:(stream) => {
+      },
+  chrdev_stream_ops:{
+  open:(stream) => {
           var device = FS.getDevice(stream.node.rdev);
           // override node's stream ops with the device's
           stream.stream_ops = device.stream_ops;
@@ -2529,11 +2764,19 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           if (stream.stream_ops.open) {
             stream.stream_ops.open(stream);
           }
-        },llseek:() => {
+        },
+  llseek:() => {
           throw new FS.ErrnoError(70);
-        }},major:(dev) => ((dev) >> 8),minor:(dev) => ((dev) & 0xff),makedev:(ma, mi) => ((ma) << 8 | (mi)),registerDevice:(dev, ops) => {
+        },
+  },
+  major:(dev) => ((dev) >> 8),
+  minor:(dev) => ((dev) & 0xff),
+  makedev:(ma, mi) => ((ma) << 8 | (mi)),
+  registerDevice:(dev, ops) => {
         FS.devices[dev] = { stream_ops: ops };
-      },getDevice:(dev) => FS.devices[dev],getMounts:(mount) => {
+      },
+  getDevice:(dev) => FS.devices[dev],
+  getMounts:(mount) => {
         var mounts = [];
         var check = [mount];
   
@@ -2546,7 +2789,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
   
         return mounts;
-      },syncfs:(populate, callback) => {
+      },
+  syncfs:(populate, callback) => {
         if (typeof populate == 'function') {
           callback = populate;
           populate = false;
@@ -2587,7 +2831,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           }
           mount.type.syncfs(mount, populate, done);
         });
-      },mount:(type, opts, mountpoint) => {
+      },
+  mount:(type, opts, mountpoint) => {
         if (typeof type == 'string') {
           // The filesystem was not included, and instead we have an error
           // message stored in the variable.
@@ -2639,7 +2884,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
   
         return mountRoot;
-      },unmount:(mountpoint) => {
+      },
+  unmount:(mountpoint) => {
         var lookup = FS.lookupPath(mountpoint, { follow_mount: false });
   
         if (!FS.isMountpoint(lookup.node)) {
@@ -2672,9 +2918,11 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         var idx = node.mount.mounts.indexOf(mount);
         assert(idx !== -1);
         node.mount.mounts.splice(idx, 1);
-      },lookup:(parent, name) => {
+      },
+  lookup:(parent, name) => {
         return parent.node_ops.lookup(parent, name);
-      },mknod:(path, mode, dev) => {
+      },
+  mknod:(path, mode, dev) => {
         var lookup = FS.lookupPath(path, { parent: true });
         var parent = lookup.node;
         var name = PATH.basename(path);
@@ -2689,17 +2937,20 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           throw new FS.ErrnoError(63);
         }
         return parent.node_ops.mknod(parent, name, mode, dev);
-      },create:(path, mode) => {
+      },
+  create:(path, mode) => {
         mode = mode !== undefined ? mode : 438 /* 0666 */;
         mode &= 4095;
         mode |= 32768;
         return FS.mknod(path, mode, 0);
-      },mkdir:(path, mode) => {
+      },
+  mkdir:(path, mode) => {
         mode = mode !== undefined ? mode : 511 /* 0777 */;
         mode &= 511 | 512;
         mode |= 16384;
         return FS.mknod(path, mode, 0);
-      },mkdirTree:(path, mode) => {
+      },
+  mkdirTree:(path, mode) => {
         var dirs = path.split('/');
         var d = '';
         for (var i = 0; i < dirs.length; ++i) {
@@ -2711,14 +2962,16 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             if (e.errno != 20) throw e;
           }
         }
-      },mkdev:(path, mode, dev) => {
+      },
+  mkdev:(path, mode, dev) => {
         if (typeof dev == 'undefined') {
           dev = mode;
           mode = 438 /* 0666 */;
         }
         mode |= 8192;
         return FS.mknod(path, mode, dev);
-      },symlink:(oldpath, newpath) => {
+      },
+  symlink:(oldpath, newpath) => {
         if (!PATH_FS.resolve(oldpath)) {
           throw new FS.ErrnoError(44);
         }
@@ -2736,7 +2989,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           throw new FS.ErrnoError(63);
         }
         return parent.node_ops.symlink(parent, newname, oldpath);
-      },rename:(old_path, new_path) => {
+      },
+  rename:(old_path, new_path) => {
         var old_dirname = PATH.dirname(old_path);
         var new_dirname = PATH.dirname(new_path);
         var old_name = PATH.basename(old_path);
@@ -2817,7 +3071,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           // changed its name)
           FS.hashAddNode(old_node);
         }
-      },rmdir:(path) => {
+      },
+  rmdir:(path) => {
         var lookup = FS.lookupPath(path, { parent: true });
         var parent = lookup.node;
         var name = PATH.basename(path);
@@ -2834,14 +3089,16 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
         parent.node_ops.rmdir(parent, name);
         FS.destroyNode(node);
-      },readdir:(path) => {
+      },
+  readdir:(path) => {
         var lookup = FS.lookupPath(path, { follow: true });
         var node = lookup.node;
         if (!node.node_ops.readdir) {
           throw new FS.ErrnoError(54);
         }
         return node.node_ops.readdir(node);
-      },unlink:(path) => {
+      },
+  unlink:(path) => {
         var lookup = FS.lookupPath(path, { parent: true });
         var parent = lookup.node;
         if (!parent) {
@@ -2864,7 +3121,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
         parent.node_ops.unlink(parent, name);
         FS.destroyNode(node);
-      },readlink:(path) => {
+      },
+  readlink:(path) => {
         var lookup = FS.lookupPath(path);
         var link = lookup.node;
         if (!link) {
@@ -2874,7 +3132,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           throw new FS.ErrnoError(28);
         }
         return PATH_FS.resolve(FS.getPath(link.parent), link.node_ops.readlink(link));
-      },stat:(path, dontFollow) => {
+      },
+  stat:(path, dontFollow) => {
         var lookup = FS.lookupPath(path, { follow: !dontFollow });
         var node = lookup.node;
         if (!node) {
@@ -2884,9 +3143,11 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           throw new FS.ErrnoError(63);
         }
         return node.node_ops.getattr(node);
-      },lstat:(path) => {
+      },
+  lstat:(path) => {
         return FS.stat(path, true);
-      },chmod:(path, mode, dontFollow) => {
+      },
+  chmod:(path, mode, dontFollow) => {
         var node;
         if (typeof path == 'string') {
           var lookup = FS.lookupPath(path, { follow: !dontFollow });
@@ -2901,12 +3162,15 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           mode: (mode & 4095) | (node.mode & ~4095),
           timestamp: Date.now()
         });
-      },lchmod:(path, mode) => {
+      },
+  lchmod:(path, mode) => {
         FS.chmod(path, mode, true);
-      },fchmod:(fd, mode) => {
+      },
+  fchmod:(fd, mode) => {
         var stream = FS.getStreamChecked(fd);
         FS.chmod(stream.node, mode);
-      },chown:(path, uid, gid, dontFollow) => {
+      },
+  chown:(path, uid, gid, dontFollow) => {
         var node;
         if (typeof path == 'string') {
           var lookup = FS.lookupPath(path, { follow: !dontFollow });
@@ -2921,12 +3185,15 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           timestamp: Date.now()
           // we ignore the uid / gid for now
         });
-      },lchown:(path, uid, gid) => {
+      },
+  lchown:(path, uid, gid) => {
         FS.chown(path, uid, gid, true);
-      },fchown:(fd, uid, gid) => {
+      },
+  fchown:(fd, uid, gid) => {
         var stream = FS.getStreamChecked(fd);
         FS.chown(stream.node, uid, gid);
-      },truncate:(path, len) => {
+      },
+  truncate:(path, len) => {
         if (len < 0) {
           throw new FS.ErrnoError(28);
         }
@@ -2954,19 +3221,22 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           size: len,
           timestamp: Date.now()
         });
-      },ftruncate:(fd, len) => {
+      },
+  ftruncate:(fd, len) => {
         var stream = FS.getStreamChecked(fd);
         if ((stream.flags & 2097155) === 0) {
           throw new FS.ErrnoError(28);
         }
         FS.truncate(stream.node, len);
-      },utime:(path, atime, mtime) => {
+      },
+  utime:(path, atime, mtime) => {
         var lookup = FS.lookupPath(path, { follow: true });
         var node = lookup.node;
         node.node_ops.setattr(node, {
           timestamp: Math.max(atime, mtime)
         });
-      },open:(path, flags, mode) => {
+      },
+  open:(path, flags, mode) => {
         if (path === "") {
           throw new FS.ErrnoError(44);
         }
@@ -3055,7 +3325,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           }
         }
         return stream;
-      },close:(stream) => {
+      },
+  close:(stream) => {
         if (FS.isClosed(stream)) {
           throw new FS.ErrnoError(8);
         }
@@ -3070,9 +3341,11 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           FS.closeStream(stream.fd);
         }
         stream.fd = null;
-      },isClosed:(stream) => {
+      },
+  isClosed:(stream) => {
         return stream.fd === null;
-      },llseek:(stream, offset, whence) => {
+      },
+  llseek:(stream, offset, whence) => {
         if (FS.isClosed(stream)) {
           throw new FS.ErrnoError(8);
         }
@@ -3085,7 +3358,9 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         stream.position = stream.stream_ops.llseek(stream, offset, whence);
         stream.ungotten = [];
         return stream.position;
-      },read:(stream, buffer, offset, length, position) => {
+      },
+  read:(stream, buffer, offset, length, position) => {
+        assert(offset >= 0);
         if (length < 0 || position < 0) {
           throw new FS.ErrnoError(28);
         }
@@ -3110,7 +3385,9 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         var bytesRead = stream.stream_ops.read(stream, buffer, offset, length, position);
         if (!seeking) stream.position += bytesRead;
         return bytesRead;
-      },write:(stream, buffer, offset, length, position, canOwn) => {
+      },
+  write:(stream, buffer, offset, length, position, canOwn) => {
+        assert(offset >= 0);
         if (length < 0 || position < 0) {
           throw new FS.ErrnoError(28);
         }
@@ -3139,7 +3416,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         var bytesWritten = stream.stream_ops.write(stream, buffer, offset, length, position, canOwn);
         if (!seeking) stream.position += bytesWritten;
         return bytesWritten;
-      },allocate:(stream, offset, length) => {
+      },
+  allocate:(stream, offset, length) => {
         if (FS.isClosed(stream)) {
           throw new FS.ErrnoError(8);
         }
@@ -3156,7 +3434,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           throw new FS.ErrnoError(138);
         }
         stream.stream_ops.allocate(stream, offset, length);
-      },mmap:(stream, length, position, prot, flags) => {
+      },
+  mmap:(stream, length, position, prot, flags) => {
         // User requests writing to file (prot & PROT_WRITE != 0).
         // Checking if we have permissions to write to the file unless
         // MAP_PRIVATE flag is set. According to POSIX spec it is possible
@@ -3175,17 +3454,22 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           throw new FS.ErrnoError(43);
         }
         return stream.stream_ops.mmap(stream, length, position, prot, flags);
-      },msync:(stream, buffer, offset, length, mmapFlags) => {
+      },
+  msync:(stream, buffer, offset, length, mmapFlags) => {
+        assert(offset >= 0);
         if (!stream.stream_ops.msync) {
           return 0;
         }
         return stream.stream_ops.msync(stream, buffer, offset, length, mmapFlags);
-      },munmap:(stream) => 0,ioctl:(stream, cmd, arg) => {
+      },
+  munmap:(stream) => 0,
+  ioctl:(stream, cmd, arg) => {
         if (!stream.stream_ops.ioctl) {
           throw new FS.ErrnoError(59);
         }
         return stream.stream_ops.ioctl(stream, cmd, arg);
-      },readFile:(path, opts = {}) => {
+      },
+  readFile:(path, opts = {}) => {
         opts.flags = opts.flags || 0;
         opts.encoding = opts.encoding || 'binary';
         if (opts.encoding !== 'utf8' && opts.encoding !== 'binary') {
@@ -3204,7 +3488,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
         FS.close(stream);
         return ret;
-      },writeFile:(path, data, opts = {}) => {
+      },
+  writeFile:(path, data, opts = {}) => {
         opts.flags = opts.flags || 577;
         var stream = FS.open(path, opts.flags, opts.mode);
         if (typeof data == 'string') {
@@ -3217,7 +3502,9 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           throw new Error('Unsupported data type');
         }
         FS.close(stream);
-      },cwd:() => FS.currentPath,chdir:(path) => {
+      },
+  cwd:() => FS.currentPath,
+  chdir:(path) => {
         var lookup = FS.lookupPath(path, { follow: true });
         if (lookup.node === null) {
           throw new FS.ErrnoError(44);
@@ -3230,11 +3517,13 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           throw new FS.ErrnoError(errCode);
         }
         FS.currentPath = lookup.path;
-      },createDefaultDirectories:() => {
+      },
+  createDefaultDirectories:() => {
         FS.mkdir('/tmp');
         FS.mkdir('/home');
         FS.mkdir('/home/web_user');
-      },createDefaultDevices:() => {
+      },
+  createDefaultDevices:() => {
         // create /dev
         FS.mkdir('/dev');
         // setup /dev/null
@@ -3265,7 +3554,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         // just create the tmp dirs that reside in it commonly
         FS.mkdir('/dev/shm');
         FS.mkdir('/dev/shm/tmp');
-      },createSpecialDirectories:() => {
+      },
+  createSpecialDirectories:() => {
         // create /proc/self/fd which allows /proc/self/fd/6 => readlink gives the
         // name of the stream for fd 6 (see test_unistd_ttyname)
         FS.mkdir('/proc');
@@ -3290,7 +3580,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             return node;
           }
         }, {}, '/proc/self/fd');
-      },createStandardStreams:() => {
+      },
+  createStandardStreams:() => {
         // TODO deprecate the old functionality of a single
         // input / output callback and that utilizes FS.createDevice
         // and instead require a unique set of stream ops
@@ -3322,7 +3613,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         assert(stdin.fd === 0, `invalid handle for stdin (${stdin.fd})`);
         assert(stdout.fd === 1, `invalid handle for stdout (${stdout.fd})`);
         assert(stderr.fd === 2, `invalid handle for stderr (${stderr.fd})`);
-      },ensureErrnoError:() => {
+      },
+  ensureErrnoError:() => {
         if (FS.ErrnoError) return;
         FS.ErrnoError = /** @this{Object} */ function ErrnoError(errno, node) {
           // We set the `name` property to be able to identify `FS.ErrnoError`
@@ -3360,7 +3652,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           FS.genericErrors[code] = new FS.ErrnoError(code);
           FS.genericErrors[code].stack = '<generic error, no stack>';
         });
-      },staticInit:() => {
+      },
+  staticInit:() => {
         FS.ensureErrnoError();
   
         FS.nameTable = new Array(4096);
@@ -3374,7 +3667,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         FS.filesystems = {
           'MEMFS': MEMFS,
         };
-      },init:(input, output, error) => {
+      },
+  init:(input, output, error) => {
         assert(!FS.init.initialized, 'FS.init was previously called. If you want to initialize later with custom parameters, remove any earlier calls (note that one is automatically added to the generated code)');
         FS.init.initialized = true;
   
@@ -3386,7 +3680,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         Module['stderr'] = error || Module['stderr'];
   
         FS.createStandardStreams();
-      },quit:() => {
+      },
+  quit:() => {
         FS.init.initialized = false;
         // force-flush all streams, so we get musl std streams printed out
         _fflush(0);
@@ -3398,13 +3693,15 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           }
           FS.close(stream);
         }
-      },findObject:(path, dontResolveLastLink) => {
+      },
+  findObject:(path, dontResolveLastLink) => {
         var ret = FS.analyzePath(path, dontResolveLastLink);
         if (!ret.exists) {
           return null;
         }
         return ret.object;
-      },analyzePath:(path, dontResolveLastLink) => {
+      },
+  analyzePath:(path, dontResolveLastLink) => {
         // operate from within the context of the symlink's target
         try {
           var lookup = FS.lookupPath(path, { follow: !dontResolveLastLink });
@@ -3431,7 +3728,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           ret.error = e.errno;
         };
         return ret;
-      },createPath:(parent, path, canRead, canWrite) => {
+      },
+  createPath:(parent, path, canRead, canWrite) => {
         parent = typeof parent == 'string' ? parent : FS.getPath(parent);
         var parts = path.split('/').reverse();
         while (parts.length) {
@@ -3446,11 +3744,13 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           parent = current;
         }
         return current;
-      },createFile:(parent, name, properties, canRead, canWrite) => {
+      },
+  createFile:(parent, name, properties, canRead, canWrite) => {
         var path = PATH.join2(typeof parent == 'string' ? parent : FS.getPath(parent), name);
         var mode = FS_getMode(canRead, canWrite);
         return FS.create(path, mode);
-      },createDataFile:(parent, name, data, canRead, canWrite, canOwn) => {
+      },
+  createDataFile:(parent, name, data, canRead, canWrite, canOwn) => {
         var path = name;
         if (parent) {
           parent = typeof parent == 'string' ? parent : FS.getPath(parent);
@@ -3472,7 +3772,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           FS.chmod(node, mode);
         }
         return node;
-      },createDevice:(parent, name, input, output) => {
+      },
+  createDevice:(parent, name, input, output) => {
         var path = PATH.join2(typeof parent == 'string' ? parent : FS.getPath(parent), name);
         var mode = FS_getMode(!!input, !!output);
         if (!FS.createDevice.major) FS.createDevice.major = 64;
@@ -3525,7 +3826,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           }
         });
         return FS.mkdev(path, mode, dev);
-      },forceLoadFile:(obj) => {
+      },
+  forceLoadFile:(obj) => {
         if (obj.isDevice || obj.isFolder || obj.link || obj.contents) return true;
         if (typeof XMLHttpRequest != 'undefined') {
           throw new Error("Lazy loading should have been performed (contents set) in createLazyFile, but it was not. Lazy loading only works in web workers. Use --embed-file or --preload-file in emcc on the main thread.");
@@ -3542,7 +3844,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         } else {
           throw new Error('Cannot load without read() or XMLHttpRequest.');
         }
-      },createLazyFile:(parent, name, url, canRead, canWrite) => {
+      },
+  createLazyFile:(parent, name, url, canRead, canWrite) => {
         // Lazy chunked Uint8Array (implements get and length from Uint8Array). Actual getting is abstracted away for eventual reuse.
         /** @constructor */
         function LazyUint8Array() {
@@ -3709,21 +4012,30 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         };
         node.stream_ops = stream_ops;
         return node;
-      },absolutePath:() => {
+      },
+  absolutePath:() => {
         abort('FS.absolutePath has been removed; use PATH_FS.resolve instead');
-      },createFolder:() => {
+      },
+  createFolder:() => {
         abort('FS.createFolder has been removed; use FS.mkdir instead');
-      },createLink:() => {
+      },
+  createLink:() => {
         abort('FS.createLink has been removed; use FS.symlink instead');
-      },joinPath:() => {
+      },
+  joinPath:() => {
         abort('FS.joinPath has been removed; use PATH.join instead');
-      },mmapAlloc:() => {
+      },
+  mmapAlloc:() => {
         abort('FS.mmapAlloc has been replaced by the top level function mmapAlloc');
-      },standardizePath:() => {
+      },
+  standardizePath:() => {
         abort('FS.standardizePath has been removed; use PATH.normalize instead');
-      }};
+      },
+  };
   
-  var SYSCALLS = {DEFAULT_POLLMASK:5,calculateAt:function(dirfd, path, allowEmpty) {
+  var SYSCALLS = {
+  DEFAULT_POLLMASK:5,
+  calculateAt:function(dirfd, path, allowEmpty) {
         if (PATH.isAbs(path)) {
           return path;
         }
@@ -3742,7 +4054,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           return dir;
         }
         return PATH.join2(dir, path);
-      },doStat:function(func, path, buf) {
+      },
+  doStat:function(func, path, buf) {
         try {
           var stat = func(path);
         } catch (e) {
@@ -3772,7 +4085,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         HEAPU32[(((buf)+(80))>>2)] = (ctime % 1000) * 1000;
         (tempI64 = [stat.ino>>>0,(tempDouble=stat.ino,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? (+(Math.floor((tempDouble)/4294967296.0)))>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)], HEAP32[(((buf)+(88))>>2)] = tempI64[0],HEAP32[(((buf)+(92))>>2)] = tempI64[1]);
         return 0;
-      },doMsync:function(addr, stream, len, flags, offset) {
+      },
+  doMsync:function(addr, stream, len, flags, offset) {
         if (!FS.isFile(stream.node.mode)) {
           throw new FS.ErrnoError(43);
         }
@@ -3782,18 +4096,23 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
         var buffer = HEAPU8.slice(addr, addr + len);
         FS.msync(stream, buffer, offset, len, flags);
-      },varargs:undefined,get:function() {
+      },
+  varargs:undefined,
+  get() {
         assert(SYSCALLS.varargs != undefined);
         SYSCALLS.varargs += 4;
         var ret = HEAP32[(((SYSCALLS.varargs)-(4))>>2)];
         return ret;
-      },getStr:function(ptr) {
+      },
+  getStr(ptr) {
         var ret = UTF8ToString(ptr);
         return ret;
-      },getStreamFromFD:function(fd) {
+      },
+  getStreamFromFD:function(fd) {
         var stream = FS.getStreamChecked(fd);
         return stream;
-      }};
+      },
+  };
   function ___syscall_fcntl64(fd, cmd, varargs) {
   SYSCALLS.varargs = varargs;
   try {
@@ -3819,9 +4138,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           stream.flags |= arg;
           return 0;
         }
-        case 5:
-        /* case 5: Currently in musl F_GETLK64 has same value as F_GETLK, so omitted to avoid duplicate case blocks. If that changes, uncomment this */ {
-          
+        case 5: {
           var arg = SYSCALLS.get();
           var offset = 0;
           // We're always unlocked.
@@ -3830,10 +4147,6 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
         case 6:
         case 7:
-        /* case 6: Currently in musl F_SETLK64 has same value as F_SETLK, so omitted to avoid duplicate case blocks. If that changes, uncomment this */
-        /* case 7: Currently in musl F_SETLKW64 has same value as F_SETLKW, so omitted to avoid duplicate case blocks. If that changes, uncomment this */
-          
-          
           return 0; // Pretend that the locking is successful.
         case 16:
         case 8:
@@ -4034,18 +4347,23 @@ function GetCanvasHeight() { return canvas.clientHeight; }
       stackRestore(stack);
       return ret;
     };
-  var JSEvents = {inEventHandler:0,removeAllEventListeners:function() {
+  var JSEvents = {
+  inEventHandler:0,
+  removeAllEventListeners:function() {
         for (var i = JSEvents.eventHandlers.length-1; i >= 0; --i) {
           JSEvents._removeHandler(i);
         }
         JSEvents.eventHandlers = [];
         JSEvents.deferredCalls = [];
-      },registerRemoveEventListeners:function() {
+      },
+  registerRemoveEventListeners:function() {
         if (!JSEvents.removeEventListenersRegistered) {
           __ATEXIT__.push(JSEvents.removeAllEventListeners);
           JSEvents.removeEventListenersRegistered = true;
         }
-      },deferredCalls:[],deferCall:function(targetFunction, precedence, argsList) {
+      },
+  deferredCalls:[],
+  deferCall:function(targetFunction, precedence, argsList) {
         function arraysHaveEqualContent(arrA, arrB) {
           if (arrA.length != arrB.length) return false;
   
@@ -4068,16 +4386,27 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         });
   
         JSEvents.deferredCalls.sort(function(x,y) { return x.precedence < y.precedence; });
-      },removeDeferredCalls:function(targetFunction) {
+      },
+  removeDeferredCalls:function(targetFunction) {
         for (var i = 0; i < JSEvents.deferredCalls.length; ++i) {
           if (JSEvents.deferredCalls[i].targetFunction == targetFunction) {
             JSEvents.deferredCalls.splice(i, 1);
             --i;
           }
         }
-      },canPerformEventHandlerRequests:function() {
+      },
+  canPerformEventHandlerRequests:function() {
+        if (navigator.userActivation) {
+          // Verify against transient activation status from UserActivation API
+          // whether it is possible to perform a request here without needing to defer. See
+          // https://developer.mozilla.org/en-US/docs/Web/Security/User_activation#transient_activation
+          // and https://caniuse.com/mdn-api_useractivation
+          // At the time of writing, Firefox does not support this API: https://bugzilla.mozilla.org/show_bug.cgi?id=1791079
+          return navigator.userActivation.isActive;
+        }
         return JSEvents.inEventHandler && JSEvents.currentEventHandler.allowsDeferredCalls;
-      },runDeferredCalls:function() {
+      },
+  runDeferredCalls:function() {
         if (!JSEvents.canPerformEventHandlerRequests()) {
           return;
         }
@@ -4087,18 +4416,22 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           --i;
           call.targetFunction.apply(null, call.argsList);
         }
-      },eventHandlers:[],removeAllHandlersOnTarget:function(target, eventTypeString) {
+      },
+  eventHandlers:[],
+  removeAllHandlersOnTarget:function(target, eventTypeString) {
         for (var i = 0; i < JSEvents.eventHandlers.length; ++i) {
           if (JSEvents.eventHandlers[i].target == target && 
             (!eventTypeString || eventTypeString == JSEvents.eventHandlers[i].eventTypeString)) {
              JSEvents._removeHandler(i--);
            }
         }
-      },_removeHandler:function(i) {
+      },
+  _removeHandler:function(i) {
         var h = JSEvents.eventHandlers[i];
         h.target.removeEventListener(h.eventTypeString, h.eventListenerFunc, h.useCapture);
         JSEvents.eventHandlers.splice(i, 1);
-      },registerOrRemoveHandler:function(eventHandler) {
+      },
+  registerOrRemoveHandler:function(eventHandler) {
         if (!eventHandler.target) {
           err('registerOrRemoveHandler: the target element for event handler registration does not exist, when processing the following event handler registration:');
           console.dir(eventHandler);
@@ -4132,18 +4465,21 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           }
         }
         return 0;
-      },getNodeNameForTarget:function(target) {
+      },
+  getNodeNameForTarget:function(target) {
         if (!target) return '';
         if (target == window) return '#window';
         if (target == screen) return '#screen';
         return (target && target.nodeName) ? target.nodeName : '';
-      },fullscreenEnabled:function() {
+      },
+  fullscreenEnabled:function() {
         return document.fullscreenEnabled
         // Safari 13.0.3 on macOS Catalina 10.15.1 still ships with prefixed webkitFullscreenEnabled.
         // TODO: If Safari at some point ships with unprefixed version, update the version check above.
         || document.webkitFullscreenEnabled
          ;
-      }};
+      },
+  };
   
   function maybeCStringToJsString(cString) {
       // "cString > 2" checks if the input is a number, and isn't of the special
@@ -4271,24 +4607,43 @@ function GetCanvasHeight() { return canvas.clientHeight; }
     }
   
   
-  var GL = {counter:1,buffers:[],programs:[],framebuffers:[],renderbuffers:[],textures:[],shaders:[],vaos:[],contexts:[],offscreenCanvases:{},queries:[],stringCache:{},unpackAlignment:4,recordError:function recordError(errorCode) {
+  var GL = {
+  counter:1,
+  buffers:[],
+  programs:[],
+  framebuffers:[],
+  renderbuffers:[],
+  textures:[],
+  shaders:[],
+  vaos:[],
+  contexts:[],
+  offscreenCanvases:{
+  },
+  queries:[],
+  stringCache:{
+  },
+  unpackAlignment:4,
+  recordError:function recordError(errorCode) {
         if (!GL.lastError) {
           GL.lastError = errorCode;
         }
-      },getNewId:function(table) {
+      },
+  getNewId:function(table) {
         var ret = GL.counter++;
         for (var i = table.length; i < ret; i++) {
           table[i] = null;
         }
         return ret;
-      },getSource:function(shader, count, string, length) {
+      },
+  getSource:function(shader, count, string, length) {
         var source = '';
         for (var i = 0; i < count; ++i) {
           var len = length ? HEAP32[(((length)+(i*4))>>2)] : -1;
           source += UTF8ToString(HEAP32[(((string)+(i*4))>>2)], len < 0 ? undefined : len);
         }
         return source;
-      },createContext:function(/** @type {HTMLCanvasElement} */ canvas, webGLContextAttributes) {
+      },
+  createContext:function(/** @type {HTMLCanvasElement} */ canvas, webGLContextAttributes) {
   
         // BUG: Workaround Safari WebGL issue: After successfully acquiring WebGL context on a canvas,
         // calling .getContext() will always return that context independent of which 'webgl' or 'webgl2'
@@ -4315,7 +4670,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         var handle = GL.registerContext(ctx, webGLContextAttributes);
   
         return handle;
-      },registerContext:function(ctx, webGLContextAttributes) {
+      },
+  registerContext:function(ctx, webGLContextAttributes) {
         // without pthreads a context is just an integer ID
         var handle = GL.getNewId(GL.contexts);
   
@@ -4334,19 +4690,23 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
   
         return handle;
-      },makeContextCurrent:function(contextHandle) {
+      },
+  makeContextCurrent:function(contextHandle) {
   
         GL.currentContext = GL.contexts[contextHandle]; // Active Emscripten GL layer context object.
         Module.ctx = GLctx = GL.currentContext && GL.currentContext.GLctx; // Active WebGL context object.
         return !(contextHandle && !GLctx);
-      },getContext:function(contextHandle) {
+      },
+  getContext:function(contextHandle) {
         return GL.contexts[contextHandle];
-      },deleteContext:function(contextHandle) {
+      },
+  deleteContext:function(contextHandle) {
         if (GL.currentContext === GL.contexts[contextHandle]) GL.currentContext = null;
         if (typeof JSEvents == 'object') JSEvents.removeAllHandlersOnTarget(GL.contexts[contextHandle].GLctx.canvas); // Release all JS event handlers on the DOM element that the GL context is associated with since the context is now deleted.
         if (GL.contexts[contextHandle] && GL.contexts[contextHandle].GLctx.canvas) GL.contexts[contextHandle].GLctx.canvas.GLctxObject = undefined; // Make sure the canvas object no longer refers to the context object so there are no GC surprises.
         GL.contexts[contextHandle] = null;
-      },initExtensions:function(context) {
+      },
+  initExtensions:function(context) {
         // If this function is called without a specific context object, init the extensions of the currently active context.
         if (!context) context = GL.currentContext;
   
@@ -4377,7 +4737,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             GLctx.getExtension(ext);
           }
         });
-      }};
+      },
+  };
   /** @suppress {duplicate } */
   function _glActiveTexture(x0) { GLctx.activeTexture(x0) }
   var _emscripten_glActiveTexture = _glActiveTexture;
@@ -6237,7 +6598,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
     };
   var _emscripten_resize_heap = (requestedSize) => {
       var oldSize = HEAPU8.length;
-      requestedSize = requestedSize >>> 0;
+      // With CAN_ADDRESS_2GB or MEMORY64, pointers are already unsigned.
+      requestedSize >>>= 0;
       abortOnCannotGrowMemory(requestedSize);
     };
 
@@ -6571,7 +6933,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
     };
   _emscripten_sleep.isAsync = true;
 
-  var ENV = {};
+  var ENV = {
+  };
   
   var getExecutableName = () => {
       return thisProgram || './this.program';
@@ -6683,20 +7046,19 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   }
   }
 
+  
   function convertI32PairToI53Checked(lo, hi) {
       assert(lo == (lo >>> 0) || lo == (lo|0)); // lo should either be a i32 or a u32
       assert(hi === (hi|0));                    // hi should be a i32
       return ((hi + 0x200000) >>> 0 < 0x400001 - !!lo) ? (lo >>> 0) + hi * 4294967296 : NaN;
     }
+  function _fd_seek(fd,offset_low, offset_high,whence,newOffset) {
+    var offset = convertI32PairToI53Checked(offset_low, offset_high);;
   
-  
-  
-  
-  
-  function _fd_seek(fd, offset_low, offset_high, whence, newOffset) {
+    
   try {
   
-      var offset = convertI32PairToI53Checked(offset_low, offset_high); if (isNaN(offset)) return 61;
+      if (isNaN(offset)) return 61;
       var stream = SYSCALLS.getStreamFromFD(fd);
       FS.llseek(stream, offset, whence);
       (tempI64 = [stream.position>>>0,(tempDouble=stream.position,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? (+(Math.floor((tempDouble)/4294967296.0)))>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)], HEAP32[((newOffset)>>2)] = tempI64[0],HEAP32[(((newOffset)+(4))>>2)] = tempI64[1]);
@@ -6706,6 +7068,7 @@ function GetCanvasHeight() { return canvas.clientHeight; }
     if (typeof FS == 'undefined' || !(e.name === 'ErrnoError')) throw e;
     return e.errno;
   }
+  ;
   }
 
   /** @param {number=} offset */
@@ -6968,11 +7331,24 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   
   
   
-  var Browser = {mainLoop:{running:false,scheduler:null,method:"",currentlyRunningMainloop:0,func:null,arg:0,timingMode:0,timingValue:0,currentFrameNumber:0,queue:[],pause:function() {
+  var Browser = {
+  mainLoop:{
+  running:false,
+  scheduler:null,
+  method:"",
+  currentlyRunningMainloop:0,
+  func:null,
+  arg:0,
+  timingMode:0,
+  timingValue:0,
+  currentFrameNumber:0,
+  queue:[],
+  pause:function() {
           Browser.mainLoop.scheduler = null;
           // Incrementing this signals the previous main loop that it's now become old, and it must return.
           Browser.mainLoop.currentlyRunningMainloop++;
-        },resume:function() {
+        },
+  resume:function() {
           Browser.mainLoop.currentlyRunningMainloop++;
           var timingMode = Browser.mainLoop.timingMode;
           var timingValue = Browser.mainLoop.timingValue;
@@ -6982,7 +7358,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           setMainLoop(func, 0, false, Browser.mainLoop.arg, true);
           _emscripten_set_main_loop_timing(timingMode, timingValue);
           Browser.mainLoop.scheduler();
-        },updateStatus:function() {
+        },
+  updateStatus:function() {
           if (Module['setStatus']) {
             var message = Module['statusMessage'] || 'Please wait...';
             var remaining = Browser.mainLoop.remainingBlockers;
@@ -6997,7 +7374,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
               Module['setStatus']('');
             }
           }
-        },runIter:function(func) {
+        },
+  runIter:function(func) {
           if (ABORT) return;
           if (Module['preMainLoop']) {
             var preRet = Module['preMainLoop']();
@@ -7007,7 +7385,13 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           }
           callUserCallback(func);
           if (Module['postMainLoop']) Module['postMainLoop']();
-        }},isFullscreen:false,pointerLock:false,moduleContextCreatedCallbacks:[],workers:[],init:function() {
+        },
+  },
+  isFullscreen:false,
+  pointerLock:false,
+  moduleContextCreatedCallbacks:[],
+  workers:[],
+  init:function() {
         if (Browser.initted) return;
         Browser.initted = true;
   
@@ -7151,7 +7535,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             }, false);
           }
         }
-      },createContext:function(/** @type {HTMLCanvasElement} */ canvas, useWebGL, setInModule, webGLContextAttributes) {
+      },
+  createContext:function(/** @type {HTMLCanvasElement} */ canvas, useWebGL, setInModule, webGLContextAttributes) {
         if (useWebGL && Module.ctx && canvas == Module.canvas) return Module.ctx; // no need to recreate GL context if it's already been created for this canvas.
   
         var ctx;
@@ -7195,7 +7580,12 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           Browser.init();
         }
         return ctx;
-      },destroyContext:function(canvas, useWebGL, setInModule) {},fullscreenHandlersInstalled:false,lockPointer:undefined,resizeCanvas:undefined,requestFullscreen:function(lockPointer, resizeCanvas) {
+      },
+  destroyContext:function(canvas, useWebGL, setInModule) {},
+  fullscreenHandlersInstalled:false,
+  lockPointer:undefined,
+  resizeCanvas:undefined,
+  requestFullscreen:function(lockPointer, resizeCanvas) {
         Browser.lockPointer = lockPointer;
         Browser.resizeCanvas = resizeCanvas;
         if (typeof Browser.lockPointer == 'undefined') Browser.lockPointer = true;
@@ -7252,9 +7642,11 @@ function GetCanvasHeight() { return canvas.clientHeight; }
                                            (canvasContainer['webkitRequestFullScreen'] ? () => canvasContainer['webkitRequestFullScreen'](Element['ALLOW_KEYBOARD_INPUT']) : null);
   
         canvasContainer.requestFullscreen();
-      },requestFullScreen:function() {
+      },
+  requestFullScreen:function() {
         abort('Module.requestFullScreen has been replaced by Module.requestFullscreen (without a capital S)');
-      },exitFullscreen:function() {
+      },
+  exitFullscreen:function() {
         // This is workaround for chrome. Trying to exit from fullscreen
         // not in fullscreen state will cause "TypeError: Document not active"
         // in chrome. See https://github.com/emscripten-core/emscripten/pull/8236
@@ -7270,7 +7662,9 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             (() => {});
         CFS.apply(document, []);
         return true;
-      },nextRAF:0,fakeRequestAnimationFrame:function(func) {
+      },
+  nextRAF:0,
+  fakeRequestAnimationFrame:function(func) {
         // try to keep 60fps between calls to here
         var now = Date.now();
         if (Browser.nextRAF === 0) {
@@ -7282,25 +7676,29 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
         var delay = Math.max(Browser.nextRAF - now, 0);
         setTimeout(func, delay);
-      },requestAnimationFrame:function(func) {
+      },
+  requestAnimationFrame:function(func) {
         if (typeof requestAnimationFrame == 'function') {
           requestAnimationFrame(func);
           return;
         }
         var RAF = Browser.fakeRequestAnimationFrame;
         RAF(func);
-      },safeSetTimeout:function(func, timeout) {
+      },
+  safeSetTimeout:function(func, timeout) {
         // Legacy function, this is used by the SDL2 port so we need to keep it
         // around at least until that is updated.
         // See https://github.com/libsdl-org/SDL/pull/6304
         return safeSetTimeout(func, timeout);
-      },safeRequestAnimationFrame:function(func) {
+      },
+  safeRequestAnimationFrame:function(func) {
         
         return Browser.requestAnimationFrame(() => {
           
           callUserCallback(func);
         });
-      },getMimetype:function(name) {
+      },
+  getMimetype:function(name) {
         return {
           'jpg': 'image/jpeg',
           'jpeg': 'image/jpeg',
@@ -7310,23 +7708,27 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           'wav': 'audio/wav',
           'mp3': 'audio/mpeg'
         }[name.substr(name.lastIndexOf('.')+1)];
-      },getUserMedia:function(func) {
+      },
+  getUserMedia:function(func) {
         if (!window.getUserMedia) {
           window.getUserMedia = navigator['getUserMedia'] ||
                                 navigator['mozGetUserMedia'];
         }
         window.getUserMedia(func);
-      },getMovementX:function(event) {
+      },
+  getMovementX:function(event) {
         return event['movementX'] ||
                event['mozMovementX'] ||
                event['webkitMovementX'] ||
                0;
-      },getMovementY:function(event) {
+      },
+  getMovementY:function(event) {
         return event['movementY'] ||
                event['mozMovementY'] ||
                event['webkitMovementY'] ||
                0;
-      },getMouseWheelDelta:function(event) {
+      },
+  getMouseWheelDelta:function(event) {
         var delta = 0;
         switch (event.type) {
           case 'DOMMouseScroll':
@@ -7360,7 +7762,16 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             throw 'unrecognized mouse wheel event: ' + event.type;
         }
         return delta;
-      },mouseX:0,mouseY:0,mouseMovementX:0,mouseMovementY:0,touches:{},lastTouches:{},calculateMouseEvent:function(event) { // event should be mousemove, mousedown or mouseup
+      },
+  mouseX:0,
+  mouseY:0,
+  mouseMovementX:0,
+  mouseMovementY:0,
+  touches:{
+  },
+  lastTouches:{
+  },
+  calculateMouseEvent:function(event) { // event should be mousemove, mousedown or mouseup
         if (Browser.pointerLock) {
           // When the pointer is locked, calculate the coordinates
           // based on the movement of the mouse.
@@ -7439,14 +7850,20 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           Browser.mouseX = x;
           Browser.mouseY = y;
         }
-      },resizeListeners:[],updateResizeListeners:function() {
+      },
+  resizeListeners:[],
+  updateResizeListeners:function() {
         var canvas = Module['canvas'];
         Browser.resizeListeners.forEach((listener) => listener(canvas.width, canvas.height));
-      },setCanvasSize:function(width, height, noUpdates) {
+      },
+  setCanvasSize:function(width, height, noUpdates) {
         var canvas = Module['canvas'];
         Browser.updateCanvasDimensions(canvas, width, height);
         if (!noUpdates) Browser.updateResizeListeners();
-      },windowedWidth:0,windowedHeight:0,setFullscreenCanvasSize:function() {
+      },
+  windowedWidth:0,
+  windowedHeight:0,
+  setFullscreenCanvasSize:function() {
         // check if SDL is available
         if (typeof SDL != "undefined") {
           var flags = HEAPU32[((SDL.screen)>>2)];
@@ -7455,7 +7872,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
         Browser.updateCanvasDimensions(Module['canvas']);
         Browser.updateResizeListeners();
-      },setWindowedCanvasSize:function() {
+      },
+  setWindowedCanvasSize:function() {
         // check if SDL is available
         if (typeof SDL != "undefined") {
           var flags = HEAPU32[((SDL.screen)>>2)];
@@ -7464,7 +7882,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
         Browser.updateCanvasDimensions(Module['canvas']);
         Browser.updateResizeListeners();
-      },updateCanvasDimensions:function(canvas, wNative, hNative) {
+      },
+  updateCanvasDimensions:function(canvas, wNative, hNative) {
         if (wNative && hNative) {
           canvas.widthNative = wNative;
           canvas.heightNative = hNative;
@@ -7508,7 +7927,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             }
           }
         }
-      }};
+      },
+  };
   
   /** @constructor */
   function GLFW_Window(id, width, height, title, monitor, share) {
@@ -7558,10 +7978,56 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   
   
   
-  var GLFW = {WindowFromId:function(id) {
+  var GLFW = {
+  WindowFromId:function(id) {
         if (id <= 0 || !GLFW.windows) return null;
         return GLFW.windows[id - 1];
-      },joystickFunc:null,errorFunc:null,monitorFunc:null,active:null,scale:null,windows:null,monitors:null,monitorString:null,versionString:null,initialTime:null,extensions:null,hints:null,defaultHints:{131073:0,131074:0,131075:1,131076:1,131077:1,131082:0,135169:8,135170:8,135171:8,135172:8,135173:24,135174:8,135175:0,135176:0,135177:0,135178:0,135179:0,135180:0,135181:0,135182:0,135183:0,139265:196609,139266:1,139267:0,139268:0,139269:0,139270:0,139271:0,139272:0,139276:0},DOMToGLFWKeyCode:function(keycode) {
+      },
+  joystickFunc:null,
+  errorFunc:null,
+  monitorFunc:null,
+  active:null,
+  scale:null,
+  windows:null,
+  monitors:null,
+  monitorString:null,
+  versionString:null,
+  initialTime:null,
+  extensions:null,
+  hints:null,
+  defaultHints:{
+  131073:0,
+  131074:0,
+  131075:1,
+  131076:1,
+  131077:1,
+  131082:0,
+  135169:8,
+  135170:8,
+  135171:8,
+  135172:8,
+  135173:24,
+  135174:8,
+  135175:0,
+  135176:0,
+  135177:0,
+  135178:0,
+  135179:0,
+  135180:0,
+  135181:0,
+  135182:0,
+  135183:0,
+  139265:196609,
+  139266:1,
+  139267:0,
+  139268:0,
+  139269:0,
+  139270:0,
+  139271:0,
+  139272:0,
+  139276:0,
+  },
+  DOMToGLFWKeyCode:function(keycode) {
         switch (keycode) {
           // these keycodes are only defined for GLFW3, assume they are the same for GLFW2
           case 0x20:return 32; // DOM_VK_SPACE -> GLFW_KEY_SPACE
@@ -7688,7 +8154,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           // XXX: GLFW_KEY_WORLD_1, GLFW_KEY_WORLD_2 what are these?
           default:return -1; // GLFW_KEY_UNKNOWN
         };
-      },getModBits:function(win) {
+      },
+  getModBits:function(win) {
         var mod = 0;
         if (win.keys[340]) mod |= 0x0001; // GLFW_MOD_SHIFT
         if (win.keys[341]) mod |= 0x0002; // GLFW_MOD_CONTROL
@@ -7696,7 +8163,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         if (win.keys[343]) mod |= 0x0008; // GLFW_MOD_SUPER
         // add caps and num lock keys? only if lock_key_mod is set
         return mod;
-      },onKeyPress:function(event) {
+      },
+  onKeyPress:function(event) {
         if (!GLFW.active || !GLFW.active.charFunc) return;
         if (event.ctrlKey || event.metaKey) return;
   
@@ -7705,7 +8173,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         if (charCode == 0 || (charCode >= 0x00 && charCode <= 0x1F)) return;
   
         ((a1, a2) => dynCall_vii.apply(null, [GLFW.active.charFunc, a1, a2]))(GLFW.active.id, charCode);
-      },onKeyChanged:function(keyCode, status) {
+      },
+  onKeyChanged:function(keyCode, status) {
         if (!GLFW.active) return;
   
         var key = GLFW.DOMToGLFWKeyCode(keyCode);
@@ -7719,11 +8188,14 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           if (repeat) status = 2; // GLFW_REPEAT
           ((a1, a2, a3, a4, a5) => dynCall_viiiii.apply(null, [GLFW.active.keyFunc, a1, a2, a3, a4, a5]))(GLFW.active.id, key, keyCode, status, GLFW.getModBits(GLFW.active));
         }
-      },onGamepadConnected:function(event) {
+      },
+  onGamepadConnected:function(event) {
         GLFW.refreshJoysticks();
-      },onGamepadDisconnected:function(event) {
+      },
+  onGamepadDisconnected:function(event) {
         GLFW.refreshJoysticks();
-      },onKeydown:function(event) {
+      },
+  onKeydown:function(event) {
         GLFW.onKeyChanged(event.keyCode, 1); // GLFW_PRESS or GLFW_REPEAT
   
         // This logic comes directly from the sdl implementation. We cannot
@@ -7732,9 +8204,11 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         if (event.keyCode === 8 /* backspace */ || event.keyCode === 9 /* tab */) {
           event.preventDefault();
         }
-      },onKeyup:function(event) {
+      },
+  onKeyup:function(event) {
         GLFW.onKeyChanged(event.keyCode, 0); // GLFW_RELEASE
-      },onBlur:function(event) {
+      },
+  onBlur:function(event) {
         if (!GLFW.active) return;
   
         for (var i = 0; i < GLFW.active.domKeys.length; ++i) {
@@ -7742,7 +8216,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             GLFW.onKeyChanged(i, 0); // GLFW_RELEASE
           }
         }
-      },onMousemove:function(event) {
+      },
+  onMousemove:function(event) {
         if (!GLFW.active) return;
   
         Browser.calculateMouseEvent(event);
@@ -7752,7 +8227,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         if (GLFW.active.cursorPosFunc) {
           ((a1, a2, a3) => dynCall_vidd.apply(null, [GLFW.active.cursorPosFunc, a1, a2, a3]))(GLFW.active.id, Browser.mouseX, Browser.mouseY);
         }
-      },DOMToGLFWMouseButton:function(event) {
+      },
+  DOMToGLFWMouseButton:function(event) {
         // DOM and glfw have different button codes.
         // See http://www.w3schools.com/jsref/event_button.asp.
         var eventButton = event['button'];
@@ -7764,7 +8240,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           }
         }
         return eventButton;
-      },onMouseenter:function(event) {
+      },
+  onMouseenter:function(event) {
         if (!GLFW.active) return;
   
         if (event.target != Module["canvas"]) return;
@@ -7772,7 +8249,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         if (GLFW.active.cursorEnterFunc) {
           ((a1, a2) => dynCall_vii.apply(null, [GLFW.active.cursorEnterFunc, a1, a2]))(GLFW.active.id, 1);
         }
-      },onMouseleave:function(event) {
+      },
+  onMouseleave:function(event) {
         if (!GLFW.active) return;
   
         if (event.target != Module["canvas"]) return;
@@ -7780,7 +8258,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         if (GLFW.active.cursorEnterFunc) {
           ((a1, a2) => dynCall_vii.apply(null, [GLFW.active.cursorEnterFunc, a1, a2]))(GLFW.active.id, 0);
         }
-      },onMouseButtonChanged:function(event, status) {
+      },
+  onMouseButtonChanged:function(event, status) {
         if (!GLFW.active) return;
   
         Browser.calculateMouseEvent(event);
@@ -7801,13 +8280,16 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         if (GLFW.active.mouseButtonFunc) {
           ((a1, a2, a3, a4) => dynCall_viiii.apply(null, [GLFW.active.mouseButtonFunc, a1, a2, a3, a4]))(GLFW.active.id, eventButton, status, GLFW.getModBits(GLFW.active));
         }
-      },onMouseButtonDown:function(event) {
+      },
+  onMouseButtonDown:function(event) {
         if (!GLFW.active) return;
         GLFW.onMouseButtonChanged(event, 1); // GLFW_PRESS
-      },onMouseButtonUp:function(event) {
+      },
+  onMouseButtonUp:function(event) {
         if (!GLFW.active) return;
         GLFW.onMouseButtonChanged(event, 0); // GLFW_RELEASE
-      },onMouseWheel:function(event) {
+      },
+  onMouseWheel:function(event) {
         // Note the minus sign that flips browser wheel direction (positive direction scrolls page down) to native wheel direction (positive direction is mouse wheel up)
         var delta = -Browser.getMouseWheelDelta(event);
         delta = (delta == 0) ? 0 : (delta > 0 ? Math.max(delta, 1) : Math.min(delta, -1)); // Quantize to integer so that minimum scroll is at least +/- 1.
@@ -7825,7 +8307,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         ((a1, a2, a3) => dynCall_vidd.apply(null, [GLFW.active.scrollFunc, a1, a2, a3]))(GLFW.active.id, sx, sy);
   
         event.preventDefault();
-      },onCanvasResize:function(width, height) {
+      },
+  onCanvasResize:function(width, height) {
         if (!GLFW.active) return;
   
         var resizeNeeded = true;
@@ -7866,28 +8349,33 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           GLFW.onWindowSizeChanged();
           GLFW.onFramebufferSizeChanged();
         }
-      },onWindowSizeChanged:function() {
+      },
+  onWindowSizeChanged:function() {
         if (!GLFW.active) return;
   
         if (GLFW.active.windowSizeFunc) {
           ((a1, a2, a3) => dynCall_viii.apply(null, [GLFW.active.windowSizeFunc, a1, a2, a3]))(GLFW.active.id, GLFW.active.width, GLFW.active.height);
         }
-      },onFramebufferSizeChanged:function() {
+      },
+  onFramebufferSizeChanged:function() {
         if (!GLFW.active) return;
   
         if (GLFW.active.framebufferSizeFunc) {
           ((a1, a2, a3) => dynCall_viii.apply(null, [GLFW.active.framebufferSizeFunc, a1, a2, a3]))(GLFW.active.id, GLFW.active.width, GLFW.active.height);
         }
-      },onWindowContentScaleChanged:function(scale) {
+      },
+  onWindowContentScaleChanged:function(scale) {
         GLFW.scale = scale;
         if (!GLFW.active) return;
   
         if (GLFW.active.windowContentScaleFunc) {
           ((a1, a2, a3) => dynCall_viff.apply(null, [GLFW.active.windowContentScaleFunc, a1, a2, a3]))(GLFW.active.id, GLFW.scale, GLFW.scale);
         }
-      },getTime:function() {
+      },
+  getTime:function() {
         return _emscripten_get_now() / 1000;
-      },setWindowTitle:function(winid, title) {
+      },
+  setWindowTitle:function(winid, title) {
         var win = GLFW.WindowFromId(winid);
         if (!win) return;
   
@@ -7895,10 +8383,16 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         if (GLFW.active.id == win.id) {
           document.title = win.title;
         }
-      },setJoystickCallback:function(cbfun) {
+      },
+  setJoystickCallback:function(cbfun) {
         GLFW.joystickFunc = cbfun;
         GLFW.refreshJoysticks();
-      },joys:{},lastGamepadState:[],lastGamepadStateFrame:null,refreshJoysticks:function() {
+      },
+  joys:{
+  },
+  lastGamepadState:[],
+  lastGamepadStateFrame:null,
+  refreshJoysticks:function() {
         // Produce a new Gamepad API sample if we are ticking a new game frame, or if not using emscripten_set_main_loop() at all to drive animation.
         if (Browser.mainLoop.currentFrameNumber !== GLFW.lastGamepadStateFrame || !Browser.mainLoop.currentFrameNumber) {
           GLFW.lastGamepadState = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
@@ -7949,43 +8443,50 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             }
           }
         }
-      },setKeyCallback:function(winid, cbfun) {
+      },
+  setKeyCallback:function(winid, cbfun) {
         var win = GLFW.WindowFromId(winid);
         if (!win) return null;
         var prevcbfun = win.keyFunc;
         win.keyFunc = cbfun;
         return prevcbfun;
-      },setCharCallback:function(winid, cbfun) {
+      },
+  setCharCallback:function(winid, cbfun) {
         var win = GLFW.WindowFromId(winid);
         if (!win) return null;
         var prevcbfun = win.charFunc;
         win.charFunc = cbfun;
         return prevcbfun;
-      },setMouseButtonCallback:function(winid, cbfun) {
+      },
+  setMouseButtonCallback:function(winid, cbfun) {
         var win = GLFW.WindowFromId(winid);
         if (!win) return null;
         var prevcbfun = win.mouseButtonFunc;
         win.mouseButtonFunc = cbfun;
         return prevcbfun;
-      },setCursorPosCallback:function(winid, cbfun) {
+      },
+  setCursorPosCallback:function(winid, cbfun) {
         var win = GLFW.WindowFromId(winid);
         if (!win) return null;
         var prevcbfun = win.cursorPosFunc;
         win.cursorPosFunc = cbfun;
         return prevcbfun;
-      },setScrollCallback:function(winid, cbfun) {
+      },
+  setScrollCallback:function(winid, cbfun) {
         var win = GLFW.WindowFromId(winid);
         if (!win) return null;
         var prevcbfun = win.scrollFunc;
         win.scrollFunc = cbfun;
         return prevcbfun;
-      },setDropCallback:function(winid, cbfun) {
+      },
+  setDropCallback:function(winid, cbfun) {
         var win = GLFW.WindowFromId(winid);
         if (!win) return null;
         var prevcbfun = win.dropFunc;
         win.dropFunc = cbfun;
         return prevcbfun;
-      },onDrop:function(event) {
+      },
+  onDrop:function(event) {
         if (!GLFW.active || !GLFW.active.dropFunc) return;
         if (!event.dataTransfer || !event.dataTransfer.files || event.dataTransfer.files.length == 0) return;
   
@@ -8033,36 +8534,42 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         }
   
         return false;
-      },onDragover:function(event) {
+      },
+  onDragover:function(event) {
         if (!GLFW.active || !GLFW.active.dropFunc) return;
   
         event.preventDefault();
         return false;
-      },setWindowSizeCallback:function(winid, cbfun) {
+      },
+  setWindowSizeCallback:function(winid, cbfun) {
         var win = GLFW.WindowFromId(winid);
         if (!win) return null;
         var prevcbfun = win.windowSizeFunc;
         win.windowSizeFunc = cbfun;
   
         return prevcbfun;
-      },setWindowCloseCallback:function(winid, cbfun) {
+      },
+  setWindowCloseCallback:function(winid, cbfun) {
         var win = GLFW.WindowFromId(winid);
         if (!win) return null;
         var prevcbfun = win.windowCloseFunc;
         win.windowCloseFunc = cbfun;
         return prevcbfun;
-      },setWindowRefreshCallback:function(winid, cbfun) {
+      },
+  setWindowRefreshCallback:function(winid, cbfun) {
         var win = GLFW.WindowFromId(winid);
         if (!win) return null;
         var prevcbfun = win.windowRefreshFunc;
         win.windowRefreshFunc = cbfun;
         return prevcbfun;
-      },onClickRequestPointerLock:function(e) {
+      },
+  onClickRequestPointerLock:function(e) {
         if (!Browser.pointerLock && Module['canvas'].requestPointerLock) {
           Module['canvas'].requestPointerLock();
           e.preventDefault();
         }
-      },setInputMode:function(winid, mode, value) {
+      },
+  setInputMode:function(winid, mode, value) {
         var win = GLFW.WindowFromId(winid);
         if (!win) return;
   
@@ -8113,22 +8620,28 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             break;
           }
         }
-      },getKey:function(winid, key) {
+      },
+  getKey:function(winid, key) {
         var win = GLFW.WindowFromId(winid);
         if (!win) return 0;
         return win.keys[key];
-      },getMouseButton:function(winid, button) {
+      },
+  getMouseButton:function(winid, button) {
         var win = GLFW.WindowFromId(winid);
         if (!win) return 0;
         return (win.buttons & (1 << button)) > 0;
-      },getCursorPos:function(winid, x, y) {
+      },
+  getCursorPos:function(winid, x, y) {
         HEAPF64[((x)>>3)] = Browser.mouseX;
         HEAPF64[((y)>>3)] = Browser.mouseY;
-      },getMousePos:function(winid, x, y) {
+      },
+  getMousePos:function(winid, x, y) {
         HEAP32[((x)>>2)] = Browser.mouseX;
         HEAP32[((y)>>2)] = Browser.mouseY;
-      },setCursorPos:function(winid, x, y) {
-      },getWindowPos:function(winid, x, y) {
+      },
+  setCursorPos:function(winid, x, y) {
+      },
+  getWindowPos:function(winid, x, y) {
         var wx = 0;
         var wy = 0;
   
@@ -8145,12 +8658,14 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         if (y) {
           HEAP32[((y)>>2)] = wy;
         }
-      },setWindowPos:function(winid, x, y) {
+      },
+  setWindowPos:function(winid, x, y) {
         var win = GLFW.WindowFromId(winid);
         if (!win) return;
         win.x = x;
         win.y = y;
-      },getWindowSize:function(winid, width, height) {
+      },
+  getWindowSize:function(winid, width, height) {
         var ww = 0;
         var wh = 0;
   
@@ -8167,7 +8682,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         if (height) {
           HEAP32[((height)>>2)] = wh;
         }
-      },setWindowSize:function(winid, width, height) {
+      },
+  setWindowSize:function(winid, width, height) {
         var win = GLFW.WindowFromId(winid);
         if (!win) return;
   
@@ -8185,7 +8701,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         if (win.windowSizeFunc) {
           ((a1, a2, a3) => dynCall_viii.apply(null, [win.windowSizeFunc, a1, a2, a3]))(win.id, width, height);
         }
-      },createWindow:function(width, height, title, monitor, share) {
+      },
+  createWindow:function(width, height, title, monitor, share) {
         var i, id;
         for (i = 0; i < GLFW.windows.length && GLFW.windows[i] !== null; i++) {
           // no-op
@@ -8238,7 +8755,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
   
         GLFW.active = win;
         return win.id;
-      },destroyWindow:function(winid) {
+      },
+  destroyWindow:function(winid) {
         var win = GLFW.WindowFromId(winid);
         if (!win) return;
   
@@ -8255,8 +8773,10 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           if (GLFW.windows[i] !== null) return;
   
         Module.ctx = Browser.destroyContext(Module['canvas'], true, true);
-      },swapBuffers:function(winid) {
-      },GLFW2ParamToGLFW3Param:function(param) {
+      },
+  swapBuffers:function(winid) {
+      },
+  GLFW2ParamToGLFW3Param:function(param) {
         var table = {
           0x00030001:0, // GLFW_MOUSE_CURSOR
           0x00030002:0, // GLFW_STICKY_KEYS
@@ -8290,7 +8810,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           0x00020018:0x00022008, // GLFW_OPENGL_PROFILE
         };
         return table[param];
-      }};
+      },
+  };
   function _glfwCreateWindow(width, height, title, monitor, share) {
       return GLFW.createWindow(width, height, title, monitor, share);
     }
@@ -8825,8 +9346,9 @@ function GetCanvasHeight() { return canvas.clientHeight; }
     };
   
   
-  var Asyncify = {instrumentWasmImports:function(imports) {
-        var importPatterns = [/^invoke_.*$/,/^fd_sync$/,/^__wasi_fd_sync$/,/^__asyncjs__.*$/,/^emscripten_promise_await$/,/^emscripten_idb_load$/,/^emscripten_idb_store$/,/^emscripten_idb_delete$/,/^emscripten_idb_exists$/,/^emscripten_idb_load_blob$/,/^emscripten_idb_store_blob$/,/^emscripten_sleep$/,/^emscripten_wget$/,/^emscripten_wget_data$/,/^emscripten_scan_registers$/,/^emscripten_lazy_load_code$/,/^_load_secondary_module$/,/^emscripten_fiber_swap$/,/^SDL_Delay$/];
+  var Asyncify = {
+  instrumentWasmImports:function(imports) {
+        var importPatterns = [/^invoke_.*$/,/^fd_sync$/,/^__wasi_fd_sync$/,/^__asyncjs__.*$/,/^emscripten_promise_await$/,/^emscripten_idb_load$/,/^emscripten_idb_store$/,/^emscripten_idb_delete$/,/^emscripten_idb_exists$/,/^emscripten_idb_load_blob$/,/^emscripten_idb_store_blob$/,/^emscripten_sleep$/,/^emscripten_wget_data$/,/^emscripten_scan_registers$/,/^emscripten_lazy_load_code$/,/^_load_secondary_module$/,/^emscripten_fiber_swap$/,/^SDL_Delay$/];
   
         for (var x in imports) {
           (function(x) {
@@ -8863,7 +9385,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             }
           })(x);
         }
-      },instrumentWasmExports:function(exports) {
+      },
+  instrumentWasmExports:function(exports) {
         var ret = {};
         for (var x in exports) {
           (function(x) {
@@ -8887,7 +9410,26 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           })(x);
         }
         return ret;
-      },State:{Normal:0,Unwinding:1,Rewinding:2,Disabled:3},state:0,StackSize:4096,currData:null,handleSleepReturnValue:0,exportCallStack:[],callStackNameToId:{},callStackIdToName:{},callStackId:0,asyncPromiseHandlers:null,sleepCallbacks:[],getCallStackId:function(funcName) {
+      },
+  State:{
+  Normal:0,
+  Unwinding:1,
+  Rewinding:2,
+  Disabled:3,
+  },
+  state:0,
+  StackSize:4096,
+  currData:null,
+  handleSleepReturnValue:0,
+  exportCallStack:[],
+  callStackNameToId:{
+  },
+  callStackIdToName:{
+  },
+  callStackId:0,
+  asyncPromiseHandlers:null,
+  sleepCallbacks:[],
+  getCallStackId:function(funcName) {
         var id = Asyncify.callStackNameToId[funcName];
         if (id === undefined) {
           id = Asyncify.callStackId++;
@@ -8895,7 +9437,8 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           Asyncify.callStackIdToName[id] = funcName;
         }
         return id;
-      },maybeStopUnwind:function() {
+      },
+  maybeStopUnwind:function() {
         if (Asyncify.currData &&
             Asyncify.state === Asyncify.State.Unwinding &&
             Asyncify.exportCallStack.length === 0) {
@@ -8912,13 +9455,15 @@ function GetCanvasHeight() { return canvas.clientHeight; }
             Fibers.trampoline();
           }
         }
-      },whenDone:function() {
+      },
+  whenDone:function() {
         assert(Asyncify.currData, 'Tried to wait for an async operation when none is in progress.');
         assert(!Asyncify.asyncPromiseHandlers, 'Cannot have multiple async operations in flight at once');
         return new Promise((resolve, reject) => {
           Asyncify.asyncPromiseHandlers = { resolve, reject };
         });
-      },allocateData:function() {
+      },
+  allocateData:function() {
         // An asyncify data structure has three fields:
         //  0  current stack pos
         //  4  max stack pos
@@ -8931,25 +9476,30 @@ function GetCanvasHeight() { return canvas.clientHeight; }
         Asyncify.setDataHeader(ptr, ptr + 12, Asyncify.StackSize);
         Asyncify.setDataRewindFunc(ptr);
         return ptr;
-      },setDataHeader:function(ptr, stack, stackSize) {
-        HEAP32[((ptr)>>2)] = stack;
-        HEAP32[(((ptr)+(4))>>2)] = stack + stackSize;
-      },setDataRewindFunc:function(ptr) {
+      },
+  setDataHeader:function(ptr, stack, stackSize) {
+        HEAPU32[((ptr)>>2)] = stack;
+        HEAPU32[(((ptr)+(4))>>2)] = stack + stackSize;
+      },
+  setDataRewindFunc:function(ptr) {
         var bottomOfCallStack = Asyncify.exportCallStack[0];
         var rewindId = Asyncify.getCallStackId(bottomOfCallStack);
         HEAP32[(((ptr)+(8))>>2)] = rewindId;
-      },getDataRewindFunc:function(ptr) {
+      },
+  getDataRewindFunc:function(ptr) {
         var id = HEAP32[(((ptr)+(8))>>2)];
         var name = Asyncify.callStackIdToName[id];
-        var func = Module['asm'][name];
+        var func = wasmExports[name];
         return func;
-      },doRewind:function(ptr) {
+      },
+  doRewind:function(ptr) {
         var start = Asyncify.getDataRewindFunc(ptr);
         // Once we have rewound and the stack we no longer need to artificially
         // keep the runtime alive.
         
         return start();
-      },handleSleep:function(startAsync) {
+      },
+  handleSleep:function(startAsync) {
         assert(Asyncify.state !== Asyncify.State.Disabled, 'Asyncify cannot be done during or after the runtime exits');
         if (ABORT) return;
         if (Asyncify.state === Asyncify.State.Normal) {
@@ -9038,12 +9588,14 @@ function GetCanvasHeight() { return canvas.clientHeight; }
           abort(`invalid state: ${Asyncify.state}`);
         }
         return Asyncify.handleSleepReturnValue;
-      },handleAsync:function(startAsync) {
+      },
+  handleAsync:function(startAsync) {
         return Asyncify.handleSleep((wakeUp) => {
           // TODO: add error handling as a second param when handleSleep implements it.
           startAsync().then(wakeUp);
         });
-      }};
+      },
+  };
 
 
   var FSNode = /** @constructor */ function(parent, name, mode, rdev) {
@@ -9244,428 +9796,352 @@ function checkIncomingModuleAPI() {
   ignoredModuleProp('fetchSettings');
 }
 var wasmImports = {
-  "GetCanvasHeight": GetCanvasHeight,
-  "GetCanvasWidth": GetCanvasWidth,
-  "__assert_fail": ___assert_fail,
-  "__cxa_throw": ___cxa_throw,
-  "__syscall_fcntl64": ___syscall_fcntl64,
-  "__syscall_getcwd": ___syscall_getcwd,
-  "__syscall_ioctl": ___syscall_ioctl,
-  "__syscall_openat": ___syscall_openat,
-  "_emscripten_get_now_is_monotonic": __emscripten_get_now_is_monotonic,
-  "abort": _abort,
-  "emscripten_asm_const_int": _emscripten_asm_const_int,
-  "emscripten_date_now": _emscripten_date_now,
-  "emscripten_get_element_css_size": _emscripten_get_element_css_size,
-  "emscripten_get_gamepad_status": _emscripten_get_gamepad_status,
-  "emscripten_get_now": _emscripten_get_now,
-  "emscripten_get_num_gamepads": _emscripten_get_num_gamepads,
-  "emscripten_glActiveTexture": _emscripten_glActiveTexture,
-  "emscripten_glAttachShader": _emscripten_glAttachShader,
-  "emscripten_glBeginQueryEXT": _emscripten_glBeginQueryEXT,
-  "emscripten_glBindAttribLocation": _emscripten_glBindAttribLocation,
-  "emscripten_glBindBuffer": _emscripten_glBindBuffer,
-  "emscripten_glBindFramebuffer": _emscripten_glBindFramebuffer,
-  "emscripten_glBindRenderbuffer": _emscripten_glBindRenderbuffer,
-  "emscripten_glBindTexture": _emscripten_glBindTexture,
-  "emscripten_glBindVertexArrayOES": _emscripten_glBindVertexArrayOES,
-  "emscripten_glBlendColor": _emscripten_glBlendColor,
-  "emscripten_glBlendEquation": _emscripten_glBlendEquation,
-  "emscripten_glBlendEquationSeparate": _emscripten_glBlendEquationSeparate,
-  "emscripten_glBlendFunc": _emscripten_glBlendFunc,
-  "emscripten_glBlendFuncSeparate": _emscripten_glBlendFuncSeparate,
-  "emscripten_glBufferData": _emscripten_glBufferData,
-  "emscripten_glBufferSubData": _emscripten_glBufferSubData,
-  "emscripten_glCheckFramebufferStatus": _emscripten_glCheckFramebufferStatus,
-  "emscripten_glClear": _emscripten_glClear,
-  "emscripten_glClearColor": _emscripten_glClearColor,
-  "emscripten_glClearDepthf": _emscripten_glClearDepthf,
-  "emscripten_glClearStencil": _emscripten_glClearStencil,
-  "emscripten_glColorMask": _emscripten_glColorMask,
-  "emscripten_glCompileShader": _emscripten_glCompileShader,
-  "emscripten_glCompressedTexImage2D": _emscripten_glCompressedTexImage2D,
-  "emscripten_glCompressedTexSubImage2D": _emscripten_glCompressedTexSubImage2D,
-  "emscripten_glCopyTexImage2D": _emscripten_glCopyTexImage2D,
-  "emscripten_glCopyTexSubImage2D": _emscripten_glCopyTexSubImage2D,
-  "emscripten_glCreateProgram": _emscripten_glCreateProgram,
-  "emscripten_glCreateShader": _emscripten_glCreateShader,
-  "emscripten_glCullFace": _emscripten_glCullFace,
-  "emscripten_glDeleteBuffers": _emscripten_glDeleteBuffers,
-  "emscripten_glDeleteFramebuffers": _emscripten_glDeleteFramebuffers,
-  "emscripten_glDeleteProgram": _emscripten_glDeleteProgram,
-  "emscripten_glDeleteQueriesEXT": _emscripten_glDeleteQueriesEXT,
-  "emscripten_glDeleteRenderbuffers": _emscripten_glDeleteRenderbuffers,
-  "emscripten_glDeleteShader": _emscripten_glDeleteShader,
-  "emscripten_glDeleteTextures": _emscripten_glDeleteTextures,
-  "emscripten_glDeleteVertexArraysOES": _emscripten_glDeleteVertexArraysOES,
-  "emscripten_glDepthFunc": _emscripten_glDepthFunc,
-  "emscripten_glDepthMask": _emscripten_glDepthMask,
-  "emscripten_glDepthRangef": _emscripten_glDepthRangef,
-  "emscripten_glDetachShader": _emscripten_glDetachShader,
-  "emscripten_glDisable": _emscripten_glDisable,
-  "emscripten_glDisableVertexAttribArray": _emscripten_glDisableVertexAttribArray,
-  "emscripten_glDrawArrays": _emscripten_glDrawArrays,
-  "emscripten_glDrawArraysInstancedANGLE": _emscripten_glDrawArraysInstancedANGLE,
-  "emscripten_glDrawBuffersWEBGL": _emscripten_glDrawBuffersWEBGL,
-  "emscripten_glDrawElements": _emscripten_glDrawElements,
-  "emscripten_glDrawElementsInstancedANGLE": _emscripten_glDrawElementsInstancedANGLE,
-  "emscripten_glEnable": _emscripten_glEnable,
-  "emscripten_glEnableVertexAttribArray": _emscripten_glEnableVertexAttribArray,
-  "emscripten_glEndQueryEXT": _emscripten_glEndQueryEXT,
-  "emscripten_glFinish": _emscripten_glFinish,
-  "emscripten_glFlush": _emscripten_glFlush,
-  "emscripten_glFramebufferRenderbuffer": _emscripten_glFramebufferRenderbuffer,
-  "emscripten_glFramebufferTexture2D": _emscripten_glFramebufferTexture2D,
-  "emscripten_glFrontFace": _emscripten_glFrontFace,
-  "emscripten_glGenBuffers": _emscripten_glGenBuffers,
-  "emscripten_glGenFramebuffers": _emscripten_glGenFramebuffers,
-  "emscripten_glGenQueriesEXT": _emscripten_glGenQueriesEXT,
-  "emscripten_glGenRenderbuffers": _emscripten_glGenRenderbuffers,
-  "emscripten_glGenTextures": _emscripten_glGenTextures,
-  "emscripten_glGenVertexArraysOES": _emscripten_glGenVertexArraysOES,
-  "emscripten_glGenerateMipmap": _emscripten_glGenerateMipmap,
-  "emscripten_glGetActiveAttrib": _emscripten_glGetActiveAttrib,
-  "emscripten_glGetActiveUniform": _emscripten_glGetActiveUniform,
-  "emscripten_glGetAttachedShaders": _emscripten_glGetAttachedShaders,
-  "emscripten_glGetAttribLocation": _emscripten_glGetAttribLocation,
-  "emscripten_glGetBooleanv": _emscripten_glGetBooleanv,
-  "emscripten_glGetBufferParameteriv": _emscripten_glGetBufferParameteriv,
-  "emscripten_glGetError": _emscripten_glGetError,
-  "emscripten_glGetFloatv": _emscripten_glGetFloatv,
-  "emscripten_glGetFramebufferAttachmentParameteriv": _emscripten_glGetFramebufferAttachmentParameteriv,
-  "emscripten_glGetIntegerv": _emscripten_glGetIntegerv,
-  "emscripten_glGetProgramInfoLog": _emscripten_glGetProgramInfoLog,
-  "emscripten_glGetProgramiv": _emscripten_glGetProgramiv,
-  "emscripten_glGetQueryObjecti64vEXT": _emscripten_glGetQueryObjecti64vEXT,
-  "emscripten_glGetQueryObjectivEXT": _emscripten_glGetQueryObjectivEXT,
-  "emscripten_glGetQueryObjectui64vEXT": _emscripten_glGetQueryObjectui64vEXT,
-  "emscripten_glGetQueryObjectuivEXT": _emscripten_glGetQueryObjectuivEXT,
-  "emscripten_glGetQueryivEXT": _emscripten_glGetQueryivEXT,
-  "emscripten_glGetRenderbufferParameteriv": _emscripten_glGetRenderbufferParameteriv,
-  "emscripten_glGetShaderInfoLog": _emscripten_glGetShaderInfoLog,
-  "emscripten_glGetShaderPrecisionFormat": _emscripten_glGetShaderPrecisionFormat,
-  "emscripten_glGetShaderSource": _emscripten_glGetShaderSource,
-  "emscripten_glGetShaderiv": _emscripten_glGetShaderiv,
-  "emscripten_glGetString": _emscripten_glGetString,
-  "emscripten_glGetTexParameterfv": _emscripten_glGetTexParameterfv,
-  "emscripten_glGetTexParameteriv": _emscripten_glGetTexParameteriv,
-  "emscripten_glGetUniformLocation": _emscripten_glGetUniformLocation,
-  "emscripten_glGetUniformfv": _emscripten_glGetUniformfv,
-  "emscripten_glGetUniformiv": _emscripten_glGetUniformiv,
-  "emscripten_glGetVertexAttribPointerv": _emscripten_glGetVertexAttribPointerv,
-  "emscripten_glGetVertexAttribfv": _emscripten_glGetVertexAttribfv,
-  "emscripten_glGetVertexAttribiv": _emscripten_glGetVertexAttribiv,
-  "emscripten_glHint": _emscripten_glHint,
-  "emscripten_glIsBuffer": _emscripten_glIsBuffer,
-  "emscripten_glIsEnabled": _emscripten_glIsEnabled,
-  "emscripten_glIsFramebuffer": _emscripten_glIsFramebuffer,
-  "emscripten_glIsProgram": _emscripten_glIsProgram,
-  "emscripten_glIsQueryEXT": _emscripten_glIsQueryEXT,
-  "emscripten_glIsRenderbuffer": _emscripten_glIsRenderbuffer,
-  "emscripten_glIsShader": _emscripten_glIsShader,
-  "emscripten_glIsTexture": _emscripten_glIsTexture,
-  "emscripten_glIsVertexArrayOES": _emscripten_glIsVertexArrayOES,
-  "emscripten_glLineWidth": _emscripten_glLineWidth,
-  "emscripten_glLinkProgram": _emscripten_glLinkProgram,
-  "emscripten_glPixelStorei": _emscripten_glPixelStorei,
-  "emscripten_glPolygonOffset": _emscripten_glPolygonOffset,
-  "emscripten_glQueryCounterEXT": _emscripten_glQueryCounterEXT,
-  "emscripten_glReadPixels": _emscripten_glReadPixels,
-  "emscripten_glReleaseShaderCompiler": _emscripten_glReleaseShaderCompiler,
-  "emscripten_glRenderbufferStorage": _emscripten_glRenderbufferStorage,
-  "emscripten_glSampleCoverage": _emscripten_glSampleCoverage,
-  "emscripten_glScissor": _emscripten_glScissor,
-  "emscripten_glShaderBinary": _emscripten_glShaderBinary,
-  "emscripten_glShaderSource": _emscripten_glShaderSource,
-  "emscripten_glStencilFunc": _emscripten_glStencilFunc,
-  "emscripten_glStencilFuncSeparate": _emscripten_glStencilFuncSeparate,
-  "emscripten_glStencilMask": _emscripten_glStencilMask,
-  "emscripten_glStencilMaskSeparate": _emscripten_glStencilMaskSeparate,
-  "emscripten_glStencilOp": _emscripten_glStencilOp,
-  "emscripten_glStencilOpSeparate": _emscripten_glStencilOpSeparate,
-  "emscripten_glTexImage2D": _emscripten_glTexImage2D,
-  "emscripten_glTexParameterf": _emscripten_glTexParameterf,
-  "emscripten_glTexParameterfv": _emscripten_glTexParameterfv,
-  "emscripten_glTexParameteri": _emscripten_glTexParameteri,
-  "emscripten_glTexParameteriv": _emscripten_glTexParameteriv,
-  "emscripten_glTexSubImage2D": _emscripten_glTexSubImage2D,
-  "emscripten_glUniform1f": _emscripten_glUniform1f,
-  "emscripten_glUniform1fv": _emscripten_glUniform1fv,
-  "emscripten_glUniform1i": _emscripten_glUniform1i,
-  "emscripten_glUniform1iv": _emscripten_glUniform1iv,
-  "emscripten_glUniform2f": _emscripten_glUniform2f,
-  "emscripten_glUniform2fv": _emscripten_glUniform2fv,
-  "emscripten_glUniform2i": _emscripten_glUniform2i,
-  "emscripten_glUniform2iv": _emscripten_glUniform2iv,
-  "emscripten_glUniform3f": _emscripten_glUniform3f,
-  "emscripten_glUniform3fv": _emscripten_glUniform3fv,
-  "emscripten_glUniform3i": _emscripten_glUniform3i,
-  "emscripten_glUniform3iv": _emscripten_glUniform3iv,
-  "emscripten_glUniform4f": _emscripten_glUniform4f,
-  "emscripten_glUniform4fv": _emscripten_glUniform4fv,
-  "emscripten_glUniform4i": _emscripten_glUniform4i,
-  "emscripten_glUniform4iv": _emscripten_glUniform4iv,
-  "emscripten_glUniformMatrix2fv": _emscripten_glUniformMatrix2fv,
-  "emscripten_glUniformMatrix3fv": _emscripten_glUniformMatrix3fv,
-  "emscripten_glUniformMatrix4fv": _emscripten_glUniformMatrix4fv,
-  "emscripten_glUseProgram": _emscripten_glUseProgram,
-  "emscripten_glValidateProgram": _emscripten_glValidateProgram,
-  "emscripten_glVertexAttrib1f": _emscripten_glVertexAttrib1f,
-  "emscripten_glVertexAttrib1fv": _emscripten_glVertexAttrib1fv,
-  "emscripten_glVertexAttrib2f": _emscripten_glVertexAttrib2f,
-  "emscripten_glVertexAttrib2fv": _emscripten_glVertexAttrib2fv,
-  "emscripten_glVertexAttrib3f": _emscripten_glVertexAttrib3f,
-  "emscripten_glVertexAttrib3fv": _emscripten_glVertexAttrib3fv,
-  "emscripten_glVertexAttrib4f": _emscripten_glVertexAttrib4f,
-  "emscripten_glVertexAttrib4fv": _emscripten_glVertexAttrib4fv,
-  "emscripten_glVertexAttribDivisorANGLE": _emscripten_glVertexAttribDivisorANGLE,
-  "emscripten_glVertexAttribPointer": _emscripten_glVertexAttribPointer,
-  "emscripten_glViewport": _emscripten_glViewport,
-  "emscripten_memcpy_big": _emscripten_memcpy_big,
-  "emscripten_resize_heap": _emscripten_resize_heap,
-  "emscripten_run_script": _emscripten_run_script,
-  "emscripten_sample_gamepad_data": _emscripten_sample_gamepad_data,
-  "emscripten_set_canvas_element_size": _emscripten_set_canvas_element_size,
-  "emscripten_set_click_callback_on_thread": _emscripten_set_click_callback_on_thread,
-  "emscripten_set_gamepadconnected_callback_on_thread": _emscripten_set_gamepadconnected_callback_on_thread,
-  "emscripten_set_gamepaddisconnected_callback_on_thread": _emscripten_set_gamepaddisconnected_callback_on_thread,
-  "emscripten_set_resize_callback_on_thread": _emscripten_set_resize_callback_on_thread,
-  "emscripten_set_touchcancel_callback_on_thread": _emscripten_set_touchcancel_callback_on_thread,
-  "emscripten_set_touchend_callback_on_thread": _emscripten_set_touchend_callback_on_thread,
-  "emscripten_set_touchmove_callback_on_thread": _emscripten_set_touchmove_callback_on_thread,
-  "emscripten_set_touchstart_callback_on_thread": _emscripten_set_touchstart_callback_on_thread,
-  "emscripten_sleep": _emscripten_sleep,
-  "environ_get": _environ_get,
-  "environ_sizes_get": _environ_sizes_get,
-  "exit": _exit,
-  "fd_close": _fd_close,
-  "fd_read": _fd_read,
-  "fd_seek": _fd_seek,
-  "fd_write": _fd_write,
-  "glActiveTexture": _glActiveTexture,
-  "glAttachShader": _glAttachShader,
-  "glBindAttribLocation": _glBindAttribLocation,
-  "glBindBuffer": _glBindBuffer,
-  "glBindFramebuffer": _glBindFramebuffer,
-  "glBindRenderbuffer": _glBindRenderbuffer,
-  "glBindTexture": _glBindTexture,
-  "glBlendFunc": _glBlendFunc,
-  "glBufferData": _glBufferData,
-  "glBufferSubData": _glBufferSubData,
-  "glCheckFramebufferStatus": _glCheckFramebufferStatus,
-  "glClear": _glClear,
-  "glClearColor": _glClearColor,
-  "glClearDepthf": _glClearDepthf,
-  "glCompileShader": _glCompileShader,
-  "glCompressedTexImage2D": _glCompressedTexImage2D,
-  "glCreateProgram": _glCreateProgram,
-  "glCreateShader": _glCreateShader,
-  "glCullFace": _glCullFace,
-  "glDeleteBuffers": _glDeleteBuffers,
-  "glDeleteProgram": _glDeleteProgram,
-  "glDeleteShader": _glDeleteShader,
-  "glDeleteTextures": _glDeleteTextures,
-  "glDepthFunc": _glDepthFunc,
-  "glDetachShader": _glDetachShader,
-  "glDisable": _glDisable,
-  "glDisableVertexAttribArray": _glDisableVertexAttribArray,
-  "glDrawArrays": _glDrawArrays,
-  "glDrawElements": _glDrawElements,
-  "glEnable": _glEnable,
-  "glEnableVertexAttribArray": _glEnableVertexAttribArray,
-  "glFramebufferRenderbuffer": _glFramebufferRenderbuffer,
-  "glFramebufferTexture2D": _glFramebufferTexture2D,
-  "glFrontFace": _glFrontFace,
-  "glGenBuffers": _glGenBuffers,
-  "glGenFramebuffers": _glGenFramebuffers,
-  "glGenRenderbuffers": _glGenRenderbuffers,
-  "glGenTextures": _glGenTextures,
-  "glGetAttribLocation": _glGetAttribLocation,
-  "glGetFloatv": _glGetFloatv,
-  "glGetProgramInfoLog": _glGetProgramInfoLog,
-  "glGetProgramiv": _glGetProgramiv,
-  "glGetShaderInfoLog": _glGetShaderInfoLog,
-  "glGetShaderiv": _glGetShaderiv,
-  "glGetString": _glGetString,
-  "glGetUniformLocation": _glGetUniformLocation,
-  "glLinkProgram": _glLinkProgram,
-  "glPixelStorei": _glPixelStorei,
-  "glReadPixels": _glReadPixels,
-  "glRenderbufferStorage": _glRenderbufferStorage,
-  "glScissor": _glScissor,
-  "glShaderSource": _glShaderSource,
-  "glTexImage2D": _glTexImage2D,
-  "glTexParameteri": _glTexParameteri,
-  "glUniform1i": _glUniform1i,
-  "glUniform4f": _glUniform4f,
-  "glUniformMatrix4fv": _glUniformMatrix4fv,
-  "glUseProgram": _glUseProgram,
-  "glVertexAttribPointer": _glVertexAttribPointer,
-  "glViewport": _glViewport,
-  "glfwCreateWindow": _glfwCreateWindow,
-  "glfwDefaultWindowHints": _glfwDefaultWindowHints,
-  "glfwDestroyWindow": _glfwDestroyWindow,
-  "glfwGetPrimaryMonitor": _glfwGetPrimaryMonitor,
-  "glfwGetTime": _glfwGetTime,
-  "glfwGetVideoModes": _glfwGetVideoModes,
-  "glfwInit": _glfwInit,
-  "glfwMakeContextCurrent": _glfwMakeContextCurrent,
-  "glfwSetCharCallback": _glfwSetCharCallback,
-  "glfwSetCursorEnterCallback": _glfwSetCursorEnterCallback,
-  "glfwSetCursorPos": _glfwSetCursorPos,
-  "glfwSetCursorPosCallback": _glfwSetCursorPosCallback,
-  "glfwSetDropCallback": _glfwSetDropCallback,
-  "glfwSetErrorCallback": _glfwSetErrorCallback,
-  "glfwSetKeyCallback": _glfwSetKeyCallback,
-  "glfwSetMouseButtonCallback": _glfwSetMouseButtonCallback,
-  "glfwSetScrollCallback": _glfwSetScrollCallback,
-  "glfwSetWindowFocusCallback": _glfwSetWindowFocusCallback,
-  "glfwSetWindowIconifyCallback": _glfwSetWindowIconifyCallback,
-  "glfwSetWindowShouldClose": _glfwSetWindowShouldClose,
-  "glfwSetWindowSize": _glfwSetWindowSize,
-  "glfwSetWindowSizeCallback": _glfwSetWindowSizeCallback,
-  "glfwSwapBuffers": _glfwSwapBuffers,
-  "glfwSwapInterval": _glfwSwapInterval,
-  "glfwTerminate": _glfwTerminate,
-  "glfwWindowHint": _glfwWindowHint,
-  "strftime_l": _strftime_l
+  GetCanvasHeight: GetCanvasHeight,
+  GetCanvasWidth: GetCanvasWidth,
+  __assert_fail: ___assert_fail,
+  __cxa_throw: ___cxa_throw,
+  __syscall_fcntl64: ___syscall_fcntl64,
+  __syscall_getcwd: ___syscall_getcwd,
+  __syscall_ioctl: ___syscall_ioctl,
+  __syscall_openat: ___syscall_openat,
+  _emscripten_get_now_is_monotonic: __emscripten_get_now_is_monotonic,
+  abort: _abort,
+  emscripten_asm_const_int: _emscripten_asm_const_int,
+  emscripten_date_now: _emscripten_date_now,
+  emscripten_get_element_css_size: _emscripten_get_element_css_size,
+  emscripten_get_gamepad_status: _emscripten_get_gamepad_status,
+  emscripten_get_now: _emscripten_get_now,
+  emscripten_get_num_gamepads: _emscripten_get_num_gamepads,
+  emscripten_glActiveTexture: _emscripten_glActiveTexture,
+  emscripten_glAttachShader: _emscripten_glAttachShader,
+  emscripten_glBeginQueryEXT: _emscripten_glBeginQueryEXT,
+  emscripten_glBindAttribLocation: _emscripten_glBindAttribLocation,
+  emscripten_glBindBuffer: _emscripten_glBindBuffer,
+  emscripten_glBindFramebuffer: _emscripten_glBindFramebuffer,
+  emscripten_glBindRenderbuffer: _emscripten_glBindRenderbuffer,
+  emscripten_glBindTexture: _emscripten_glBindTexture,
+  emscripten_glBindVertexArrayOES: _emscripten_glBindVertexArrayOES,
+  emscripten_glBlendColor: _emscripten_glBlendColor,
+  emscripten_glBlendEquation: _emscripten_glBlendEquation,
+  emscripten_glBlendEquationSeparate: _emscripten_glBlendEquationSeparate,
+  emscripten_glBlendFunc: _emscripten_glBlendFunc,
+  emscripten_glBlendFuncSeparate: _emscripten_glBlendFuncSeparate,
+  emscripten_glBufferData: _emscripten_glBufferData,
+  emscripten_glBufferSubData: _emscripten_glBufferSubData,
+  emscripten_glCheckFramebufferStatus: _emscripten_glCheckFramebufferStatus,
+  emscripten_glClear: _emscripten_glClear,
+  emscripten_glClearColor: _emscripten_glClearColor,
+  emscripten_glClearDepthf: _emscripten_glClearDepthf,
+  emscripten_glClearStencil: _emscripten_glClearStencil,
+  emscripten_glColorMask: _emscripten_glColorMask,
+  emscripten_glCompileShader: _emscripten_glCompileShader,
+  emscripten_glCompressedTexImage2D: _emscripten_glCompressedTexImage2D,
+  emscripten_glCompressedTexSubImage2D: _emscripten_glCompressedTexSubImage2D,
+  emscripten_glCopyTexImage2D: _emscripten_glCopyTexImage2D,
+  emscripten_glCopyTexSubImage2D: _emscripten_glCopyTexSubImage2D,
+  emscripten_glCreateProgram: _emscripten_glCreateProgram,
+  emscripten_glCreateShader: _emscripten_glCreateShader,
+  emscripten_glCullFace: _emscripten_glCullFace,
+  emscripten_glDeleteBuffers: _emscripten_glDeleteBuffers,
+  emscripten_glDeleteFramebuffers: _emscripten_glDeleteFramebuffers,
+  emscripten_glDeleteProgram: _emscripten_glDeleteProgram,
+  emscripten_glDeleteQueriesEXT: _emscripten_glDeleteQueriesEXT,
+  emscripten_glDeleteRenderbuffers: _emscripten_glDeleteRenderbuffers,
+  emscripten_glDeleteShader: _emscripten_glDeleteShader,
+  emscripten_glDeleteTextures: _emscripten_glDeleteTextures,
+  emscripten_glDeleteVertexArraysOES: _emscripten_glDeleteVertexArraysOES,
+  emscripten_glDepthFunc: _emscripten_glDepthFunc,
+  emscripten_glDepthMask: _emscripten_glDepthMask,
+  emscripten_glDepthRangef: _emscripten_glDepthRangef,
+  emscripten_glDetachShader: _emscripten_glDetachShader,
+  emscripten_glDisable: _emscripten_glDisable,
+  emscripten_glDisableVertexAttribArray: _emscripten_glDisableVertexAttribArray,
+  emscripten_glDrawArrays: _emscripten_glDrawArrays,
+  emscripten_glDrawArraysInstancedANGLE: _emscripten_glDrawArraysInstancedANGLE,
+  emscripten_glDrawBuffersWEBGL: _emscripten_glDrawBuffersWEBGL,
+  emscripten_glDrawElements: _emscripten_glDrawElements,
+  emscripten_glDrawElementsInstancedANGLE: _emscripten_glDrawElementsInstancedANGLE,
+  emscripten_glEnable: _emscripten_glEnable,
+  emscripten_glEnableVertexAttribArray: _emscripten_glEnableVertexAttribArray,
+  emscripten_glEndQueryEXT: _emscripten_glEndQueryEXT,
+  emscripten_glFinish: _emscripten_glFinish,
+  emscripten_glFlush: _emscripten_glFlush,
+  emscripten_glFramebufferRenderbuffer: _emscripten_glFramebufferRenderbuffer,
+  emscripten_glFramebufferTexture2D: _emscripten_glFramebufferTexture2D,
+  emscripten_glFrontFace: _emscripten_glFrontFace,
+  emscripten_glGenBuffers: _emscripten_glGenBuffers,
+  emscripten_glGenFramebuffers: _emscripten_glGenFramebuffers,
+  emscripten_glGenQueriesEXT: _emscripten_glGenQueriesEXT,
+  emscripten_glGenRenderbuffers: _emscripten_glGenRenderbuffers,
+  emscripten_glGenTextures: _emscripten_glGenTextures,
+  emscripten_glGenVertexArraysOES: _emscripten_glGenVertexArraysOES,
+  emscripten_glGenerateMipmap: _emscripten_glGenerateMipmap,
+  emscripten_glGetActiveAttrib: _emscripten_glGetActiveAttrib,
+  emscripten_glGetActiveUniform: _emscripten_glGetActiveUniform,
+  emscripten_glGetAttachedShaders: _emscripten_glGetAttachedShaders,
+  emscripten_glGetAttribLocation: _emscripten_glGetAttribLocation,
+  emscripten_glGetBooleanv: _emscripten_glGetBooleanv,
+  emscripten_glGetBufferParameteriv: _emscripten_glGetBufferParameteriv,
+  emscripten_glGetError: _emscripten_glGetError,
+  emscripten_glGetFloatv: _emscripten_glGetFloatv,
+  emscripten_glGetFramebufferAttachmentParameteriv: _emscripten_glGetFramebufferAttachmentParameteriv,
+  emscripten_glGetIntegerv: _emscripten_glGetIntegerv,
+  emscripten_glGetProgramInfoLog: _emscripten_glGetProgramInfoLog,
+  emscripten_glGetProgramiv: _emscripten_glGetProgramiv,
+  emscripten_glGetQueryObjecti64vEXT: _emscripten_glGetQueryObjecti64vEXT,
+  emscripten_glGetQueryObjectivEXT: _emscripten_glGetQueryObjectivEXT,
+  emscripten_glGetQueryObjectui64vEXT: _emscripten_glGetQueryObjectui64vEXT,
+  emscripten_glGetQueryObjectuivEXT: _emscripten_glGetQueryObjectuivEXT,
+  emscripten_glGetQueryivEXT: _emscripten_glGetQueryivEXT,
+  emscripten_glGetRenderbufferParameteriv: _emscripten_glGetRenderbufferParameteriv,
+  emscripten_glGetShaderInfoLog: _emscripten_glGetShaderInfoLog,
+  emscripten_glGetShaderPrecisionFormat: _emscripten_glGetShaderPrecisionFormat,
+  emscripten_glGetShaderSource: _emscripten_glGetShaderSource,
+  emscripten_glGetShaderiv: _emscripten_glGetShaderiv,
+  emscripten_glGetString: _emscripten_glGetString,
+  emscripten_glGetTexParameterfv: _emscripten_glGetTexParameterfv,
+  emscripten_glGetTexParameteriv: _emscripten_glGetTexParameteriv,
+  emscripten_glGetUniformLocation: _emscripten_glGetUniformLocation,
+  emscripten_glGetUniformfv: _emscripten_glGetUniformfv,
+  emscripten_glGetUniformiv: _emscripten_glGetUniformiv,
+  emscripten_glGetVertexAttribPointerv: _emscripten_glGetVertexAttribPointerv,
+  emscripten_glGetVertexAttribfv: _emscripten_glGetVertexAttribfv,
+  emscripten_glGetVertexAttribiv: _emscripten_glGetVertexAttribiv,
+  emscripten_glHint: _emscripten_glHint,
+  emscripten_glIsBuffer: _emscripten_glIsBuffer,
+  emscripten_glIsEnabled: _emscripten_glIsEnabled,
+  emscripten_glIsFramebuffer: _emscripten_glIsFramebuffer,
+  emscripten_glIsProgram: _emscripten_glIsProgram,
+  emscripten_glIsQueryEXT: _emscripten_glIsQueryEXT,
+  emscripten_glIsRenderbuffer: _emscripten_glIsRenderbuffer,
+  emscripten_glIsShader: _emscripten_glIsShader,
+  emscripten_glIsTexture: _emscripten_glIsTexture,
+  emscripten_glIsVertexArrayOES: _emscripten_glIsVertexArrayOES,
+  emscripten_glLineWidth: _emscripten_glLineWidth,
+  emscripten_glLinkProgram: _emscripten_glLinkProgram,
+  emscripten_glPixelStorei: _emscripten_glPixelStorei,
+  emscripten_glPolygonOffset: _emscripten_glPolygonOffset,
+  emscripten_glQueryCounterEXT: _emscripten_glQueryCounterEXT,
+  emscripten_glReadPixels: _emscripten_glReadPixels,
+  emscripten_glReleaseShaderCompiler: _emscripten_glReleaseShaderCompiler,
+  emscripten_glRenderbufferStorage: _emscripten_glRenderbufferStorage,
+  emscripten_glSampleCoverage: _emscripten_glSampleCoverage,
+  emscripten_glScissor: _emscripten_glScissor,
+  emscripten_glShaderBinary: _emscripten_glShaderBinary,
+  emscripten_glShaderSource: _emscripten_glShaderSource,
+  emscripten_glStencilFunc: _emscripten_glStencilFunc,
+  emscripten_glStencilFuncSeparate: _emscripten_glStencilFuncSeparate,
+  emscripten_glStencilMask: _emscripten_glStencilMask,
+  emscripten_glStencilMaskSeparate: _emscripten_glStencilMaskSeparate,
+  emscripten_glStencilOp: _emscripten_glStencilOp,
+  emscripten_glStencilOpSeparate: _emscripten_glStencilOpSeparate,
+  emscripten_glTexImage2D: _emscripten_glTexImage2D,
+  emscripten_glTexParameterf: _emscripten_glTexParameterf,
+  emscripten_glTexParameterfv: _emscripten_glTexParameterfv,
+  emscripten_glTexParameteri: _emscripten_glTexParameteri,
+  emscripten_glTexParameteriv: _emscripten_glTexParameteriv,
+  emscripten_glTexSubImage2D: _emscripten_glTexSubImage2D,
+  emscripten_glUniform1f: _emscripten_glUniform1f,
+  emscripten_glUniform1fv: _emscripten_glUniform1fv,
+  emscripten_glUniform1i: _emscripten_glUniform1i,
+  emscripten_glUniform1iv: _emscripten_glUniform1iv,
+  emscripten_glUniform2f: _emscripten_glUniform2f,
+  emscripten_glUniform2fv: _emscripten_glUniform2fv,
+  emscripten_glUniform2i: _emscripten_glUniform2i,
+  emscripten_glUniform2iv: _emscripten_glUniform2iv,
+  emscripten_glUniform3f: _emscripten_glUniform3f,
+  emscripten_glUniform3fv: _emscripten_glUniform3fv,
+  emscripten_glUniform3i: _emscripten_glUniform3i,
+  emscripten_glUniform3iv: _emscripten_glUniform3iv,
+  emscripten_glUniform4f: _emscripten_glUniform4f,
+  emscripten_glUniform4fv: _emscripten_glUniform4fv,
+  emscripten_glUniform4i: _emscripten_glUniform4i,
+  emscripten_glUniform4iv: _emscripten_glUniform4iv,
+  emscripten_glUniformMatrix2fv: _emscripten_glUniformMatrix2fv,
+  emscripten_glUniformMatrix3fv: _emscripten_glUniformMatrix3fv,
+  emscripten_glUniformMatrix4fv: _emscripten_glUniformMatrix4fv,
+  emscripten_glUseProgram: _emscripten_glUseProgram,
+  emscripten_glValidateProgram: _emscripten_glValidateProgram,
+  emscripten_glVertexAttrib1f: _emscripten_glVertexAttrib1f,
+  emscripten_glVertexAttrib1fv: _emscripten_glVertexAttrib1fv,
+  emscripten_glVertexAttrib2f: _emscripten_glVertexAttrib2f,
+  emscripten_glVertexAttrib2fv: _emscripten_glVertexAttrib2fv,
+  emscripten_glVertexAttrib3f: _emscripten_glVertexAttrib3f,
+  emscripten_glVertexAttrib3fv: _emscripten_glVertexAttrib3fv,
+  emscripten_glVertexAttrib4f: _emscripten_glVertexAttrib4f,
+  emscripten_glVertexAttrib4fv: _emscripten_glVertexAttrib4fv,
+  emscripten_glVertexAttribDivisorANGLE: _emscripten_glVertexAttribDivisorANGLE,
+  emscripten_glVertexAttribPointer: _emscripten_glVertexAttribPointer,
+  emscripten_glViewport: _emscripten_glViewport,
+  emscripten_memcpy_big: _emscripten_memcpy_big,
+  emscripten_resize_heap: _emscripten_resize_heap,
+  emscripten_run_script: _emscripten_run_script,
+  emscripten_sample_gamepad_data: _emscripten_sample_gamepad_data,
+  emscripten_set_canvas_element_size: _emscripten_set_canvas_element_size,
+  emscripten_set_click_callback_on_thread: _emscripten_set_click_callback_on_thread,
+  emscripten_set_gamepadconnected_callback_on_thread: _emscripten_set_gamepadconnected_callback_on_thread,
+  emscripten_set_gamepaddisconnected_callback_on_thread: _emscripten_set_gamepaddisconnected_callback_on_thread,
+  emscripten_set_resize_callback_on_thread: _emscripten_set_resize_callback_on_thread,
+  emscripten_set_touchcancel_callback_on_thread: _emscripten_set_touchcancel_callback_on_thread,
+  emscripten_set_touchend_callback_on_thread: _emscripten_set_touchend_callback_on_thread,
+  emscripten_set_touchmove_callback_on_thread: _emscripten_set_touchmove_callback_on_thread,
+  emscripten_set_touchstart_callback_on_thread: _emscripten_set_touchstart_callback_on_thread,
+  emscripten_sleep: _emscripten_sleep,
+  environ_get: _environ_get,
+  environ_sizes_get: _environ_sizes_get,
+  exit: _exit,
+  fd_close: _fd_close,
+  fd_read: _fd_read,
+  fd_seek: _fd_seek,
+  fd_write: _fd_write,
+  glActiveTexture: _glActiveTexture,
+  glAttachShader: _glAttachShader,
+  glBindAttribLocation: _glBindAttribLocation,
+  glBindBuffer: _glBindBuffer,
+  glBindFramebuffer: _glBindFramebuffer,
+  glBindRenderbuffer: _glBindRenderbuffer,
+  glBindTexture: _glBindTexture,
+  glBlendFunc: _glBlendFunc,
+  glBufferData: _glBufferData,
+  glBufferSubData: _glBufferSubData,
+  glCheckFramebufferStatus: _glCheckFramebufferStatus,
+  glClear: _glClear,
+  glClearColor: _glClearColor,
+  glClearDepthf: _glClearDepthf,
+  glCompileShader: _glCompileShader,
+  glCompressedTexImage2D: _glCompressedTexImage2D,
+  glCreateProgram: _glCreateProgram,
+  glCreateShader: _glCreateShader,
+  glCullFace: _glCullFace,
+  glDeleteBuffers: _glDeleteBuffers,
+  glDeleteProgram: _glDeleteProgram,
+  glDeleteShader: _glDeleteShader,
+  glDeleteTextures: _glDeleteTextures,
+  glDepthFunc: _glDepthFunc,
+  glDetachShader: _glDetachShader,
+  glDisable: _glDisable,
+  glDisableVertexAttribArray: _glDisableVertexAttribArray,
+  glDrawArrays: _glDrawArrays,
+  glDrawElements: _glDrawElements,
+  glEnable: _glEnable,
+  glEnableVertexAttribArray: _glEnableVertexAttribArray,
+  glFramebufferRenderbuffer: _glFramebufferRenderbuffer,
+  glFramebufferTexture2D: _glFramebufferTexture2D,
+  glFrontFace: _glFrontFace,
+  glGenBuffers: _glGenBuffers,
+  glGenFramebuffers: _glGenFramebuffers,
+  glGenRenderbuffers: _glGenRenderbuffers,
+  glGenTextures: _glGenTextures,
+  glGetAttribLocation: _glGetAttribLocation,
+  glGetFloatv: _glGetFloatv,
+  glGetProgramInfoLog: _glGetProgramInfoLog,
+  glGetProgramiv: _glGetProgramiv,
+  glGetShaderInfoLog: _glGetShaderInfoLog,
+  glGetShaderiv: _glGetShaderiv,
+  glGetString: _glGetString,
+  glGetUniformLocation: _glGetUniformLocation,
+  glLinkProgram: _glLinkProgram,
+  glPixelStorei: _glPixelStorei,
+  glReadPixels: _glReadPixels,
+  glRenderbufferStorage: _glRenderbufferStorage,
+  glScissor: _glScissor,
+  glShaderSource: _glShaderSource,
+  glTexImage2D: _glTexImage2D,
+  glTexParameteri: _glTexParameteri,
+  glUniform1i: _glUniform1i,
+  glUniform4f: _glUniform4f,
+  glUniformMatrix4fv: _glUniformMatrix4fv,
+  glUseProgram: _glUseProgram,
+  glVertexAttribPointer: _glVertexAttribPointer,
+  glViewport: _glViewport,
+  glfwCreateWindow: _glfwCreateWindow,
+  glfwDefaultWindowHints: _glfwDefaultWindowHints,
+  glfwDestroyWindow: _glfwDestroyWindow,
+  glfwGetPrimaryMonitor: _glfwGetPrimaryMonitor,
+  glfwGetTime: _glfwGetTime,
+  glfwGetVideoModes: _glfwGetVideoModes,
+  glfwInit: _glfwInit,
+  glfwMakeContextCurrent: _glfwMakeContextCurrent,
+  glfwSetCharCallback: _glfwSetCharCallback,
+  glfwSetCursorEnterCallback: _glfwSetCursorEnterCallback,
+  glfwSetCursorPos: _glfwSetCursorPos,
+  glfwSetCursorPosCallback: _glfwSetCursorPosCallback,
+  glfwSetDropCallback: _glfwSetDropCallback,
+  glfwSetErrorCallback: _glfwSetErrorCallback,
+  glfwSetKeyCallback: _glfwSetKeyCallback,
+  glfwSetMouseButtonCallback: _glfwSetMouseButtonCallback,
+  glfwSetScrollCallback: _glfwSetScrollCallback,
+  glfwSetWindowFocusCallback: _glfwSetWindowFocusCallback,
+  glfwSetWindowIconifyCallback: _glfwSetWindowIconifyCallback,
+  glfwSetWindowShouldClose: _glfwSetWindowShouldClose,
+  glfwSetWindowSize: _glfwSetWindowSize,
+  glfwSetWindowSizeCallback: _glfwSetWindowSizeCallback,
+  glfwSwapBuffers: _glfwSwapBuffers,
+  glfwSwapInterval: _glfwSwapInterval,
+  glfwTerminate: _glfwTerminate,
+  glfwWindowHint: _glfwWindowHint,
+  strftime_l: _strftime_l
 };
 Asyncify.instrumentWasmImports(wasmImports);
 var asm = createWasm();
-/** @type {function(...*):?} */
-var ___wasm_call_ctors = createExportWrapper("__wasm_call_ctors");
-/** @type {function(...*):?} */
-var _main = Module["_main"] = createExportWrapper("main");
-/** @type {function(...*):?} */
-var ___errno_location = createExportWrapper("__errno_location");
-/** @type {function(...*):?} */
-var _malloc = createExportWrapper("malloc");
-/** @type {function(...*):?} */
-var _free = createExportWrapper("free");
-/** @type {function(...*):?} */
-var _fflush = Module["_fflush"] = createExportWrapper("fflush");
-/** @type {function(...*):?} */
-var _emscripten_stack_init = function() {
-  return (_emscripten_stack_init = Module["asm"]["emscripten_stack_init"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _emscripten_stack_set_limits = function() {
-  return (_emscripten_stack_set_limits = Module["asm"]["emscripten_stack_set_limits"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _emscripten_stack_get_free = function() {
-  return (_emscripten_stack_get_free = Module["asm"]["emscripten_stack_get_free"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _emscripten_stack_get_base = function() {
-  return (_emscripten_stack_get_base = Module["asm"]["emscripten_stack_get_base"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _emscripten_stack_get_end = function() {
-  return (_emscripten_stack_get_end = Module["asm"]["emscripten_stack_get_end"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var stackSave = createExportWrapper("stackSave");
-/** @type {function(...*):?} */
-var stackRestore = createExportWrapper("stackRestore");
-/** @type {function(...*):?} */
-var stackAlloc = createExportWrapper("stackAlloc");
-/** @type {function(...*):?} */
-var _emscripten_stack_get_current = function() {
-  return (_emscripten_stack_get_current = Module["asm"]["emscripten_stack_get_current"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var ___cxa_is_pointer_type = createExportWrapper("__cxa_is_pointer_type");
-/** @type {function(...*):?} */
-var dynCall_vi = Module["dynCall_vi"] = createExportWrapper("dynCall_vi");
-/** @type {function(...*):?} */
-var dynCall_ii = Module["dynCall_ii"] = createExportWrapper("dynCall_ii");
-/** @type {function(...*):?} */
-var dynCall_iii = Module["dynCall_iii"] = createExportWrapper("dynCall_iii");
-/** @type {function(...*):?} */
-var dynCall_iiii = Module["dynCall_iiii"] = createExportWrapper("dynCall_iiii");
-/** @type {function(...*):?} */
-var dynCall_viii = Module["dynCall_viii"] = createExportWrapper("dynCall_viii");
-/** @type {function(...*):?} */
-var dynCall_viiiii = Module["dynCall_viiiii"] = createExportWrapper("dynCall_viiiii");
-/** @type {function(...*):?} */
-var dynCall_vii = Module["dynCall_vii"] = createExportWrapper("dynCall_vii");
-/** @type {function(...*):?} */
-var dynCall_v = Module["dynCall_v"] = createExportWrapper("dynCall_v");
-/** @type {function(...*):?} */
-var dynCall_vif = Module["dynCall_vif"] = createExportWrapper("dynCall_vif");
-/** @type {function(...*):?} */
-var dynCall_viiii = Module["dynCall_viiii"] = createExportWrapper("dynCall_viiii");
-/** @type {function(...*):?} */
-var dynCall_vidd = Module["dynCall_vidd"] = createExportWrapper("dynCall_vidd");
-/** @type {function(...*):?} */
-var dynCall_fii = Module["dynCall_fii"] = createExportWrapper("dynCall_fii");
-/** @type {function(...*):?} */
-var dynCall_vffff = Module["dynCall_vffff"] = createExportWrapper("dynCall_vffff");
-/** @type {function(...*):?} */
-var dynCall_vf = Module["dynCall_vf"] = createExportWrapper("dynCall_vf");
-/** @type {function(...*):?} */
-var dynCall_viiiiiiii = Module["dynCall_viiiiiiii"] = createExportWrapper("dynCall_viiiiiiii");
-/** @type {function(...*):?} */
-var dynCall_viiiiiiiii = Module["dynCall_viiiiiiiii"] = createExportWrapper("dynCall_viiiiiiiii");
-/** @type {function(...*):?} */
-var dynCall_i = Module["dynCall_i"] = createExportWrapper("dynCall_i");
-/** @type {function(...*):?} */
-var dynCall_vff = Module["dynCall_vff"] = createExportWrapper("dynCall_vff");
-/** @type {function(...*):?} */
-var dynCall_viiiiiii = Module["dynCall_viiiiiii"] = createExportWrapper("dynCall_viiiiiii");
-/** @type {function(...*):?} */
-var dynCall_vfi = Module["dynCall_vfi"] = createExportWrapper("dynCall_vfi");
-/** @type {function(...*):?} */
-var dynCall_viif = Module["dynCall_viif"] = createExportWrapper("dynCall_viif");
-/** @type {function(...*):?} */
-var dynCall_viff = Module["dynCall_viff"] = createExportWrapper("dynCall_viff");
-/** @type {function(...*):?} */
-var dynCall_vifff = Module["dynCall_vifff"] = createExportWrapper("dynCall_vifff");
-/** @type {function(...*):?} */
-var dynCall_viffff = Module["dynCall_viffff"] = createExportWrapper("dynCall_viffff");
-/** @type {function(...*):?} */
-var dynCall_viiiiii = Module["dynCall_viiiiii"] = createExportWrapper("dynCall_viiiiii");
-/** @type {function(...*):?} */
-var dynCall_jiji = Module["dynCall_jiji"] = createExportWrapper("dynCall_jiji");
-/** @type {function(...*):?} */
-var dynCall_iidiiii = Module["dynCall_iidiiii"] = createExportWrapper("dynCall_iidiiii");
-/** @type {function(...*):?} */
-var dynCall_viijii = Module["dynCall_viijii"] = createExportWrapper("dynCall_viijii");
-/** @type {function(...*):?} */
-var dynCall_iiiii = Module["dynCall_iiiii"] = createExportWrapper("dynCall_iiiii");
-/** @type {function(...*):?} */
-var dynCall_iiiiii = Module["dynCall_iiiiii"] = createExportWrapper("dynCall_iiiiii");
-/** @type {function(...*):?} */
-var dynCall_iiiiiiiii = Module["dynCall_iiiiiiiii"] = createExportWrapper("dynCall_iiiiiiiii");
-/** @type {function(...*):?} */
-var dynCall_iiiiiii = Module["dynCall_iiiiiii"] = createExportWrapper("dynCall_iiiiiii");
-/** @type {function(...*):?} */
-var dynCall_iiiiij = Module["dynCall_iiiiij"] = createExportWrapper("dynCall_iiiiij");
-/** @type {function(...*):?} */
-var dynCall_iiiiid = Module["dynCall_iiiiid"] = createExportWrapper("dynCall_iiiiid");
-/** @type {function(...*):?} */
-var dynCall_iiiiijj = Module["dynCall_iiiiijj"] = createExportWrapper("dynCall_iiiiijj");
-/** @type {function(...*):?} */
-var dynCall_iiiiiiii = Module["dynCall_iiiiiiii"] = createExportWrapper("dynCall_iiiiiiii");
-/** @type {function(...*):?} */
-var dynCall_iiiiiijj = Module["dynCall_iiiiiijj"] = createExportWrapper("dynCall_iiiiiijj");
-/** @type {function(...*):?} */
-var _asyncify_start_unwind = createExportWrapper("asyncify_start_unwind");
-/** @type {function(...*):?} */
-var _asyncify_stop_unwind = createExportWrapper("asyncify_stop_unwind");
-/** @type {function(...*):?} */
-var _asyncify_start_rewind = createExportWrapper("asyncify_start_rewind");
-/** @type {function(...*):?} */
-var _asyncify_stop_rewind = createExportWrapper("asyncify_stop_rewind");
-var ___start_em_js = Module['___start_em_js'] = 253195;
-var ___stop_em_js = Module['___stop_em_js'] = 253270;
+var ___wasm_call_ctors = createExportWrapper('__wasm_call_ctors');
+var _main = Module['_main'] = createExportWrapper('main');
+var ___errno_location = createExportWrapper('__errno_location');
+var _malloc = createExportWrapper('malloc');
+var _free = createExportWrapper('free');
+var _fflush = Module['_fflush'] = createExportWrapper('fflush');
+var _emscripten_stack_init = () => (_emscripten_stack_init = wasmExports['emscripten_stack_init'])();
+var _emscripten_stack_get_free = () => (_emscripten_stack_get_free = wasmExports['emscripten_stack_get_free'])();
+var _emscripten_stack_get_base = () => (_emscripten_stack_get_base = wasmExports['emscripten_stack_get_base'])();
+var _emscripten_stack_get_end = () => (_emscripten_stack_get_end = wasmExports['emscripten_stack_get_end'])();
+var stackSave = createExportWrapper('stackSave');
+var stackRestore = createExportWrapper('stackRestore');
+var stackAlloc = createExportWrapper('stackAlloc');
+var _emscripten_stack_get_current = () => (_emscripten_stack_get_current = wasmExports['emscripten_stack_get_current'])();
+var ___cxa_is_pointer_type = createExportWrapper('__cxa_is_pointer_type');
+var dynCall_vi = Module['dynCall_vi'] = createExportWrapper('dynCall_vi');
+var dynCall_ii = Module['dynCall_ii'] = createExportWrapper('dynCall_ii');
+var dynCall_iii = Module['dynCall_iii'] = createExportWrapper('dynCall_iii');
+var dynCall_iiii = Module['dynCall_iiii'] = createExportWrapper('dynCall_iiii');
+var dynCall_viii = Module['dynCall_viii'] = createExportWrapper('dynCall_viii');
+var dynCall_viiiii = Module['dynCall_viiiii'] = createExportWrapper('dynCall_viiiii');
+var dynCall_vii = Module['dynCall_vii'] = createExportWrapper('dynCall_vii');
+var dynCall_v = Module['dynCall_v'] = createExportWrapper('dynCall_v');
+var dynCall_vif = Module['dynCall_vif'] = createExportWrapper('dynCall_vif');
+var dynCall_viiii = Module['dynCall_viiii'] = createExportWrapper('dynCall_viiii');
+var dynCall_vidd = Module['dynCall_vidd'] = createExportWrapper('dynCall_vidd');
+var dynCall_fii = Module['dynCall_fii'] = createExportWrapper('dynCall_fii');
+var dynCall_vffff = Module['dynCall_vffff'] = createExportWrapper('dynCall_vffff');
+var dynCall_vf = Module['dynCall_vf'] = createExportWrapper('dynCall_vf');
+var dynCall_viiiiiiii = Module['dynCall_viiiiiiii'] = createExportWrapper('dynCall_viiiiiiii');
+var dynCall_viiiiiiiii = Module['dynCall_viiiiiiiii'] = createExportWrapper('dynCall_viiiiiiiii');
+var dynCall_i = Module['dynCall_i'] = createExportWrapper('dynCall_i');
+var dynCall_vff = Module['dynCall_vff'] = createExportWrapper('dynCall_vff');
+var dynCall_viiiiiii = Module['dynCall_viiiiiii'] = createExportWrapper('dynCall_viiiiiii');
+var dynCall_vfi = Module['dynCall_vfi'] = createExportWrapper('dynCall_vfi');
+var dynCall_viif = Module['dynCall_viif'] = createExportWrapper('dynCall_viif');
+var dynCall_viff = Module['dynCall_viff'] = createExportWrapper('dynCall_viff');
+var dynCall_vifff = Module['dynCall_vifff'] = createExportWrapper('dynCall_vifff');
+var dynCall_viffff = Module['dynCall_viffff'] = createExportWrapper('dynCall_viffff');
+var dynCall_viiiiii = Module['dynCall_viiiiii'] = createExportWrapper('dynCall_viiiiii');
+var dynCall_jiji = Module['dynCall_jiji'] = createExportWrapper('dynCall_jiji');
+var dynCall_iidiiii = Module['dynCall_iidiiii'] = createExportWrapper('dynCall_iidiiii');
+var dynCall_viijii = Module['dynCall_viijii'] = createExportWrapper('dynCall_viijii');
+var dynCall_iiiii = Module['dynCall_iiiii'] = createExportWrapper('dynCall_iiiii');
+var dynCall_iiiiii = Module['dynCall_iiiiii'] = createExportWrapper('dynCall_iiiiii');
+var dynCall_iiiiiiiii = Module['dynCall_iiiiiiiii'] = createExportWrapper('dynCall_iiiiiiiii');
+var dynCall_iiiiiii = Module['dynCall_iiiiiii'] = createExportWrapper('dynCall_iiiiiii');
+var dynCall_iiiiij = Module['dynCall_iiiiij'] = createExportWrapper('dynCall_iiiiij');
+var dynCall_iiiiid = Module['dynCall_iiiiid'] = createExportWrapper('dynCall_iiiiid');
+var dynCall_iiiiijj = Module['dynCall_iiiiijj'] = createExportWrapper('dynCall_iiiiijj');
+var dynCall_iiiiiiii = Module['dynCall_iiiiiiii'] = createExportWrapper('dynCall_iiiiiiii');
+var dynCall_iiiiiijj = Module['dynCall_iiiiiijj'] = createExportWrapper('dynCall_iiiiiijj');
+var _asyncify_start_unwind = createExportWrapper('asyncify_start_unwind');
+var _asyncify_stop_unwind = createExportWrapper('asyncify_stop_unwind');
+var _asyncify_start_rewind = createExportWrapper('asyncify_start_rewind');
+var _asyncify_stop_rewind = createExportWrapper('asyncify_stop_rewind');
+var ___start_em_js = Module['___start_em_js'] = 257915;
+var ___stop_em_js = Module['___stop_em_js'] = 257990;
 
 // include: postamble.js
 // === Auto-generated postamble setup entry stuff ===
@@ -9701,15 +10177,21 @@ function tryParseAsDataURI(filename) {
   return intArrayFromBase64(filename.slice(dataURIPrefix.length));
 }
 // end include: base64Utils.js
-Module["addRunDependency"] = addRunDependency;
-Module["removeRunDependency"] = removeRunDependency;
-Module["FS_createPath"] = FS.createPath;
-Module["FS_createDataFile"] = FS.createDataFile;
-Module["FS_createLazyFile"] = FS.createLazyFile;
-Module["FS_createDevice"] = FS.createDevice;
-Module["FS_unlink"] = FS.unlink;
-Module["FS_createPreloadedFile"] = FS.createPreloadedFile;
+Module['addRunDependency'] = addRunDependency;
+Module['removeRunDependency'] = removeRunDependency;
+Module['FS_createPath'] = FS.createPath;
+Module['FS_createDataFile'] = FS.createDataFile;
+Module['FS_createLazyFile'] = FS.createLazyFile;
+Module['FS_createDevice'] = FS.createDevice;
+Module['FS_unlink'] = FS.unlink;
+Module['FS_createPreloadedFile'] = FS.createPreloadedFile;
 var missingLibrarySymbols = [
+  'writeI53ToI64Clamped',
+  'writeI53ToI64Signaling',
+  'writeI53ToU64Clamped',
+  'writeI53ToU64Signaling',
+  'convertI32PairToI53',
+  'convertU32PairToI53',
   'growMemory',
   'ydayFromDate',
   'inetPton4',
@@ -9719,7 +10201,6 @@ var missingLibrarySymbols = [
   'readSockaddr',
   'writeSockaddr',
   'getHostByName',
-  'traverseStack',
   'getCallstack',
   'emscriptenLog',
   'convertPCtoSourceLocation',
@@ -9731,18 +10212,13 @@ var missingLibrarySymbols = [
   'getDynCaller',
   'dynCall',
   'asmjsMangle',
+  'handleAllocatorInit',
   'HandleAllocator',
   'getNativeTypeSize',
   'STACK_SIZE',
   'STACK_ALIGN',
   'POINTER_SIZE',
   'ASSERTIONS',
-  'writeI53ToI64Clamped',
-  'writeI53ToI64Signaling',
-  'writeI53ToU64Clamped',
-  'writeI53ToU64Signaling',
-  'convertI32PairToI53',
-  'convertU32PairToI53',
   'getCFunc',
   'ccall',
   'cwrap',
@@ -9813,6 +10289,7 @@ var missingLibrarySymbols = [
   'makePromise',
   'idsToPromises',
   'makePromiseCallback',
+  'findMatchingCatch',
   'getSocketFromFD',
   'getSocketAddress',
   '_setNetworkCallback',
@@ -9844,6 +10321,8 @@ var unexportedSymbols = [
   'abort',
   'keepRuntimeAlive',
   'wasmMemory',
+  'wasmTable',
+  'wasmExports',
   'stackAlloc',
   'stackSave',
   'stackRestore',
@@ -9851,6 +10330,10 @@ var unexportedSymbols = [
   'setTempRet0',
   'writeStackCookie',
   'checkStackCookie',
+  'writeI53ToI64',
+  'readI53FromI64',
+  'readI53FromU64',
+  'convertI32PairToI53Checked',
   'ptrToString',
   'zeroMemory',
   'exitJS',
@@ -9889,10 +10372,6 @@ var unexportedSymbols = [
   'asyncLoad',
   'alignMemory',
   'mmapAlloc',
-  'writeI53ToI64',
-  'readI53FromI64',
-  'readI53FromU64',
-  'convertI32PairToI53Checked',
   'sigToWasmTypes',
   'freeTableIndexes',
   'functionsInTableMap',
@@ -9943,6 +10422,8 @@ var unexportedSymbols = [
   'preloadPlugins',
   'FS_modeStringToFlags',
   'FS_getMode',
+  'FS_stdin_getChar_buffer',
+  'FS_stdin_getChar',
   'FS',
   'MEMFS',
   'TTY',
@@ -10113,7 +10594,7 @@ function checkUnflushedContent() {
   out = oldOut;
   err = oldErr;
   if (has) {
-    warnOnce('stdio streams had content in them that was not flushed. you should set EXIT_RUNTIME to 1 (see the FAQ), or make sure to emit a newline when you printf etc.');
+    warnOnce('stdio streams had content in them that was not flushed. you should set EXIT_RUNTIME to 1 (see the Emscripten FAQ), or make sure to emit a newline when you printf etc.');
   }
 }
 
