@@ -4,9 +4,12 @@
 
 #ifndef DUNGEON_CRAWLER_EVENTS_HPP
 #define DUNGEON_CRAWLER_EVENTS_HPP
-#include <filesystem>
-#include <components.hpp>
+extern "C" {
+#include <raylib.h>
+}
+#include <ecs/components.hpp>
 #include <cstdint>
+#include <filesystem>
 namespace editor {
     enum class EditMode : uint8_t{
         None,

@@ -26,5 +26,8 @@ enum class DoorStateType {
 enum class WorldDirection {
     NORTH, EAST, WEST, SOUTH
 };
+enum class MonsterType {
+    GHOUL, GOBLIN, SAND_SCORPION, SPECTRE, NOMAD_THIEF
+};
 
 #endif//DUNGEON_CRAWLER_TYPES_HPP

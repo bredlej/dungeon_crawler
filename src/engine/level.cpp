@@ -3,6 +3,15 @@
 //
 #include <level.hpp>
 
+/**
+ * @brief Load a level from a given file path
+ *
+ * This function clears the existing level data, parses the level from the provided JSON file,
+ * and initializes the tile and wall maps accordingly. If a player spawn position is specified in
+ * the JSON, it updates the player's direction and position in the level.
+ *
+ * @param path The file path of the JSON level file to load
+ */
 void Level::load(const std::string &path) {
     clear();
     auto json = LevelParser::parse(path);

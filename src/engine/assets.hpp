@@ -272,7 +272,7 @@ namespace assets {
             _textures._gui.emplace(dungeon_view::GUI::MiniMap::Player, assets::gui::minimap::player_ss);
 
             // Bestiary
-            _textures._beasts.emplace(Beast::GoblinWarrior, assets::beasts::goblin_warrior);
+            _textures._beasts.emplace(Beast::GoblinWarrior, assets::monsters::goblin_warrior);
         };
 
         Textures _textures;

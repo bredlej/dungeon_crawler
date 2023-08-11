@@ -4,8 +4,8 @@
 
 #ifndef DUNGEON_CRAWLER_EDIT_MODE_HPP
 #define DUNGEON_CRAWLER_EDIT_MODE_HPP
-#include <core.hpp>
 #include <events.hpp>
+#include <core.hpp>
 #include <memory>
 
 class EditModeSelector {

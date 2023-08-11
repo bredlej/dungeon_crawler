@@ -4,8 +4,8 @@
 
 #ifndef DUNGEON_CRAWLER_FILE_OPERATIONS_HPP
 #define DUNGEON_CRAWLER_FILE_OPERATIONS_HPP
-#include <core.hpp>
 #include <events.hpp>
+#include <core.hpp>
 #include <memory>
 class FileOperations {
 public:

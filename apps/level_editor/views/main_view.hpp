@@ -5,20 +5,22 @@
 #ifndef DUNGEON_CRAWLER_MAIN_VIEW_HPP
 #define DUNGEON_CRAWLER_MAIN_VIEW_HPP
 extern "C" {
-#include <raylib.h>
+#include "raylib-4.0.0/src/raylib.h"
 };
-#include <blueprint.hpp>
-#include <core.hpp>
-#include <edit_mode.hpp>
-#include <entity_details.hpp>
-#include <events.hpp>
-#include <file_operations.hpp>
-#include <imgui/imgui.h>
-#include <imgui/rlImGui.h>
-#include <level_list.hpp>
-#include <main_menu.hpp>
-#include <map_view.hpp>
+#include "engine/core.hpp"
+#include "imgui/imgui.h"
+#include "imgui/rlImGui.h"
+#include "views/battle_editor_tab/battle_view.hpp"
+#include "views/level_editor_tab/components/blueprint.hpp"
+#include "views/level_editor_tab/components/edit_mode.hpp"
+#include "views/level_editor_tab/components/entity_details.hpp"
+#include "views/level_editor_tab/components/file_operations.hpp"
+#include "views/level_editor_tab/components/level_list.hpp"
+#include "views/level_editor_tab/components/main_menu.hpp"
+#include "views/level_editor_tab/events.hpp"
+#include "views/level_editor_tab/map_view.hpp"
 #include <memory>
+
 class MainView : public UIView<MainView> {
 public:
     explicit MainView(std::shared_ptr<Core> &core) : UIView(core),
@@ -26,7 +28,8 @@ public:
                                                      _entity_details{core},
                                                      _edit_mode{core},
                                                      _file_operations{core},
-                                                     _blueprint{core} {
+                                                     _blueprint{core},
+                                                     _battle_view{core} {
         _core->dispatcher.sink<RefreshLevels>().connect<&MainView::_refresh_levels>(this);
         _core->dispatcher.sink<ToggleShowDemo>().connect<&MainView::_toggle_show_demo>(this);
         _initialize();
@@ -43,6 +46,7 @@ private:
     EntityDetails _entity_details;
     EditModeSelector _edit_mode;
     Blueprint _blueprint;
+    BattleView _battle_view;
     void _initialize();
     void _refresh_levels();
     bool _show_demo{false};

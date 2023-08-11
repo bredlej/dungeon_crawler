@@ -4,11 +4,11 @@
 
 #ifndef DUNGEON_CRAWLER_ENTITY_DETAILS_HPP
 #define DUNGEON_CRAWLER_ENTITY_DETAILS_HPP
-#include <core.hpp>
 #include <events.hpp>
-#include <components.hpp>
-#include <fmt/format.h>
 #include <component_renderer.hpp>
+#include <components.hpp>
+#include <core.hpp>
+#include <fmt/format.h>
 class EntityDetails {
 public:
     explicit EntityDetails(std::shared_ptr<Core> core) : _core{core}, _component_renderer{core} {};

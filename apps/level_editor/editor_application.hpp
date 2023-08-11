@@ -8,10 +8,17 @@
 extern "C" {
 #include <raylib.h>
 }
-#include <main_view.hpp>
+#include "views/main_view.hpp"
+#include <editor_assets.hpp>
 #include <imgui/imgui.h>
 #include <imgui/rlImGui.h>
-#include <editor_assets.hpp>
+#include <nlohmann/json.hpp>
+#include <path.hpp>
+
+struct LaunchResult {
+    bool success;
+    std::string message;
+};
 
 class EditorApplication {
 public:
@@ -20,7 +27,7 @@ public:
     EditorApplication(EditorApplication&&) noexcept = delete;
     EditorApplication& operator=(const EditorApplication&) noexcept = delete;
     EditorApplication& operator=(EditorApplication&&) noexcept = delete;
-    void run() const;
+    LaunchResult run() const;
 private:
     uint32_t _window_width{1024};
     uint32_t _window_height{768};

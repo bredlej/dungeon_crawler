@@ -1,7 +1,7 @@
 //
 // Created by Patryk Szczypień on 10/04/2023.
 //
-#include <edit_mode.hpp>
+#include <level_editor_tab/components/edit_mode.hpp>
 template<>
 void EditModeSelector::_render_edit_mode_tools<editor::EditMode::Tile>() {
     using namespace editor;

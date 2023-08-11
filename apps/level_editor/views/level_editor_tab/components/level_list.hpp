@@ -10,11 +10,11 @@
 extern "C" {
 #include <raylib.h>
 };
+#include <events.hpp>
+#include <core.hpp>
+#include <cstdlib>
 #include <imgui/imgui.h>
 #include <imgui/rlImGui.h>
-#include <cstdlib>
-#include <core.hpp>
-#include <events.hpp>
 
 class LevelList {
 public:

@@ -12,8 +12,12 @@ namespace assets {
             constexpr const char *player_ss = "assets/GUI/Minimap/player.png";
         }// namespace minimap
     }    // namespace gui
-    namespace beasts {
+    namespace monsters {
         constexpr const char *goblin_warrior = "assets/Bestiary/goblin_warrior.png";
+        constexpr const char *ghoul = "assets/Bestiary/ghoul.png";
+        constexpr const char *sand_scorpion = "assets/Bestiary/sand_scorpion.png";
+        constexpr const char *spectre = "assets/Bestiary/spectre.png";
+        constexpr const char *nomad_thief = "assets/Bestiary/nomad_thief.png";
     }
     namespace tiles {
         namespace stratum {
@@ -175,8 +179,8 @@ namespace assets {
         }            // namespace stratum
     }                // namespace tiles
     namespace level_editor::tiles {
-            constexpr const char *ruins_01 = "../../assets/LevelEditor/ruins_01.png";
-            constexpr const char *ruins_02 = "../../assets/LevelEditor/ruins_02.png";
+            constexpr const char *ruins_01 = "assets/LevelEditor/ruins_01.png";
+            constexpr const char *ruins_02 = "assets/LevelEditor/ruins_02.png";
     }
 }// namespace assets
 #endif//DUNGEON_CRAWLER_ASSET_PATHS_HPP
