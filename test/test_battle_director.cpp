@@ -21,14 +21,14 @@ static void process_turn(auto &battleDirector) {
 
 TEST_F(BattleDirectorTest, Test_Battle_Director_Initializes) {
     std::shared_ptr<Core> core = std::make_shared<Core>();
-    CustomBattleDirector battleDirector{core};
+    BattleDirector battleDirector{core};
     battleDirector.update(); // INACTIVE -> BATTLE_START
     ASSERT_EQ(battleDirector.get_battle_phase(), BattlePhase::BATTLE_START);
 }
 
 TEST_F(BattleDirectorTest, Test_Battle_Goes_Through_All_Phases) {
     std::shared_ptr<Core> core = std::make_shared<Core>();
-    CustomBattleDirector battleDirector{core};
+    BattleDirector battleDirector{core};
 
     process_turn(battleDirector);
     battleDirector.update(); // TURN_END -> BATTLE_END
@@ -40,7 +40,7 @@ TEST_F(BattleDirectorTest, Test_Battle_Goes_Through_All_Phases) {
 
 TEST_F(BattleDirectorTest, Test_Battle_Ends_With_End_Condition) {
     std::shared_ptr<Core> core = std::make_shared<Core>();
-    CustomBattleDirector battle_director{core};
+    BattleDirector battle_director{core};
 
     struct TurnCounter {
         int32_t turn = 0;
@@ -65,7 +65,7 @@ TEST_F(BattleDirectorTest, Test_Battle_Ends_With_End_Condition) {
 
 TEST_F(BattleDirectorTest, Test_Switches_To_Next_Phase_When_Guard_Is_True) {
     std::shared_ptr<Core> core = std::make_shared<Core>();
-    CustomBattleDirector battle_director{core};
+    BattleDirector battle_director{core};
 
     struct PlayerActionCounter {
         int32_t player_actions = 3;
@@ -92,6 +92,15 @@ TEST_F(BattleDirectorTest, Test_Switches_To_Next_Phase_When_Guard_Is_True) {
     battle_director.update(); // PLAYER_ACTIONS -> AI_ACTIONS
 
     ASSERT_EQ(battle_director.get_battle_phase(), BattlePhase::AI_ACTIONS);
+}
+
+TEST_F(BattleDirectorTest, BattleDirector_Inside_Registry) {
+    std::shared_ptr<Core> core = std::make_shared<Core>();
+
+    core->registry.ctx().emplace<BattleDirector>(core);
+    core->registry.ctx().find<BattleDirector>()->update();
+
+    ASSERT_EQ(BattlePhase::BATTLE_START, core->registry.ctx().find<BattleDirector>()->get_battle_phase());
 }
 
 int main(int ac, char *av[]) {

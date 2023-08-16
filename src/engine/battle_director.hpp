@@ -24,7 +24,15 @@ struct NextStateEvent {
     BattlePhase from_phase;
 };
 
-class CustomBattleDirector {
+/**
+ * @class BattleDirector
+ * @brief Coordinates the flow of a battle by managing different phases and their actions
+ *
+ * The BattleDirector class is responsible for managing the flow of a battle by coordinating
+ * different phases and their actions. It keeps track of the current battle phase, allows for
+ * updating the battle state, and handles transitions between phases based on certain conditions.
+ */
+class BattleDirector {
     using void_func = std::function<void(std::shared_ptr<Core>)>;
     using bool_func = std::function<bool(std::shared_ptr<Core>)>;
     using void_map = std::unordered_map<BattlePhase, void_func>;
@@ -37,8 +45,8 @@ public:
     bool_map guard;
     bool_func end_condition;
 
-    explicit CustomBattleDirector(std::shared_ptr<Core> &core) : _core{core} {
-        _core->dispatcher.sink<NextStateEvent>().connect<&CustomBattleDirector::next_state>(this);
+    explicit BattleDirector(std::shared_ptr<Core> &core) : _core{core} {
+        _core->dispatcher.sink<NextStateEvent>().connect<&BattleDirector::next_state>(this);
 
         pre_phase[BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) {};
         post_phase[BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) {};
@@ -79,12 +87,15 @@ public:
 
         end_condition = [](const std::shared_ptr<Core> &core) { return true; };
     };
-    explicit CustomBattleDirector(std::shared_ptr<Core> &core, void_map &&pre_phase, void_map &&post_phase, void_map &&phase, bool_map &&guard, bool_func &&end_condition)
+    explicit BattleDirector(std::shared_ptr<Core> &core, void_map &&pre_phase, void_map &&post_phase, void_map &&phase, bool_map &&guard, bool_func &&end_condition)
         : _core{core}, pre_phase{std::move(pre_phase)}, post_phase{std::move(post_phase)}, phase{std::move(phase)}, guard{std::move(guard)}, end_condition{std::move(end_condition)} {
-        _core->dispatcher.sink<NextStateEvent>().connect<&CustomBattleDirector::next_state>(this);
+        _core->dispatcher.sink<NextStateEvent>().connect<&BattleDirector::next_state>(this);
     };
-
-    ~CustomBattleDirector() = default;
+    BattleDirector(const BattleDirector &) = delete;
+    BattleDirector(BattleDirector &&) = default;
+    BattleDirector &operator=(const BattleDirector &) = delete;
+    BattleDirector &operator=(BattleDirector &&) = delete;
+    ~BattleDirector() = default;
 
     [[nodiscard]] BattlePhase get_battle_phase() const noexcept {
         return _battle_phase;
@@ -95,7 +106,7 @@ public:
         _core->dispatcher.update();
     }
 
-    static constexpr void guard_and_process(CustomBattleDirector &battleDirector, std::shared_ptr<Core> &core, BattlePhase from_phase, BattlePhase to_phase) {
+    static constexpr void guard_and_process(BattleDirector &battleDirector, std::shared_ptr<Core> &core, BattlePhase from_phase, BattlePhase to_phase) {
         if (battleDirector.guard[from_phase](core)) {
             battleDirector.post_phase[from_phase](core);
             battleDirector.pre_phase[to_phase](core);
