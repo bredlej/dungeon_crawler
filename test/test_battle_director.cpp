@@ -5,38 +5,11 @@
 #include <engine/battle_director.hpp>
 #include <gtest/gtest.h>
 #include <memory>
-#include "battle_director_mocks.hpp"
 
 class BattleDirectorTest : public testing::Test {
 protected:
     BattleDirectorTest() = default;
 };
-
-TEST_F(BattleDirectorTest, Test_Init) {
-    std::shared_ptr<Core> core = std::make_shared<Core>();
-    TestBattleDirector battleDirector{core};
-
-    ASSERT_EQ(battleDirector.get_battle_phase(), BattlePhase::INACTIVE);
-}
-
-TEST_F(BattleDirectorTest, Test_Update) {
-    std::shared_ptr<Core> core = std::make_shared<Core>();
-    TestBattleDirector battleDirector{core};
-
-    battleDirector.update();
-    const auto battle_phase = battleDirector.get_battle_phase();
-    ASSERT_EQ(battle_phase, BattlePhase::BATTLE_START);
-}
-
-TEST_F(BattleDirectorTest, Test_Guard_Prevents_Phase_Change) {
-    std::shared_ptr<Core> core = std::make_shared<Core>();
-    TestBattleDirector_TurnStartGuard battleDirector{core};
-
-    battleDirector.update();
-    battleDirector.update();
-    const auto battle_phase = battleDirector.get_battle_phase();
-    ASSERT_EQ(battle_phase, BattlePhase::BATTLE_START);
-}
 
 static void process_turn(auto &battleDirector) {
     battleDirector.update(); // INACTIVE -> BATTLE_START
@@ -46,9 +19,16 @@ static void process_turn(auto &battleDirector) {
     battleDirector.update(); // AI_ACTIONS -> TURN_END
 }
 
-TEST_F(BattleDirectorTest, Test_Battle_Reaches_Finished_Phase) {
+TEST_F(BattleDirectorTest, Test_Battle_Director_Initializes) {
     std::shared_ptr<Core> core = std::make_shared<Core>();
-    TestBattleDirector battleDirector{core};
+    CustomBattleDirector battleDirector{core};
+    battleDirector.update(); // INACTIVE -> BATTLE_START
+    ASSERT_EQ(battleDirector.get_battle_phase(), BattlePhase::BATTLE_START);
+}
+
+TEST_F(BattleDirectorTest, Test_Battle_Goes_Through_All_Phases) {
+    std::shared_ptr<Core> core = std::make_shared<Core>();
+    CustomBattleDirector battleDirector{core};
 
     process_turn(battleDirector);
     battleDirector.update(); // TURN_END -> BATTLE_END
@@ -58,17 +38,60 @@ TEST_F(BattleDirectorTest, Test_Battle_Reaches_Finished_Phase) {
     ASSERT_EQ(battle_phase, BattlePhase::FINISHED);
 }
 
-TEST_F(BattleDirectorTest, Test_Battle_Ends_In_Turn_2) {
+TEST_F(BattleDirectorTest, Test_Battle_Ends_With_End_Condition) {
     std::shared_ptr<Core> core = std::make_shared<Core>();
-    TestBattleDirector_Finishes_After_Turn_2 battleDirector{core};
+    CustomBattleDirector battle_director{core};
 
-    process_turn(battleDirector);
-    process_turn(battleDirector);
+    struct TurnCounter {
+        int32_t turn = 0;
+    };
+    core->registry.ctx().emplace<TurnCounter>();
 
-    const auto battle_phase = battleDirector.get_battle_phase();
-    const auto turn = battleDirector.get_turn();
-    ASSERT_EQ(battle_phase, BattlePhase::BATTLE_END);
-    ASSERT_EQ(turn, 2);
+    battle_director.pre_phase[BattlePhase::TURN_START] = [](const std::shared_ptr<Core> &core) {
+        auto *turn_counter = core->registry.ctx().find<TurnCounter>();
+        turn_counter->turn++;
+    };
+    battle_director.end_condition = [](const std::shared_ptr<Core> &core) {
+        auto *turn_counter = core->registry.ctx().find<TurnCounter>();
+        return turn_counter->turn == 2;
+    };
+
+    process_turn(battle_director); // Turn #1
+    process_turn(battle_director); // Turn #2
+
+    ASSERT_EQ(battle_director.get_battle_phase(), BattlePhase::BATTLE_END);
+    ASSERT_EQ(core->registry.ctx().find<TurnCounter>()->turn, 2);
+}
+
+TEST_F(BattleDirectorTest, Test_Switches_To_Next_Phase_When_Guard_Is_True) {
+    std::shared_ptr<Core> core = std::make_shared<Core>();
+    CustomBattleDirector battle_director{core};
+
+    struct PlayerActionCounter {
+        int32_t player_actions = 3;
+    };
+    core->registry.ctx().emplace<PlayerActionCounter>();
+
+    battle_director.phase[BattlePhase::PLAYER_ACTIONS] = [](const std::shared_ptr<Core> &core) {
+        auto *player_action_counter = core->registry.ctx().find<PlayerActionCounter>();
+        player_action_counter->player_actions--;
+        core->dispatcher.enqueue(NextStateEvent{BattlePhase::PLAYER_ACTIONS});
+    };
+
+    battle_director.guard[BattlePhase::AI_ACTIONS] = [](const std::shared_ptr<Core> &core) {
+        auto *player_action_counter = core->registry.ctx().find<PlayerActionCounter>();
+        return player_action_counter->player_actions == 0;
+    };
+
+    battle_director.update(); // INACTIVE -> BATTLE_START
+    battle_director.update(); // BATTLE_START -> TURN_START
+    battle_director.update(); // TURN_START -> PLAYER_ACTIONS
+    battle_director.update(); // PLAYER_ACTIONS -> PLAYER_ACTIONS - Action #1
+    battle_director.update(); // PLAYER_ACTIONS -> PLAYER_ACTIONS - Action #2
+    battle_director.update(); // PLAYER_ACTIONS -> PLAYER_ACTIONS - Action #3
+    battle_director.update(); // PLAYER_ACTIONS -> AI_ACTIONS
+
+    ASSERT_EQ(battle_director.get_battle_phase(), BattlePhase::AI_ACTIONS);
 }
 
 int main(int ac, char *av[]) {

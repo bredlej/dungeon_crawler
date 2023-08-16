@@ -6,6 +6,8 @@
 #define DUNGEON_CRAWLER_BATTLE_DIRECTOR_HPP
 #include <engine/core.hpp>
 #include <memory>
+#include <functional>
+#include <unordered_map>
 
 enum class BattlePhase {
     INACTIVE,
@@ -22,118 +24,128 @@ struct NextStateEvent {
     BattlePhase from_phase;
 };
 
-template<typename T>
-class BattleDirector {
+class CustomBattleDirector {
+    using void_func = std::function<void(std::shared_ptr<Core>)>;
+    using bool_func = std::function<bool(std::shared_ptr<Core>)>;
+    using void_map = std::unordered_map<BattlePhase, void_func>;
+    using bool_map = std::unordered_map<BattlePhase, bool_func>;
+
 public:
-    explicit BattleDirector(std::shared_ptr<Core> &core) : _core{core} {};
-    virtual ~BattleDirector() = default;
+    void_map pre_phase;
+    void_map post_phase;
+    void_map phase;
+    bool_map guard;
+    bool_func end_condition;
+
+    explicit CustomBattleDirector(std::shared_ptr<Core> &core) : _core{core} {
+        _core->dispatcher.sink<NextStateEvent>().connect<&CustomBattleDirector::next_state>(this);
+
+        pre_phase[BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) {};
+        post_phase[BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) {};
+        phase[BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) { core->dispatcher.trigger(NextStateEvent{BattlePhase::INACTIVE}); };
+        guard[BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) { return true; };
+
+        pre_phase[BattlePhase::BATTLE_START] = [](const std::shared_ptr<Core> &core) {};
+        post_phase[BattlePhase::BATTLE_START] = [](const std::shared_ptr<Core> &core) {};
+        phase[BattlePhase::BATTLE_START] = [](const std::shared_ptr<Core> &core) { core->dispatcher.trigger(NextStateEvent{BattlePhase::BATTLE_START}); };
+        guard[BattlePhase::BATTLE_START] = [](const std::shared_ptr<Core> &core) { return true; };
+
+        pre_phase[BattlePhase::TURN_START] = [](const std::shared_ptr<Core> &core) {};
+        post_phase[BattlePhase::TURN_START] = [](const std::shared_ptr<Core> &core) {};
+        phase[BattlePhase::TURN_START] = [](const std::shared_ptr<Core> &core) { core->dispatcher.trigger(NextStateEvent{BattlePhase::TURN_START}); };
+        guard[BattlePhase::TURN_START] = [](const std::shared_ptr<Core> &core) { return true; };
+
+        pre_phase[BattlePhase::PLAYER_ACTIONS] = [](const std::shared_ptr<Core> &core) {};
+        post_phase[BattlePhase::PLAYER_ACTIONS] = [](const std::shared_ptr<Core> &core) {};
+        phase[BattlePhase::PLAYER_ACTIONS] = [](const std::shared_ptr<Core> &core) { core->dispatcher.trigger(NextStateEvent{BattlePhase::PLAYER_ACTIONS}); };
+        guard[BattlePhase::PLAYER_ACTIONS] = [](const std::shared_ptr<Core> &core) { return true; };
+
+        pre_phase[BattlePhase::AI_ACTIONS] = [](const std::shared_ptr<Core> &core) {};
+        post_phase[BattlePhase::AI_ACTIONS] = [](const std::shared_ptr<Core> &core) {};
+        phase[BattlePhase::AI_ACTIONS] = [](const std::shared_ptr<Core> &core) { core->dispatcher.trigger(NextStateEvent{BattlePhase::AI_ACTIONS}); };
+        guard[BattlePhase::AI_ACTIONS] = [](const std::shared_ptr<Core> &core) { return true; };
+
+        pre_phase[BattlePhase::TURN_END] = [](const std::shared_ptr<Core> &core) {};
+        post_phase[BattlePhase::TURN_END] = [](const std::shared_ptr<Core> &core) {};
+        phase[BattlePhase::TURN_END] = [](const std::shared_ptr<Core> &core) { core->dispatcher.trigger(NextStateEvent{BattlePhase::TURN_END}); };
+        guard[BattlePhase::TURN_END] = [](const std::shared_ptr<Core> &core) { return true; };
+
+        pre_phase[BattlePhase::BATTLE_END] = [](const std::shared_ptr<Core> &core) {};
+        post_phase[BattlePhase::BATTLE_END] = [](const std::shared_ptr<Core> &core) {};
+        phase[BattlePhase::BATTLE_END] = [](const std::shared_ptr<Core> &core) { core->dispatcher.trigger(NextStateEvent{BattlePhase::BATTLE_END}); };
+        guard[BattlePhase::BATTLE_END] = [](const std::shared_ptr<Core> &core) { return true; };
+
+        phase[BattlePhase::FINISHED] = [](const std::shared_ptr<Core> &core) {};
+
+        end_condition = [](const std::shared_ptr<Core> &core) { return true; };
+    };
+    explicit CustomBattleDirector(std::shared_ptr<Core> &core, void_map &&pre_phase, void_map &&post_phase, void_map &&phase, bool_map &&guard, bool_func &&end_condition)
+        : _core{core}, pre_phase{std::move(pre_phase)}, post_phase{std::move(post_phase)}, phase{std::move(phase)}, guard{std::move(guard)}, end_condition{std::move(end_condition)} {
+        _core->dispatcher.sink<NextStateEvent>().connect<&CustomBattleDirector::next_state>(this);
+    };
+
+    ~CustomBattleDirector() = default;
 
     [[nodiscard]] BattlePhase get_battle_phase() const noexcept {
         return _battle_phase;
     }
 
-    virtual constexpr void update() noexcept {}
-    virtual constexpr void next_state(const NextStateEvent &next_state_event) noexcept {}
-protected:
+    constexpr void update() noexcept {
+        phase[_battle_phase](_core);
+        _core->dispatcher.update();
+    }
+
+    static constexpr void guard_and_process(CustomBattleDirector &battleDirector, std::shared_ptr<Core> &core, BattlePhase from_phase, BattlePhase to_phase) {
+        if (battleDirector.guard[from_phase](core)) {
+            battleDirector.post_phase[from_phase](core);
+            battleDirector.pre_phase[to_phase](core);
+            battleDirector._battle_phase = to_phase;
+        }
+    }
+
+    constexpr void next_state(const NextStateEvent &next_state_event) noexcept {
+        switch (next_state_event.from_phase) {
+            case BattlePhase::INACTIVE:
+                if (guard[BattlePhase::INACTIVE](_core)) {
+                    pre_phase[BattlePhase::BATTLE_START](_core);
+                    _battle_phase = BattlePhase::BATTLE_START;
+                }
+                break;
+            case BattlePhase::BATTLE_START:
+                guard_and_process(*this, _core, BattlePhase::BATTLE_START, BattlePhase::TURN_START);
+                break;
+            case BattlePhase::TURN_START:
+                guard_and_process(*this, _core, BattlePhase::TURN_START, BattlePhase::PLAYER_ACTIONS);
+                break;
+            case BattlePhase::PLAYER_ACTIONS:
+                guard_and_process(*this, _core, BattlePhase::PLAYER_ACTIONS, BattlePhase::AI_ACTIONS);
+                break;
+            case BattlePhase::AI_ACTIONS:
+                guard_and_process(*this, _core, BattlePhase::AI_ACTIONS, BattlePhase::TURN_END);
+                break;
+            case BattlePhase::TURN_END:
+                if (guard[BattlePhase::TURN_END](_core)) {
+                    post_phase[BattlePhase::TURN_END](_core);
+                    if (end_condition(_core)) {
+                        pre_phase[BattlePhase::BATTLE_END](_core);
+                        _battle_phase = BattlePhase::BATTLE_END;
+                    } else {
+                        pre_phase[BattlePhase::TURN_START](_core);
+                        _battle_phase = BattlePhase::TURN_START;
+                    }
+                }
+                break;
+            case BattlePhase::BATTLE_END:
+                post_phase[BattlePhase::BATTLE_END](_core);
+                _battle_phase = BattlePhase::FINISHED;
+                break;
+            case BattlePhase::FINISHED:
+                break;
+        }
+    }
+
+private:
     std::shared_ptr<Core> _core;
-
-    virtual void initialize() noexcept {
-        static_cast<T *>(this)->initialize();
-    };
-
-    virtual void pre_battle_start() noexcept {
-        static_cast<T *>(this)->pre_battle_start();
-    };
-    virtual void battle_start() noexcept {
-        static_cast<T *>(this)->battle_start();
-    }
-    virtual void post_battle_start() noexcept {
-        static_cast<T *>(this)->post_battle_start();
-    }
-
-    virtual bool battle_start_guard() noexcept {
-        return static_cast<T *>(this)->battle_start_guard();
-    }
-
-    virtual void pre_turn_start() noexcept {
-        static_cast<T *>(this)->pre_turn_start();
-    };
-    virtual void turn_start() noexcept {
-        static_cast<T *>(this)->turn_start();
-    }
-    virtual void post_turn_start() noexcept {
-        static_cast<T *>(this)->post_turn_start();
-    }
-
-    virtual bool turn_start_guard() noexcept {
-        return static_cast<T *>(this)->turn_start_guard();
-    }
-
-    virtual void pre_player_actions() noexcept {
-        static_cast<T *>(this)->pre_player_actions();
-    };
-    virtual void player_actions() noexcept {
-        static_cast<T *>(this)->player_actions();
-    }
-    virtual void post_player_actions() noexcept {
-        static_cast<T *>(this)->post_player_actions();
-    }
-
-    virtual bool player_actions_guard() noexcept {
-        return static_cast<T *>(this)->player_actions_guard();
-    }
-
-    virtual void pre_ai_actions() noexcept {
-        static_cast<T *>(this)->pre_ai_actions();
-    };
-    virtual void ai_actions() noexcept {
-        static_cast<T *>(this)->ai_actions();
-    }
-    virtual void post_ai_actions() noexcept {
-        static_cast<T *>(this)->post_ai_actions();
-    }
-
-    virtual bool ai_actions_guard() noexcept {
-        return static_cast<T *>(this)->ai_actions_guard();
-    }
-
-    virtual void pre_turn_end() noexcept {
-        static_cast<T *>(this)->pre_turn_end();
-    };
-    virtual void turn_end() noexcept {
-        static_cast<T *>(this)->turn_end();
-    }
-    virtual void post_turn_end() noexcept {
-        static_cast<T *>(this)->post_turn_end();
-    }
-
-    virtual bool turn_end_guard() noexcept {
-        return static_cast<T *>(this)->turn_end_guard();
-    }
-
-    virtual bool end_condition() noexcept {
-        return static_cast<T *>(this)->end_condition();
-    }
-
-    virtual void pre_battle_end() noexcept {
-        static_cast<T *>(this)->pre_battle_end();
-    };
-    virtual void battle_end() noexcept {
-        static_cast<T *>(this)->battle_end();
-    }
-
-    virtual void post_battle_end() noexcept {
-        static_cast<T *>(this)->post_battle_end();
-    }
-
-    virtual bool battle_end_guard() noexcept {
-        return static_cast<T *>(this)->battle_end_guard();
-    }
-
-    virtual void finish() noexcept {
-        static_cast<T *>(this)->finish();
-    };
-
     BattlePhase _battle_phase{BattlePhase::INACTIVE};
 };
 
