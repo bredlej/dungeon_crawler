@@ -4,7 +4,8 @@
 #include <battle_view.hpp>
 
 void BattleView::render() noexcept {
-    DrawTextureRec(_core->registry.ctx().find<EditorAssets>()->_textures[MonsterType::SAND_SCORPION].get(), {0, 0, 25, 25}, {0, 0}, WHITE);
+    const auto image = _core->registry.ctx().find<EditorAssets>()->_textures[MonsterType::SAND_SCORPION].get();
+    DrawTextureRec(image,  {0, 0, static_cast<float>(image.width), static_cast<float>(image.height)}, {20, 20}, WHITE);
     using namespace editor;
 }
 

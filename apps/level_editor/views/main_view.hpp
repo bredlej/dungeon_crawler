@@ -20,6 +20,7 @@ extern "C" {
 #include "views/level_editor_tab/events.hpp"
 #include "views/level_editor_tab/map_view.hpp"
 #include <memory>
+#include <battle_director.hpp>
 
 class MainView : public UIView<MainView> {
 public:
