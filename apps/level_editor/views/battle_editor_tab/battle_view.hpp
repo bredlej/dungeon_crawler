@@ -13,6 +13,8 @@ extern "C" {
 #include "imgui/rlImGui.h"
 #include <editor_assets.hpp>
 #include <memory>
+#include <battle_director.hpp>
+
 class BattleView : public UIView<BattleView> {
 public:
     explicit BattleView(std::shared_ptr<Core> core) : UIView{core} {};

@@ -4,7 +4,7 @@
 
 #ifndef DUNGEON_CRAWLER_ASSET_PATHS_HPP
 #define DUNGEON_CRAWLER_ASSET_PATHS_HPP
-#include <string_view>
+
 namespace assets {
     namespace gui {
         namespace minimap {

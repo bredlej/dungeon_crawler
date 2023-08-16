@@ -28,39 +28,7 @@ void MainView::render() noexcept {
         }
         if (ImGui::BeginTabItem("Battle editor")) {
             _battle_view.render();
-            if (auto *battle_director = _core->registry.ctx().find<BattleDirector>()) {
-                const auto battle_phase = battle_director->get_battle_phase();
-                ImGui::Text("Battle phase: %s", to_string(battle_phase).c_str());
-                switch (battle_phase) {
 
-                    case BattlePhase::INACTIVE:
-                        if (ImGui::Button("Start battle")) {
-                            battle_director->update();
-                        }
-                        break;
-                    case BattlePhase::BATTLE_START:
-                    case BattlePhase::TURN_START:
-                    case BattlePhase::PLAYER_ACTIONS:
-                    case BattlePhase::AI_ACTIONS:
-                    case BattlePhase::TURN_END:
-                    case BattlePhase::BATTLE_END:
-                        if (ImGui::Button("Next phase")) {
-                            battle_director->update();
-                        }
-                        break;
-                    case BattlePhase::FINISHED:
-                        if (ImGui::Button("End battle")) {
-                            _core->registry.ctx().erase<BattleDirector>();
-                        }
-                        break;
-                }
-            }
-            else {
-                if (ImGui::Button("New battle")) {
-                    _core->registry.ctx().emplace<BattleDirector>(_core);
-                    //
-                }
-            }
             ImGui::EndTabItem();
         }
 
