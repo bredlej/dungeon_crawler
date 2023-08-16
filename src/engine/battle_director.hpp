@@ -8,6 +8,7 @@
 #include <memory>
 #include <functional>
 #include <unordered_map>
+#include <string>
 
 enum class BattlePhase {
     INACTIVE,
@@ -19,6 +20,27 @@ enum class BattlePhase {
     BATTLE_END,
     FINISHED
 };
+
+inline std::string to_string(BattlePhase battle_phase) {
+    switch (battle_phase) {
+        case BattlePhase::INACTIVE:
+            return "INACTIVE";
+        case BattlePhase::BATTLE_START:
+            return "BATTLE_START";
+        case BattlePhase::TURN_START:
+            return "TURN_START";
+        case BattlePhase::PLAYER_ACTIONS:
+            return "PLAYER_ACTIONS";
+        case BattlePhase::AI_ACTIONS:
+            return "AI_ACTIONS";
+        case BattlePhase::TURN_END:
+            return "TURN_END";
+        case BattlePhase::BATTLE_END:
+            return "BATTLE_END";
+        case BattlePhase::FINISHED:
+            return "FINISHED";
+    }
+}
 
 struct NextStateEvent {
     BattlePhase from_phase;
@@ -95,7 +117,10 @@ public:
     BattleDirector(BattleDirector &&) = default;
     BattleDirector &operator=(const BattleDirector &) = delete;
     BattleDirector &operator=(BattleDirector &&) = delete;
-    ~BattleDirector() = default;
+
+    ~BattleDirector() {
+        _core->dispatcher.sink<NextStateEvent>().disconnect<&BattleDirector::next_state>(this);
+    }
 
     [[nodiscard]] BattlePhase get_battle_phase() const noexcept {
         return _battle_phase;
