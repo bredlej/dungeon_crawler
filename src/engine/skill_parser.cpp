@@ -75,27 +75,28 @@ static void validate_has_damage(const nlohmann::json &json) {
     }
 }
 
-static void validate_ailment(const nlohmann::json &json) {
-    if (!json[names[types::ailment].data()].is_string()) {
-        throw SkillParserException(fmt::format("Skill damage ailment is not a string: {}", json.dump(4)));
+static void validate_has_ailments(const nlohmann::json &json) {
+    if (!json.contains(names[types::ailments].data())) {
+        throw SkillParserException(fmt::format("Skill does not have a ailments: {}", json.dump(4)));
     }
-    if (!name_to_ailment.contains(json[names[types::ailment].data()].get<std::string_view>())) {
-        throw SkillParserException(fmt::format("Skill damage ailment is not a valid ailment: {}", json.dump(4)));
+}
+static void validate_ailments(const nlohmann::json &json) {
+    if (!json[names[types::ailments].data()].is_array()) {
+        throw SkillParserException(fmt::format("Skill ailments is not an array: {}", json.dump(4)));
     }
-    if (!json[names[types::ailment].data()].contains(names[types::type].data())) {
-        throw SkillParserException(fmt::format("Skill damage ailment does not have a type: {}", json.dump(4)));
-    }
-    if (name_to_ailment[json[names[types::ailment].data()][names[types::type].data()].get<std::string_view>()] == battle::Ailment::NONE) {
-        throw SkillParserException(fmt::format("Skill damage ailment is not a valid ailment: {}", json.dump(4)));
-    }
-    if (!json[names[types::ailment].data()].contains(names[types::duration].data())) {
-        throw SkillParserException(fmt::format("Skill damage ailment does not have a duration: {}", json.dump(4)));
-    }
-    if (!json[names[types::ailment].data()].contains(names[types::damage_value].data())) {
-        throw SkillParserException(fmt::format("Skill damage ailment does not have a damage value: {}", json.dump(4)));
-    }
-    if (!json[names[types::ailment].data()].contains(names[types::chance].data())) {
-        throw SkillParserException(fmt::format("Skill damage ailment does not have a chance: {}", json.dump(4)));
+    for (const auto& ailment: json[names[types::ailments].data()]) {
+        if (!ailment.contains(names[types::duration].data())) {
+            throw SkillParserException(fmt::format("Skill ailment does not have a duration: {}", json.dump(4)));
+        }
+        if (!ailment.contains(names[types::type].data())) {
+            throw SkillParserException(fmt::format("Skill ailment does not have a type: {}", json.dump(4)));
+        }
+        if (!ailment.contains(names[types::damage_value].data())) {
+            throw SkillParserException(fmt::format("Skill ailment does not have a damage_value: {}", json.dump(4)));
+        }
+        if (!ailment.contains(names[types::chance].data())) {
+            throw SkillParserException(fmt::format("Skill ailment does not have a chance: {}", json.dump(4)));
+        }
     }
 }
 
@@ -104,11 +105,8 @@ static void validate_damage(const nlohmann::json &json) {
         throw SkillParserException(fmt::format("Skill damage is not an array: {}", json.dump(4)));
     }
     for (const auto& damage: json[names[types::damage].data()]) {
-        if (damage.contains(names[types::ailment].data())) {
-            validate_ailment(damage);
-        }
-        if (!damage.contains(names[types::duration].data())) {
-            throw SkillParserException(fmt::format("Skill damage does not have a duration: {}", json.dump(4)));
+        if (!damage.contains(names[types::type].data())) {
+            throw SkillParserException(fmt::format("Skill damage does not have a type: {}", json.dump(4)));
         }
         if (!damage.contains(names[types::attribute].data())) {
             throw SkillParserException(fmt::format("Skill damage does not have an attribute: {}", json.dump(4)));
@@ -152,18 +150,25 @@ static void validate_roles(const nlohmann::json &json) {
 }
 
 static void validate_offensive_skills(const nlohmann::json &json) {
-    for (const auto& skill: json [names[types::offense].data()]) {
-        validate_has_name(skill);
-        validate_has_body_required(skill);
-        validate_has_target_type(skill);
-        validate_has_targets(skill);
-        validate_targets(skill);
-        validate_has_damage(skill);
-        validate_damage(skill);
-        validate_has_sp(skill);
-        validate_has_hp(skill);
-        validate_has_roles(skill);
-        validate_roles(skill);
+    if (json.contains(names[types::offense].data()) && !json[names[types::offense].data()].is_array()) {
+        throw SkillParserException(fmt::format("Skill offense is not an array: {}", json.dump(4)));
+    }
+    if (json.contains(names[types::offense].data())) {
+        for (const auto& skill: json [names[types::offense].data()]) {
+            validate_has_name(skill);
+            validate_has_body_required(skill);
+            validate_has_target_type(skill);
+            validate_has_targets(skill);
+            validate_targets(skill);
+            validate_has_damage(skill);
+            validate_damage(skill);
+            validate_has_ailments(skill);
+            validate_ailments(skill);
+            validate_has_sp(skill);
+            validate_has_hp(skill);
+            validate_has_roles(skill);
+            validate_roles(skill);
+        }
     }
 }
 
