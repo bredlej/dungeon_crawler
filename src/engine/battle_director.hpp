@@ -9,17 +9,9 @@
 #include <functional>
 #include <unordered_map>
 #include <string>
+#include <types.hpp>
 
-enum class BattlePhase {
-    INACTIVE,
-    BATTLE_START,
-    TURN_START,
-    PLAYER_ACTIONS,
-    AI_ACTIONS,
-    TURN_END,
-    BATTLE_END,
-    FINISHED
-};
+using namespace battle;
 
 inline std::string to_string(BattlePhase battle_phase) {
     switch (battle_phase) {
@@ -128,7 +120,6 @@ public:
 
     constexpr void update() noexcept {
         phase[_battle_phase](_core);
-        _core->dispatcher.update();
     }
 
     static constexpr void guard_and_process(BattleDirector &battleDirector, std::shared_ptr<Core> &core, BattlePhase from_phase, BattlePhase to_phase) {

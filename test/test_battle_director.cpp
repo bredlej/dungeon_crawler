@@ -75,7 +75,7 @@ TEST_F(BattleDirectorTest, Test_Switches_To_Next_Phase_When_Guard_Is_True) {
     battle_director.phase[BattlePhase::PLAYER_ACTIONS] = [](const std::shared_ptr<Core> &core) {
         auto *player_action_counter = core->registry.ctx().find<PlayerActionCounter>();
         player_action_counter->player_actions--;
-        core->dispatcher.enqueue(NextStateEvent{BattlePhase::PLAYER_ACTIONS});
+        core->dispatcher.trigger(NextStateEvent{BattlePhase::PLAYER_ACTIONS});
     };
 
     battle_director.guard[BattlePhase::AI_ACTIONS] = [](const std::shared_ptr<Core> &core) {

@@ -7,7 +7,6 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <string>
-#include <format>
 #include <ecs/types.hpp>
 #include <cstdlib>
 #include <cmath>
@@ -19,7 +18,7 @@ public:
     explicit LevelParserException(const std::string message) : _message(message) {}
     explicit LevelParserException() = delete;
     explicit LevelParserException(LevelParserException &&) = delete;
-    const char * what() const noexcept override {
+    [[nodiscard]] const char * what() const noexcept override {
         return _message.c_str();
     }
 };
@@ -44,7 +43,7 @@ namespace level_schema {
         direction,
         encounter_chance
     };
-    static std::unordered_map<types, const char *> names = {
+    static std::unordered_map<types, std::string_view> names = {
             {types::size_x, "size_x"},
             {types::size_y, "size_y"},
             {types::tiles, "tiles"},
@@ -63,13 +62,13 @@ namespace level_schema {
             {types::direction, "direction"},
             {types::encounter_chance, "encounter_chance"},
     };
-    static std::unordered_map<std::string, WorldDirection> name_to_direction = {
+    static std::unordered_map<std::string_view, WorldDirection> name_to_direction = {
             {"NORTH", WorldDirection::NORTH},
             {"EAST", WorldDirection::EAST},
             {"SOUTH", WorldDirection::SOUTH},
             {"WEST", WorldDirection::WEST}
     };
-    static std::unordered_map<WorldDirection, std::string> direction_to_name = {
+    static std::unordered_map<WorldDirection, std::string_view> direction_to_name = {
             {WorldDirection::NORTH, "NORTH"},
             {WorldDirection::EAST, "EAST"},
             {WorldDirection::SOUTH, "SOUTH"},

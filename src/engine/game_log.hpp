@@ -36,6 +36,7 @@ public:
         va_start(args, fmt);
         Buf.appendfv(fmt, args);
         va_end(args);
+        std::printf("%s", Buf.begin() + old_size);
         for (int new_size = Buf.size(); old_size < new_size; old_size++)
             if (Buf[old_size] == '\n')
                 LineOffsets.push_back(old_size + 1);

@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <ecs/types.hpp>
 #include <entt/entt.hpp>
+#include <string>
+#include <unordered_map>
 
 namespace components {
     namespace general {
@@ -16,6 +18,10 @@ namespace components {
         struct Player {
             bool is_active;
         };
+        struct Name {
+            std::string name;
+        };
+        struct Skill {};
     }
     namespace values {
         struct EncounterChance {
@@ -61,6 +67,63 @@ namespace components {
         };
         struct InFovOfEntity {
             entt::entity entity;
+        };
+    }
+    namespace battle {
+        namespace targets {
+            struct TargetSingle {
+                entt::entity target;
+                float percentage;
+            };
+            struct TargetMultiple {
+                explicit TargetMultiple(const std::vector<entt::entity> &targets, float percentage) : targets{std::move(targets)}, percentage{percentage} {}
+                std::vector<entt::entity> targets;
+                float percentage;
+            };
+        }
+
+        namespace damage_types {
+            struct FireDmg {
+                float damage;
+                static constexpr std::string_view description = "fire damage";
+            };
+        }
+
+        namespace mods {
+            template <typename DAMAGE_TYPE>
+            struct Weakness {
+                float damage_multiplier;
+            };
+
+            template <typename DAMAGE_TYPE>
+            struct Resistance {
+                float damage_multiplier;
+            };
+
+            template <typename DAMAGE_TYPE>
+            struct Immunity {
+                float damage_multiplier;
+            };
+        }
+        namespace ailments {
+            struct Death {
+                bool is_undead{false};
+                static constexpr std::string_view description = "is dead!";
+            };
+            struct Burn {
+                float chance;
+                float damage;
+                uint32_t duration;
+                static constexpr std::string_view description = "is burning!";
+            };
+        }
+
+        struct Attributes {
+            std::unordered_map<character::Attribute, float> attributes;
+        };
+
+        struct Neighbours {
+            std::vector<entt::entity> neighbours;
         };
     }
 }

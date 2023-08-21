@@ -30,4 +30,24 @@ namespace events::dungeon {
     };
     struct StartEncounter {};
 }
+
+namespace events::battle {
+    struct AttackEvent {
+        entt::entity attacker;
+        entt::entity skill;
+    };
+
+    template <typename DAMAGE_TYPE>
+    struct DamageEvent {
+        entt::entity target;
+        DAMAGE_TYPE damage;
+    };
+
+    template <typename DAMAGE_TYPE, typename AILMENT>
+    struct AilmentEvent {
+        entt::entity target;
+        DAMAGE_TYPE damage;
+        AILMENT ailment;
+    };
+}
 #endif//DUNGEON_CRAWLER_EVENTS_HPP

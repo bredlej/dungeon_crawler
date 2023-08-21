@@ -10,6 +10,7 @@
 #include <game_log.hpp>
 #include <pcg/pcg_random.hpp>
 #include <cstdint>
+#include <memory>
 
 struct ModXY {
     int32_t x;
@@ -21,6 +22,9 @@ public:
     explicit Core() {
         std::printf("Core created\n");
     }
+
+    template<typename COMPONENT>
+    COMPONENT* try_get(entt::entity entity) {return registry.try_get<COMPONENT>(entity); }
 
     void load_assets();
     assets::Assets *get_assets() {return _assets.get();}

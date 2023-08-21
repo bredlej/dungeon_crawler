@@ -4,6 +4,7 @@
 #include <battle_view.hpp>
 
 void BattleView::render() noexcept {
+    using namespace battle;
     if (auto *battle_director = _core->registry.ctx().find<BattleDirector>()) {
         const auto battle_phase = battle_director->get_battle_phase();
         ImGui::Text("Battle phase: %s", to_string(battle_phase).c_str());
@@ -45,7 +46,6 @@ void BattleView::render() noexcept {
             _core->registry.ctx().find<BattleDirector>()->end_condition = [](const std::shared_ptr<Core> &core) {
                 return false;
             };
-            //
         }
     }
 

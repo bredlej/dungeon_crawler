@@ -11,7 +11,9 @@ set(SOURCE_FILES
         views/dungeon_view.cpp
         views/ui/dungeon_ui.cpp
         engine/core.cpp
+        engine/combat.cpp
         engine/level_parser.cpp
+        engine/skill_parser.cpp
         engine/level.cpp
         ecs/wall_map.cpp
         ecs/tile_map.cpp
