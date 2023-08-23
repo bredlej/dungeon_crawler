@@ -155,7 +155,6 @@ void DungeonActions::_on_open_door(const events::dungeon::OpenDoor &open_door_ev
     _core->registry.emplace_or_replace<components::tiles::Walkability>(open_door_event.door, true);
     door.state = DoorStateType::OPEN;
     _core->game_log.message("You open the door.\n");
-    _core->dispatcher.enqueue<events::dungeon::RecalculateFov>();
 }
 
 void DungeonActions::_on_encounter_chance_changed(events::dungeon::EncounterChanceChange encounter_chance_change) {
