@@ -11,6 +11,8 @@
 #include <cstdlib>
 #include <cmath>
 
+using namespace types;
+
 class LevelParserException : public std::exception {
     const std::string _message;;
 
@@ -24,7 +26,7 @@ public:
 };
 
 namespace level_schema {
-    enum class types {
+    enum class schema_types {
         size_x,
         size_y,
         tiles,
@@ -43,24 +45,24 @@ namespace level_schema {
         direction,
         encounter_chance
     };
-    static std::unordered_map<types, std::string_view> names = {
-            {types::size_x, "size_x"},
-            {types::size_y, "size_y"},
-            {types::tiles, "tiles"},
-            {types::walls, "walls"},
-            {types::wall, "wall"},
-            {types::door, "door"},
-            {types::type_opened, "type_opened"},
-            {types::type_closed, "type_closed"},
-            {types::state, "state"},
-            {types::between, "between"},
-            {types::floor, "floor"},
-            {types::walkable, "walkable"},
-            {types::player_spawn, "player_spawn"},
-            {types::x, "x"},
-            {types::y, "y"},
-            {types::direction, "direction"},
-            {types::encounter_chance, "encounter_chance"},
+    static std::unordered_map<schema_types, std::string_view> names = {
+            {schema_types::size_x, "size_x"},
+            {schema_types::size_y, "size_y"},
+            {schema_types::tiles, "tiles"},
+            {schema_types::walls, "walls"},
+            {schema_types::wall, "wall"},
+            {schema_types::door, "door"},
+            {schema_types::type_opened, "type_opened"},
+            {schema_types::type_closed, "type_closed"},
+            {schema_types::state, "state"},
+            {schema_types::between, "between"},
+            {schema_types::floor, "floor"},
+            {schema_types::walkable, "walkable"},
+            {schema_types::player_spawn, "player_spawn"},
+            {schema_types::x, "x"},
+            {schema_types::y, "y"},
+            {schema_types::direction, "direction"},
+            {schema_types::encounter_chance, "encounter_chance"},
     };
     static std::unordered_map<std::string_view, WorldDirection> name_to_direction = {
             {"NORTH", WorldDirection::NORTH},

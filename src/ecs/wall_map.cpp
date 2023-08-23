@@ -62,19 +62,19 @@ void WallMap::initialize(const TileMap &tile_map) {
 
 void WallMap::from_json(const TileMap &tile_map, const nlohmann::json &json) {
     using namespace level_schema;
-    for (const auto &wall: json[names[types::walls].data()]) {
-        WallType wall_type = assets::name_to_wall_type[wall[names[types::wall].data()]];
-        components::tiles::MapPosition field1_pos = {wall[names[types::between].data()][0], wall[names[types::between].data()][1]};
-        components::tiles::MapPosition field2_pos = {wall[names[types::between].data()][2], wall[names[types::between].data()][3]};
+    for (const auto &wall: json[names[schema_types::walls].data()]) {
+        WallType wall_type = assets::name_to_wall_type[wall[names[schema_types::wall].data()]];
+        components::tiles::MapPosition field1_pos = {wall[names[schema_types::between].data()][0], wall[names[schema_types::between].data()][1]};
+        components::tiles::MapPosition field2_pos = {wall[names[schema_types::between].data()][2], wall[names[schema_types::between].data()][3]};
         if (get_between(field1_pos, field2_pos) == entt::null) {
             entt::entity wall_entity = _core->registry.create();
             _core->registry.emplace_or_replace<components::tiles::Wall>(wall_entity, wall_type, field1_pos, field2_pos);
             _core->registry.emplace_or_replace<components::tiles::Walkability>(wall_entity, false);
             _walls.emplace_back(WallEntity{wall_entity});
-            if (wall.contains(names[types::door])) {
-                auto door_closed_type = assets::name_to_door_type[wall[names[types::door].data()][names[types::type_closed].data()]];
-                auto door_open_type = assets::name_to_door_type[wall[names[types::door].data()][names[types::type_opened].data()]];
-                auto door_state = assets::name_to_door_state_type[wall[names[types::door].data()][names[types::state].data()]];
+            if (wall.contains(names[schema_types::door])) {
+                auto door_closed_type = assets::name_to_door_type[wall[names[schema_types::door].data()][names[schema_types::type_closed].data()]];
+                auto door_open_type = assets::name_to_door_type[wall[names[schema_types::door].data()][names[schema_types::type_opened].data()]];
+                auto door_state = assets::name_to_door_state_type[wall[names[schema_types::door].data()][names[schema_types::state].data()]];
                 _core->registry.emplace_or_replace<components::tiles::Door>(wall_entity, door_closed_type, door_open_type, door_state);
                 if (door_state == DoorStateType::OPEN) {
                     _core->registry.emplace_or_replace<components::tiles::Walkability>(wall_entity, true);
@@ -85,14 +85,14 @@ void WallMap::from_json(const TileMap &tile_map, const nlohmann::json &json) {
 }
 void WallMap::to_json(nlohmann::json &json) {
     using namespace level_schema;
-    json[names[types::walls].data()] = nlohmann::json::array();
+    json[names[schema_types::walls].data()] = nlohmann::json::array();
     for (const auto &wall: _walls) {
         auto &wall_component = _core->registry.get<components::tiles::Wall>(wall.entity);
         auto door_component = _core->registry.try_get<components::tiles::Door>(wall.entity);
         // clang-format off
-        json[names[types::walls].data()].push_back({
-            {names[types::wall], assets::wall_type_to_name[wall_component.type]},
-            {names[types::between], {
+        json[names[schema_types::walls].data()].push_back({
+            {names[schema_types::wall], assets::wall_type_to_name[wall_component.type]},
+            {names[schema_types::between], {
                 wall_component.field1.x,
                 wall_component.field1.y,
                 wall_component.field2.x,
@@ -100,11 +100,11 @@ void WallMap::to_json(nlohmann::json &json) {
             }},
         });
         if (door_component) {
-            json[names[types::walls].data()].back().push_back({
-                names[types::door], {
-                    {names[types::type_opened], assets::door_type_to_name[door_component->type_opened]},
-                    {names[types::type_closed], assets::door_type_to_name[door_component->type_closed]},
-                    {names[types::state], assets::door_state_type_to_name[door_component->state]},
+            json[names[schema_types::walls].data()].back().push_back({
+                names[schema_types::door], {
+                    {names[schema_types::type_opened], assets::door_type_to_name[door_component->type_opened]},
+                    {names[schema_types::type_closed], assets::door_type_to_name[door_component->type_closed]},
+                    {names[schema_types::state], assets::door_state_type_to_name[door_component->state]},
                 }
             });
         }

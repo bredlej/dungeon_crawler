@@ -13,7 +13,7 @@
 namespace components {
     namespace general {
         struct Direction {
-            WorldDirection direction;
+            types::WorldDirection direction;
         };
         struct Player {
             bool is_active;
@@ -44,20 +44,20 @@ namespace components {
             int id;
         };
         struct Floor {
-            FloorType type;
+            types::FloorType type;
         };
         struct Ceiling {
-            CeilingType type;
+            types::CeilingType type;
         };
         struct Wall {
-            WallType type;
+            types::WallType type;
             MapPosition field1;
             MapPosition field2;
         };
         struct Door {
-            DoorType type_closed;
-            DoorType type_opened;
-            DoorStateType state;
+            types::DoorType type_closed;
+            types::DoorType type_opened;
+            types::DoorStateType state;
         };
         struct Visibility {
             bool is_visible;
@@ -76,7 +76,7 @@ namespace components {
                 float percentage;
             };
             struct TargetMultiple {
-                explicit TargetMultiple(const std::vector<entt::entity> &targets, float percentage) : targets{std::move(targets)}, percentage{percentage} {}
+                explicit TargetMultiple(const std::vector<entt::entity> &targets, float percentage) : targets{targets}, percentage{percentage} {}
                 std::vector<entt::entity> targets;
                 float percentage;
             };
@@ -105,6 +105,7 @@ namespace components {
                 float damage_multiplier;
             };
         }
+
         namespace ailments {
             struct Death {
                 bool is_undead{false};
@@ -119,11 +120,19 @@ namespace components {
         }
 
         struct Attributes {
-            std::unordered_map<character::Attribute, float> attributes;
+            std::unordered_map<types::character::Attribute, float> attributes;
         };
 
         struct Neighbours {
             std::vector<entt::entity> neighbours;
+        };
+
+        struct RoleConstraints {
+            std::vector<types::character::Role> roles;
+        };
+
+        struct BodyConstraints {
+            std::vector<types::battle::BodyPart> body_parts;
         };
     }
 }

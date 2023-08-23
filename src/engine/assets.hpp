@@ -16,6 +16,7 @@ extern "C" {
 #include <variant>
 #include <string>
 
+using namespace types;
 namespace assets {
     struct DCTexture {
     public:

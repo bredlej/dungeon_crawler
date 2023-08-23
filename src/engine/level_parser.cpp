@@ -57,13 +57,13 @@ void LevelParser::save(const std::string &path, const nlohmann::json &json) {
  * @throws LevelParserException If `size_x` or `size_y` is missing or invalid
  */
 static inline void validate_definition_size_xy(const nlohmann::json &json) {
-    if (!json.contains(names[types::size_x])) {
+    if (!json.contains(names[schema_types::size_x])) {
         throw LevelParserException("Missing `size_x` definition.");
-    } else if (!json.contains(names[types::size_y])) {
+    } else if (!json.contains(names[schema_types::size_y])) {
         throw LevelParserException("Missing `size_y` definition.");
     }
-    int size_x = json[names[types::size_x].data()];
-    int size_y = json[names[types::size_y].data()];
+    int size_x = json[names[schema_types::size_x].data()];
+    int size_y = json[names[schema_types::size_y].data()];
     if (size_x < 1) {
         throw LevelParserException("`size_x` must be a value equal or greater than 1.");
     }
@@ -83,7 +83,7 @@ static inline void validate_definition_size_xy(const nlohmann::json &json) {
  * @throws LevelParserException If the `tiles` definition is missing.
  */
 static inline void validate_definition_tiles(const nlohmann::json &json) {
-    if (!json.contains(names[types::tiles])) {
+    if (!json.contains(names[schema_types::tiles])) {
         throw LevelParserException("Missing `tiles` definition.");
     }
 }
@@ -98,7 +98,7 @@ static inline void validate_definition_tiles(const nlohmann::json &json) {
  * @throw LevelParserException Thrown if `walls` definition is missing.
  */
 static inline void validate_definition_walls(const nlohmann::json &json) {
-    if (!json.contains(names[types::walls])) {
+    if (!json.contains(names[schema_types::walls])) {
         throw LevelParserException("Missing `walls` definition.");
     }
 }
@@ -115,8 +115,8 @@ static inline void validate_definition_walls(const nlohmann::json &json) {
  */
 static inline void validate_definition_walls_wall(const nlohmann::json &json) {
     size_t index = 0;
-    for (const auto &wall: json[names[types::walls].data()]) {
-        if (!wall.contains(names[types::wall])) {
+    for (const auto &wall: json[names[schema_types::walls].data()]) {
+        if (!wall.contains(names[schema_types::wall])) {
             std::ostringstream stringStream;
             stringStream << "Missing `wall` definition in wall element at index " << index << ".";
             throw LevelParserException(stringStream.str());
@@ -127,20 +127,20 @@ static inline void validate_definition_walls_wall(const nlohmann::json &json) {
 
 static inline void validate_definition_walls_door(const nlohmann::json &json) {
     size_t index = 0;
-    for (const auto &wall: json[names[types::walls].data()]) {
-        if (wall.contains(names[types::door])) {
-            auto door = wall[names[types::door].data()];
-            if (!door.contains(names[types::type_opened])) {
+    for (const auto &wall: json[names[schema_types::walls].data()]) {
+        if (wall.contains(names[schema_types::door])) {
+            auto door = wall[names[schema_types::door].data()];
+            if (!door.contains(names[schema_types::type_opened])) {
                 std::ostringstream stringStream;
                 stringStream << "Missing `type_opened` definition in door element at index " << index << ".";
                 throw LevelParserException(stringStream.str());
             }
-            if (!door.contains(names[types::type_closed])) {
+            if (!door.contains(names[schema_types::type_closed])) {
                 std::ostringstream stringStream;
                 stringStream << "Missing `type_closed` definition in door element at index " << index << ".";
                 throw LevelParserException(stringStream.str());
             }
-            if (!door.contains(names[types::state])) {
+            if (!door.contains(names[schema_types::state])) {
                 std::ostringstream stringStream;
                 stringStream << "Missing `state` definition in door element at index " << index << ".";
                 throw LevelParserException(stringStream.str());
@@ -163,9 +163,9 @@ static inline void validate_definition_walls_door(const nlohmann::json &json) {
  *                              of 'size_x' and 'size_y'.
  */
 static inline void validate_tiles_have_correct_size(const nlohmann::json &json) {
-    int size_x = json[names[types::size_x].data()];
-    int size_y = json[names[types::size_y].data()];
-    size_t tiles_size = json[names[types::tiles].data()].size();
+    int size_x = json[names[schema_types::size_x].data()];
+    int size_y = json[names[schema_types::size_y].data()];
+    size_t tiles_size = json[names[schema_types::tiles].data()].size();
     if (tiles_size != size_x * size_y) {
         std::ostringstream stringStream;
         stringStream << "Wrong size (" << tiles_size << ") of `tiles` array - must have " << size_x * size_y << " elements.";
@@ -185,20 +185,20 @@ static inline void validate_tiles_have_correct_size(const nlohmann::json &json) 
  * @throws LevelParserException if any validation fails
  */
 static inline void validate_definition_player_spawn(const nlohmann::json &json) {
-    if (json.contains(names[types::player_spawn])) {
-        if (!json[names[types::player_spawn].data()].contains(names[types::x])) {
+    if (json.contains(names[schema_types::player_spawn])) {
+        if (!json[names[schema_types::player_spawn].data()].contains(names[schema_types::x])) {
             throw LevelParserException("Missing `x` definition in `player_spawn`.");
         }
-        if (!json[names[types::player_spawn].data()].contains(names[types::y])) {
+        if (!json[names[schema_types::player_spawn].data()].contains(names[schema_types::y])) {
             throw LevelParserException("Missing `y` definition in `player_spawn`.");
         }
-        if (!json[names[types::player_spawn].data()].contains(names[types::direction])) {
+        if (!json[names[schema_types::player_spawn].data()].contains(names[schema_types::direction])) {
             throw LevelParserException("Missing `direction` definition in `player_spawn`.");
         }
-        int size_x = json[names[types::size_x].data()];
-        int size_y = json[names[types::size_y].data()];
+        int size_x = json[names[schema_types::size_x].data()];
+        int size_y = json[names[schema_types::size_y].data()];
         {
-            int x = json[names[types::player_spawn].data()][names[types::x].data()];
+            int x = json[names[schema_types::player_spawn].data()][names[schema_types::x].data()];
             if (x < 0 || x >= size_x) {
                 std::ostringstream stringStream;
                 stringStream << "`x` value [" << x << "] in `player_spawn` is outside allowed bounds [0.." << size_x - 1 << "].";
@@ -206,14 +206,14 @@ static inline void validate_definition_player_spawn(const nlohmann::json &json) 
             }
         }
         {
-            int y = json[names[types::player_spawn].data()][names[types::y].data()];
+            int y = json[names[schema_types::player_spawn].data()][names[schema_types::y].data()];
             if (y < 0 || y >= size_y) {
                 std::ostringstream stringStream;
                 stringStream << "`y` value [" << y << "] in `player_spawn` is outside allowed bounds [0.." << size_y - 1 << "].";
                 throw LevelParserException(stringStream.str());
             }
         }
-        std::string direction = json[names[types::player_spawn].data()][names[types::direction].data()];
+        std::string direction = json[names[schema_types::player_spawn].data()][names[schema_types::direction].data()];
         if (name_to_direction.find(direction) == name_to_direction.end()) {
             std::ostringstream stringStream;
             stringStream << "Wrong value [" << direction << "] defined for `player_spawn.direction` - Must be one of [NORTH, EAST, WEST, SOUTH].";
@@ -232,20 +232,20 @@ static inline void validate_definition_player_spawn(const nlohmann::json &json) 
  */
 static inline void validate_definition_walls_between(const nlohmann::json &json) {
     size_t index = 0;
-    for (const auto &wall: json[names[types::walls].data()]) {
-        if (!wall.contains(names[types::between])) {
+    for (const auto &wall: json[names[schema_types::walls].data()]) {
+        if (!wall.contains(names[schema_types::between])) {
             std::ostringstream stringStream;
             stringStream << "Missing `between` definition in wall element at index " << index << ".";
             throw LevelParserException(stringStream.str());
         } else {
-            auto between = wall[names[types::between].data()];
+            auto between = wall[names[schema_types::between].data()];
             if (between.size() != 4) {
                 std::ostringstream stringStream;
                 stringStream << "Wrong size of `between` array in wall element at index " << index << ". Must have 4 integers.";
                 throw LevelParserException(stringStream.str());
             } else {
-                int size_x = json[names[types::size_x].data()];
-                int size_y = json[names[types::size_y].data()];
+                int size_x = json[names[schema_types::size_x].data()];
+                int size_y = json[names[schema_types::size_y].data()];
                 if (between[0] < 0 || between[0] >= size_x) {
                     std::ostringstream stringStream;
                     stringStream << "x0 value [" << between[0] << "] out of bounds in `between` array in wall element at index " << index << ". Value must be in range [0.." << size_x - 1 << "].";

@@ -10,6 +10,8 @@
 #include <fmt/format.h>
 #include <ecs/types.hpp>
 
+using namespace types;
+
 class SkillParserException : public std::exception {
     const std::string _message;;
     
@@ -23,7 +25,7 @@ public:
 };
 
 namespace skill_schema {
-    enum class types {
+    enum class schema_types {
         offense,
         name,
         body_required,
@@ -40,22 +42,22 @@ namespace skill_schema {
         hp,
         roles
     };
-    static std::unordered_map<types, std::string_view> names {
-            {types::offense, "offense"},
-            {types::name, "name"},
-            {types::body_required, "body_required"},
-            {types::target_type, "target_type"},
-            {types::targets, "targets"},
-            {types::type, "type"},
-            {types::chance, "chance"},
-            {types::damage, "damage"},
-            {types::ailments, "ailments"},
-            {types::duration, "duration"},
-            {types::attribute, "attribute"},
-            {types::damage_value, "damage_value"},
-            {types::sp, "sp"},
-            {types::hp, "hp"},
-            {types::roles, "roles"}
+    static std::unordered_map<schema_types, std::string_view> names {
+            {schema_types::offense, "offense"},
+            {schema_types::name, "name"},
+            {schema_types::body_required, "body_required"},
+            {schema_types::target_type, "target_type"},
+            {schema_types::targets, "targets"},
+            {schema_types::type, "type"},
+            {schema_types::chance, "chance"},
+            {schema_types::damage, "damage"},
+            {schema_types::ailments, "ailments"},
+            {schema_types::duration, "duration"},
+            {schema_types::attribute, "attribute"},
+            {schema_types::damage_value, "damage_value"},
+            {schema_types::sp, "sp"},
+            {schema_types::hp, "hp"},
+            {schema_types::roles, "roles"}
     };
 
     static std::unordered_map<std::string_view, battle::Ailment> name_to_ailment = {
