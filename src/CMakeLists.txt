@@ -12,6 +12,7 @@ set(SOURCE_FILES
         views/ui/dungeon_ui.cpp
         engine/core.cpp
         engine/combat.cpp
+        engine/skills.cpp
         engine/level_parser.cpp
         engine/skill_parser.cpp
         engine/level.cpp

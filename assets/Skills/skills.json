@@ -10,7 +10,7 @@
           "chance": 100
         },
         {
-          "type": "NEIGHBORS",
+          "type": "NEIGHBOURS",
           "chance": 50
         }
       ],
@@ -34,6 +34,23 @@
       "roles": [
         "MAGE"
       ]
+    }
+  ],
+  "defense" : [
+    {
+      "name": "Heal",
+      "body_required": "HEAD",
+      "target_type": "ALLY",
+      "targets": [{
+        "type": "SINGLE",
+        "chance": 100
+      },{
+        "type": "NEIGHBORS",
+        "chance": 50
+      }],
+      "hp": 10,
+      "sp": 0,
+      "roles": ["MAGE"]
     }
   ]
 }
