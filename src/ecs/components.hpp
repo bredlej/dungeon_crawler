@@ -22,6 +22,10 @@ namespace components {
             std::string name;
         };
         struct Skill {};
+        struct SkillCost {
+            int sp;
+            int hp;
+        };
     }
     namespace values {
         struct EncounterChance {

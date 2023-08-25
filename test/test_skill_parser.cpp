@@ -96,7 +96,7 @@ TEST_F(SkillParserTest, CreatesSkillsMap) {
                                                             {types::battle::AttackType::FIRE, types::character::Attribute::MAGIC_ATTACK, 10}},
                                                     skills::SkillsMap::Ailments{
                                                             {types::battle::Ailment::BURN, 30, 5, 3}},
-                                                    skills::SkillCost{10, 0},
+                                                    components::general::SkillCost{10, 0},
                                                     skills::SkillsMap::RoleConstraints{types::character::Role::MAGE}));
     skills::SkillsMap skills(std::move(offensive_skill_map));
 
@@ -117,8 +117,8 @@ TEST_F(SkillParserTest, CreatesSkillsMap) {
     ASSERT_EQ(std::get<skills::SkillsMap::Ailments>(skills.offensive_skills["Fireball"])[0].chance, 30);
     ASSERT_EQ(std::get<skills::SkillsMap::Ailments>(skills.offensive_skills["Fireball"])[0].damage_value, 5);
     ASSERT_EQ(std::get<skills::SkillsMap::Ailments>(skills.offensive_skills["Fireball"])[0].duration, 3);
-    ASSERT_EQ(std::get<skills::SkillCost>(skills.offensive_skills["Fireball"]).sp, 10);
-    ASSERT_EQ(std::get<skills::SkillCost>(skills.offensive_skills["Fireball"]).hp, 0);
+    ASSERT_EQ(std::get<components::general::SkillCost>(skills.offensive_skills["Fireball"]).sp, 10);
+    ASSERT_EQ(std::get<components::general::SkillCost>(skills.offensive_skills["Fireball"]).hp, 0);
     ASSERT_EQ(std::get<skills::SkillsMap::RoleConstraints>(skills.offensive_skills["Fireball"]).size(), 1);
     ASSERT_EQ(std::get<skills::SkillsMap::RoleConstraints>(skills.offensive_skills["Fireball"])[0], types::character::Role::MAGE);
 }
@@ -178,8 +178,8 @@ TEST_F(SkillParserTest, SkillMapFromJson) {
     ASSERT_EQ(std::get<skills::SkillsMap::Ailments>(skills.offensive_skills["Fireball"])[0].chance, 30);
     ASSERT_EQ(std::get<skills::SkillsMap::Ailments>(skills.offensive_skills["Fireball"])[0].damage_value, 5);
     ASSERT_EQ(std::get<skills::SkillsMap::Ailments>(skills.offensive_skills["Fireball"])[0].duration, 3);
-    ASSERT_EQ(std::get<skills::SkillCost>(skills.offensive_skills["Fireball"]).sp, 10);
-    ASSERT_EQ(std::get<skills::SkillCost>(skills.offensive_skills["Fireball"]).hp, 0);
+    ASSERT_EQ(std::get<components::general::SkillCost>(skills.offensive_skills["Fireball"]).sp, 10);
+    ASSERT_EQ(std::get<components::general::SkillCost>(skills.offensive_skills["Fireball"]).hp, 0);
     ASSERT_EQ(std::get<skills::SkillsMap::RoleConstraints>(skills.offensive_skills["Fireball"]).size(), 1);
     ASSERT_EQ(std::get<skills::SkillsMap::RoleConstraints>(skills.offensive_skills["Fireball"])[0], types::character::Role::MAGE);
 }

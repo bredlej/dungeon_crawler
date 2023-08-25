@@ -12,12 +12,16 @@
 #include <variant>
 #include <nlohmann/json.hpp>
 #include <skill_parser.hpp>
+#include <functional>
+#include <memory>
+#include <core.hpp>
+#include <entt/entt.hpp>
 
 namespace skills {
     struct DamageDefinition {
         types::battle::AttackType type;
         types::character::Attribute attribute;
-        int damage_value;
+        float damage_value;
     };
 
     struct AilmentDefinition {
@@ -25,11 +29,6 @@ namespace skills {
         int chance;
         int damage_value;
         int duration;
-    };
-
-    struct SkillCost {
-        int sp;
-        int hp;
     };
 
     struct SkillsMap {
@@ -45,7 +44,7 @@ namespace skills {
                 Targets,
                 Damage,
                 Ailments,
-                SkillCost,
+                components::general::SkillCost,
                 RoleConstraints>;
         using OffensiveSkillMap = std::unordered_map<std::string, OffensiveSkill>;
 
@@ -61,6 +60,8 @@ namespace skills {
     };
 
     SkillsMap from_json(nlohmann::json &json);
+
+    std::function<entt::entity(const std::shared_ptr<Core>&)> instance_offensive_skill(const std::shared_ptr<Core> &core, const SkillsMap &skills_map, const std::string &skill_name);
 }
 
 #endif//DUNGEON_CRAWLER_SKILLS_HPP
