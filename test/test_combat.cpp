@@ -47,7 +47,8 @@ protected:
       ],
       "sp": 10,
       "hp": 0,
-      "roles": ["MAGE"]
+      "roles": ["MAGE"],
+      "followups": []
     },
     {
         "name": "Ice dance",
