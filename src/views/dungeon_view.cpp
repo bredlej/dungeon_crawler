@@ -49,6 +49,7 @@ void DungeonView::_render_pov() noexcept
 
     if (assets::Assets *assets = _core->get_assets())
     {
+        _render_background(assets);
         _render_tiles(assets);
         _render_walls(assets);
         _render_encounter(assets);
@@ -57,6 +58,12 @@ void DungeonView::_render_pov() noexcept
     EndTextureMode();
 }
 
+void DungeonView::_render_background(assets::Assets *assets) noexcept {
+    auto player_view = _core->registry.view<components::general::Player, components::general::Direction>();
+    player_view.each([&](const entt::entity entity, const components::general::Player player, components::general::Direction direction) {
+        DrawTextureRec(assets->_textures._background[direction.direction].get(), Rectangle{0, 0, 320, 240}, Vector2{0, 0}, WHITE);
+    });
+}
 /**
  * Renders the tiles of the dungeon view.
  *
@@ -166,7 +173,7 @@ void DungeonView::_render_minimap() noexcept {
 
     BeginTextureMode(_render_texture_gui);
     ClearBackground(BACKGROUND_COLOR);
-    DrawTexture(_core->get_assets()->_textures._gui[assets::dungeon_view::GUI::MiniMap::Background].get(), 0, 0, WHITE);
+    DrawTexture(_core->get_assets()->_textures._gui[assets::dungeon_view::GUI::MiniMap::Background].get(), 0, 0, Color{255,255,255,255});
     ModXY offset {10,10};
     for (auto tile: _level.tile_map._tiles) {
         if (_core->registry.valid(tile.entity)) {
@@ -261,7 +268,9 @@ void DungeonView::render() noexcept {
     BeginDrawing();
     ClearBackground(BLACK);
     _render_pov();
-    _render_minimap();
+    if (_core->registry.ctx().contains<components::values::ShowMinimap>()){
+        _render_minimap();
+    }
     static Rectangle POV_DIMENSION_FULLSCREEN = Rectangle{0,0, static_cast<float>(GetMonitorWidth(GetCurrentMonitor())), static_cast<float>(GetMonitorHeight(GetCurrentMonitor()))};
     static Rectangle GUI_DIMENSION_FULLSCREEN = Rectangle{static_cast<float>(GetMonitorWidth(GetCurrentMonitor())) * 0.75f, static_cast<float>(GetMonitorHeight(GetCurrentMonitor())) * 0.1f, static_cast<float>(GetMonitorWidth(GetCurrentMonitor())) * 0.2f, static_cast<float>(GetMonitorWidth(GetCurrentMonitor())) * 0.2f};
     render_texture(_render_texture_pov.texture, IsWindowFullscreen() ? POV_DIMENSION_FULLSCREEN : POV_DIMENSION);
@@ -324,6 +333,16 @@ void DungeonView::update() noexcept {
     }
     if (IsKeyDown(KEY_LEFT_ALT) && IsKeyPressed(KEY_D)) {
         _core->dispatcher.enqueue(events::ui::ToggleShowDemo());
+    }
+    if (IsKeyPressed(KEY_M)) {
+        if (_core->registry.ctx().contains<components::values::ShowMinimap>()) {
+            std::printf("Erasing minimap\n");
+            _core->registry.ctx().erase<components::values::ShowMinimap>();
+        }
+        else {
+            _core->registry.ctx().emplace<components::values::ShowMinimap>();
+        }
+        std::printf("Is minimap: %d\n", _core->registry.ctx().contains<components::values::ShowMinimap>());
     }
     after_first_update = true;
 }

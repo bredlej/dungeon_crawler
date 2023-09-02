@@ -39,6 +39,14 @@ namespace events::battle {
 
     template <typename DAMAGE_TYPE>
     struct DamageEvent {
+        entt::entity source_skill;
+        entt::entity target;
+        DAMAGE_TYPE damage;
+    };
+
+    template <typename DAMAGE_TYPE>
+    struct FollowupEvent {
+        entt::entity source_skill;
         entt::entity target;
         DAMAGE_TYPE damage;
     };

@@ -22,6 +22,12 @@ namespace assets {
     namespace tiles {
         namespace stratum {
             namespace ruins {
+                namespace background {
+                    constexpr const char *l01_north = "assets/Backgrounds/panorama_N.png";
+                    constexpr const char *l01_east = "assets/Backgrounds/panorama_E.png";
+                    constexpr const char *l01_south = "assets/Backgrounds/panorama_S.png";
+                    constexpr const char *l01_west = "assets/Backgrounds/panorama_W.png";
+                }
                 namespace floor {
                     namespace floor_01 {
                         constexpr const char *f01 = "assets/Tiles/Stratum/Ruins/Floor/01/01.png";

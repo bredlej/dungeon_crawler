@@ -40,7 +40,12 @@ namespace skill_schema {
         damage_value,
         sp,
         hp,
-        roles
+        roles,
+        followups,
+        on_damage_type,
+        max_stack,
+        initial_chance,
+        damage_reduction_percent
     };
     static std::unordered_map<schema_types, std::string_view> names {
             {schema_types::offense, "offense"},
@@ -57,7 +62,12 @@ namespace skill_schema {
             {schema_types::damage_value, "damage_value"},
             {schema_types::sp, "sp"},
             {schema_types::hp, "hp"},
-            {schema_types::roles, "roles"}
+            {schema_types::roles, "roles"},
+            {schema_types::followups, "followups"},
+            {schema_types::on_damage_type, "on_damage_type"},
+            {schema_types::max_stack, "max_stack"},
+            {schema_types::initial_chance, "initial_chance"},
+            {schema_types::damage_reduction_percent, "damage_reduction_percent"}
     };
 
     static std::unordered_map<std::string_view, battle::Ailment> name_to_ailment = {
@@ -81,7 +91,8 @@ namespace skill_schema {
             {"HEAVY_KNIGHT", character::Role::HEAVY_KNIGHT},
             {"MAGE", character::Role::MAGE},
             {"THIEF", character::Role::THIEF},
-            {"WARRIOR", character::Role::WARRIOR}
+            {"WARRIOR", character::Role::WARRIOR},
+            {"BLADE_DANCER", character::Role::BLADE_DANCER}
     };
 }
 

@@ -117,11 +117,17 @@ namespace assets {
         std::unordered_map<std::variant<dungeon_view::POVFloor, dungeon_view::POVWall>, FieldMap> _tiles;
         std::unordered_map<std::variant<dungeon_view::GUI::MiniMap>, const assets::DCTexture> _gui;
         std::unordered_map<Beast, const assets::DCTexture> _beasts;
+        std::unordered_map<WorldDirection, const assets::DCTexture> _background;
     };
 
     class Assets {
     public:
         explicit Assets() noexcept : _textures{} {
+            _textures._background.emplace(WorldDirection::NORTH, DCTexture(assets::tiles::stratum::ruins::background::l01_north));
+            _textures._background.emplace(WorldDirection::SOUTH, DCTexture(assets::tiles::stratum::ruins::background::l01_south));
+            _textures._background.emplace(WorldDirection::EAST, DCTexture(assets::tiles::stratum::ruins::background::l01_east));
+            _textures._background.emplace(WorldDirection::WEST, DCTexture(assets::tiles::stratum::ruins::background::l01_west));
+
             // ruins: floor type 1
             _textures._tiles[dungeon_view::POVFloor::F01].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f01);
             _textures._tiles[dungeon_view::POVFloor::F02].emplace(FloorType::RUINS_01, assets::tiles::stratum::ruins::floor::floor_01::f02);

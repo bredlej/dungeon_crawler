@@ -38,6 +38,7 @@ namespace components {
             uint8_t b;
             uint8_t a;
         };
+        struct ShowMinimap {};
     }
     namespace tiles {
         struct MapPosition {
@@ -91,6 +92,14 @@ namespace components {
                 float damage;
                 static constexpr std::string_view description = "fire damage";
             };
+            struct IceDmg {
+                float damage;
+                static constexpr std::string_view description = "ice damage";
+            };
+            struct PierceDmg {
+                float damage;
+                static constexpr std::string_view description = "pierce damage";
+            };
         }
 
         namespace mods {
@@ -137,6 +146,17 @@ namespace components {
 
         struct BodyConstraints {
             std::vector<types::battle::BodyPart> body_parts;
+        };
+
+        struct FollowupAttack {
+            entt::entity skill;
+            int duration;
+            int max_stack;
+            int current_stack;
+            int initial_chance;
+            int damage_reduction_percent;
+            std::vector<entt::entity> damage;
+            std::vector<entt::entity> ailments;
         };
     }
 }

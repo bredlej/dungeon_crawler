@@ -5,8 +5,12 @@
 
 void Combat::initialize() {
     _combat_dispatcher.sink<events::battle::AttackEvent>().connect<&Combat::attack>(this);
+    register_attack_callback<damage_types::IceDmg, battle::AttackType::ICE>();
     register_attack_callback<damage_types::FireDmg, battle::AttackType::FIRE>();
+    register_attack_callback<damage_types::PierceDmg, battle::AttackType::PIERCE>();
     register_damage_callback<damage_types::FireDmg>();
+    register_damage_callback<damage_types::IceDmg>();
+    register_damage_callback<damage_types::PierceDmg>();
     register_ailment_callback<damage_types::FireDmg, ailments::Burn>();
 }
 
@@ -17,7 +21,8 @@ void Combat::register_attack_callback() {
 
 template<typename DAMAGE_TYPE>
 void Combat::register_damage_callback (){
-    _core->dispatcher.sink<events::battle::DamageEvent<DAMAGE_TYPE>>().template connect<&Combat::template cause_damage<DAMAGE_TYPE>>(this);
+    _core->dispatcher.sink<events::battle::DamageEvent<DAMAGE_TYPE>>().template connect<&Combat::template on_damage_event<DAMAGE_TYPE>>(this);
+    _core->dispatcher.sink<events::battle::FollowupEvent<DAMAGE_TYPE>>().template connect<&Combat::template followup_attack<DAMAGE_TYPE>>(this);
 }
 
 template<typename DAMAGE_TYPE, typename AILMENT>
@@ -46,8 +51,9 @@ void Combat::cause_ailment(events::battle::AilmentEvent<DAMAGE_TYPE, AILMENT> ev
     }
 };
 
+
 template<typename DAMAGE_TYPE>
-void Combat::cause_damage(events::battle::DamageEvent<DAMAGE_TYPE> event) {
+void Combat::on_damage_event(events::battle::DamageEvent<DAMAGE_TYPE> event) {
     auto *weakness = _core->try_get<mods::Weakness<DAMAGE_TYPE>>(event.target);
     auto *resistance = _core->try_get<mods::Resistance<DAMAGE_TYPE>>(event.target);
     auto *immunity = _core->try_get<mods::Immunity<DAMAGE_TYPE>>(event.target);
@@ -71,14 +77,38 @@ void Combat::cause_damage(events::battle::DamageEvent<DAMAGE_TYPE> event) {
             _core->registry.emplace<ailments::Death>(event.target);
         }
     }
+    _core->dispatcher.trigger(events::battle::FollowupEvent<DAMAGE_TYPE>{event.target, event.source_skill, event.damage});
 };
 
+template<typename DAMAGE_TYPE>
+void Combat::followup_attack(events::battle::FollowupEvent<DAMAGE_TYPE> event) {
+    DAMAGE_TYPE damage_type;
+
+    _core->registry.view<FollowupAttack>().each([&event, this](auto entity, auto &followup_attack) {
+        if (event.source_skill == followup_attack.skill) {
+            std::printf("SAME SOURCE Followup attack of type: %s from source %u !\n", DAMAGE_TYPE::description.data(), event.source_skill);
+            return;
+        } else {
+            std::printf("Followup attack of type: %s from source %u !\n", DAMAGE_TYPE::description.data(), event.source_skill);
+            _core->dispatcher.trigger(events::battle::AttackEvent{entity, followup_attack.skill});
+        }
+    });
+}
+
 template <typename DAMAGE_TYPE, typename AILMENT>
-void Combat::cause_damage_with_ailment(const entt::entity attacker, const entt::entity target, const entt::entity skill) {
+void Combat::trigger_damage_with_ailment(const entt::entity attacker, const entt::entity target, const entt::entity skill) {
 
     if (const auto *damage = _core->try_get<DAMAGE_TYPE>(skill)) {
-        _core->dispatcher.trigger(events::battle::DamageEvent<DAMAGE_TYPE>{target, *damage});
+        _core->dispatcher.trigger(events::battle::DamageEvent<DAMAGE_TYPE>{target, skill, *damage});
         _core->dispatcher.trigger(events::battle::AilmentEvent<DAMAGE_TYPE, AILMENT>{target, *damage, _core->registry.get<AILMENT>(skill)});
+    }
+}
+
+template <typename DAMAGE_TYPE>
+void Combat::trigger_damage(const entt::entity attacker, const entt::entity target, const entt::entity skill) {
+
+    if (const auto *damage = _core->try_get<DAMAGE_TYPE>(skill)) {
+        _core->dispatcher.trigger(events::battle::DamageEvent<DAMAGE_TYPE>{target, skill, *damage});
     }
 }
 
@@ -92,8 +122,13 @@ void Combat::attack(events::battle::AttackEvent event) {
             for (auto damage_type: _attacks[event.skill]) {
                 switch (damage_type) {
                     case battle::AttackType::FIRE:
-                        cause_damage_with_ailment<damage_types::FireDmg, ailments::Burn>(event.attacker, target->target, event.skill);
+                        trigger_damage_with_ailment<damage_types::FireDmg, ailments::Burn>(event.attacker, target->target, event.skill);
                         break;
+                    case battle::AttackType::ICE:
+                        trigger_damage<damage_types::IceDmg>(event.attacker, target->target, event.skill);
+                        break;
+                    case battle::AttackType::PIERCE:
+                        trigger_damage<damage_types::PierceDmg>(event.attacker, target->target, event.skill);
                     default:
                         break;
                 }
@@ -110,7 +145,7 @@ void Combat::attack(events::battle::AttackEvent event) {
                 for (auto damage_type: _attacks[event.skill]) {
                     switch (damage_type) {
                         case battle::AttackType::FIRE:
-                            cause_damage_with_ailment<damage_types::FireDmg, ailments::Burn>(event.attacker, target, event.skill);
+                            trigger_damage_with_ailment<damage_types::FireDmg, ailments::Burn>(event.attacker, target, event.skill);
                             break;
                         default:
                             break;

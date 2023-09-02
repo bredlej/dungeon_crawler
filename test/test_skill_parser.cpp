@@ -97,7 +97,16 @@ TEST_F(SkillParserTest, CreatesSkillsMap) {
                                                     skills::SkillsMap::Ailments{
                                                             {types::battle::Ailment::BURN, 30, 5, 3}},
                                                     components::general::SkillCost{10, 0},
-                                                    skills::SkillsMap::RoleConstraints{types::character::Role::MAGE}));
+                                                    skills::SkillsMap::RoleConstraints{types::character::Role::MAGE},
+                                                    skills::SkillsMap::Followups{
+                                                            {{types::battle::AttackType::FIRE},
+                                                             3,
+                                                             1,
+                                                             100,
+                                                             50,
+                                                             skills::SkillsMap::Damage{
+                                                                     {types::battle::AttackType::FIRE, types::character::Attribute::MAGIC_ATTACK, 10.0f}},
+                                                             skills::SkillsMap::Ailments{}}}));
     skills::SkillsMap skills(std::move(offensive_skill_map));
 
     ASSERT_EQ(std::get<components::general::Name>(skills.offensive_skills["Fireball"]).name, "Fireball");
@@ -121,6 +130,17 @@ TEST_F(SkillParserTest, CreatesSkillsMap) {
     ASSERT_EQ(std::get<components::general::SkillCost>(skills.offensive_skills["Fireball"]).hp, 0);
     ASSERT_EQ(std::get<skills::SkillsMap::RoleConstraints>(skills.offensive_skills["Fireball"]).size(), 1);
     ASSERT_EQ(std::get<skills::SkillsMap::RoleConstraints>(skills.offensive_skills["Fireball"])[0], types::character::Role::MAGE);
+    ASSERT_EQ(std::get<skills::SkillsMap::Followups>(skills.offensive_skills["Fireball"]).size(), 1);
+    ASSERT_EQ(std::get<skills::SkillsMap::Followups>(skills.offensive_skills["Fireball"])[0].on_damage_type[0], types::battle::AttackType::FIRE);
+    ASSERT_EQ(std::get<skills::SkillsMap::Followups>(skills.offensive_skills["Fireball"])[0].duration, 3);
+    ASSERT_EQ(std::get<skills::SkillsMap::Followups>(skills.offensive_skills["Fireball"])[0].max_stack, 1);
+    ASSERT_EQ(std::get<skills::SkillsMap::Followups>(skills.offensive_skills["Fireball"])[0].initial_chance, 100);
+    ASSERT_EQ(std::get<skills::SkillsMap::Followups>(skills.offensive_skills["Fireball"])[0].damage_reduction_percent, 50);
+    ASSERT_EQ(std::get<skills::SkillsMap::Followups>(skills.offensive_skills["Fireball"])[0].damage.size(), 1);
+    ASSERT_EQ(std::get<skills::SkillsMap::Followups>(skills.offensive_skills["Fireball"])[0].damage[0].type, types::battle::AttackType::FIRE);
+    ASSERT_EQ(std::get<skills::SkillsMap::Followups>(skills.offensive_skills["Fireball"])[0].damage[0].attribute, types::character::Attribute::MAGIC_ATTACK);
+    ASSERT_EQ(std::get<skills::SkillsMap::Followups>(skills.offensive_skills["Fireball"])[0].damage[0].damage_value, 10);
+    ASSERT_EQ(std::get<skills::SkillsMap::Followups>(skills.offensive_skills["Fireball"])[0].ailments.size(), 0);
 }
 
 TEST_F(SkillParserTest, SkillMapFromJson) {

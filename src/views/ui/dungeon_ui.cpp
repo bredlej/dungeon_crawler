@@ -9,7 +9,7 @@ void DungeonUI::render() {
         ImGui::ShowDemoWindow(&_show_demo);
     }
     _render_movement_buttons();
-    _render_encounter_chance();
+    //_render_encounter_chance();
     _core->game_log.render_no_border("GameLog", &_show_demo);
     rlImGuiEnd();
 }

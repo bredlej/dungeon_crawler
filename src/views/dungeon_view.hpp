@@ -61,6 +61,7 @@ public:
 private:
     void _initialize() noexcept;
     void _render_pov() noexcept;
+    void _render_background(assets::Assets *assets) noexcept;
     void _render_tiles(assets::Assets *assets) noexcept;
     void _render_walls(assets::Assets *assets) noexcept;
     void _render_encounter(assets::Assets *assets) noexcept;

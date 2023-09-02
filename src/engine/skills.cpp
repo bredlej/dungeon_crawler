@@ -4,9 +4,81 @@
 #include <skills.hpp>
 
 using namespace skills;
+using namespace skill_schema;
 
+static SkillsMap::Targets map_targets(const nlohmann::json &skill) {
+    SkillsMap::Targets targets;
+    for (auto &skill_target: skill[names[schema_types::targets].data()]) {
+        std::string target_string{skill_target[names[schema_types::type].data()]};
+        types::battle::Target target{types::battle::string_to_target[target_string]};
+        int chance{skill_target[names[schema_types::chance].data()]};
+        targets.emplace_back(target, chance);
+    }
+    return targets;
+}
+static SkillsMap::Damage map_damage(const nlohmann::json &damage) {
+    SkillsMap::Damage damage_definitions;
+    for (auto &skill_damage: damage) {
+        std::string type_string{skill_damage[names[schema_types::type].data()]};
+        types::battle::AttackType type{types::battle::string_to_attack_type[type_string]};
+        std::string attribute_string{skill_damage[names[schema_types::attribute].data()]};
+        types::character::Attribute attribute{types::character::string_to_attribute[attribute_string]};
+        int damage_value{skill_damage[names[schema_types::damage_value].data()]};
+        damage_definitions.emplace_back(DamageDefinition{type, attribute, static_cast<float>(damage_value)});
+    }
+    return damage_definitions;
+}
+static SkillsMap::Ailments map_ailments(const nlohmann::json &ailments) {
+    SkillsMap::Ailments ailment_definitions;
+    for (auto &skill_ailment: ailments) {
+        std::string type_string{skill_ailment[names[schema_types::type].data()]};
+        types::battle::Ailment type{types::battle::string_to_ailment[type_string]};
+        int chance{skill_ailment[names[schema_types::chance].data()]};
+        int damage_value{skill_ailment[names[schema_types::damage_value].data()]};
+        int duration{skill_ailment[names[schema_types::duration].data()]};
+        ailment_definitions.emplace_back(AilmentDefinition{type, chance, damage_value, duration});
+    }
+    return ailment_definitions;
+}
+static SkillsMap::RoleConstraints map_role_constraints(const nlohmann::json &roles) {
+    SkillsMap::RoleConstraints role_constraints;
+    for (auto &skill_role: roles) {
+        std::string role_string{skill_role};
+        types::character::Role role{types::character::string_to_role[role_string]};
+        role_constraints.emplace_back(role);
+    }
+    return role_constraints;
+}
+
+SkillsMap::Followups map_followups(const nlohmann::json &followups) {
+    SkillsMap::Followups followup_definitions;
+    for (auto &skill_followup: followups) {
+        std::vector<types::battle::AttackType> on_damage_type;
+        for (auto &damage_type: skill_followup[names[schema_types::on_damage_type].data()]) {
+            std::string type_string{damage_type};
+            types::battle::AttackType type{types::battle::string_to_attack_type[type_string]};
+            on_damage_type.emplace_back(type);
+        }
+        int duration{skill_followup[names[schema_types::duration].data()]};
+        int max_stack{skill_followup[names[schema_types::max_stack].data()]};
+        int initial_chance{skill_followup[names[schema_types::initial_chance].data()]};
+        int damage_reduction_percent{skill_followup[names[schema_types::damage_reduction_percent].data()]};
+        SkillsMap::Damage damage = map_damage(skill_followup[names[schema_types::damage].data()]);
+        SkillsMap::Ailments ailments = map_ailments(skill_followup[names[schema_types::ailments].data()]);
+        followup_definitions.emplace_back(FollowupDefinition{
+                on_damage_type,
+                duration,
+                max_stack,
+                initial_chance,
+                damage_reduction_percent,
+                damage,
+                ailments
+        });
+    }
+    return followup_definitions;
+}
 static SkillsMap::OffensiveSkillMap map_offensive_skills(nlohmann::json &json) {
-    using namespace skill_schema;
+
     SkillsMap::OffensiveSkillMap offensive_skills;
     for (auto &skill: json[names[schema_types::offense].data()]) {
         components::general::Name name{skill[names[schema_types::name].data()]};
@@ -14,39 +86,15 @@ static SkillsMap::OffensiveSkillMap map_offensive_skills(nlohmann::json &json) {
         types::battle::BodyPart body_part{types::battle::string_to_body_part[body_part_string]};
         std::string target_type_string{skill[names[schema_types::target_type].data()]};
         types::battle::TargetType target_type{types::battle::string_to_target_type[target_type_string]};
-        SkillsMap::Targets targets;
-        for (auto &skill_target: skill[names[schema_types::targets].data()]) {
-            std::string target_string{skill_target[names[schema_types::type].data()]};
-            types::battle::Target target{types::battle::string_to_target[target_string]};
-            int chance{skill_target[names[schema_types::chance].data()]};
-            targets.emplace_back(target, chance);
-        }
-        SkillsMap::Damage damage;
-        for (auto &skill_damage: skill[names[schema_types::damage].data()]) {
-            std::string type_string{skill_damage[names[schema_types::type].data()]};
-            types::battle::AttackType type{types::battle::string_to_attack_type[type_string]};
-            std::string attribute_string{skill_damage[names[schema_types::attribute].data()]};
-            types::character::Attribute attribute{types::character::string_to_attribute[attribute_string]};
-            int damage_value{skill_damage[names[schema_types::damage_value].data()]};
-            damage.emplace_back(DamageDefinition{type, attribute, static_cast<float>(damage_value)});
-        }
-        SkillsMap::Ailments ailments;
-        for (auto &skill_ailment: skill[names[schema_types::ailments].data()]) {
-            std::string type_string{skill_ailment[names[schema_types::type].data()]};
-            types::battle::Ailment type{types::battle::string_to_ailment[type_string]};
-            int chance{skill_ailment[names[schema_types::chance].data()]};
-            int damage_value{skill_ailment[names[schema_types::damage_value].data()]};
-            int duration{skill_ailment[names[schema_types::duration].data()]};
-            ailments.emplace_back(AilmentDefinition{type, chance, damage_value, duration});
-        }
+
+        SkillsMap::Targets targets = map_targets(skill);
+        SkillsMap::Damage damage = map_damage(skill[names[schema_types::damage].data()]);
+        SkillsMap::Ailments ailments = map_ailments(skill[names[schema_types::ailments].data()]);
         components::general::SkillCost skill_cost{skill[names[schema_types::sp].data()], skill[names[schema_types::hp].data()]};
-        SkillsMap::RoleConstraints role_constraints;
-        for (auto &skill_role: skill[names[schema_types::roles].data()]) {
-            std::string role_string{skill_role};
-            types::character::Role role{types::character::string_to_role[role_string]};
-            role_constraints.emplace_back(role);
-        }
-        offensive_skills.emplace(name.name, std::make_tuple(name, body_part, target_type, targets, damage, ailments, skill_cost, role_constraints));
+        SkillsMap::RoleConstraints role_constraints = map_role_constraints(skill[names[schema_types::roles].data()]);
+        SkillsMap::Followups followups = map_followups(skill[names[schema_types::followups].data()]);
+
+        offensive_skills.emplace(name.name, std::make_tuple(name, body_part, target_type, targets, damage, ailments, skill_cost, role_constraints, followups));
     }
     return offensive_skills;
 }
@@ -79,6 +127,10 @@ static void map_targets(const std::shared_ptr<Core> &core, entt::entity skill, c
     }
 }
 
+template <typename DAMAGE>
+static void emplace_damage(const std::shared_ptr<Core> &core, entt::entity skill, const auto &damage_definition) {
+    core->registry.emplace<DAMAGE>(skill, static_cast<float>(damage_definition.damage_value));
+}
 static void map_damage(const std::shared_ptr<Core> &core, entt::entity skill, const SkillsMap::Damage &damage) {
     for (auto &damage_definition: damage) {
         switch (damage_definition.type) {
@@ -87,11 +139,13 @@ static void map_damage(const std::shared_ptr<Core> &core, entt::entity skill, co
             case battle::AttackType::CUT:
                 break;
             case battle::AttackType::PIERCE:
+                emplace_damage<components::battle::damage_types::PierceDmg>(core, skill, damage_definition);
                 break;
             case battle::AttackType::FIRE:
-                core->registry.emplace<components::battle::damage_types::FireDmg>(skill, static_cast<float>(damage_definition.damage_value));
+                emplace_damage<components::battle::damage_types::FireDmg>(core, skill, damage_definition);
                 break;
             case battle::AttackType::ICE:
+                emplace_damage<components::battle::damage_types::IceDmg>(core, skill, damage_definition);
                 break;
             case battle::AttackType::LIGHTNING:
                 break;
@@ -105,16 +159,21 @@ static void map_damage(const std::shared_ptr<Core> &core, entt::entity skill, co
     }
 }
 
+template <typename AILMENT>
+static void emplace_ailment(const std::shared_ptr<Core> &core, entt::entity skill, const auto &ailment_definition) {
+    core->registry.emplace<AILMENT>(skill,
+                                                               static_cast<float>(ailment_definition.damage_value),
+                                                               static_cast<float>(ailment_definition.chance),
+                                                               static_cast<uint32_t>(ailment_definition.duration));
+}
+
 static void map_ailments(const std::shared_ptr<Core> &core, entt::entity skill, const SkillsMap::Ailments &ailments) {
     for (auto &ailment_definition: ailments) {
         switch (ailment_definition.type) {
             case battle::Ailment::NONE:
                 break;
             case battle::Ailment::BURN:
-                core->registry.emplace<components::battle::ailments::Burn>(skill,
-                                                                           static_cast<float>(ailment_definition.damage_value),
-                                                                           static_cast<float>(ailment_definition.chance),
-                                                                           static_cast<uint32_t>(ailment_definition.duration));
+                emplace_ailment<components::battle::ailments::Burn>(core, skill, ailment_definition);
                 break;
             case battle::Ailment::FREEZE:
             case battle::Ailment::PARALYSIS:
@@ -149,6 +208,39 @@ static void map_name(const std::shared_ptr<Core> &core, entt::entity skill, cons
     core->registry.emplace<components::general::Name>(skill, name.name);
 }
 
+static void map_followup_attacks(const std::shared_ptr<Core> &core, entt::entity skill, const skills::SkillsMap::Followups &followups) {
+    for (auto &followup: followups) {
+        auto followup_attack = components::battle::FollowupAttack{skill, followup.duration, followup.max_stack, followup.initial_chance, followup.damage_reduction_percent};
+        for (auto &damage: followup.damage) {
+            auto followup_damage = core->registry.create();
+            switch (damage.type) {
+                case battle::AttackType::BASH:
+                    break;
+                case battle::AttackType::CUT:
+                    break;
+                case battle::AttackType::PIERCE:
+                    emplace_damage<components::battle::damage_types::PierceDmg>(core, followup_damage, damage);
+                    break;
+                case battle::AttackType::FIRE:
+                    emplace_damage<components::battle::damage_types::FireDmg>(core, followup_damage, damage);
+                    break;
+                case battle::AttackType::ICE:
+                    emplace_damage<components::battle::damage_types::IceDmg>(core, followup_damage, damage);
+                    break;
+                case battle::AttackType::LIGHTNING:
+                    break;
+                case battle::AttackType::POISON:
+                    break;
+                case battle::AttackType::DARKNESS:
+                    break;
+                case battle::AttackType::HOLY:
+                    break;
+            }
+            followup_attack.damage.emplace_back(followup_damage);
+        }
+        core->registry.emplace_or_replace<components::battle::FollowupAttack>(skill, followup_attack);
+    }
+}
 std::function<entt::entity(const std::shared_ptr<Core> &)> skills::instance_offensive_skill(const std::shared_ptr<Core> &core, const SkillsMap &skills_map, const std::string &skill_name) {
     return [&](const std::shared_ptr<Core> &c) -> entt::entity {
         entt::entity e = entt::null;
@@ -162,6 +254,7 @@ std::function<entt::entity(const std::shared_ptr<Core> &)> skills::instance_offe
             map_damage(core, e, std::get<skills::SkillsMap::Damage>(skill));
             map_ailments(core, e, std::get<skills::SkillsMap::Ailments>(skill));
             map_skill_cost(core, e, std::get<components::general::SkillCost>(skill));
+            map_followup_attacks(core, e, std::get<skills::SkillsMap::Followups>(skill));
         }
 
         return e;
