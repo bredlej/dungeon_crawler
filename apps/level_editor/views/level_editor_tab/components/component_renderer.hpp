@@ -17,7 +17,7 @@ public:
     ComponentRenderer &operator=(ComponentRenderer &&) = delete;
     ~ComponentRenderer() = default;
     template<typename T>
-    void render_component(entt::entity entity);
+    void render_component_of_entity(entt::entity entity);
     template<typename T>
     void render_component(T &component);
 private:

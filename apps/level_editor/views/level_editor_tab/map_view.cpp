@@ -649,6 +649,19 @@ void MapView::_place_floor(editor::PlaceTileComponent<Floor> event) {
     }
 }
 
+void MapView::_place_ceiling(editor::PlaceTileComponent<Ceiling> event) {
+    for (const auto &position: *event.positions) {
+        auto field = _level.tile_map.get_at(position.x, position.y);
+        if (field == entt::null) {
+            field = _core->registry.create();
+            _core->registry.emplace<components::tiles::TileId>(field);
+            _core->registry.emplace<components::tiles::MapPosition>(field, position.x, position.y);
+            _level.tile_map._tiles.emplace_back(Tile{field});
+        }
+        _core->registry.emplace_or_replace<components::tiles::Ceiling>(field, event.component.type);
+    }
+}
+
 /**
  * @brief Places encounter chance on the map at specified positions.
  *

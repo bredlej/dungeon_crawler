@@ -4,8 +4,6 @@
 #
 # Tasks are added as separate sub-projects so as compilation errors in
 # one task don't affect another task.
-option(BUILD_LEVEL_EDITOR "Build the level editor" ON)
-if (BUILD_LEVEL_EDITOR)
 set(EDITOR_SOURCE_FILES
         level_editor.cpp
         editor_application.cpp
@@ -30,4 +28,5 @@ set(EDITOR_INCLUDE_DIRS
         ${INCLUDE_DIR})
 
 add_executable(level_editor ${EDITOR_SOURCE_FILES})
-endif ()
+target_link_libraries(level_editor dungeon_crawler_application)
+target_include_directories(level_editor PRIVATE ${EDITOR_INCLUDE_DIRS})

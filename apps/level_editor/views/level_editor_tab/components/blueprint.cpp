@@ -36,6 +36,7 @@ void Blueprint::_initialize() {
  */
 void Blueprint::_initialize_tile_components() {
     _tile_component_handlers.emplace(TileComponentType::Floor, std::make_unique<FloorComponentHandler>());
+    _tile_component_handlers.emplace(TileComponentType::Ceiling, std::make_unique<CeilingComponentHandler>());
     _tile_component_handlers.emplace(TileComponentType::Walkability, std::make_unique<WalkabilityComponentHandler>());
     _tile_component_handlers.emplace(TileComponentType::EncounterChance, std::make_unique<EncounterChanceComponentHandler>());
 
@@ -43,6 +44,7 @@ void Blueprint::_initialize_tile_components() {
     _wall_component_handlers.emplace(WallComponentType::Door, std::make_unique<DoorComponentHandler>());
 
     _all_available_tile_component_types.push_back(static_cast<uint8_t>(TileComponentType::Floor));
+    _all_available_tile_component_types.push_back(static_cast<uint8_t>(TileComponentType::Ceiling));
     _all_available_tile_component_types.push_back(static_cast<uint8_t>(TileComponentType::EncounterChance));
     _all_available_tile_component_types.push_back(static_cast<uint8_t>(TileComponentType::Walkability));
     _selected_field_component_type = _all_available_tile_component_types[0];
@@ -163,14 +165,14 @@ void Blueprint::renderTileComponentSelection() {
 /**
  * Renders a wall component selection.
  *
- * This function renders the specified wall component by calling the `render_component` function
+ * This function renders the specified wall component by calling the `render_component_of_entity` function
  * of the component renderer.
  *
  * @tparam T - The type of the wall component to render
  *
  * @note Ensure that the specified wall component type is included in the `_wall_components.components` tuple.
  *
- * @see ComponentRenderer::render_component
+ * @see ComponentRenderer::render_component_of_entity
  */
 template <typename T>
 void Blueprint::renderWallComponentSelection() {

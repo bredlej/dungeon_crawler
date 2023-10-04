@@ -1,7 +1,7 @@
+#include <skills.hpp>
 //
 // Created by Patryk Szczypień on 24/08/2023.
 //
-#include <skills.hpp>
 
 using namespace skills;
 using namespace skill_schema;
@@ -76,45 +76,18 @@ SkillsMap::Followups map_followups(const nlohmann::json &json) {
     return followup_definitions;
 }
 
-static components::general::SkillCost map_skill_cost(const nlohmann::json &skill_cost) {
-    return components::general::SkillCost{skill_cost[names[schema_types::sp].data()], skill_cost[names[schema_types::hp].data()]};
+static components::general::SkillCost map_skill_cost(const nlohmann::json &json) {
+    return components::general::SkillCost{json[names[schema_types::sp].data()], json[names[schema_types::hp].data()]};
 }
-static components::general::Name map_name(const nlohmann::json &name) {
-    return components::general::Name{name[names[schema_types::name].data()]};
+static components::general::Name map_name(const nlohmann::json &json) {
+    return components::general::Name{json[names[schema_types::name].data()]};
 }
-static types::battle::BodyPart map_body_part(const nlohmann::json &body_part) {
-    std::string body_part_string{body_part[names[schema_types::body_required].data()]};
-    return types::battle::string_to_body_part[body_part_string];
+static types::battle::BodyPart map_body_part(const nlohmann::json &json) {
+    return types::battle::string_to_body_part[std::string{json[names[schema_types::body_required].data()]}];
 }
-static types::battle::TargetType map_target_type(const nlohmann::json &target_type) {
-    std::string target_type_string{target_type[names[schema_types::target_type].data()]};
-    return types::battle::string_to_target_type[target_type_string];
+static types::battle::TargetType map_target_type(const nlohmann::json &json) {
+    return types::battle::string_to_target_type[std::string{json[names[schema_types::target_type].data()]}];
 }
-static SkillsMap::OffensiveSkillMap map_offensive_skills(nlohmann::json &json) {
-
-    SkillsMap::OffensiveSkillMap offensive_skills;
-    for (auto &skill: json[names[schema_types::offense].data()]) {
-        components::general::Name name = map_name(skill);
-
-        offensive_skills.emplace(name.name,
-                                 std::make_tuple(name,
-                                                 map_body_part(skill),
-                                                 map_target_type(skill),
-                                                 map_targets(skill),
-                                                 map_damage(skill),
-                                                 map_ailments(skill),
-                                                 map_skill_cost(skill),
-                                                 map_role_constraints(skill),
-                                                 map_followups(skill)));
-    }
-    return offensive_skills;
-}
-
-SkillsMap skills::from_json(nlohmann::json &json) {
-    return SkillsMap(
-            map_offensive_skills(json));
-}
-
 static void map_targets(const std::shared_ptr<Core> &core, entt::entity skill, const SkillsMap::Targets &targets) {
     for (auto &target: targets) {
         switch (target.first) {
@@ -142,6 +115,7 @@ template<typename DAMAGE>
 static void emplace_damage(const std::shared_ptr<Core> &core, entt::entity skill, const auto &damage_definition) {
     core->registry.emplace<DAMAGE>(skill, static_cast<float>(damage_definition.damage_value));
 }
+
 static void map_damage(const std::shared_ptr<Core> &core, entt::entity skill, const SkillsMap::Damage &damage) {
     for (auto &damage_definition: damage) {
         switch (damage_definition.type) {
@@ -177,7 +151,6 @@ static void emplace_ailment(const std::shared_ptr<Core> &core, entt::entity skil
                                     static_cast<float>(ailment_definition.chance),
                                     static_cast<uint32_t>(ailment_definition.duration));
 }
-
 static void map_ailments(const std::shared_ptr<Core> &core, entt::entity skill, const SkillsMap::Ailments &ailments) {
     for (auto &ailment_definition: ailments) {
         switch (ailment_definition.type) {
@@ -209,16 +182,17 @@ static void map_ailments(const std::shared_ptr<Core> &core, entt::entity skill, 
         }
     }
 }
+
 static void map_skill_cost(const std::shared_ptr<Core> &core, entt::entity skill, const components::general::SkillCost &skill_cost) {
     core->registry.emplace<components::general::SkillCost>(skill, skill_cost.sp, skill_cost.hp);
 }
+
 static void map_body_constraints(const std::shared_ptr<Core> &core, entt::entity skill, const types::battle::BodyPart &body_part) {
     core->registry.emplace<components::battle::BodyConstraints>(skill, std::vector<types::battle::BodyPart>{body_part});
 }
 static void map_name(const std::shared_ptr<Core> &core, entt::entity skill, const components::general::Name &name) {
     core->registry.emplace<components::general::Name>(skill, name.name);
 }
-
 static void map_followup_attacks(const std::shared_ptr<Core> &core, entt::entity skill, const skills::SkillsMap::Followups &followups) {
     for (auto &followup: followups) {
         auto followup_attack = components::battle::FollowupAttack{skill, followup.duration, followup.max_stack, followup.initial_chance, followup.damage_reduction_percent};
@@ -252,6 +226,7 @@ static void map_followup_attacks(const std::shared_ptr<Core> &core, entt::entity
         core->registry.emplace_or_replace<components::battle::FollowupAttack>(skill, followup_attack);
     }
 }
+
 std::function<entt::entity(const std::shared_ptr<Core> &)> skills::instance_offensive_skill(const std::shared_ptr<Core> &core, const SkillsMap &skills_map, const std::string &skill_name) {
     return [&](const std::shared_ptr<Core> &c) -> entt::entity {
         entt::entity e = entt::null;
@@ -270,4 +245,29 @@ std::function<entt::entity(const std::shared_ptr<Core> &)> skills::instance_offe
 
         return e;
     };
+}
+
+static SkillsMap::OffensiveSkillMap map_offensive_skills(nlohmann::json &json) {
+
+    SkillsMap::OffensiveSkillMap offensive_skills;
+    for (auto &skill: json[names[schema_types::offense].data()]) {
+        components::general::Name name = map_name(skill);
+
+        offensive_skills.emplace(name.name,
+                                 std::make_tuple(name,
+                                                 map_body_part(skill),
+                                                 map_target_type(skill),
+                                                 map_targets(skill),
+                                                 map_damage(skill),
+                                                 map_ailments(skill),
+                                                 map_skill_cost(skill),
+                                                 map_role_constraints(skill),
+                                                 map_followups(skill)));
+    }
+    return offensive_skills;
+}
+
+SkillsMap skills::from_json(nlohmann::json &json) {
+    return SkillsMap(
+            map_offensive_skills(json));
 }

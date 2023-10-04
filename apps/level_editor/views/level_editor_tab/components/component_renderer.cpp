@@ -20,7 +20,7 @@ static void render_combo(const char* label, MAP map, TYPE &type) {
 }
 
 template<>
-void ComponentRenderer::render_component<components::tiles::Floor>(entt::entity entity) {
+void ComponentRenderer::render_component_of_entity<components::tiles::Floor>(entt::entity entity) {
     components::tiles::Floor *floor = _core->registry.try_get<components::tiles::Floor>(entity);
     if (floor) {
         const auto label = fmt::format("Floor type##{}", static_cast<int32_t>(entity));
@@ -32,13 +32,26 @@ void ComponentRenderer::render_component<components::tiles::Floor>(entt::entity 
     }
 }
 
+template<>
+void ComponentRenderer::render_component_of_entity<components::tiles::Ceiling>(entt::entity entity) {
+    components::tiles::Ceiling *ceiling = _core->registry.try_get<components::tiles::Ceiling>(entity);
+    if (ceiling) {
+        const auto label = fmt::format("Ceiling type##{}", static_cast<int32_t>(entity));
+        const auto hidden_label = fmt::format("##ceiling_type{}", static_cast<int32_t>(entity));
+        if (ImGui::TreeNode(label.c_str())) {
+            render_combo(hidden_label.c_str(), assets::ceiling_type_to_name, ceiling->type);
+            ImGui::TreePop();
+        }
+    }
+}
+
 template <>
 void ComponentRenderer::render_component<components::tiles::Wall>(components::tiles::Wall &component) {
     render_combo("Wall type", assets::wall_type_to_name, component.type);
 }
 
 template<>
-void ComponentRenderer::render_component<components::values::EncounterChance>(entt::entity entity) {
+void ComponentRenderer::render_component_of_entity<components::values::EncounterChance>(entt::entity entity) {
     components::values::EncounterChance *encounter_chance = _core->registry.try_get<components::values::EncounterChance>(entity);
     if (encounter_chance) {
         const auto label = fmt::format("Encounter chance##{}", static_cast<int32_t>(entity));
@@ -57,7 +70,7 @@ void ComponentRenderer::render_component<components::values::EncounterChance>(co
 }
 
 template<>
-void ComponentRenderer::render_component<components::tiles::Walkability>(entt::entity entity) {
+void ComponentRenderer::render_component_of_entity<components::tiles::Walkability>(entt::entity entity) {
     components::tiles::Walkability *walkability = _core->registry.try_get<components::tiles::Walkability>(entity);
     if (walkability) {
         const auto label = fmt::format("Walkable##{}", static_cast<int32_t>(entity));
@@ -76,18 +89,24 @@ void ComponentRenderer::render_component<components::tiles::Walkability>(compone
 }
 
 template<>
-void ComponentRenderer::render_component<components::tiles::TileId>(entt::entity entity) {
+void ComponentRenderer::render_component_of_entity<components::tiles::TileId>(entt::entity entity) {
     components::tiles::TileId *field = _core->registry.try_get<components::tiles::TileId>(entity);
     if (field) {
-        render_component<components::tiles::Floor>(entity);
-        render_component<components::tiles::Walkability>(entity);
-        render_component<components::values::EncounterChance>(entity);
+        render_component_of_entity<components::tiles::Floor>(entity);
+        render_component_of_entity<components::tiles::Ceiling>(entity);
+        render_component_of_entity<components::tiles::Walkability>(entity);
+        render_component_of_entity<components::values::EncounterChance>(entity);
     }
 }
 
 template<>
 void ComponentRenderer::render_component<components::tiles::Floor>(components::tiles::Floor &component) {
     render_combo("Floor type", assets::floor_type_to_name, component.type);
+}
+
+template<>
+void ComponentRenderer::render_component<components::tiles::Ceiling>(components::tiles::Ceiling &component) {
+    render_combo("Ceiling type", assets::ceiling_type_to_name, component.type);
 }
 
 template <>
@@ -98,7 +117,7 @@ void ComponentRenderer::render_component<components::tiles::Door>(components::ti
 }
 
 template<>
-void ComponentRenderer::render_component<components::tiles::Door>(entt::entity entity) {
+void ComponentRenderer::render_component_of_entity<components::tiles::Door>(entt::entity entity) {
     components::tiles::Door *door = _core->registry.try_get<components::tiles::Door>(entity);
     if (door) {
         render_component<components::tiles::Door>(*(door));
@@ -106,7 +125,7 @@ void ComponentRenderer::render_component<components::tiles::Door>(entt::entity e
 }
 
 template<>
-void ComponentRenderer::render_component<components::tiles::Wall>(entt::entity entity) {
+void ComponentRenderer::render_component_of_entity<components::tiles::Wall>(entt::entity entity) {
     components::tiles::Wall *wall = _core->registry.try_get<components::tiles::Wall>(entity);
     if (wall) {
         render_component<components::tiles::Wall>(*(wall));

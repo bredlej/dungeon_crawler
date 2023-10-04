@@ -15,20 +15,18 @@
 void DungeonView::_initialize() noexcept{
     _core->registry.ctx().emplace<components::values::EncounterChance>(0.00f);
 }
+
 /**
- * @brief Draw a floor tile with a specified type and tint.
+ * Draws a tile asset on the screen.
  *
- * This function draws a floor tile onto the screen with a specified type and tint color.
- * The floor tile is obtained from the assets by index and floor type, and it is drawn at
- * position (0, 0) on the screen with the specified tint color.
- *
- * @param assets A pointer to the assets instance.
- * @param index The index of the floor tile.
- * @param floor_type The type of the floor tile.
- * @param tint The tint color to be applied to the floor tile.
+ * @param assets A pointer to the assets object.
+ * @param index The index of the asset to draw.
+ * @param type The type of asset being drawn.
+ * @param tint The tint color to apply to the asset.
  */
-static inline void draw_floor(assets::Assets *assets, const size_t index, const FloorType floor_type, const Color tint) {
-    DrawTexture(assets->_textures._tiles[static_cast<POVFloor>(index)][floor_type].get(), 0, 0, tint);
+template <typename T>
+static inline void draw_tile_asset(assets::Assets *assets, const size_t index, const T type, const Color tint) {
+    DrawTexture(assets->_textures._tiles[static_cast<POVFloor>(index)][type].get(), 0, 0, tint);
 }
 
 /**
@@ -77,25 +75,21 @@ void DungeonView::_render_tiles(assets::Assets *assets) noexcept
 {
     for (size_t i = 0; i < _player_fov_tile.field.size(); i++)
     {
-        const auto floor_entity = _player_fov_tile.field[i];
-        const Color defaultColor = _core->registry.valid(floor_entity) ? WHITE : RED;
-        const FloorType defaultFloorType = FloorType::RUINS_01;
-        Color fillColor = defaultColor;
-        FloorType floorType = defaultFloorType;
-
-        if (_core->registry.valid(floor_entity)){
+        const auto tile_entity = _player_fov_tile.field[i];
+        const Color default_color = _core->registry.valid(tile_entity) ? WHITE : RED;
+        if (_core->registry.valid(tile_entity)){
             if(const auto floor = _core->registry.try_get<components::tiles::Floor>(_player_fov_tile.field[i]))
             {
                 const auto tint = _core->registry.try_get<components::values::Tint>(_player_fov_tile.field[i]);
-                fillColor = tint ? Color{tint->r, tint->g, tint->b, tint->a} : defaultColor;
-                floorType = floor->type;
+                draw_tile_asset(assets, i, floor->type, tint ? Color{tint->r, tint->g, tint->b, tint->a} : default_color);
             }
-            else {
-                fillColor = RED;
+
+            if (const auto ceiling = _core->registry.try_get<components::tiles::Ceiling>(_player_fov_tile.field[i]))
+            {
+                const auto tint = _core->registry.try_get<components::values::Tint>(_player_fov_tile.field[i]);
+                draw_tile_asset(assets, i, ceiling->type, tint ? Color{tint->r, tint->g, tint->b, tint->a} : default_color);
             }
         }
-
-        draw_floor(assets, i, floorType, fillColor);
     }
 }
 
@@ -276,6 +270,7 @@ void DungeonView::render() noexcept {
     render_texture(_render_texture_pov.texture, IsWindowFullscreen() ? POV_DIMENSION_FULLSCREEN : POV_DIMENSION);
     render_texture(_render_texture_gui.texture, IsWindowFullscreen() ? GUI_DIMENSION_FULLSCREEN : GUI_DIMENSION);
     _ui.render();
+    DrawFPS(20, 20);
     EndDrawing();
 }
 

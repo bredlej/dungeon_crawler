@@ -10,6 +10,7 @@ extern "C" {
 #include <ecs/components.hpp>
 #include <cstdint>
 #include <filesystem>
+using namespace types;
 namespace editor {
     enum class EditMode : uint8_t{
         None,

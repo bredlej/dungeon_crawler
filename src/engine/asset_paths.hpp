@@ -18,7 +18,7 @@ namespace assets {
         constexpr const char *sand_scorpion = "assets/Bestiary/sand_scorpion.png";
         constexpr const char *spectre = "assets/Bestiary/spectre.png";
         constexpr const char *nomad_thief = "assets/Bestiary/nomad_thief.png";
-    }
+    }// namespace monsters
     namespace tiles {
         namespace stratum {
             namespace ruins {
@@ -27,7 +27,31 @@ namespace assets {
                     constexpr const char *l01_east = "assets/Backgrounds/panorama_E.png";
                     constexpr const char *l01_south = "assets/Backgrounds/panorama_S.png";
                     constexpr const char *l01_west = "assets/Backgrounds/panorama_W.png";
-                }
+                }// namespace background
+                namespace ceiling {
+                    namespace ceiling_01 {
+                        constexpr const char *c01 = "assets/Tiles/Stratum/Ruins/Ceiling/01/01.png";
+                        constexpr const char *c02 = "assets/Tiles/Stratum/Ruins/Ceiling/01/02.png";
+                        constexpr const char *c03 = "assets/Tiles/Stratum/Ruins/Ceiling/01/03.png";
+                        constexpr const char *c04 = "assets/Tiles/Stratum/Ruins/Ceiling/01/04.png";
+                        constexpr const char *c05 = "assets/Tiles/Stratum/Ruins/Ceiling/01/05.png";
+                        constexpr const char *c06 = "assets/Tiles/Stratum/Ruins/Ceiling/01/06.png";
+                        constexpr const char *c07 = "assets/Tiles/Stratum/Ruins/Ceiling/01/07.png";
+                        constexpr const char *c08 = "assets/Tiles/Stratum/Ruins/Ceiling/01/08.png";
+                        constexpr const char *c09 = "assets/Tiles/Stratum/Ruins/Ceiling/01/09.png";
+                        constexpr const char *c10 = "assets/Tiles/Stratum/Ruins/Ceiling/01/10.png";
+                        constexpr const char *c11 = "assets/Tiles/Stratum/Ruins/Ceiling/01/11.png";
+                        constexpr const char *c12 = "assets/Tiles/Stratum/Ruins/Ceiling/01/12.png";
+                        constexpr const char *c13 = "assets/Tiles/Stratum/Ruins/Ceiling/01/13.png";
+                        constexpr const char *c14 = "assets/Tiles/Stratum/Ruins/Ceiling/01/14.png";
+                        constexpr const char *c15 = "assets/Tiles/Stratum/Ruins/Ceiling/01/15.png";
+                        constexpr const char *c16 = "assets/Tiles/Stratum/Ruins/Ceiling/01/16.png";
+                        constexpr const char *c17 = "assets/Tiles/Stratum/Ruins/Ceiling/01/17.png";
+                        constexpr const char *c18 = "assets/Tiles/Stratum/Ruins/Ceiling/01/18.png";
+                        constexpr const char *c19 = "assets/Tiles/Stratum/Ruins/Ceiling/01/19.png";
+
+                    }// namespace ceiling_01
+                }    // namespace ceiling
                 namespace floor {
                     namespace floor_01 {
                         constexpr const char *f01 = "assets/Tiles/Stratum/Ruins/Floor/01/01.png";
@@ -49,7 +73,7 @@ namespace assets {
                         constexpr const char *f17 = "assets/Tiles/Stratum/Ruins/Floor/01/17.png";
                         constexpr const char *f18 = "assets/Tiles/Stratum/Ruins/Floor/01/18.png";
                         constexpr const char *f19 = "assets/Tiles/Stratum/Ruins/Floor/01/19.png";
-                    }// namespace ruins_01
+                    }// namespace floor_01
                     namespace floor_02 {
                         constexpr const char *f01 = "assets/Tiles/Stratum/Ruins/Floor/02/01.png";
                         constexpr const char *f02 = "assets/Tiles/Stratum/Ruins/Floor/02/02.png";
@@ -70,7 +94,7 @@ namespace assets {
                         constexpr const char *f17 = "assets/Tiles/Stratum/Ruins/Floor/02/17.png";
                         constexpr const char *f18 = "assets/Tiles/Stratum/Ruins/Floor/02/18.png";
                         constexpr const char *f19 = "assets/Tiles/Stratum/Ruins/Floor/02/19.png";
-                    }// namespace ruins_02
+                    }// namespace floor_02
                 }    // namespace floor
                 namespace wall {
                     namespace wall_01 {
@@ -180,13 +204,13 @@ namespace assets {
                     constexpr const char *d17o_e = "assets/Tiles/Stratum/Ruins/Door/D17O_E.png";
                     constexpr const char *d19c_w = "assets/Tiles/Stratum/Ruins/Door/D19C_W.png";
                     constexpr const char *d19o_w = "assets/Tiles/Stratum/Ruins/Door/D19O_W.png";
-                }
-            }        // namespace ruins
-        }            // namespace stratum
-    }                // namespace tiles
+                }// namespace door_01
+            }    // namespace ruins
+        }        // namespace stratum
+    }            // namespace tiles
     namespace level_editor::tiles {
-            constexpr const char *ruins_01 = "assets/LevelEditor/ruins_01.png";
-            constexpr const char *ruins_02 = "assets/LevelEditor/ruins_02.png";
-    }
+        constexpr const char *ruins_01 = "assets/LevelEditor/ruins_01.png";
+        constexpr const char *ruins_02 = "assets/LevelEditor/ruins_02.png";
+    }// namespace level_editor::tiles
 }// namespace assets
 #endif//DUNGEON_CRAWLER_ASSET_PATHS_HPP

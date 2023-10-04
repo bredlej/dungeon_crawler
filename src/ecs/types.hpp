@@ -15,7 +15,7 @@ namespace types {
         RUINS_01, RUINS_02
     };
     enum class CeilingType {
-        NORMAL
+        RUINS_01
     };
     enum class WallType {
         RUINS_01

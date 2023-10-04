@@ -15,11 +15,13 @@
 enum class TileComponentType : uint8_t {
     None,
     Floor,
+    Ceiling,
     EncounterChance,
     Walkability
 };
 static std::unordered_map<uint8_t, std::string> tile_component_type_to_string = {
         {static_cast<uint8_t>(TileComponentType::Floor), "Floor"},
+        {static_cast<uint8_t>(TileComponentType::Ceiling), "Ceiling"},
         {static_cast<uint8_t>(TileComponentType::EncounterChance), "Encounter chance"},
         {static_cast<uint8_t>(TileComponentType::Walkability), "Walkability"}};
 
@@ -144,7 +146,7 @@ private:
                                                      const std::function<void(uint8_t)> &on_component_selected_callback,
                                                      const std::function<void(uint8_t)> &on_add_button_clicked_callback);
 
-    Components<Floor, Walkability, EncounterChance> _tile_components;
+    Components<Floor, Ceiling, Walkability, EncounterChance> _tile_components;
     Components<Wall, Door> _wall_components;
 };
 
@@ -156,6 +158,17 @@ public:
 
     void handleComponentPlacement(Blueprint *blueprint, editor::MapPositionSelected *positions) override {
         blueprint->enqueueTileComponentPlacement<Floor>(&positions->positions);
+    }
+};
+
+class CeilingComponentHandler : public TileComponentActionHandler {
+public:
+    void handleComponentSelection(Blueprint *blueprint) override {
+        blueprint->renderTileComponentSelection<Ceiling>();
+    }
+
+    void handleComponentPlacement(Blueprint *blueprint, editor::MapPositionSelected *positions) override {
+        blueprint->enqueueTileComponentPlacement<Ceiling>(&positions->positions);
     }
 };
 

@@ -49,6 +49,12 @@ namespace assets {
             {FloorType::RUINS_01, "RUINS_01"},
             {FloorType::RUINS_02, "RUINS_02"}
     };
+    static std::unordered_map<std::string, CeilingType> name_to_ceiling_type = {
+            {"RUINS_01", CeilingType::RUINS_01}
+    };
+    static std::unordered_map<CeilingType, std::string> ceiling_type_to_name = {
+            {CeilingType::RUINS_01, "RUINS_01"}
+    };
     static std::unordered_map<std::string, WallType> name_to_wall_type = {
             {"RUINS_01", WallType::RUINS_01}
     };
@@ -169,6 +175,26 @@ namespace assets {
             _textures._tiles[dungeon_view::POVFloor::F17].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f17);
             _textures._tiles[dungeon_view::POVFloor::F18].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f18);
             _textures._tiles[dungeon_view::POVFloor::F19].emplace(FloorType::RUINS_02, assets::tiles::stratum::ruins::floor::floor_02::f19);
+
+            _textures._tiles[dungeon_view::POVFloor::F01].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c01);
+            _textures._tiles[dungeon_view::POVFloor::F02].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c02);
+            _textures._tiles[dungeon_view::POVFloor::F03].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c03);
+            _textures._tiles[dungeon_view::POVFloor::F04].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c04);
+            _textures._tiles[dungeon_view::POVFloor::F05].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c05);
+            _textures._tiles[dungeon_view::POVFloor::F06].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c06);
+            _textures._tiles[dungeon_view::POVFloor::F07].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c07);
+            _textures._tiles[dungeon_view::POVFloor::F08].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c08);
+            _textures._tiles[dungeon_view::POVFloor::F09].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c09);
+            _textures._tiles[dungeon_view::POVFloor::F10].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c10);
+            _textures._tiles[dungeon_view::POVFloor::F11].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c11);
+            _textures._tiles[dungeon_view::POVFloor::F12].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c12);
+            _textures._tiles[dungeon_view::POVFloor::F13].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c13);
+            _textures._tiles[dungeon_view::POVFloor::F14].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c14);
+            _textures._tiles[dungeon_view::POVFloor::F15].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c15);
+            _textures._tiles[dungeon_view::POVFloor::F16].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c16);
+            _textures._tiles[dungeon_view::POVFloor::F17].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c17);
+            _textures._tiles[dungeon_view::POVFloor::F18].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c18);
+            _textures._tiles[dungeon_view::POVFloor::F19].emplace(CeilingType::RUINS_01, assets::tiles::stratum::ruins::ceiling::ceiling_01::c19);
 
             _textures._tiles[dungeon_view::POVWall::W01_N].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w01_n);
             _textures._tiles[dungeon_view::POVWall::W01_E].emplace(WallType::RUINS_01, assets::tiles::stratum::ruins::wall::wall_01::w01_e);

@@ -27,6 +27,7 @@ public:
         _core->dispatcher.sink<MapPositionSelected>().connect<&MapView::_handle_entities_selection>(this);
         _core->dispatcher.sink<ClearSelection>().connect<&MapView::_clear_rectangle_selection>(this);
         _core->dispatcher.sink<editor::PlaceTileComponent<Floor>>().connect<&MapView::_place_floor>(this);
+        _core->dispatcher.sink<editor::PlaceTileComponent<Ceiling>>().connect<&MapView::_place_ceiling>(this);
         _core->dispatcher.sink<editor::PlaceTileComponent<EncounterChance>>().connect<&MapView::_place_encounter_chance>(this);
         _core->dispatcher.sink<editor::PlaceTileComponent<Walkability>>().connect<&MapView::_place_walkability>(this);
         _core->dispatcher.sink<editor::PlaceWallComponent<Wall>>().connect<&MapView::_place_wall>(this);
@@ -82,6 +83,7 @@ private:
     void _handle_user_interactions_with_wall_on_grid(int32_t x, int32_t y) const;
 
     void _place_floor(editor::PlaceTileComponent<Floor> event);
+    void _place_ceiling(editor::PlaceTileComponent<Ceiling> event);
     void _place_walkability(editor::PlaceTileComponent<Walkability> event);
     void _place_encounter_chance(editor::PlaceTileComponent<EncounterChance> event);
 

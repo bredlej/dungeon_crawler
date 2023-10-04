@@ -11,7 +11,6 @@ void TileMap::_initialize() {
             Tile tile{_core->registry.create()};
             _core->registry.emplace<components::tiles::MapPosition>(tile.entity, x, y);
             _core->registry.emplace<components::tiles::Floor>(tile.entity, rand() % 100 < 50 ? FloorType::RUINS_01 : FloorType::RUINS_02);
-            _core->registry.emplace<components::tiles::Ceiling>(tile.entity, CeilingType::NORMAL);
             _core->registry.emplace<components::tiles::Visibility>(tile.entity, true);
             _core->registry.emplace<components::tiles::Walkability>(tile.entity, true);
             _core->registry.emplace<components::tiles::TileId>(tile.entity, 1);
@@ -33,7 +32,6 @@ void TileMap::from_json(nlohmann::json &json) {
     for (const auto &tile_contents: tiles) {
         Tile tile{_core->registry.create()};
         _core->registry.emplace<components::tiles::MapPosition>(tile.entity, index % size_x, index / size_y);
-        _core->registry.emplace<components::tiles::Ceiling>(tile.entity, CeilingType::NORMAL);
         _core->registry.emplace<components::tiles::Visibility>(tile.entity, true);
         _core->registry.emplace<components::tiles::TileId>(tile.entity, 1);
         if (!tile_contents.empty()) {
@@ -45,6 +43,9 @@ void TileMap::from_json(nlohmann::json &json) {
                     } else {
                         _core->registry.emplace<components::tiles::Walkability>(tile.entity, true);
                     }
+                }
+                if (content.contains(names[level_schema::schema_types::ceiling])) {
+                    _core->registry.emplace<components::tiles::Ceiling>(tile.entity, assets::name_to_ceiling_type[content[names[level_schema::schema_types::ceiling].data()]]);
                 }
                 if (content.contains(names[level_schema::schema_types::encounter_chance])) {
                     _core->registry.emplace<components::values::EncounterChance>(tile.entity, content[names[level_schema::schema_types::encounter_chance].data()]);
@@ -71,19 +72,24 @@ void TileMap::to_json(nlohmann::json &json) {
             tile_contents = nlohmann::json::array();
             std::vector<nlohmann::json> contents;
             if (tile != entt::null) {
-                if (_core->registry.any_of<components::tiles::Floor>(tile)) {
-                    auto json_floor = nlohmann::json::object();
-                    auto &floor = _core->registry.get<components::tiles::Floor>(tile);
-                    json_floor[names[schema_types::floor].data()] = assets::floor_type_to_name[floor.type];
+                if (_core->registry.any_of<components::tiles::TileId>(tile)) {
+                    auto json_tile = nlohmann::json::object();
+                    if (_core->registry.any_of<components::tiles::Floor>(tile)) {
+                        auto &floor = _core->registry.get<components::tiles::Floor>(tile);
+                        json_tile[names[schema_types::floor].data()] = assets::floor_type_to_name[floor.type];
+                    }
+                    if (_core->registry.any_of<components::tiles::Ceiling>(tile)) {
+                        auto &ceiling = _core->registry.get<components::tiles::Ceiling>(tile);
+                        json_tile[names[schema_types::ceiling].data()] = assets::ceiling_type_to_name[ceiling.type];
+                    }
                     if (_core->registry.any_of<components::tiles::Walkability>(tile)) {
                         auto &walkability = _core->registry.get<components::tiles::Walkability>(tile);
-                        json_floor[names[schema_types::walkable].data()] = walkability.walkable;
+                        json_tile[names[schema_types::walkable].data()] = walkability.walkable;
                     }
-                    components::values::EncounterChance *encounter_chance = _core->registry.try_get<components::values::EncounterChance>(tile);
-                    if (encounter_chance) {
-                        json_floor[names[schema_types::encounter_chance].data()] = encounter_chance->chance;//fmt::format("{:.2f}", encounter_chance->chance);
+                    if (components::values::EncounterChance *encounter_chance = _core->registry.try_get<components::values::EncounterChance>(tile)) {
+                        json_tile[names[schema_types::encounter_chance].data()] = encounter_chance->chance;//fmt::format("{:.2f}", encounter_chance->chance);
                     }
-                    contents.emplace_back(json_floor);
+                    contents.emplace_back(json_tile);
                 }
             }
             tile_contents = contents;
