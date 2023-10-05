@@ -84,6 +84,38 @@
         ],
         "ailments": []
       }]
+    },
+    {
+      "name": "Ice bolt",
+        "body_required": "HEAD",
+        "target_type": "ENEMY",
+        "targets": [
+          {
+            "type": "SINGLE",
+            "chance": 100
+          }
+        ],
+        "damage": [
+          {
+            "type": "ICE",
+            "attribute": "MAGIC_ATTACK",
+            "damage_value": 10
+          }
+        ],
+        "ailments": [
+          {
+            "type": "FREEZE",
+            "chance": 30,
+            "damage_value": 5,
+            "duration": 3
+          }
+        ],
+        "sp": 10,
+        "hp": 0,
+        "roles": [
+          "MAGE"
+        ],
+        "followups": []
     }
   ],
   "defense": [

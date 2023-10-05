@@ -195,7 +195,7 @@ static void map_name(const std::shared_ptr<Core> &core, entt::entity skill, cons
 }
 static void map_followup_attacks(const std::shared_ptr<Core> &core, entt::entity skill, const skills::SkillsMap::Followups &followups) {
     for (auto &followup: followups) {
-        auto followup_attack = components::battle::FollowupAttack{skill, followup.duration, followup.max_stack, followup.initial_chance, followup.damage_reduction_percent};
+        auto followup_attack = components::battle::FollowupAttack{entt::null, skill, followup.duration, followup.max_stack, followup.initial_chance, followup.damage_reduction_percent};
         for (auto &damage: followup.damage) {
             auto followup_damage = core->registry.create();
             switch (damage.type) {

@@ -126,6 +126,13 @@ namespace assets {
         std::unordered_map<WorldDirection, const assets::DCTexture> _background;
     };
 
+    struct Fonts {
+    public:
+        Fonts() : font{LoadFont("assets/Fonts/jupiterc.ttf")} {};
+        ~Fonts() {UnloadFont(font);};
+        Font font;
+    };
+
     class Assets {
     public:
         explicit Assets() noexcept : _textures{} {
@@ -309,6 +316,7 @@ namespace assets {
         };
 
         Textures _textures;
+        Fonts fonts;
     };
 }// namespace assets
 

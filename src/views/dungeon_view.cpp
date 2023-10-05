@@ -54,6 +54,7 @@ void DungeonView::_render_pov() noexcept
     }
 
     EndTextureMode();
+
 }
 
 void DungeonView::_render_background(assets::Assets *assets) noexcept {
@@ -270,7 +271,8 @@ void DungeonView::render() noexcept {
     render_texture(_render_texture_pov.texture, IsWindowFullscreen() ? POV_DIMENSION_FULLSCREEN : POV_DIMENSION);
     render_texture(_render_texture_gui.texture, IsWindowFullscreen() ? GUI_DIMENSION_FULLSCREEN : GUI_DIMENSION);
     _ui.render();
-    DrawFPS(20, 20);
+    //DrawFPS(20, 20);
+    //DrawTextEx(_core->get_assets()->fonts.font, "Dungeon Crawler", Vector2{50, 50}, _core->get_assets()->fonts.font.baseSize, 0, WHITE);
     EndDrawing();
 }
 

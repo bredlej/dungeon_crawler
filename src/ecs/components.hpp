@@ -149,6 +149,7 @@ namespace components {
         };
 
         struct FollowupAttack {
+            entt::entity attacker;
             entt::entity skill;
             int duration;
             int max_stack;
