@@ -1,6 +1,7 @@
 {
   "offense": [
     {
+      "id": "skill-1",
       "name": "Fireball",
       "body_required": "HEAD",
       "target_type": "ENEMY",
@@ -34,9 +35,10 @@
       "roles": [
         "MAGE"
       ],
-      "followups" : []
+      "followups": []
     },
     {
+      "id": "skill-2",
       "name": "Ice dance",
       "body_required": "LEGS",
       "target_type": "ENEMY",
@@ -54,72 +56,79 @@
         },
         {
           "type": "PIERCE",
-            "attribute": "ATTACK",
-            "damage_value": 5
+          "attribute": "ATTACK",
+          "damage_value": 5
         }
       ],
       "ailments": [],
-        "sp": 10,
-        "hp": 0,
-        "roles": [
-          "BLADE_DANCER"
-        ],
-      "followups": [{
-        "on_damage_type": ["ICE", "PIERCE"],
-        "duration": 1,
-        "max_stack": 5,
-        "initial_chance": 100,
-        "damage_reduction_percent": 10,
-        "damage": [
+      "sp": 10,
+      "hp": 0,
+      "roles": [
+        "BLADE_DANCER"
+      ],
+      "followups": [
+        {
+          "on_damage_type": [
+            "ICE",
+            "PIERCE"
+          ],
+          "duration": 1,
+          "max_stack": 5,
+          "initial_chance": 100,
+          "damage_reduction_percent": 10,
+          "damage": [
             {
-                "type": "ICE",
-                "attribute": "MAGIC_ATTACK",
-                "damage_value": 10
+              "type": "ICE",
+              "attribute": "MAGIC_ATTACK",
+              "damage_value": 10
             },
             {
-                "type": "PIERCE",
-                "attribute": "ATTACK",
-                "damage_value": 5
+              "type": "PIERCE",
+              "attribute": "ATTACK",
+              "damage_value": 5
             }
-        ],
-        "ailments": []
-      }]
+          ],
+          "ailments": []
+        }
+      ]
     },
     {
+      "id": "skill-3",
       "name": "Ice bolt",
-        "body_required": "HEAD",
-        "target_type": "ENEMY",
-        "targets": [
-          {
-            "type": "SINGLE",
-            "chance": 100
-          }
-        ],
-        "damage": [
-          {
-            "type": "ICE",
-            "attribute": "MAGIC_ATTACK",
-            "damage_value": 10
-          }
-        ],
-        "ailments": [
-          {
-            "type": "FREEZE",
-            "chance": 30,
-            "damage_value": 5,
-            "duration": 3
-          }
-        ],
-        "sp": 10,
-        "hp": 0,
-        "roles": [
-          "MAGE"
-        ],
-        "followups": []
+      "body_required": "HEAD",
+      "target_type": "ENEMY",
+      "targets": [
+        {
+          "type": "SINGLE",
+          "chance": 100
+        }
+      ],
+      "damage": [
+        {
+          "type": "ICE",
+          "attribute": "MAGIC_ATTACK",
+          "damage_value": 10
+        }
+      ],
+      "ailments": [
+        {
+          "type": "FREEZE",
+          "chance": 30,
+          "damage_value": 5,
+          "duration": 3
+        }
+      ],
+      "sp": 10,
+      "hp": 0,
+      "roles": [
+        "MAGE"
+      ],
+      "followups": []
     }
   ],
   "defense": [
     {
+      "id": "skill-4",
       "name": "Heal",
       "body_required": "HEAD",
       "target_type": "ALLY",
@@ -138,6 +147,45 @@
       "roles": [
         "MAGE"
       ]
+    }
+  ],
+  "monster_skills": [
+    {
+      "id": "skill-1",
+      "name": "Fireball",
+      "body_required": "HEAD",
+      "target_type": "ENEMY",
+      "targets": [
+        {
+          "type": "SINGLE",
+          "chance": 100
+        },
+        {
+          "type": "NEIGHBOURS",
+          "chance": 50
+        }
+      ],
+      "damage": [
+        {
+          "type": "FIRE",
+          "attribute": "MAGIC_ATTACK",
+          "damage_value": 10
+        }
+      ],
+      "ailments": [
+        {
+          "type": "BURN",
+          "chance": 30,
+          "damage_value": 5,
+          "duration": 3
+        }
+      ],
+      "sp": 10,
+      "hp": 0,
+      "roles": [
+        "MAGE"
+      ],
+      "followups": []
     }
   ]
 }

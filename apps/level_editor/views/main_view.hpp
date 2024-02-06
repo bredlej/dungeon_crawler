@@ -17,7 +17,7 @@ extern "C" {
 #include "views/level_editor_tab/components/file_operations.hpp"
 #include "views/level_editor_tab/components/level_list.hpp"
 #include "views/level_editor_tab/components/main_menu.hpp"
-#include "views/level_editor_tab/events.hpp"
+#include "views/level_editor_tab/editor_events.hpp"
 #include "views/level_editor_tab/map_view.hpp"
 #include <memory>
 

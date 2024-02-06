@@ -1,8 +1,7 @@
 //
 // Created by Patryk Szczypień on 15/08/2023.
 //
-#include <core.hpp>
-#include <engine/battle_director.hpp>
+#include "engine/battle_system/battle_director.hpp"
 #include <gtest/gtest.h>
 #include <memory>
 

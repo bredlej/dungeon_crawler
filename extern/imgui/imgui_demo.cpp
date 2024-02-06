@@ -760,6 +760,7 @@ static void ShowDemoWindowWidgets()
         }
 
         if (ImGui::TreeNode("Advanced, with Selectable nodes"))
+        if (ImGui::TreeNode("Advanced, with Selectable nodes"))
         {
             HelpMarker(
                 "This is a more typical looking tree with selectable nodes.\n"

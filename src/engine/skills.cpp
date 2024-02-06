@@ -79,6 +79,9 @@ SkillsMap::Followups map_followups(const nlohmann::json &json) {
 static components::general::SkillCost map_skill_cost(const nlohmann::json &json) {
     return components::general::SkillCost{json[names[schema_types::sp].data()], json[names[schema_types::hp].data()]};
 }
+static components::general::Id map_id(const nlohmann::json &json) {
+    return components::general::Id{json[names[schema_types::id].data()]};
+}
 static components::general::Name map_name(const nlohmann::json &json) {
     return components::general::Name{json[names[schema_types::name].data()]};
 }
@@ -190,6 +193,9 @@ static void map_skill_cost(const std::shared_ptr<Core> &core, entt::entity skill
 static void map_body_constraints(const std::shared_ptr<Core> &core, entt::entity skill, const types::battle::BodyPart &body_part) {
     core->registry.emplace<components::battle::BodyConstraints>(skill, std::vector<types::battle::BodyPart>{body_part});
 }
+static void map_id(const std::shared_ptr<Core> &core, entt::entity skill, const components::general::Id &id) {
+    core->registry.emplace<components::general::Id>(skill, id.id);
+}
 static void map_name(const std::shared_ptr<Core> &core, entt::entity skill, const components::general::Name &name) {
     core->registry.emplace<components::general::Name>(skill, name.name);
 }
@@ -227,13 +233,13 @@ static void map_followup_attacks(const std::shared_ptr<Core> &core, entt::entity
     }
 }
 
-std::function<entt::entity(const std::shared_ptr<Core> &)> skills::instance_offensive_skill(const std::shared_ptr<Core> &core, const SkillsMap &skills_map, const std::string &skill_name) {
+std::function<entt::entity(const std::shared_ptr<Core> &)> SkillsMap::instance_offensive_skill(const std::shared_ptr<Core> &core, const SkillsMap &skills_map, const std::string &skill_name) {
     return [&](const std::shared_ptr<Core> &c) -> entt::entity {
         entt::entity e = entt::null;
         if (skills_map.offensive_skills.contains(skill_name)) {
             e = core->registry.create();
-            auto skill = skills_map.offensive_skills.at(skill_name);
-
+            const auto skill = skills_map.offensive_skills.at(skill_name);
+            map_id(core, e, std::get<components::general::Id>(skill));
             map_name(core, e, std::get<components::general::Name>(skill));
             map_body_constraints(core, e, std::get<types::battle::BodyPart>(skill));
             map_targets(core, e, std::get<skills::SkillsMap::Targets>(skill));
@@ -247,14 +253,15 @@ std::function<entt::entity(const std::shared_ptr<Core> &)> skills::instance_offe
     };
 }
 
-static SkillsMap::OffensiveSkillMap map_offensive_skills(nlohmann::json &json) {
+static SkillsMap::OffensiveSkillMap map_offensive_skills(const nlohmann::json &json) {
 
     SkillsMap::OffensiveSkillMap offensive_skills;
     for (auto &skill: json[names[schema_types::offense].data()]) {
+        components::general::Id id = map_id(skill);
         components::general::Name name = map_name(skill);
 
-        offensive_skills.emplace(name.name,
-                                 std::make_tuple(name,
+        offensive_skills.emplace(id.id,
+                                 std::make_tuple(id, name,
                                                  map_body_part(skill),
                                                  map_target_type(skill),
                                                  map_targets(skill),
@@ -267,7 +274,27 @@ static SkillsMap::OffensiveSkillMap map_offensive_skills(nlohmann::json &json) {
     return offensive_skills;
 }
 
-SkillsMap skills::from_json(nlohmann::json &json) {
+static SkillsMap::MonsterSkillMap map_monster_skills(const nlohmann::json &json) {
+    SkillsMap::MonsterSkillMap monster_skills;
+
+    for (auto &skill: json[names[schema_types::monster_skills].data()]) {
+components::general::Id id = map_id(skill);
+        components::general::Name name = map_name(skill);
+
+        monster_skills.emplace(id.id,
+                               std::make_tuple(id, name,
+                                               map_body_part(skill),
+                                               map_target_type(skill),
+                                               map_targets(skill),
+                                               map_damage(skill),
+                                               map_ailments(skill),
+                                               map_skill_cost(skill),
+                                               map_followups(skill)));
+    }
+    return monster_skills;
+}
+
+SkillsMap SkillsMap::from_json(const nlohmann::json &json) {
     return SkillsMap(
-            map_offensive_skills(json));
+            map_offensive_skills(json), map_monster_skills(json));
 }

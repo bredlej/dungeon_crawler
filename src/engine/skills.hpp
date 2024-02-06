@@ -11,7 +11,7 @@
 #include <functional>
 #include <memory>
 #include <nlohmann/json.hpp>
-#include <skill_parser.hpp>
+#include <parsers/skill_parser.hpp>
 #include <string>
 #include <tuple>
 #include <unordered_map>
@@ -19,20 +19,20 @@
 
 namespace skills {
     struct DamageDefinition {
-        types::battle::AttackType type;
-        types::character::Attribute attribute;
+        battle::AttackType type;
+        character::Attribute attribute;
         float damage_value;
     };
 
     struct AilmentDefinition {
-        types::battle::Ailment type;
+        battle::Ailment type;
         int chance;
         int damage_value;
         int duration;
     };
 
     struct FollowupDefinition {
-        std::vector<types::battle::AttackType> on_damage_type;
+        std::vector<battle::AttackType> on_damage_type;
         int duration;
         int max_stack;
         int initial_chance;
@@ -53,7 +53,7 @@ namespace skills {
         UNAVAILABLE_SKILL
     };
 
-    struct SkillsMap {
+    class SkillsMap {
     public:
         using Targets = std::vector<std::pair<types::battle::Target, int>>;
         using Damage = std::vector<DamageDefinition>;
@@ -61,6 +61,7 @@ namespace skills {
         using RoleConstraints = std::vector<types::character::Role>;
         using Followups = std::vector<FollowupDefinition>;
         using OffensiveSkill = std::tuple<
+                components::general::Id,
                 components::general::Name,
                 types::battle::BodyPart,
                 types::battle::TargetType,
@@ -70,22 +71,36 @@ namespace skills {
                 components::general::SkillCost,
                 RoleConstraints,
                 Followups>;
+        using MonsterSkill = std::tuple<
+                components::general::Id,
+                components::general::Name,
+                types::battle::BodyPart,
+                types::battle::TargetType,
+                Targets,
+                Damage,
+                Ailments,
+                components::general::SkillCost,
+                Followups>;
         using OffensiveSkillMap = std::unordered_map<std::string, OffensiveSkill>;
+        using MonsterSkillMap = std::unordered_map<std::string, MonsterSkill>;
 
-        explicit SkillsMap(OffensiveSkillMap &&offensive_skill_map) : offensive_skills(std::move(offensive_skill_map)){};
-
-        SkillsMap(const SkillsMap &) = delete;
-        SkillsMap(SkillsMap &&) = delete;
+        explicit SkillsMap(OffensiveSkillMap &&offensive_skill_map, MonsterSkillMap &&monster_skill_map) : offensive_skills(std::move(offensive_skill_map)), monster_skills(std::move(monster_skill_map)){};
+        SkillsMap(const SkillsMap &) = default;
+        SkillsMap(SkillsMap &&) = default;
         SkillsMap &operator=(const SkillsMap &) = delete;
         SkillsMap &operator=(SkillsMap &&) = delete;
         ~SkillsMap() = default;
 
+        static SkillsMap from_json(const nlohmann::json &json);
+        static std::function<entt::entity(const std::shared_ptr<Core> &)> instance_offensive_skill(const std::shared_ptr<Core> &core, const SkillsMap &skills_map, const std::string &skill_name);
+
         OffensiveSkillMap offensive_skills;
+        MonsterSkillMap monster_skills;
+
+
     };
 
-    SkillsMap from_json(nlohmann::json &json);
 
-    std::function<entt::entity(const std::shared_ptr<Core> &)> instance_offensive_skill(const std::shared_ptr<Core> &core, const SkillsMap &skills_map, const std::string &skill_name);
 }// namespace skills
 
 #endif//DUNGEON_CRAWLER_SKILLS_HPP

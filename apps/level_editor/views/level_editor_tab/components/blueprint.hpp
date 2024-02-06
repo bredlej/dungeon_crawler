@@ -4,7 +4,7 @@
 
 #ifndef DUNGEON_CRAWLER_BLUEPRINT_HPP
 #define DUNGEON_CRAWLER_BLUEPRINT_HPP
-#include <events.hpp>
+#include <editor_events.hpp>
 #include <component_renderer.hpp>
 #include <core.hpp>
 #include <cstdint>

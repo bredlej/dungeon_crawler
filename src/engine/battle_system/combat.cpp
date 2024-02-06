@@ -1,7 +1,7 @@
 //
 // Created by Patryk Szczypień on 21/08/2023.
 //
-#include <combat.hpp>
+#include "combat.hpp"
 
 void Combat::initialize() {
     _combat_dispatcher.sink<events::battle::AttackEvent>().connect<&Combat::attack>(this);

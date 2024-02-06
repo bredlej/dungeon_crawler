@@ -11,11 +11,15 @@ set(SOURCE_FILES
         views/dungeon_view.cpp
         views/ui/dungeon_ui.cpp
         engine/core.cpp
-        engine/combat.cpp
+        engine/battle_system/combat.cpp
         engine/skills.cpp
-        engine/level_parser.cpp
-        engine/skill_parser.cpp
+        engine/monsters.cpp
+        engine/parsers/level_parser.cpp
+        engine/parsers/attributes_parser.cpp
+        engine/parsers/skill_parser.cpp
+        engine/parsers/monster_parser.cpp
         engine/level.cpp
+        engine/battle_system/battle_system.cpp
         ecs/wall_map.cpp
         ecs/tile_map.cpp
         views/actions/dungeon_actions.cpp)

@@ -4,7 +4,7 @@
 
 #ifndef DUNGEON_CRAWLER_ENTITY_DETAILS_HPP
 #define DUNGEON_CRAWLER_ENTITY_DETAILS_HPP
-#include <events.hpp>
+#include <editor_events.hpp>
 #include <component_renderer.hpp>
 #include <components.hpp>
 #include <core.hpp>

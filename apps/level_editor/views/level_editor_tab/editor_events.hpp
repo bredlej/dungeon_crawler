@@ -2,8 +2,8 @@
 // Created by Patryk Szczypień on 05/04/2023.
 //
 
-#ifndef DUNGEON_CRAWLER_EVENTS_HPP
-#define DUNGEON_CRAWLER_EVENTS_HPP
+#ifndef DUNGEON_CRAWLER_EDITOR_EVENTS_HPP
+#define DUNGEON_CRAWLER_EDITOR_EVENTS_HPP
 extern "C" {
 #include <raylib.h>
 }
@@ -101,4 +101,4 @@ namespace editor {
         entt::entity entity;
     };
 }// namespace editor
-#endif//DUNGEON_CRAWLER_EVENTS_HPP
+#endif//DUNGEON_CRAWLER_EDITOR_EVENTS_HPP

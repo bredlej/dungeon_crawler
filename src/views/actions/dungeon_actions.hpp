@@ -22,18 +22,18 @@ public:
     DungeonActions &operator=(const DungeonActions &) noexcept = delete;
     DungeonActions &operator=(const DungeonActions &&) noexcept = delete;
 
-    void turn_left();
-    void turn_right();
-    void move_forward();
-    void move_back();
-    void move_left();
-    void move_right();
-    void start_encounter();
+    void turn_left() const;
+    void turn_right() const;
+    void move_forward() const;
+    void move_back() const;
+    void move_left() const;
+    void move_right() const;
+    void start_encounter() const;
 private:
     void _initialize();
-    void _on_movement(const events::dungeon::Movement &movement);
-    void _on_encounter_chance_changed(events::dungeon::EncounterChanceChange);
-    void _on_open_door(const events::dungeon::OpenDoor &open_door_event);
+    void _on_movement(const events::dungeon::Movement &movement) const;
+    void _on_encounter_chance_changed(events::dungeon::EncounterChanceChange) const;
+    void _on_open_door(const events::dungeon::OpenDoor &open_door_event) const;
     const TileMap *_tile_map;
     const WallMap *_wall_map;
     std::shared_ptr<Core> _core;

@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <ecs/components.hpp>
 #include <engine/core.hpp>
-#include <engine/level_parser.hpp>
+#include <engine/parsers/level_parser.hpp>
 #include <entt/entt.hpp>
 #include <ecs/components.hpp>
 #include <random>

@@ -10,7 +10,7 @@
 extern "C" {
 #include <raylib.h>
 };
-#include <events.hpp>
+#include <editor_events.hpp>
 #include <core.hpp>
 #include <cstdlib>
 #include <imgui/imgui.h>

@@ -2,6 +2,7 @@
 // Created by Patryk Szczypień on 03/04/2023.
 //
 #include <editor_application.hpp>
+#include <skills.hpp>
 
 /**
  * @brief Executes the main game loop for the EditorApplication.
@@ -41,6 +42,9 @@ LaunchResult EditorApplication::run() const {
 
     core->registry.ctx().emplace<EditorAssets>(game_path);
     core->registry.ctx().find<EditorAssets>()->load_textures();
+
+    skills::SkillsMap skills_map = skills::SkillsMap::from_json(SkillParser::parse(game_path + "assets/Skills/skills.json"));
+    core->registry.ctx().emplace<skills::SkillsMap>(skills_map);
     SetExitKey(0);
     // main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key

@@ -69,7 +69,7 @@ namespace types {
                 {"DEFENSE", Attribute::DEFENSE},
                 {"MAGIC_DEFENSE", Attribute::MAGIC_DEFENSE}
         };
-        enum class Role {
+        enum class Role {\
             CULTIST, HEAVY_KNIGHT, MAGE, THIEF, WARRIOR, BLADE_DANCER
         };
         static std::unordered_map<Role, std::string_view> role_to_string = {

@@ -128,14 +128,14 @@ namespace assets {
 
     struct Fonts {
     public:
-        Fonts() : font{LoadFont("assets/Fonts/jupiterc.ttf")} {};
+        Fonts() : font{LoadFont("assets/Fonts/romulus.png")} {};
         ~Fonts() {UnloadFont(font);};
         Font font;
     };
 
     class Assets {
     public:
-        explicit Assets() noexcept : _textures{} {
+        explicit Assets() noexcept {
             _textures._background.emplace(WorldDirection::NORTH, DCTexture(assets::tiles::stratum::ruins::background::l01_north));
             _textures._background.emplace(WorldDirection::SOUTH, DCTexture(assets::tiles::stratum::ruins::background::l01_south));
             _textures._background.emplace(WorldDirection::EAST, DCTexture(assets::tiles::stratum::ruins::background::l01_east));

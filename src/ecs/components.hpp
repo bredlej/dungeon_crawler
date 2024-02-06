@@ -18,6 +18,9 @@ namespace components {
         struct Player {
             bool is_active;
         };
+        struct EnemyMarker {
+            bool is_active;
+        };
         struct Name {
             std::string name;
         };
@@ -25,6 +28,9 @@ namespace components {
         struct SkillCost {
             int sp;
             int hp;
+        };
+        struct Id {
+            std::string id;
         };
     }
     namespace values {
@@ -117,6 +123,16 @@ namespace components {
             struct Immunity {
                 float damage_multiplier;
             };
+        }
+
+        namespace placement {
+            enum class Row { BACK_ROW, FRONT_ROW };
+
+            template <size_t N>
+            struct TwoRows {
+                std::unordered_map<Row, std::array<entt::entity, N>> rows;
+            };
+
         }
 
         namespace ailments {

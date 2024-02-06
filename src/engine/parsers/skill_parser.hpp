@@ -4,22 +4,23 @@
 
 #ifndef DUNGEON_CRAWLER_SKILL_PARSER_HPP
 #define DUNGEON_CRAWLER_SKILL_PARSER_HPP
-#include <nlohmann/json.hpp>
-#include <fstream>
-#include <string>
-#include <fmt/format.h>
 #include <ecs/types.hpp>
+#include <fmt/format.h>
+#include <fstream>
+#include <nlohmann/json.hpp>
+#include <string>
 
 using namespace types;
 
-class SkillParserException : public std::exception {
-    const std::string _message;;
-    
+class SkillParserException final : public std::exception {
+    const std::string _message;
+    ;
+
 public:
-    explicit SkillParserException(const std::string message) : _message(message) {}
+    explicit SkillParserException(const std::string &message) : _message(message) {}
     explicit SkillParserException() = delete;
     explicit SkillParserException(SkillParserException &&) = delete;
-    [[nodiscard]] const char * what() const noexcept override {
+    [[nodiscard]] const char *what() const noexcept override {
         return _message.c_str();
     }
 };
@@ -27,6 +28,8 @@ public:
 namespace skill_schema {
     enum class schema_types {
         offense,
+        monster_skills,
+        id,
         name,
         body_required,
         target_type,
@@ -47,8 +50,10 @@ namespace skill_schema {
         initial_chance,
         damage_reduction_percent
     };
-    static std::unordered_map<schema_types, std::string_view> names {
+    static std::unordered_map<schema_types, std::string_view> names{
             {schema_types::offense, "offense"},
+            {schema_types::monster_skills, "monster_skills"},
+            {schema_types::id, "id"},
             {schema_types::name, "name"},
             {schema_types::body_required, "body_required"},
             {schema_types::target_type, "target_type"},
@@ -67,8 +72,7 @@ namespace skill_schema {
             {schema_types::on_damage_type, "on_damage_type"},
             {schema_types::max_stack, "max_stack"},
             {schema_types::initial_chance, "initial_chance"},
-            {schema_types::damage_reduction_percent, "damage_reduction_percent"}
-    };
+            {schema_types::damage_reduction_percent, "damage_reduction_percent"}};
 
     static std::unordered_map<std::string_view, battle::Ailment> name_to_ailment = {
             {"BURN", battle::Ailment::BURN},
@@ -83,8 +87,7 @@ namespace skill_schema {
             {"STUN", battle::Ailment::STUN},
             {"CURSE", battle::Ailment::CURSE},
             {"DEATH", battle::Ailment::DEATH},
-            {"NONE", battle::Ailment::NONE}
-    };
+            {"NONE", battle::Ailment::NONE}};
 
     static std::unordered_map<std::string_view, character::Role> name_to_role = {
             {"CULTIST", character::Role::CULTIST},
@@ -92,15 +95,15 @@ namespace skill_schema {
             {"MAGE", character::Role::MAGE},
             {"THIEF", character::Role::THIEF},
             {"WARRIOR", character::Role::WARRIOR},
-            {"BLADE_DANCER", character::Role::BLADE_DANCER}
-    };
-}
+            {"BLADE_DANCER", character::Role::BLADE_DANCER}};
+}// namespace skill_schema
 
 class SkillParser {
 public:
     static nlohmann::json parse(const std::string &path);
     static nlohmann::json parse_json(const nlohmann::json &json);
     static void save(const std::string &path, const nlohmann::json &json);
+
 private:
     static void _validate(const nlohmann::json &json);
 };

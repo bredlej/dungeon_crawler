@@ -4,7 +4,7 @@
 
 #ifndef DUNGEON_CRAWLER_EDIT_MODE_HPP
 #define DUNGEON_CRAWLER_EDIT_MODE_HPP
-#include <events.hpp>
+#include <editor_events.hpp>
 #include <core.hpp>
 #include <memory>
 

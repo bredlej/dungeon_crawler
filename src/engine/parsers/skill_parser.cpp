@@ -2,7 +2,7 @@
 // Created by Patryk Szczypień on 21/08/2023.
 //
 
-#include "skill_parser.hpp"
+#include <parsers/skill_parser.hpp>
 
 using namespace skill_schema;
 
@@ -23,6 +23,11 @@ void SkillParser::save(const std::string &path, const nlohmann::json &json) {
     file << json.dump(4);
 }
 
+static void validate_has_id(const nlohmann::json &json) {
+    if (!json.contains(names[schema_types::id].data())) {
+        throw SkillParserException(fmt::format("Skill does not have an id: {}", json.dump(4)));
+    }
+}
 static void validate_has_name(const nlohmann::json &json) {
     if (!json.contains(names[schema_types::name].data())) {
         throw SkillParserException(fmt::format("Skill does not have a name: {}", json.dump(4)));
@@ -155,6 +160,7 @@ static void validate_offensive_skills(const nlohmann::json &json) {
     }
     if (json.contains(names[schema_types::offense].data())) {
         for (const auto& skill: json [names[schema_types::offense].data()]) {
+            validate_has_id(skill);
             validate_has_name(skill);
             validate_has_body_required(skill);
             validate_has_target_type(skill);

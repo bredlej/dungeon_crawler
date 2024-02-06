@@ -4,10 +4,10 @@
 
 #ifndef DUNGEON_CRAWLER_COMBAT_HPP
 #define DUNGEON_CRAWLER_COMBAT_HPP
-#include <components.hpp>
-#include <engine/core.hpp>
-#include <events.hpp>
-#include <types.hpp>
+#include "ecs/components.hpp"
+#include "ecs/types.hpp"
+#include "engine/core.hpp"
+#include "engine/events.hpp"
 #include <unordered_map>
 using namespace components::battle;
 

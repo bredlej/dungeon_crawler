@@ -13,11 +13,11 @@
 
 using namespace types;
 
-class LevelParserException : public std::exception {
+class LevelParserException final : public std::exception {
     const std::string _message;;
 
 public:
-    explicit LevelParserException(const std::string message) : _message(message) {}
+    explicit LevelParserException(const std::string &message) : _message(message) {}
     explicit LevelParserException() = delete;
     explicit LevelParserException(LevelParserException &&) = delete;
     [[nodiscard]] const char * what() const noexcept override {

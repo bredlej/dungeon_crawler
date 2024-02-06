@@ -4,6 +4,7 @@
 
 #ifndef DUNGEON_CRAWLER_EVENTS_HPP
 #define DUNGEON_CRAWLER_EVENTS_HPP
+#include <entt/entt.hpp>
 
 namespace events::ui {
     struct ToggleShowDemo {};
@@ -28,7 +29,9 @@ namespace events::dungeon {
     struct EncounterChanceChange {
         float fraction;
     };
-    struct StartEncounter {};
+    struct StartEncounter {
+
+    };
 }
 
 namespace events::battle {

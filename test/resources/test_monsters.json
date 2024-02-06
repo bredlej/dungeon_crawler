@@ -1,0 +1,23 @@
+{
+  "common" : [
+      {
+        "id": "monster-1",
+        "name": "Goblin",
+        "skills": ["skill-1"],
+        "attributes": {
+          "HIT_POINTS": 10,
+          "SKILL_POINTS": 5,
+          "STRENGTH": 5,
+          "INTELLIGENCE": 5,
+          "VITALITY": 5,
+          "WISDOM": 5,
+          "DEXTERITY": 5,
+          "LUCK": 5,
+          "ATTACK": 5,
+          "MAGIC_ATTACK": 5,
+          "DEFENSE": 5,
+          "MAGIC_DEFENSE": 5
+        }
+      }
+    ]
+}

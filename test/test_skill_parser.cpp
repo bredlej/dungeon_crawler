@@ -1,8 +1,8 @@
 //
 // Created by Patryk Szczypień on 21/08/2023.
 //
-#include <engine/skill_parser.hpp>
 #include <gtest/gtest.h>
+#include <parsers/skill_parser.hpp>
 #include <skills.hpp>
 #include <tuple>
 
@@ -23,6 +23,7 @@ TEST_F(SkillParserTest, Test_Skill_Parser_Parses_Offense_Skill) {
 {
   "offense" : [
     {
+        "id": "s-1",
       "name": "Fireball",
       "body_required": "HEAD",
       "target_type": "ENEMY",
@@ -86,6 +87,7 @@ TEST_F(SkillParserTest, Test_Skill_Parser_Parses_Defense_Skill) {
 TEST_F(SkillParserTest, CreatesSkillsMap) {
     skills::SkillsMap::OffensiveSkillMap offensive_skill_map;
     offensive_skill_map.emplace("Fireball", std::make_tuple(
+                                                    components::general::Id{0},
                                                     components::general::Name{"Fireball"},
                                                     types::battle::BodyPart::HEAD,
                                                     types::battle::TargetType::ENEMY,
@@ -107,7 +109,7 @@ TEST_F(SkillParserTest, CreatesSkillsMap) {
                                                              skills::SkillsMap::Damage{
                                                                      {types::battle::AttackType::FIRE, types::character::Attribute::MAGIC_ATTACK, 10.0f}},
                                                              skills::SkillsMap::Ailments{}}}));
-    skills::SkillsMap skills(std::move(offensive_skill_map));
+    skills::SkillsMap skills(std::move(offensive_skill_map), skills::SkillsMap::MonsterSkillMap{});
 
     ASSERT_EQ(std::get<components::general::Name>(skills.offensive_skills["Fireball"]).name, "Fireball");
     ASSERT_EQ(std::get<types::battle::BodyPart>(skills.offensive_skills["Fireball"]), types::battle::BodyPart::HEAD);
@@ -148,6 +150,7 @@ TEST_F(SkillParserTest, SkillMapFromJson) {
 {
   "offense" : [
     {
+      "id" : "s-1",
       "name": "Fireball",
       "body_required": "HEAD",
       "target_type": "ENEMY",
@@ -175,11 +178,41 @@ TEST_F(SkillParserTest, SkillMapFromJson) {
       "hp": 0,
       "roles": ["MAGE"]
     }
-  ]
+  ],
+  "monster_skills" : [
+    {
+        "id" : "ms-1",
+      "name": "Fireball",
+      "body_required": "HEAD",
+      "target_type": "ENEMY",
+      "targets": [{
+        "type": "SINGLE",
+        "chance": 100
+      },{
+        "type": "NEIGHBOURS",
+        "chance": 50
+      }],
+      "damage": [{
+        "type": "FIRE",
+        "attribute": "MAGIC_ATTACK",
+        "damage_value": 10
+      }],
+      "ailments" : [
+        {
+            "type": "BURN",
+            "chance": 30,
+            "damage_value": 5,
+            "duration": 3
+        }
+      ],
+      "sp": 10,
+      "hp": 0,
+    }
+]
 }
     )"_json);
 
-    skills::SkillsMap skills = skills::from_json(json);
+    skills::SkillsMap skills = skills::SkillsMap::from_json(json);
 
     ASSERT_EQ(std::get<components::general::Name>(skills.offensive_skills["Fireball"]).name, "Fireball");
     ASSERT_EQ(std::get<types::battle::BodyPart>(skills.offensive_skills["Fireball"]), types::battle::BodyPart::HEAD);
@@ -202,6 +235,8 @@ TEST_F(SkillParserTest, SkillMapFromJson) {
     ASSERT_EQ(std::get<components::general::SkillCost>(skills.offensive_skills["Fireball"]).hp, 0);
     ASSERT_EQ(std::get<skills::SkillsMap::RoleConstraints>(skills.offensive_skills["Fireball"]).size(), 1);
     ASSERT_EQ(std::get<skills::SkillsMap::RoleConstraints>(skills.offensive_skills["Fireball"])[0], types::character::Role::MAGE);
+
+    ASSERT_EQ(std::get<components::general::Name>(skills.monster_skills["Fireball"]).name, "Fireball");
 }
 
 TEST_F(SkillParserTest, JsonToBodyPartEnum) {

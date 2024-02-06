@@ -73,6 +73,12 @@ add_custom_command(
         ${CMAKE_SOURCE_DIR}/assets
         ${CMAKE_CURRENT_BINARY_DIR}/assets)
 
+add_custom_command(
+        TARGET dungeon_crawler PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_CURRENT_SOURCE_DIR}/test/resources
+        ${CMAKE_CURRENT_BINARY_DIR}/test/resources)
+
 if (EMSCRIPTEN AND ${WASM})
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DPLATFORM_WEB -DGRAPHICS_API_OPENGL_ES2 -s USE_GLFW=3 -s TOTAL_MEMORY=64MB -s ASSERTIONS=1 -s WASM=1 -s  ASYNCIFY -sNO_DISABLE_EXCEPTION_CATCHING -fexceptions")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -DPLATFORM_WEB -DGRAPHICS_API_OPENGL_ES2 -s USE_GLFW=3 --preload-file assets -s TOTAL_MEMORY=32MB -s ASSERTIONS=1 -s WASM=1 -s ASYNCIFY -sNO_DISABLE_EXCEPTION_CATCHING -fexceptions")

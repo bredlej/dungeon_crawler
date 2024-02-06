@@ -5,7 +5,7 @@
 #ifndef DUNGEON_CRAWLER_LEVEL_HPP
 #define DUNGEON_CRAWLER_LEVEL_HPP
 #include <core.hpp>
-#include <level_parser.hpp>
+#include <parsers/level_parser.hpp>
 #include <nlohmann/json.hpp>
 #include <tile_map.hpp>
 #include <wall_map.hpp>

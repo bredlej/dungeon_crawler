@@ -4,12 +4,12 @@
 
 #ifndef DUNGEON_CRAWLER_BATTLE_DIRECTOR_HPP
 #define DUNGEON_CRAWLER_BATTLE_DIRECTOR_HPP
-#include <engine/core.hpp>
-#include <memory>
+#include "ecs/types.hpp"
+#include "engine/core.hpp"
 #include <functional>
-#include <unordered_map>
+#include <memory>
 #include <string>
-#include <types.hpp>
+#include <unordered_map>
 
 using namespace battle;
 

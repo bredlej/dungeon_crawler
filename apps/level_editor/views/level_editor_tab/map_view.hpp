@@ -8,11 +8,13 @@
 #include "editor_assets.hpp"
 #include "engine/core.hpp"
 #include "engine/level.hpp"
-#include "engine/level_parser.hpp"
+#include "engine/parsers/level_parser.hpp"
 #include "events.hpp"
 #include "views/colors.hpp"
 #include <filesystem>
 #include <memory>
+#include "editor_events.hpp"
+
 using namespace editor;
 using namespace components::tiles;
 using namespace components::values;
