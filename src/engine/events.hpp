@@ -32,7 +32,6 @@ namespace events::dungeon {
     };
 
     struct StartEncounter {
-        BattleDirector battle_director;
     };
 
     struct EndEncounter {

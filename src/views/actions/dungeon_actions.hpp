@@ -11,6 +11,8 @@
 #include <memory>
 #include <tile_map.hpp>
 #include <wall_map.hpp>
+#include <scheduler.hpp>
+#include <chrono>
 
 class DungeonActions {
 public:

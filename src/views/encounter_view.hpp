@@ -10,7 +10,7 @@
 
 class EncounterView : public UIView<EncounterView> {
 public:
-    explicit EncounterView(std::shared_ptr<Core> core, BattleDirector &battle_director)
+    explicit EncounterView(std::shared_ptr<Core> core, BattleDirector *battle_director)
         : UIView{core}, _battle_director{battle_director} {}
 
     EncounterView(const EncounterView &) noexcept = delete;
@@ -24,6 +24,6 @@ public:
 
     ~EncounterView() override = default;
 private:
-    BattleDirector _battle_director;
+    BattleDirector *_battle_director;
 };
 #endif//DUNGEON_CRAWLER_ENCOUNTER_VIEW_HPP

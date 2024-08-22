@@ -91,8 +91,37 @@ void Application::run() noexcept {
     auto level = Level(_core, TileMap(_core, 20, 20));
     level.load("assets/Levels/Ruins/ruins0001.json");
     dungeon_view = std::make_unique<DungeonView>(_core, std::move(level));
-
+    Scheduler<std::chrono::seconds> scheduler(_core);
+    scheduler.builder()
+            .after(1, [](const std::shared_ptr<Core> &core) {
+                core->scheduler.update(1);
+            })
+            .repeating()
+            .run();
     SetTargetFPS(144);
+
+    _battle_director.guard[types::battle::BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) {
+        return !core->registry.ctx().contains<components::values::AnimationTimer>();
+    };
+
+    _battle_director.phase[types::battle::BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) {
+        if (core->registry.ctx().contains<components::values::Encounter>()) {
+            core->registry.ctx().erase<components::values::Encounter>();
+        }
+        if (auto *animation = core->registry.ctx().find<components::values::AnimationTimer>()) {
+
+            if (animation->counter <= 0) {
+                core->registry.ctx().erase<components::values::AnimationTimer>();
+                core->dispatcher.trigger(NextStateEvent{BattlePhase::INACTIVE});
+            }
+        }
+    };
+    _battle_director.post_phase[types::battle::BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) {
+        std::printf("Starting battle...");
+    };
+
+    _battle_director.phase[types::battle::BattlePhase::BATTLE_START] = [](const std::shared_ptr<Core> &core) {
+    };
     while (!WindowShouldClose()) {
         _toggle_fullscreen();
         _core->dispatcher.update();
@@ -115,7 +144,8 @@ void Application::run() noexcept {
 
 void Application::start_encounter(events::dungeon::StartEncounter &event) noexcept {
     _view_mode = ViewMode::Encounter;
-    encounter_view = std::make_unique<EncounterView>(_core, event.battle_director);
+    _core->dispatcher.sink<NextStateEvent>().connect<&BattleDirector::next_state>(_battle_director);
+    encounter_view = std::make_unique<EncounterView>(_core, &_battle_director);
 }
 
 void Application::end_encounter(const events::dungeon::EndEncounter &event) noexcept {

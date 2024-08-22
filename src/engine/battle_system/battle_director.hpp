@@ -60,8 +60,6 @@ public:
     bool_func end_condition;
 
     explicit BattleDirector(const std::shared_ptr<Core> &core) : _core{core} {
-        _core->dispatcher.sink<NextStateEvent>().connect<&BattleDirector::next_state>(this);
-
         pre_phase[BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) {};
         post_phase[BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) {};
         phase[BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) { core->dispatcher.trigger(NextStateEvent{BattlePhase::INACTIVE}); };
@@ -103,7 +101,7 @@ public:
     };
     explicit BattleDirector(std::shared_ptr<Core> &core, void_map &&pre_phase, void_map &&post_phase, void_map &&phase, bool_map &&guard, bool_func &&end_condition)
         : _core{core}, pre_phase{std::move(pre_phase)}, post_phase{std::move(post_phase)}, phase{std::move(phase)}, guard{std::move(guard)}, end_condition{std::move(end_condition)} {
-        _core->dispatcher.sink<NextStateEvent>().connect<&BattleDirector::next_state>(this);
+
     };
     BattleDirector(const BattleDirector &) = default;
     BattleDirector(BattleDirector &&) = default;
@@ -132,6 +130,7 @@ public:
         switch (next_state_event.from_phase) {
             case BattlePhase::INACTIVE:
                 if (guard[BattlePhase::INACTIVE](_core)) {
+                    post_phase[BattlePhase::INACTIVE](_core);
                     pre_phase[BattlePhase::BATTLE_START](_core);
                     _battle_phase = BattlePhase::BATTLE_START;
                 }

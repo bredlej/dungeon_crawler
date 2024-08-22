@@ -1,6 +1,5 @@
 #include "dungeon_actions.hpp"
 
-
 //
 // Created by Patryk Szczypień on 23/03/2023.
 //
@@ -155,19 +154,21 @@ void DungeonActions::_on_encounter_chance_changed(events::dungeon::EncounterChan
     if (_core->pcg(100) < static_cast<uint32_t>(encounter_chance_change.fraction * 100)) {
         _core->registry.ctx().erase<components::values::EncounterChance>();
         _core->registry.ctx().emplace<components::values::EncounterChance>(0.0f);
-        BattleDirector battle_director{_core};
-        battle_director.phase[types::battle::BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) {
-            if (core->registry.ctx().contains<components::values::Encounter>()) {
-                core->registry.ctx().erase<components::values::Encounter>();
-            }
-            std::printf("Inactive phase\n");
-        };
-        _core->dispatcher.enqueue<events::dungeon::StartEncounter>(battle_director);
+
+        _core->dispatcher.enqueue<events::dungeon::StartEncounter>();
     }
 }
 
 void DungeonActions::start_encounter() const {
-    _core->game_log.message("Encounter!\n");
     _core->registry.ctx().emplace<components::values::Encounter>();
+    _core->registry.ctx().emplace<components::values::AnimationTimer>((uint32_t) 3);
+    _core->scheduler.attach([this](auto delta, void *, auto succeed, auto fail){
+        if (auto *timer = _core->registry.ctx().find<components::values::AnimationTimer>()) {
+            timer->counter -= 1;
+        }
+        else {
+            succeed();
+        }
+    });
 
 }

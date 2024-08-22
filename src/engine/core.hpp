@@ -11,6 +11,7 @@
 #include <pcg/pcg_random.hpp>
 #include <cstdint>
 #include <memory>
+#include <scheduler.hpp>
 
 struct ModXY {
     int32_t x;
@@ -30,6 +31,7 @@ public:
     assets::Assets *get_assets() {return _assets.get();}
     entt::dispatcher dispatcher;
     entt::registry registry;
+    entt::scheduler scheduler;
     GameLog game_log;
     pcg32 pcg;
 private:

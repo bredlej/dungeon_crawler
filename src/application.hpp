@@ -18,6 +18,7 @@ extern "C" {
 #include <engine/assets.hpp>
 #include <engine/core.hpp>
 #include <string_view>
+#include <scheduler.hpp>
 
 struct Config {
     static constexpr std::string_view title = "Dungeon Crawler";
@@ -35,7 +36,7 @@ enum class ViewMode {
 
 class Application {
 public:
-    explicit Application() noexcept : _view_mode{ViewMode::Dungeon}, _core{std::make_shared<Core>()} {
+    explicit Application() noexcept : _view_mode{ViewMode::Dungeon}, _core{std::make_shared<Core>()}, _battle_director(_core) {
         main_menu_view = std::make_unique<MainMenu>(_core);
         _core->dispatcher.sink<events::dungeon::StartEncounter>().connect<&Application::start_encounter>(this);
         _core->dispatcher.sink<events::dungeon::EndEncounter>().connect<&Application::end_encounter>(this);
@@ -53,6 +54,7 @@ public:
 private:
     ViewMode _view_mode;
     std::shared_ptr<Core> _core;
+    BattleDirector _battle_director;
     std::unique_ptr<DungeonView> dungeon_view;
     std::unique_ptr<MainMenu> main_menu_view;
     std::unique_ptr<EncounterView> encounter_view;

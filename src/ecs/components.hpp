@@ -52,6 +52,9 @@ namespace components {
             float chance;
         };
         struct Encounter {};
+        struct AnimationTimer {
+            uint32_t counter;
+        };
         struct Tint {
             uint8_t r;
             uint8_t g;

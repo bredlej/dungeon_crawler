@@ -7,7 +7,7 @@
 void EncounterView::render() noexcept {
     BeginDrawing();
     ClearBackground(BLUE);
-    _battle_director.update();
+    _battle_director->update();
     EndDrawing();
 }
 
