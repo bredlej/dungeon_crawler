@@ -1,7 +1,7 @@
 //
 // Created by Patryk Szczypień on 13/03/2023.
 //
-#include <engine/level_parser.hpp>
+#include <engine/parsers/level_parser.hpp>
 #include <gtest/gtest.h>
 
 using namespace nlohmann;

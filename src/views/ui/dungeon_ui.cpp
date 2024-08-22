@@ -8,9 +8,53 @@ void DungeonUI::render() {
     if (_show_demo) {
         ImGui::ShowDemoWindow(&_show_demo);
     }
+
     _render_movement_buttons();
-    //_render_encounter_chance();
+    _render_encounter_chance();
     _core->game_log.render_no_border("GameLog", &_show_demo);
+    ImGui::SetNextWindowSize(ImVec2(520, 600), ImGuiCond_FirstUseEver);
+    auto shader_effects_visible = true;
+    ImGui::Begin("Shader Effects", &shader_effects_visible);
+    auto shader_effects = _core->registry.ctx().find<components::values::ShaderEffects>();
+
+    if (ImGui::Checkbox("Toggle bloom", &shader_effects->bloom_enabled)) {
+        //
+    }
+    if (ImGui::DragInt("Bloom blend mode", &shader_effects->bloom_blend_mode, 1, 0, 3)) {
+        //
+    }
+    if (ImGui::DragFloat("Bloom alpha", &shader_effects->bloom_alpha, 0.01f, 0.0f, 1.0f)) {
+        //
+    }
+
+    if (ImGui::DragFloat("Brightness threshold", &shader_effects->brightness_threshold, 0.01f, 0.19f, 1.0f)) {
+        //
+    }
+
+    if(ImGui::Checkbox("Toggle blur", &shader_effects->blur_enabled)) {
+        //
+    }
+    if (ImGui::DragInt("Blur blend mode", &shader_effects->blur_blend_mode, 1, 0, 3)) {
+        //
+    }
+    if (ImGui::DragFloat("Blur alpha", &shader_effects->blur_alpha, 0.01f, 0.0f, 1.0f)) {
+        //
+    }
+
+    if(ImGui::Checkbox("Toggle crt", &shader_effects->crt_enabled)) {
+        //
+    }
+    if (ImGui::DragInt("CRT blend mode", &shader_effects->crt_blend_mode, 1, 0, 3)) {
+        //
+    }
+    if (ImGui::DragFloat("CRT time", &shader_effects->crt_time, 0.1f, 0.0f, 360.0f)) {
+        //
+    }
+    if (ImGui::DragFloat("CRT alpha", &shader_effects->crt_alpha, 0.01f, 0.0f, 1.0f)) {
+        //
+    }
+
+    ImGui::End();
     rlImGuiEnd();
 }
 
@@ -60,6 +104,7 @@ void DungeonUI::_render_movement_buttons() {
         }
     }
     ImGui::End();
+
 }
 void DungeonUI::_render_encounter_chance() {
     ImGuiIO &io = ImGui::GetIO();

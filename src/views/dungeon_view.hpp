@@ -10,6 +10,7 @@
 #include <utility>
 extern "C" {
 #include <raylib.h>
+#include <rlgl.h>
 };
 #include <ecs/tile_map.hpp>
 #include <views/ui/dungeon_ui.hpp>
@@ -71,10 +72,16 @@ private:
     POVField<assets::dungeon_view::POVFloor> _player_fov_tile;
     POVField<assets::dungeon_view::POVWall> _player_fov_wall;
     RenderTexture _render_texture_pov;
+    RenderTexture _render_texture_pov_bloom = LoadRenderTexture(320, 240);
     RenderTexture _render_texture_gui;
     Level _level;
+    Shader _blur_shader = LoadShader(0, "assets/Shaders/gauss_blur.fs");
+    Shader _brightness_filter_shader = LoadShader(0, "assets/Shaders/brightness_filter.fs");
+    Shader _crt_shader = LoadShader(0, "assets/Shaders/crt.fs");
+
     DungeonUI _ui;
     DungeonActions _actions{_core, &_level};
+    void _render_effects(const Rectangle &POV_DIMENSION_FULLSCREEN) const;
 };
 
 

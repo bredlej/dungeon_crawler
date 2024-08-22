@@ -9,8 +9,10 @@ set(SOURCE_FILES
         application.cpp
         views/main_menu.cpp
         views/dungeon_view.cpp
+        views/encounter_view.cpp
         views/ui/dungeon_ui.cpp
         engine/core.cpp
+        engine/scheduler.cpp
         engine/battle_system/combat.cpp
         engine/skills.cpp
         engine/monsters.cpp

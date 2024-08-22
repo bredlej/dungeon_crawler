@@ -225,7 +225,7 @@ void Blueprint::_render_available_component_combobox(const std::vector<uint8_t>&
         ImGui::Text("No more components available");
         return;
     }
-    uint8_t selection = static_cast<uint8_t>(selected_component_type);
+    uint8_t selection = selected_component_type;
     if (ImGui::BeginCombo(component_type_to_string.at(selected_component_type).c_str(),
                           component_type_to_string.at(selected_component_type).c_str())) {
         for (const auto &componentType: available_component_types) {

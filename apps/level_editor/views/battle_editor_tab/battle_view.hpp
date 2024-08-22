@@ -15,6 +15,13 @@ extern "C" {
 #include "imgui/rlImGui.h"
 #include <editor_assets.hpp>
 #include <memory>
+#include <monsters.hpp>
+#include <component_renderer.hpp>
+
+struct RowSetup {
+    std::vector<std::string> front_row = {"none", "none", "none"};
+    std::vector<std::string> back_row = {"none", "none", "none"};
+};
 
 class BattleView : public UIView<BattleView> {
 public:

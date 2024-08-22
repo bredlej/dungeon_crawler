@@ -4,6 +4,7 @@
 
 #ifndef DUNGEON_CRAWLER_EVENTS_HPP
 #define DUNGEON_CRAWLER_EVENTS_HPP
+#include "battle_system/battle_director.hpp"
 #include <entt/entt.hpp>
 
 namespace events::ui {
@@ -29,7 +30,12 @@ namespace events::dungeon {
     struct EncounterChanceChange {
         float fraction;
     };
+
     struct StartEncounter {
+        BattleDirector battle_director;
+    };
+
+    struct EndEncounter {
 
     };
 }

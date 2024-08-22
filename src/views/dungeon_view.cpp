@@ -12,8 +12,9 @@
  *
  * \note This function is noexcept.
  */
-void DungeonView::_initialize() noexcept{
+void DungeonView::_initialize() noexcept {
     _core->registry.ctx().emplace<components::values::EncounterChance>(0.00f);
+    _core->registry.ctx().emplace<components::values::ShaderEffects>(false, BLEND_ADDITIVE, false, BLEND_ADDITIVE, false, BLEND_ADDITIVE, 0.0f, 0.8f, 0.5f, 0.5f, 0.5f);
 }
 
 /**
@@ -24,7 +25,7 @@ void DungeonView::_initialize() noexcept{
  * @param type The type of asset being drawn.
  * @param tint The tint color to apply to the asset.
  */
-template <typename T>
+template<typename T>
 static inline void draw_tile_asset(assets::Assets *assets, const size_t index, const T type, const Color tint) {
     DrawTexture(assets->_textures._tiles[static_cast<POVFloor>(index)][type].get(), 0, 0, tint);
 }
@@ -40,22 +41,20 @@ static inline void draw_tile_asset(assets::Assets *assets, const size_t index, c
  *
  * @sa _render_tiles, _render_walls, _render_encounter
  */
-void DungeonView::_render_pov() noexcept
-{
+void DungeonView::_render_pov() noexcept {
+
     BeginTextureMode(_render_texture_pov);
     ClearBackground(BACKGROUND_COLOR);
 
-    if (assets::Assets *assets = _core->get_assets())
-    {
+    if (assets::Assets *assets = _core->get_assets()) {
         _render_background(assets);
         _render_tiles(assets);
         _render_walls(assets);
         _render_encounter(assets);
     }
     SetTextureFilter(_core->get_assets()->fonts.font.texture, TEXTURE_FILTER_POINT);
-    DrawTextEx(_core->get_assets()->fonts.font, "Dungeon Crawler", Vector2{50, 50}, _core->get_assets()->fonts.font.baseSize, 1, WHITE);
+    //DrawTextEx(_core->get_assets()->fonts.font, "Dungeon Crawler", Vector2{50, 50}, _core->get_assets()->fonts.font.baseSize, 1, WHITE);
     EndTextureMode();
-
 }
 
 void DungeonView::_render_background(assets::Assets *assets) noexcept {
@@ -73,21 +72,17 @@ void DungeonView::_render_background(assets::Assets *assets) noexcept {
  *
  * @param assets A pointer to the assets used for rendering.
  */
-void DungeonView::_render_tiles(assets::Assets *assets) noexcept
-{
-    for (size_t i = 0; i < _player_fov_tile.field.size(); i++)
-    {
+void DungeonView::_render_tiles(assets::Assets *assets) noexcept {
+    for (size_t i = 0; i < _player_fov_tile.field.size(); i++) {
         const auto tile_entity = _player_fov_tile.field[i];
         const Color default_color = _core->registry.valid(tile_entity) ? WHITE : RED;
-        if (_core->registry.valid(tile_entity)){
-            if(const auto floor = _core->registry.try_get<components::tiles::Floor>(_player_fov_tile.field[i]))
-            {
+        if (_core->registry.valid(tile_entity)) {
+            if (const auto floor = _core->registry.try_get<components::tiles::Floor>(_player_fov_tile.field[i])) {
                 const auto tint = _core->registry.try_get<components::values::Tint>(_player_fov_tile.field[i]);
                 draw_tile_asset(assets, i, floor->type, tint ? Color{tint->r, tint->g, tint->b, tint->a} : default_color);
             }
 
-            if (const auto ceiling = _core->registry.try_get<components::tiles::Ceiling>(_player_fov_tile.field[i]))
-            {
+            if (const auto ceiling = _core->registry.try_get<components::tiles::Ceiling>(_player_fov_tile.field[i])) {
                 const auto tint = _core->registry.try_get<components::values::Tint>(_player_fov_tile.field[i]);
                 draw_tile_asset(assets, i, ceiling->type, tint ? Color{tint->r, tint->g, tint->b, tint->a} : default_color);
             }
@@ -100,26 +95,20 @@ void DungeonView::_render_tiles(assets::Assets *assets) noexcept
  *
  * @param assets A pointer to the assets object containing wall textures.
  */
-void DungeonView::_render_walls(assets::Assets *assets) noexcept
-{
-    for (const POVWall i: draw_order_walls)
-    {
+void DungeonView::_render_walls(assets::Assets *assets) noexcept {
+    for (const POVWall i: draw_order_walls) {
         const auto index = static_cast<const size_t>(i);
-        if (_core->registry.valid(_player_fov_wall.field[index]))
-        {
+        if (_core->registry.valid(_player_fov_wall.field[index])) {
             const auto wall = _core->registry.try_get<components::tiles::Wall>(_player_fov_wall.field[index]);
             const auto tint = _core->registry.try_get<components::values::Tint>(_player_fov_wall.field[index]);
             const auto door = _core->registry.try_get<components::tiles::Door>(_player_fov_wall.field[index]);
 
             const Color fillColor = tint ? Color{tint->r, tint->g, tint->b, tint->a} : WHITE;
-            if (door)
-            {
-                const auto& doorTexture = assets->_textures._tiles[i][door->state == DoorStateType::CLOSED ? door->type_closed : door->type_opened];
+            if (door) {
+                const auto &doorTexture = assets->_textures._tiles[i][door->state == DoorStateType::CLOSED ? door->type_closed : door->type_opened];
                 DrawTexture(doorTexture.get(), 0, 0, fillColor);
-            }
-            else if (wall)
-            {
-                const auto& wallTexture = assets->_textures._tiles[i][wall->type];
+            } else if (wall) {
+                const auto &wallTexture = assets->_textures._tiles[i][wall->type];
                 DrawTexture(wallTexture.get(), 0, 0, fillColor);
             }
         }
@@ -134,10 +123,8 @@ void DungeonView::_render_walls(assets::Assets *assets) noexcept
  *
  * @param assets A pointer to the assets object that provides the required textures.
  */
-void DungeonView::_render_encounter(assets::Assets *assets) noexcept
-{
-    if (_core->registry.ctx().contains<components::values::Encounter>())
-    {
+void DungeonView::_render_encounter(assets::Assets *assets) noexcept {
+    if (_core->registry.ctx().contains<components::values::Encounter>()) {
         DrawTexture(assets->_textures._beasts[Beast::GoblinWarrior].get(), 140, 55, WHITE);
     }
 }
@@ -169,17 +156,16 @@ void DungeonView::_render_minimap() noexcept {
 
     BeginTextureMode(_render_texture_gui);
     ClearBackground(BACKGROUND_COLOR);
-    DrawTexture(_core->get_assets()->_textures._gui[assets::dungeon_view::GUI::MiniMap::Background].get(), 0, 0, Color{255,255,255,255});
-    ModXY offset {10,10};
+    DrawTexture(_core->get_assets()->_textures._gui[assets::dungeon_view::GUI::MiniMap::Background].get(), 0, 0, Color{255, 255, 255, 255});
+    ModXY offset{10, 10};
     for (auto tile: _level.tile_map._tiles) {
         if (_core->registry.valid(tile.entity)) {
             components::tiles::MapPosition position = _core->registry.get<components::tiles::MapPosition>(tile.entity);
             auto *tile_in_fov = _core->registry.try_get<components::tiles::InFovOfEntity>(tile.entity);
             if (tile_in_fov) {
-                DrawRectangle(position.x * MINIMAP_GRID_SIZE + offset.x, position.y * MINIMAP_GRID_SIZE +offset.y, MINIMAP_GRID_SIZE, MINIMAP_GRID_SIZE, FOV_COLOR);
-            }
-            else {
-                DrawRectangle(position.x * MINIMAP_GRID_SIZE + offset.x, position.y * MINIMAP_GRID_SIZE +offset.y, MINIMAP_GRID_SIZE, MINIMAP_GRID_SIZE, BACKGROUND_COLOR);
+                DrawRectangle(position.x * MINIMAP_GRID_SIZE + offset.x, position.y * MINIMAP_GRID_SIZE + offset.y, MINIMAP_GRID_SIZE, MINIMAP_GRID_SIZE, FOV_COLOR);
+            } else {
+                DrawRectangle(position.x * MINIMAP_GRID_SIZE + offset.x, position.y * MINIMAP_GRID_SIZE + offset.y, MINIMAP_GRID_SIZE, MINIMAP_GRID_SIZE, BACKGROUND_COLOR);
             }
         }
     }
@@ -187,10 +173,18 @@ void DungeonView::_render_minimap() noexcept {
     Texture2D player_texture = _core->get_assets()->_textures._gui[assets::dungeon_view::GUI::MiniMap::Player].get();
     player_view.each([&](const entt::entity entity, const components::general::Player player, components::general::Direction direction, components::tiles::MapPosition position) {
         switch (direction.direction) {
-            case WorldDirection::NORTH: minimap_draw_player_frame(player_texture, {0,0,5,5}, position, offset); break;
-            case WorldDirection::EAST: minimap_draw_player_frame(player_texture, {5,0,5,5}, position, offset); break;
-            case WorldDirection::SOUTH: minimap_draw_player_frame(player_texture, {10,0,5,5}, position, offset); break;
-            case WorldDirection::WEST: minimap_draw_player_frame(player_texture, {15,0,5,5}, position, offset); break;
+            case WorldDirection::NORTH:
+                minimap_draw_player_frame(player_texture, {0, 0, 5, 5}, position, offset);
+                break;
+            case WorldDirection::EAST:
+                minimap_draw_player_frame(player_texture, {5, 0, 5, 5}, position, offset);
+                break;
+            case WorldDirection::SOUTH:
+                minimap_draw_player_frame(player_texture, {10, 0, 5, 5}, position, offset);
+                break;
+            case WorldDirection::WEST:
+                minimap_draw_player_frame(player_texture, {15, 0, 5, 5}, position, offset);
+                break;
         }
     });
     for (WallEntity wall: _level.wall_map._walls) {
@@ -198,24 +192,29 @@ void DungeonView::_render_minimap() noexcept {
         components::tiles::MapPosition field1_position = wall_component.field1;
         components::tiles::MapPosition field2_position = wall_component.field2;
         if (field1_position.x == field2_position.x) {
-            if (auto *door = _core->registry.try_get<components::tiles::Door>(wall.entity)){
+            if (auto *door = _core->registry.try_get<components::tiles::Door>(wall.entity)) {
                 switch (door->state) {
-                    case DoorStateType::OPEN: DrawLine(field1_position.x * MINIMAP_GRID_SIZE + offset.x, std::max(field1_position.y, field2_position.y) * MINIMAP_GRID_SIZE + offset.y, field1_position.x * MINIMAP_GRID_SIZE + offset.x + MINIMAP_GRID_SIZE, std::max(field1_position.y, field2_position.y) * 5 + offset.y, palette::green); break;
-                    case DoorStateType::CLOSED: DrawLine(field1_position.x * MINIMAP_GRID_SIZE + offset.x, std::max(field1_position.y, field2_position.y) * MINIMAP_GRID_SIZE + offset.y, field1_position.x * MINIMAP_GRID_SIZE + offset.x + MINIMAP_GRID_SIZE, std::max(field1_position.y, field2_position.y) * 5 + offset.y, palette::red); break;
+                    case DoorStateType::OPEN:
+                        DrawLine(field1_position.x * MINIMAP_GRID_SIZE + offset.x, std::max(field1_position.y, field2_position.y) * MINIMAP_GRID_SIZE + offset.y, field1_position.x * MINIMAP_GRID_SIZE + offset.x + MINIMAP_GRID_SIZE, std::max(field1_position.y, field2_position.y) * 5 + offset.y, palette::green);
+                        break;
+                    case DoorStateType::CLOSED:
+                        DrawLine(field1_position.x * MINIMAP_GRID_SIZE + offset.x, std::max(field1_position.y, field2_position.y) * MINIMAP_GRID_SIZE + offset.y, field1_position.x * MINIMAP_GRID_SIZE + offset.x + MINIMAP_GRID_SIZE, std::max(field1_position.y, field2_position.y) * 5 + offset.y, palette::red);
+                        break;
                 }
-            }
-            else {
+            } else {
                 DrawLine(field1_position.x * MINIMAP_GRID_SIZE + offset.x, std::max(field1_position.y, field2_position.y) * MINIMAP_GRID_SIZE + offset.y, field1_position.x * MINIMAP_GRID_SIZE + offset.x + MINIMAP_GRID_SIZE, std::max(field1_position.y, field2_position.y) * 5 + offset.y, WALL_COLOR);
             }
-        }
-        else if (field1_position.y == field2_position.y) {
-            if (auto *door = _core->registry.try_get<components::tiles::Door>(wall.entity)){
+        } else if (field1_position.y == field2_position.y) {
+            if (auto *door = _core->registry.try_get<components::tiles::Door>(wall.entity)) {
                 switch (door->state) {
-                    case DoorStateType::OPEN: DrawLine(std::max(field1_position.x, field2_position.x) * MINIMAP_GRID_SIZE + offset.x, field1_position.y * MINIMAP_GRID_SIZE + offset.y, std::max(field1_position.x, field2_position.x) * MINIMAP_GRID_SIZE + offset.x, field1_position.y * MINIMAP_GRID_SIZE + offset.y + MINIMAP_GRID_SIZE, palette::green); break;
-                    case DoorStateType::CLOSED: DrawLine(std::max(field1_position.x, field2_position.x) * MINIMAP_GRID_SIZE + offset.x, field1_position.y * MINIMAP_GRID_SIZE + offset.y, std::max(field1_position.x, field2_position.x) * MINIMAP_GRID_SIZE + offset.x, field1_position.y * MINIMAP_GRID_SIZE + offset.y + MINIMAP_GRID_SIZE, palette::red); break;
+                    case DoorStateType::OPEN:
+                        DrawLine(std::max(field1_position.x, field2_position.x) * MINIMAP_GRID_SIZE + offset.x, field1_position.y * MINIMAP_GRID_SIZE + offset.y, std::max(field1_position.x, field2_position.x) * MINIMAP_GRID_SIZE + offset.x, field1_position.y * MINIMAP_GRID_SIZE + offset.y + MINIMAP_GRID_SIZE, palette::green);
+                        break;
+                    case DoorStateType::CLOSED:
+                        DrawLine(std::max(field1_position.x, field2_position.x) * MINIMAP_GRID_SIZE + offset.x, field1_position.y * MINIMAP_GRID_SIZE + offset.y, std::max(field1_position.x, field2_position.x) * MINIMAP_GRID_SIZE + offset.x, field1_position.y * MINIMAP_GRID_SIZE + offset.y + MINIMAP_GRID_SIZE, palette::red);
+                        break;
                 }
-            }
-            else {
+            } else {
                 DrawLine(std::max(field1_position.x, field2_position.x) * MINIMAP_GRID_SIZE + offset.x, field1_position.y * MINIMAP_GRID_SIZE + offset.y, std::max(field1_position.x, field2_position.x) * MINIMAP_GRID_SIZE + offset.x, field1_position.y * MINIMAP_GRID_SIZE + offset.y + MINIMAP_GRID_SIZE, WALL_COLOR);
             }
         }
@@ -243,6 +242,15 @@ static inline void render_texture(const Texture &texture, const Rectangle &dimen
                    WHITE);
 }
 
+static inline void render_texture_transparent(const Texture &texture, const Rectangle &dimension, float alpha) {
+    DrawTexturePro(texture,
+                   Rectangle{0.0f, 0.0f, (float) texture.width, (float) -texture.height},
+                   dimension,
+                   Vector2{0, 0},
+                   0.0f,
+                   ColorAlpha(WHITE, alpha));
+}
+
 /**
  * @brief Renders the dungeon view.
  *
@@ -264,17 +272,68 @@ void DungeonView::render() noexcept {
     BeginDrawing();
     ClearBackground(BLACK);
     _render_pov();
-    if (_core->registry.ctx().contains<components::values::ShowMinimap>()){
+    if (_core->registry.ctx().contains<components::values::ShowMinimap>()) {
         _render_minimap();
     }
-    static Rectangle POV_DIMENSION_FULLSCREEN = Rectangle{0,0, static_cast<float>(GetMonitorWidth(GetCurrentMonitor())), static_cast<float>(GetMonitorHeight(GetCurrentMonitor()))};
+    static Rectangle POV_DIMENSION_FULLSCREEN = Rectangle{0, 0, static_cast<float>(GetMonitorWidth(GetCurrentMonitor())), static_cast<float>(GetMonitorHeight(GetCurrentMonitor()))};
     static Rectangle GUI_DIMENSION_FULLSCREEN = Rectangle{static_cast<float>(GetMonitorWidth(GetCurrentMonitor())) * 0.75f, static_cast<float>(GetMonitorHeight(GetCurrentMonitor())) * 0.1f, static_cast<float>(GetMonitorWidth(GetCurrentMonitor())) * 0.2f, static_cast<float>(GetMonitorWidth(GetCurrentMonitor())) * 0.2f};
     render_texture(_render_texture_pov.texture, IsWindowFullscreen() ? POV_DIMENSION_FULLSCREEN : POV_DIMENSION);
+
+    _render_effects(POV_DIMENSION_FULLSCREEN);
+
     render_texture(_render_texture_gui.texture, IsWindowFullscreen() ? GUI_DIMENSION_FULLSCREEN : GUI_DIMENSION);
     _ui.render();
-    //DrawFPS(20, 20);
+    DrawFPS(20, 20);
 
     EndDrawing();
+}
+
+void DungeonView::_render_effects(const Rectangle &POV_DIMENSION_FULLSCREEN) const {
+    auto effects = _core->registry.ctx().find<components::values::ShaderEffects>();
+    if (effects->bloom_enabled) {
+        BeginTextureMode(_render_texture_pov_bloom);
+        ClearBackground(BLACK);
+        BeginShaderMode(_brightness_filter_shader);
+        {
+            SetShaderValue(_brightness_filter_shader, GetShaderLocation(_brightness_filter_shader, "threshold"), &effects->brightness_threshold, SHADER_UNIFORM_FLOAT);
+            render_texture(_render_texture_pov.texture, Rectangle{0, 0, 320, 240});
+        }
+        EndShaderMode();
+        EndTextureMode();
+
+        if (effects->blur_enabled) {
+            BeginShaderMode(_blur_shader);
+            {
+                int value = 1;
+                SetShaderValue(_blur_shader, GetShaderLocation(_blur_shader, "horizontal"), &value, SHADER_UNIFORM_INT);
+                BeginBlendMode(effects->blur_blend_mode);
+                render_texture_transparent(_render_texture_pov_bloom.texture, IsWindowFullscreen() ? POV_DIMENSION_FULLSCREEN : POV_DIMENSION, effects->blur_alpha);
+                EndBlendMode();
+                value = 0;
+                SetShaderValue(_blur_shader, GetShaderLocation(_blur_shader, "horizontal"), &value, SHADER_UNIFORM_INT);
+                BeginBlendMode(effects->blur_blend_mode);
+                render_texture_transparent(_render_texture_pov_bloom.texture, IsWindowFullscreen() ? POV_DIMENSION_FULLSCREEN : POV_DIMENSION, effects->blur_alpha);
+                EndBlendMode();
+            }
+            EndShaderMode();
+        }
+        if (effects->crt_enabled) {
+            BeginShaderMode(_crt_shader);
+            {
+                SetShaderValue(_crt_shader, GetShaderLocation(_crt_shader, "time"), &effects->crt_time, SHADER_UNIFORM_FLOAT);
+                BeginBlendMode(effects->crt_blend_mode);
+                render_texture_transparent(_render_texture_pov_bloom.texture, IsWindowFullscreen() ? POV_DIMENSION_FULLSCREEN : POV_DIMENSION, effects->crt_alpha);
+                EndBlendMode();
+            }
+            EndShaderMode();
+        }
+
+        BeginBlendMode(effects->bloom_blend_mode);
+        render_texture_transparent(_render_texture_pov_bloom.texture, IsWindowFullscreen() ? POV_DIMENSION_FULLSCREEN : POV_DIMENSION, effects->bloom_alpha);
+        EndBlendMode();
+
+    }
+
 }
 
 /**
@@ -316,16 +375,14 @@ void DungeonView::update() noexcept {
             _clear();
             _level.load("assets/Levels/Ruins/ruins0001.json");
             _calculate_fov();
-        }
-        catch (std::exception &e) {
+        } catch (std::exception &e) {
             printf("Exception: %s\n", e.what());
         }
     }
     if (IsKeyPressed(KEY_S)) {
         try {
             _level.save("assets/Levels/Ruins/ruins_01_saved.json");
-        }
-        catch (std::exception &e) {
+        } catch (std::exception &e) {
             printf("Exception: %s\n", e.what());
         }
     }
@@ -336,15 +393,12 @@ void DungeonView::update() noexcept {
         if (_core->registry.ctx().contains<components::values::ShowMinimap>()) {
             std::printf("Erasing minimap\n");
             _core->registry.ctx().erase<components::values::ShowMinimap>();
-        }
-        else {
+        } else {
             _core->registry.ctx().emplace<components::values::ShowMinimap>();
         }
         std::printf("Is minimap: %d\n", _core->registry.ctx().contains<components::values::ShowMinimap>());
     }
-    if (IsKeyPressed(KEY_B)) {
-        _core->dispatcher.enqueue(events::dungeon::StartEncounter{});
-    }
+
     after_first_update = true;
 }
 
@@ -407,10 +461,10 @@ static void fill_player_fov_walls(std::array<entt::entity, AMOUNT_WALLS_IN_FOV> 
  * @param tile_map The tile map containing the dungeon layout.
  * @param direction The current direction the player is facing.
  */
-template <size_t SIZE>
+template<size_t SIZE>
 static void fill_player_fov_tiles(std::array<entt::entity, SIZE> &player_fov_tiles, const components::tiles::MapPosition player_position, const TileMap &tile_map, const WorldDirection direction) {
     ModXY mod = (direction == WorldDirection::NORTH || direction == WorldDirection::EAST) ? ModXY{1, 1} : ModXY{-1, -1};
-    
+
     player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F01] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x - 2 * mod.x, player_position.y - 4 * mod.y) : tile_map.get_at(player_position.x + 4 * mod.x, player_position.y - 2 * mod.y);
     player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F02] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x - 1 * mod.x, player_position.y - 4 * mod.y) : tile_map.get_at(player_position.x + 4 * mod.x, player_position.y - 1 * mod.y);
     player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F03] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x, player_position.y - 4 * mod.y) : tile_map.get_at(player_position.x + 4 * mod.x, player_position.y);
@@ -428,7 +482,7 @@ static void fill_player_fov_tiles(std::array<entt::entity, SIZE> &player_fov_til
     player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F15] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x, player_position.y - 1 * mod.y) : tile_map.get_at(player_position.x + 1 * mod.x, player_position.y);
     player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F16] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x + 1 * mod.x, player_position.y - 1 * mod.y) : tile_map.get_at(player_position.x + 1 * mod.x, player_position.y + 1 * mod.y);
     player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F17] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x - 1 * mod.x, player_position.y) : tile_map.get_at(player_position.x, player_position.y - 1 * mod.y);
-    player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F18] = tile_map.get_at(player_position.x, player_position.y); // the player is always on field 18
+    player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F18] = tile_map.get_at(player_position.x, player_position.y);// the player is always on field 18
     player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F19] = (direction == WorldDirection::NORTH || direction == WorldDirection::SOUTH) ? tile_map.get_at(player_position.x + 1 * mod.x, player_position.y) : tile_map.get_at(player_position.x, player_position.y + 1 * mod.y);
 }
 
@@ -458,24 +512,24 @@ static inline void set_tint_on_entity(entt::registry &registry, const entt::enti
     }
 }
 
-template <size_t SIZE>
+template<size_t SIZE>
 static inline void set_tiles_tint(entt::registry &registry, const std::array<entt::entity, SIZE> &player_fov_tiles) {
     set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F01], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
     set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F02], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
     set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F03], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
     set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F04], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
     set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F05], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
-    
+
     set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F06], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
     set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F07], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
     set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F08], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
     set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F09], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
     set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F10], TINT_DARKER, TINT_DARKER, TINT_DARKER, NO_TINT);
-    
+
     set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F11], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
     set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F12], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
     set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F13], TINT_DARK, TINT_DARK, TINT_DARK, NO_TINT);
-    
+
     set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F14], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
     set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F15], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
     set_tint_on_entity(registry, player_fov_tiles[(size_t) assets::dungeon_view::POVFloor::F16], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
@@ -499,7 +553,7 @@ static inline void set_tiles_tint(entt::registry &registry, const std::array<ent
  *       - float - The blue tint value.
  *       - float - The alpha tint value.
  */
-template <size_t SIZE>
+template<size_t SIZE>
 static inline void set_walls_tint(entt::registry &registry, const std::array<entt::entity, SIZE> &player_fov_walls) {
     set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W01_E], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
     set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W01_N], TINT_DARKEST, TINT_DARKEST, TINT_DARKEST, NO_TINT);
@@ -535,7 +589,6 @@ static inline void set_walls_tint(entt::registry &registry, const std::array<ent
     set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W15_S], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
     set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W16_S], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
     set_tint_on_entity(registry, player_fov_walls[(size_t) assets::dungeon_view::POVWall::W16_W], TINT_A_BIT_DARK, TINT_A_BIT_DARK, TINT_A_BIT_DARK, NO_TINT);
-
 }
 
 /**

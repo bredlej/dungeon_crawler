@@ -2,8 +2,9 @@
 // Created by Patryk Szczypień on 03/04/2023.
 //
 #include <editor_application.hpp>
+#include <monsters.hpp>
+#include <parsers/monster_parser.hpp>
 #include <skills.hpp>
-
 /**
  * @brief Executes the main game loop for the EditorApplication.
  *
@@ -45,6 +46,10 @@ LaunchResult EditorApplication::run() const {
 
     skills::SkillsMap skills_map = skills::SkillsMap::from_json(SkillParser::parse(game_path + "assets/Skills/skills.json"));
     core->registry.ctx().emplace<skills::SkillsMap>(skills_map);
+    MonstersMap monsters_map = MonstersMap::from_json(MonsterParser::parse(game_path + "assets/Bestiary/monsters.json", AttributesParser{}, skills_map));
+    core->registry.ctx().emplace<MonstersMap>(monsters_map);
+
+
     SetExitKey(0);
     // main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key

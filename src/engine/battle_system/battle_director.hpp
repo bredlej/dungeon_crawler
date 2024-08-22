@@ -59,7 +59,7 @@ public:
     bool_map guard;
     bool_func end_condition;
 
-    explicit BattleDirector(std::shared_ptr<Core> &core) : _core{core} {
+    explicit BattleDirector(const std::shared_ptr<Core> &core) : _core{core} {
         _core->dispatcher.sink<NextStateEvent>().connect<&BattleDirector::next_state>(this);
 
         pre_phase[BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) {};
@@ -105,14 +105,12 @@ public:
         : _core{core}, pre_phase{std::move(pre_phase)}, post_phase{std::move(post_phase)}, phase{std::move(phase)}, guard{std::move(guard)}, end_condition{std::move(end_condition)} {
         _core->dispatcher.sink<NextStateEvent>().connect<&BattleDirector::next_state>(this);
     };
-    BattleDirector(const BattleDirector &) = delete;
+    BattleDirector(const BattleDirector &) = default;
     BattleDirector(BattleDirector &&) = default;
-    BattleDirector &operator=(const BattleDirector &) = delete;
+    BattleDirector &operator=(const BattleDirector &) = default;
     BattleDirector &operator=(BattleDirector &&) = delete;
 
-    ~BattleDirector() {
-        _core->dispatcher.sink<NextStateEvent>().disconnect<&BattleDirector::next_state>(this);
-    }
+    ~BattleDirector() = default;
 
     [[nodiscard]] BattlePhase get_battle_phase() const noexcept {
         return _battle_phase;

@@ -34,6 +34,20 @@ namespace components {
         };
     }
     namespace values {
+        struct ShaderEffects {
+            bool bloom_enabled;
+            int bloom_blend_mode;
+            bool blur_enabled;
+            int blur_blend_mode;
+            bool crt_enabled;
+            int crt_blend_mode;
+            float crt_time;
+            float brightness_threshold;
+            float bloom_alpha;
+            float blur_alpha;
+
+            float crt_alpha;
+        };
         struct EncounterChance {
             float chance;
         };
