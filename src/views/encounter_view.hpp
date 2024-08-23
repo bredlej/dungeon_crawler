@@ -7,6 +7,7 @@
 
 #include <engine/core.hpp>
 #include <engine/events.hpp>
+#include <engine/battle_system/battle_director.hpp>
 
 class EncounterView : public UIView<EncounterView> {
 public:

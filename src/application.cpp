@@ -81,16 +81,26 @@ void Application::_toggle_fullscreen() noexcept {
     }
 }
 
+void Application::initialize() noexcept {
+    main_menu_view = std::make_unique<MainMenu>(_core);
+    _core->dispatcher.sink<events::dungeon::StartEncounter>().connect<&Application::start_encounter>(this);
+    _core->dispatcher.sink<events::dungeon::EndEncounter>().connect<&Application::end_encounter>(this);
+}
+
 void Application::run() noexcept {
     std::printf("Dungeon crawler is running.\n");
 
     setup_imgui_colors();
     _core->load_assets();
 
+    initialize();
     initialize_player(_core);
     auto level = Level(_core, TileMap(_core, 20, 20));
     level.load("assets/Levels/Ruins/ruins0001.json");
     dungeon_view = std::make_unique<DungeonView>(_core, std::move(level));
+
+    SetTargetFPS(144);
+
     Scheduler<std::chrono::seconds> scheduler(_core);
     scheduler.builder()
             .after(1, [](const std::shared_ptr<Core> &core) {
@@ -98,30 +108,7 @@ void Application::run() noexcept {
             })
             .repeating()
             .run();
-    SetTargetFPS(144);
 
-    _battle_director.guard[types::battle::BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) {
-        return !core->registry.ctx().contains<components::values::AnimationTimer>();
-    };
-
-    _battle_director.phase[types::battle::BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) {
-        if (core->registry.ctx().contains<components::values::Encounter>()) {
-            core->registry.ctx().erase<components::values::Encounter>();
-        }
-        if (auto *animation = core->registry.ctx().find<components::values::AnimationTimer>()) {
-
-            if (animation->counter <= 0) {
-                core->registry.ctx().erase<components::values::AnimationTimer>();
-                core->dispatcher.trigger(NextStateEvent{BattlePhase::INACTIVE});
-            }
-        }
-    };
-    _battle_director.post_phase[types::battle::BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) {
-        std::printf("Starting battle...");
-    };
-
-    _battle_director.phase[types::battle::BattlePhase::BATTLE_START] = [](const std::shared_ptr<Core> &core) {
-    };
     while (!WindowShouldClose()) {
         _toggle_fullscreen();
         _core->dispatcher.update();
@@ -143,8 +130,18 @@ void Application::run() noexcept {
 }
 
 void Application::start_encounter(events::dungeon::StartEncounter &event) noexcept {
+    _core->registry.ctx().emplace<components::values::AnimationTimer>((uint32_t) 3);
+    _core->scheduler.attach([this](auto delta, void *, auto succeed, auto fail){
+        if (auto *timer = _core->registry.ctx().find<components::values::AnimationTimer>()) {
+            timer->counter -= 1;
+        }
+        else {
+            _core->registry.ctx().emplace<components::values::Encounter>();
+            succeed();
+        }
+    });
     _view_mode = ViewMode::Encounter;
-    _core->dispatcher.sink<NextStateEvent>().connect<&BattleDirector::next_state>(_battle_director);
+    _battle_director.apply_configuration(battle_configurations::animated_intro());
     encounter_view = std::make_unique<EncounterView>(_core, &_battle_director);
 }
 

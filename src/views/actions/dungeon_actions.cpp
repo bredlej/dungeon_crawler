@@ -13,7 +13,6 @@ void DungeonActions::_initialize() {
     _core->dispatcher.sink<events::dungeon::Movement>().connect<&DungeonActions::_on_movement>(this);
     _core->dispatcher.sink<events::dungeon::OpenDoor>().connect<&DungeonActions::_on_open_door>(this);
     _core->dispatcher.sink<events::dungeon::EncounterChanceChange>().connect<&DungeonActions::_on_encounter_chance_changed>(this);
-    _core->dispatcher.sink<events::dungeon::StartEncounter>().connect<&DungeonActions::start_encounter>(this);
 }
 
 static void handle_turn_direction(entt::registry &registry, WorldDirection from_north, WorldDirection from_east, WorldDirection from_south, WorldDirection from_west) {
@@ -157,18 +156,4 @@ void DungeonActions::_on_encounter_chance_changed(events::dungeon::EncounterChan
 
         _core->dispatcher.enqueue<events::dungeon::StartEncounter>();
     }
-}
-
-void DungeonActions::start_encounter() const {
-    _core->registry.ctx().emplace<components::values::Encounter>();
-    _core->registry.ctx().emplace<components::values::AnimationTimer>((uint32_t) 3);
-    _core->scheduler.attach([this](auto delta, void *, auto succeed, auto fail){
-        if (auto *timer = _core->registry.ctx().find<components::values::AnimationTimer>()) {
-            timer->counter -= 1;
-        }
-        else {
-            succeed();
-        }
-    });
-
 }

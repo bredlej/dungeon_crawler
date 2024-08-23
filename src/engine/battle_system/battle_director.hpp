@@ -5,13 +5,20 @@
 #ifndef DUNGEON_CRAWLER_BATTLE_DIRECTOR_HPP
 #define DUNGEON_CRAWLER_BATTLE_DIRECTOR_HPP
 #include "ecs/types.hpp"
+#include "engine/events.hpp"
 #include "engine/core.hpp"
 #include <functional>
 #include <memory>
 #include <string>
 #include <unordered_map>
+#include <battle_system/battle_phase_configuration.hpp>
 
 using namespace battle;
+using void_func = std::function<void(std::shared_ptr<Core>)>;
+using bool_func = std::function<bool(std::shared_ptr<Core>)>;
+using void_map = std::unordered_map<BattlePhase, void_func>;
+using bool_map = std::unordered_map<BattlePhase, bool_func>;
+
 
 inline std::string to_string(BattlePhase battle_phase) {
     switch (battle_phase) {
@@ -34,9 +41,6 @@ inline std::string to_string(BattlePhase battle_phase) {
     }
 }
 
-struct NextStateEvent {
-    BattlePhase from_phase;
-};
 
 /**
  * @class BattleDirector
@@ -47,11 +51,6 @@ struct NextStateEvent {
  * updating the battle state, and handles transitions between phases based on certain conditions.
  */
 class BattleDirector {
-    using void_func = std::function<void(std::shared_ptr<Core>)>;
-    using bool_func = std::function<bool(std::shared_ptr<Core>)>;
-    using void_map = std::unordered_map<BattlePhase, void_func>;
-    using bool_map = std::unordered_map<BattlePhase, bool_func>;
-
 public:
     void_map pre_phase;
     void_map post_phase;
@@ -60,49 +59,10 @@ public:
     bool_func end_condition;
 
     explicit BattleDirector(const std::shared_ptr<Core> &core) : _core{core} {
-        pre_phase[BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) {};
-        post_phase[BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) {};
-        phase[BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) { core->dispatcher.trigger(NextStateEvent{BattlePhase::INACTIVE}); };
-        guard[BattlePhase::INACTIVE] = [](const std::shared_ptr<Core> &core) { return true; };
-
-        pre_phase[BattlePhase::BATTLE_START] = [](const std::shared_ptr<Core> &core) {};
-        post_phase[BattlePhase::BATTLE_START] = [](const std::shared_ptr<Core> &core) {};
-        phase[BattlePhase::BATTLE_START] = [](const std::shared_ptr<Core> &core) { core->dispatcher.trigger(NextStateEvent{BattlePhase::BATTLE_START}); };
-        guard[BattlePhase::BATTLE_START] = [](const std::shared_ptr<Core> &core) { return true; };
-
-        pre_phase[BattlePhase::TURN_START] = [](const std::shared_ptr<Core> &core) {};
-        post_phase[BattlePhase::TURN_START] = [](const std::shared_ptr<Core> &core) {};
-        phase[BattlePhase::TURN_START] = [](const std::shared_ptr<Core> &core) { core->dispatcher.trigger(NextStateEvent{BattlePhase::TURN_START}); };
-        guard[BattlePhase::TURN_START] = [](const std::shared_ptr<Core> &core) { return true; };
-
-        pre_phase[BattlePhase::PLAYER_ACTIONS] = [](const std::shared_ptr<Core> &core) {};
-        post_phase[BattlePhase::PLAYER_ACTIONS] = [](const std::shared_ptr<Core> &core) {};
-        phase[BattlePhase::PLAYER_ACTIONS] = [](const std::shared_ptr<Core> &core) { core->dispatcher.trigger(NextStateEvent{BattlePhase::PLAYER_ACTIONS}); };
-        guard[BattlePhase::PLAYER_ACTIONS] = [](const std::shared_ptr<Core> &core) { return true; };
-
-        pre_phase[BattlePhase::AI_ACTIONS] = [](const std::shared_ptr<Core> &core) {};
-        post_phase[BattlePhase::AI_ACTIONS] = [](const std::shared_ptr<Core> &core) {};
-        phase[BattlePhase::AI_ACTIONS] = [](const std::shared_ptr<Core> &core) { core->dispatcher.trigger(NextStateEvent{BattlePhase::AI_ACTIONS}); };
-        guard[BattlePhase::AI_ACTIONS] = [](const std::shared_ptr<Core> &core) { return true; };
-
-        pre_phase[BattlePhase::TURN_END] = [](const std::shared_ptr<Core> &core) {};
-        post_phase[BattlePhase::TURN_END] = [](const std::shared_ptr<Core> &core) {};
-        phase[BattlePhase::TURN_END] = [](const std::shared_ptr<Core> &core) { core->dispatcher.trigger(NextStateEvent{BattlePhase::TURN_END}); };
-        guard[BattlePhase::TURN_END] = [](const std::shared_ptr<Core> &core) { return true; };
-
-        pre_phase[BattlePhase::BATTLE_END] = [](const std::shared_ptr<Core> &core) {};
-        post_phase[BattlePhase::BATTLE_END] = [](const std::shared_ptr<Core> &core) {};
-        phase[BattlePhase::BATTLE_END] = [](const std::shared_ptr<Core> &core) { core->dispatcher.trigger(NextStateEvent{BattlePhase::BATTLE_END}); };
-        guard[BattlePhase::BATTLE_END] = [](const std::shared_ptr<Core> &core) { return true; };
-
-        phase[BattlePhase::FINISHED] = [](const std::shared_ptr<Core> &core) {};
-
-        end_condition = [](const std::shared_ptr<Core> &core) { return true; };
+        _core->dispatcher.sink<NextStateEvent>().connect<&BattleDirector::next_state>(*this);
+        reset_to_default();
     };
-    explicit BattleDirector(std::shared_ptr<Core> &core, void_map &&pre_phase, void_map &&post_phase, void_map &&phase, bool_map &&guard, bool_func &&end_condition)
-        : _core{core}, pre_phase{std::move(pre_phase)}, post_phase{std::move(post_phase)}, phase{std::move(phase)}, guard{std::move(guard)}, end_condition{std::move(end_condition)} {
 
-    };
     BattleDirector(const BattleDirector &) = default;
     BattleDirector(BattleDirector &&) = default;
     BattleDirector &operator=(const BattleDirector &) = default;
@@ -110,12 +70,38 @@ public:
 
     ~BattleDirector() = default;
 
+    void apply_configuration(BattlePhaseConfiguration config) {
+        _battle_phase = types::battle::BattlePhase::INACTIVE;
+        for (auto &[key, value]: config.pre_phase) {
+            pre_phase[key] = value;
+        }
+        for (auto &[key, value]: config.post_phase) {
+            post_phase[key] = value;
+        }
+        for (auto &[key, value]: config.phase) {
+            phase[key] = value;
+        }
+        for (auto &[key, value]: config.guard) {
+            guard[key] = value;
+        }
+        if (config.end_condition) {
+            end_condition = config.end_condition;
+        }
+        else {
+            end_condition = [](const std::shared_ptr<Core> &core) { return true; };
+        }
+    }
+
     [[nodiscard]] BattlePhase get_battle_phase() const noexcept {
         return _battle_phase;
     }
 
     constexpr void update() noexcept {
         phase[_battle_phase](_core);
+    }
+
+    constexpr void reset_to_default() noexcept {
+        apply_configuration(battle_configurations::default_config());
     }
 
     static constexpr void guard_and_process(BattleDirector &battleDirector, std::shared_ptr<Core> &core, BattlePhase from_phase, BattlePhase to_phase) {

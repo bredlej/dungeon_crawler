@@ -17,6 +17,7 @@ extern "C" {
 #include <cstdio>
 #include <engine/assets.hpp>
 #include <engine/core.hpp>
+#include <engine/battle_system/battle_director.hpp>
 #include <string_view>
 #include <scheduler.hpp>
 
@@ -37,9 +38,7 @@ enum class ViewMode {
 class Application {
 public:
     explicit Application() noexcept : _view_mode{ViewMode::Dungeon}, _core{std::make_shared<Core>()}, _battle_director(_core) {
-        main_menu_view = std::make_unique<MainMenu>(_core);
-        _core->dispatcher.sink<events::dungeon::StartEncounter>().connect<&Application::start_encounter>(this);
-        _core->dispatcher.sink<events::dungeon::EndEncounter>().connect<&Application::end_encounter>(this);
+
     };
     Application(const Application &) noexcept = delete;
     Application(Application &) noexcept = delete;
@@ -48,6 +47,7 @@ public:
     Application &operator=(const Application &&) noexcept = delete;
 
     void run() noexcept;
+    void initialize() noexcept;
     void start_encounter(events::dungeon::StartEncounter &event) noexcept;
     void end_encounter(const events::dungeon::EndEncounter &event) noexcept;
 

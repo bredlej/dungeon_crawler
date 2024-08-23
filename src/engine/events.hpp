@@ -4,8 +4,8 @@
 
 #ifndef DUNGEON_CRAWLER_EVENTS_HPP
 #define DUNGEON_CRAWLER_EVENTS_HPP
-#include "battle_system/battle_director.hpp"
 #include <entt/entt.hpp>
+#include <ecs/types.hpp>
 
 namespace events::ui {
     struct ToggleShowDemo {};
@@ -40,6 +40,9 @@ namespace events::dungeon {
 }
 
 namespace events::battle {
+    struct NextStateEvent {
+        types::battle::BattlePhase from_phase;
+    };
     struct AttackEvent {
         entt::entity attacker;
         entt::entity skill;
