@@ -53,6 +53,27 @@ void DungeonUI::render() {
     if (ImGui::DragFloat("CRT alpha", &shader_effects->crt_alpha, 0.01f, 0.0f, 1.0f)) {
         //
     }
+    if (ImGui::Checkbox("Toggle vignette", &shader_effects->vignette_enabled)) {
+        //
+    }
+    if (ImGui::DragInt("Vignette blend mode", &shader_effects->vignette_blend_mode, 1, 0, 3)) {
+        //
+    }
+    if (ImGui::DragFloat("Vignette radius", &shader_effects->vignette_radius, 0.01f, 0.0f, 1.0f)) {
+        //
+    }
+    if (ImGui::DragFloat("Vignette softness", &shader_effects->vignette_softness, 0.01f, 0.0f, 1.0f)) {
+        //
+    }
+    if (ImGui::DragFloat("R", &shader_effects->vignette_r, 0.01f, 0.0f, 1.0f)) {
+        //
+    }
+    if (ImGui::DragFloat("G", &shader_effects->vignette_g, 0.01f, 0.0f, 1.0f)) {
+        //
+    }
+    if (ImGui::DragFloat("B", &shader_effects->vignette_b, 0.01f, 0.0f, 1.0f)) {
+        //
+    }
 
     ImGui::End();
     rlImGuiEnd();

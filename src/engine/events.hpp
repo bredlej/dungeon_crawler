@@ -9,6 +9,12 @@
 
 namespace events::ui {
     struct ToggleShowDemo {};
+    struct ShowPartyView {};
+    struct ShowDungeonView {};
+    namespace party {
+        struct NextPartyMember {};
+        struct PreviousPartyMember {};
+    }
 }
 namespace events::dungeon {
     struct RecalculateFov {};

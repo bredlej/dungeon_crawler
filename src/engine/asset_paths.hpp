@@ -19,6 +19,11 @@ namespace assets {
         constexpr const char *spectre = "assets/Bestiary/spectre.png";
         constexpr const char *nomad_thief = "assets/Bestiary/nomad_thief.png";
     }// namespace monsters
+    namespace portraits {
+        constexpr const char *mage = "assets/Portraits/portrait-mage.png";
+        constexpr const char *priest = "assets/Portraits/portrait-priest.png";
+        constexpr const char *warrior = "assets/Portraits/portrait-warrior.png";
+    }
     namespace tiles {
         namespace stratum {
             namespace ruins {

@@ -2,6 +2,7 @@
 // Created by geoco on 17.11.2022.
 //
 #include "encounter_view.hpp"
+#include "skills.hpp"
 #include <application.hpp>
 
 void initialize_player(const std::shared_ptr<Core> &core) {
@@ -9,6 +10,73 @@ void initialize_player(const std::shared_ptr<Core> &core) {
     core->registry.emplace<components::general::Player>(player_entity, true);
     core->registry.emplace<components::general::Direction>(player_entity, WorldDirection::EAST);
     core->registry.emplace<components::tiles::MapPosition>(player_entity, 1, 1);
+
+    const components::battle::Attributes attributes_mage{
+            std::unordered_map<types::character::Attribute, float>{
+                    {types::character::Attribute::LEVEL, 1.0f},
+                    {types::character::Attribute::HIT_POINTS, 13.0f},
+                    {types::character::Attribute::SKILL_POINTS, 15.0f},
+                    {types::character::Attribute::STRENGTH, 8.0f},
+                    {types::character::Attribute::INTELLIGENCE, 11.0f},
+                    {types::character::Attribute::VITALITY, 9.0f},
+                    {types::character::Attribute::WISDOM, 13.0f},
+                    {types::character::Attribute::DEXTERITY, 7.0f},
+                    {types::character::Attribute::LUCK, 10.0f},
+                    {types::character::Attribute::ATTACK, 7.0f},
+                    {types::character::Attribute::MAGIC_ATTACK, 12.0f},
+                    {types::character::Attribute::DEFENSE, 7.0f},
+                    {types::character::Attribute::MAGIC_DEFENSE, 11.0f}
+            }};
+
+    const components::battle::Attributes attributes_warrior{
+            std::unordered_map<types::character::Attribute, float>{
+                    {types::character::Attribute::LEVEL, 1.0f},
+                    {types::character::Attribute::HIT_POINTS, 15.0f},
+                    {types::character::Attribute::SKILL_POINTS, 11.0f},
+                    {types::character::Attribute::STRENGTH, 13.0f},
+                    {types::character::Attribute::INTELLIGENCE, 7.0f},
+                    {types::character::Attribute::VITALITY, 11.0f},
+                    {types::character::Attribute::WISDOM, 7.0f},
+                    {types::character::Attribute::DEXTERITY, 9.0f},
+                    {types::character::Attribute::LUCK, 10.0f},
+                    {types::character::Attribute::ATTACK, 13.0f},
+                    {types::character::Attribute::MAGIC_ATTACK, 6.0f},
+                    {types::character::Attribute::DEFENSE, 12.0f},
+                    {types::character::Attribute::MAGIC_DEFENSE, 5.0f}
+            }};
+
+    const components::battle::Attributes attributes_priest{
+            std::unordered_map<types::character::Attribute, float>{
+                    {types::character::Attribute::LEVEL, 1.0f},
+                    {types::character::Attribute::HIT_POINTS, 9.0f},
+                    {types::character::Attribute::SKILL_POINTS, 13.0f},
+                    {types::character::Attribute::STRENGTH, 6.0f},
+                    {types::character::Attribute::INTELLIGENCE, 9.0f},
+                    {types::character::Attribute::VITALITY, 8.0f},
+                    {types::character::Attribute::WISDOM, 14.0f},
+                    {types::character::Attribute::DEXTERITY, 8.0f},
+                    {types::character::Attribute::LUCK, 10.0f},
+                    {types::character::Attribute::ATTACK, 6.0f},
+                    {types::character::Attribute::MAGIC_ATTACK, 10.0f},
+                    {types::character::Attribute::DEFENSE, 5.0f},
+                    {types::character::Attribute::MAGIC_DEFENSE, 9.0f}
+            }};
+
+    const entt::entity party_mage = core->registry.create();
+    core->registry.emplace<components::party::PartyMember>(party_mage, "Bred", types::character::Role::MAGE, attributes_mage);
+
+    const entt::entity party_warrior = core->registry.create();
+    core->registry.emplace<components::party::PartyMember>(party_warrior, "Kain", types::character::Role::WARRIOR, attributes_warrior);
+
+    const entt::entity party_priest = core->registry.create();
+    core->registry.emplace<components::party::PartyMember>(party_priest, "Luna", types::character::Role::CULTIST, attributes_priest);
+
+    const entt::entity party_entity = core->registry.create();
+    const components::party::Party party {
+        {party_mage, party_warrior, party_priest}
+    };
+    core->registry.ctx().emplace<components::party::Party>(party);
+    core->registry.ctx().emplace<components::view::party::Selected>(party_mage);
 }
 
 static inline void setup_imgui_colors() {
@@ -85,6 +153,10 @@ void Application::initialize() noexcept {
     main_menu_view = std::make_unique<MainMenu>(_core);
     _core->dispatcher.sink<events::dungeon::StartEncounter>().connect<&Application::start_encounter>(this);
     _core->dispatcher.sink<events::dungeon::EndEncounter>().connect<&Application::end_encounter>(this);
+    _core->dispatcher.sink<events::ui::ShowPartyView>().connect<&Application::show_party_view>(this);
+    _core->dispatcher.sink<events::ui::ShowDungeonView>().connect<&Application::show_dungeon_view>(this);
+
+    _core->registry.ctx().emplace<skills::SkillsMap>(skills::SkillsMap::from_json(SkillParser::parse("assets/Skills/skills.json")));
 }
 
 void Application::run() noexcept {
@@ -96,12 +168,13 @@ void Application::run() noexcept {
     initialize();
     initialize_player(_core);
     auto level = Level(_core, TileMap(_core, 20, 20));
+
     level.load("assets/Levels/Ruins/ruins0001.json");
     dungeon_view = std::make_unique<DungeonView>(_core, std::move(level));
 
     SetTargetFPS(144);
 
-    Scheduler<std::chrono::seconds> scheduler(_core);
+    Scheduler<std::chrono::milliseconds> scheduler(_core);
     scheduler.builder()
             .after(1, [](const std::shared_ptr<Core> &core) {
                 core->scheduler.update(1);
@@ -112,40 +185,97 @@ void Application::run() noexcept {
     while (!WindowShouldClose()) {
         _toggle_fullscreen();
         _core->dispatcher.update();
+        common_update();
         switch (_view_mode) {
             case ViewMode::MainMenu:
-                main_menu_view->update();
-                main_menu_view->render();
+                if (main_menu_view) {
+                    main_menu_view->update();
+                    main_menu_view->render();
+                }
                 break;
             case ViewMode::Dungeon:
-                dungeon_view->update();
-                dungeon_view->render();
+                if (dungeon_view) {
+                    dungeon_view->update();
+                    dungeon_view->render();
+                }
                 break;
             case ViewMode::Encounter:
-                encounter_view->update();
-                encounter_view->render();
+                if (encounter_view) {
+                    encounter_view->update();
+                    encounter_view->render();
+                }
+                break;
+            case ViewMode::Party:
+                if (party_view) {
+                    party_view->update();
+                    party_view->render();
+                }
                 break;
         }
     }
 }
 
+void Application::common_update() noexcept {
+    if (IsKeyPressed(KEY_ONE)) {
+        _core->dispatcher.trigger<events::ui::ShowDungeonView>();
+    }
+    if (IsKeyPressed(KEY_TWO)) {
+        _core->dispatcher.trigger<events::ui::ShowPartyView>();
+    }
+    if (IsKeyPressed(KEY_F11)) {
+        _toggle_fullscreen();
+    }
+}
+
+void Application::show_party_view() noexcept {
+    _view_mode = ViewMode::Party;
+}
+
+void Application::show_dungeon_view() noexcept {
+    _view_mode = ViewMode::Dungeon;
+}
+
 void Application::start_encounter(events::dungeon::StartEncounter &event) noexcept {
-    _core->registry.ctx().emplace<components::values::AnimationTimer>((uint32_t) 3);
-    _core->scheduler.attach([this](auto delta, void *, auto succeed, auto fail){
+    auto duration_ms = 150;
+    auto bloom_alpha = 0.200f;
+    auto brightness_threshold = 0.190f;
+    auto brightness_step = (brightness_threshold / (float) duration_ms) * 2.0f;
+    auto bloom_step = bloom_alpha / (float) duration_ms;
+
+    if (auto *effects = _core->registry.ctx().find<components::values::ShaderEffects>()) {
+        effects->bloom_enabled = true;
+        effects->bloom_blend_mode = BLEND_ADD_COLORS;
+        effects->bloom_alpha = bloom_alpha;
+        effects->brightness_threshold = brightness_threshold;
+        effects->blur_enabled = true;
+        effects->blur_blend_mode = BLEND_MULTIPLIED;
+    }
+
+    _core->registry.ctx().emplace<components::values::AnimationTimer>((uint32_t) duration_ms);
+    _core->scheduler.attach([this, brightness_step](auto delta, void *, auto succeed, auto fail) {
         if (auto *timer = _core->registry.ctx().find<components::values::AnimationTimer>()) {
             timer->counter -= 1;
-        }
-        else {
+            if (timer->counter <= 0) {
+                _core->registry.ctx().erase<components::values::AnimationTimer>();
+            }
+            if (auto *effects = _core->registry.ctx().find<components::values::ShaderEffects>()) {
+                ;
+                effects->brightness_threshold += brightness_step;
+            }
+        } else {
             _core->registry.ctx().emplace<components::values::Encounter>();
+            _view_mode = ViewMode::Encounter;
+            _battle_director.apply_configuration(battle_configurations::animated_intro());
+            _battle_director.apply_configuration(battle_configurations::enemies_in_two_rows<3>());
             succeed();
         }
     });
-    _view_mode = ViewMode::Encounter;
-    _battle_director.apply_configuration(battle_configurations::animated_intro());
-    encounter_view = std::make_unique<EncounterView>(_core, &_battle_director);
 }
 
 void Application::end_encounter(const events::dungeon::EndEncounter &event) noexcept {
-    _view_mode = ViewMode::Dungeon;
-    encounter_view = nullptr;
+    if (auto *effects = _core->registry.ctx().find<components::values::ShaderEffects>()) {
+        effects->bloom_enabled = false;
+        effects->blur_enabled = false;
+    }
+    _core->dispatcher.trigger(events::ui::ShowDungeonView());
 }

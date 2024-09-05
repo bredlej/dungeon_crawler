@@ -18,11 +18,9 @@ extern "C" {
 #include <events.hpp>
 #include <level.hpp>
 
-constexpr static Color BACKGROUND_COLOR = {0x34 /2, 0x31/2, 0x1d/2, 0xff};
+
 constexpr static Color FOV_COLOR = {0x48, 0x53, 0x22, 0xff};
 constexpr static Color WALL_COLOR = {0xb1, 0x48, 0x63, 0xff};
-constexpr static Rectangle POV_DIMENSION = Rectangle{0.0f, 0.0f, static_cast<float>(1024.0f), static_cast<float>(768.0f)};
-constexpr static Rectangle GUI_DIMENSION = Rectangle{750.0f, 50.0f, static_cast<float>(240.0f), static_cast<float>(240.0f)};
 constexpr static uint8_t MINIMAP_GRID_SIZE = 5;
 //clang-format off
 using namespace assets::dungeon_view;
@@ -77,6 +75,7 @@ private:
     Level _level;
     Shader _blur_shader = LoadShader(0, "assets/Shaders/gauss_blur.fs");
     Shader _brightness_filter_shader = LoadShader(0, "assets/Shaders/brightness_filter.fs");
+    Shader _vignette_shader = LoadShader(0, "assets/Shaders/vignette.fs");
     Shader _crt_shader = LoadShader(0, "assets/Shaders/crt.fs");
 
     DungeonUI _ui;

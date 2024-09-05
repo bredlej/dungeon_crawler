@@ -277,13 +277,13 @@ void DungeonView::render() noexcept {
     }
     static Rectangle POV_DIMENSION_FULLSCREEN = Rectangle{0, 0, static_cast<float>(GetMonitorWidth(GetCurrentMonitor())), static_cast<float>(GetMonitorHeight(GetCurrentMonitor()))};
     static Rectangle GUI_DIMENSION_FULLSCREEN = Rectangle{static_cast<float>(GetMonitorWidth(GetCurrentMonitor())) * 0.75f, static_cast<float>(GetMonitorHeight(GetCurrentMonitor())) * 0.1f, static_cast<float>(GetMonitorWidth(GetCurrentMonitor())) * 0.2f, static_cast<float>(GetMonitorWidth(GetCurrentMonitor())) * 0.2f};
-    render_texture(_render_texture_pov.texture, IsWindowFullscreen() ? POV_DIMENSION_FULLSCREEN : POV_DIMENSION);
+    _render_texture(_render_texture_pov.texture, POV_DIMENSION_FULLSCREEN);
 
     _render_effects(POV_DIMENSION_FULLSCREEN);
 
-    render_texture(_render_texture_gui.texture, IsWindowFullscreen() ? GUI_DIMENSION_FULLSCREEN : GUI_DIMENSION);
+    _render_texture(_render_texture_gui.texture, GUI_DIMENSION_FULLSCREEN);
     _ui.render();
-    DrawFPS(20, 20);
+    //DrawFPS(20, 20);
 
     EndDrawing();
 }
@@ -293,7 +293,7 @@ void DungeonView::_render_effects(const Rectangle &POV_DIMENSION_FULLSCREEN) con
     if (effects->bloom_enabled) {
         BeginTextureMode(_render_texture_pov_bloom);
         ClearBackground(BLACK);
-        BeginShaderMode(_brightness_filter_shader);
+         BeginShaderMode(_brightness_filter_shader);
         {
             SetShaderValue(_brightness_filter_shader, GetShaderLocation(_brightness_filter_shader, "threshold"), &effects->brightness_threshold, SHADER_UNIFORM_FLOAT);
             render_texture(_render_texture_pov.texture, Rectangle{0, 0, 320, 240});
@@ -322,6 +322,19 @@ void DungeonView::_render_effects(const Rectangle &POV_DIMENSION_FULLSCREEN) con
             {
                 SetShaderValue(_crt_shader, GetShaderLocation(_crt_shader, "time"), &effects->crt_time, SHADER_UNIFORM_FLOAT);
                 BeginBlendMode(effects->crt_blend_mode);
+                render_texture_transparent(_render_texture_pov_bloom.texture, IsWindowFullscreen() ? POV_DIMENSION_FULLSCREEN : POV_DIMENSION, effects->crt_alpha);
+                EndBlendMode();
+            }
+            EndShaderMode();
+        }
+        if (effects->vignette_enabled) {
+            BeginShaderMode(_vignette_shader);
+            {
+                auto color = Vector3{effects->vignette_r, effects->vignette_g, effects->vignette_b};
+                SetShaderValue(_vignette_shader, GetShaderLocation(_vignette_shader, "vignetteRadius"), &effects->vignette_radius, SHADER_UNIFORM_FLOAT);
+                SetShaderValue(_vignette_shader, GetShaderLocation(_vignette_shader, "vignetteSoftness"), &effects->vignette_softness, SHADER_UNIFORM_FLOAT);
+                SetShaderValue(_vignette_shader, GetShaderLocation(_vignette_shader, "vignetteColor"), &color, SHADER_UNIFORM_VEC3);
+                BeginBlendMode(effects->vignette_blend_mode);
                 render_texture_transparent(_render_texture_pov_bloom.texture, IsWindowFullscreen() ? POV_DIMENSION_FULLSCREEN : POV_DIMENSION, effects->crt_alpha);
                 EndBlendMode();
             }

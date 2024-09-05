@@ -123,7 +123,9 @@ namespace assets {
         std::unordered_map<std::variant<dungeon_view::POVFloor, dungeon_view::POVWall>, FieldMap> _tiles;
         std::unordered_map<std::variant<dungeon_view::GUI::MiniMap>, const assets::DCTexture> _gui;
         std::unordered_map<Beast, const assets::DCTexture> _beasts;
+        std::unordered_map<MonsterType, const assets::DCTexture> _enemies;
         std::unordered_map<WorldDirection, const assets::DCTexture> _background;
+        std::unordered_map<character::Role, const assets::DCTexture> _roles;
     };
 
     struct Fonts {
@@ -313,6 +315,17 @@ namespace assets {
 
             // Bestiary
             _textures._beasts.emplace(Beast::GoblinWarrior, assets::monsters::goblin_warrior);
+
+            _textures._enemies.emplace(types::MonsterType::GHOUL, assets::monsters::ghoul);
+            _textures._enemies.emplace(types::MonsterType::GOBLIN, assets::monsters::goblin_warrior);
+            _textures._enemies.emplace(types::MonsterType::NOMAD_THIEF, assets::monsters::nomad_thief);
+            _textures._enemies.emplace(types::MonsterType::SAND_SCORPION, assets::monsters::sand_scorpion);
+            _textures._enemies.emplace(types::MonsterType::SPECTRE, assets::monsters::spectre);
+
+            // Roles
+            _textures._roles.emplace(character::Role::MAGE, assets::portraits::mage);
+            _textures._roles.emplace(character::Role::CULTIST, assets::portraits::priest);
+            _textures._roles.emplace(character::Role::WARRIOR, assets::portraits::warrior);
         };
 
         Textures _textures;

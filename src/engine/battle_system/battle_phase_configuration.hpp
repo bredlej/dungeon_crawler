@@ -5,9 +5,9 @@
 #ifndef DUNGEON_CRAWLER_BATTLE_CONFIGURATIONS_HPP
 #define DUNGEON_CRAWLER_BATTLE_CONFIGURATIONS_HPP
 
-#include <engine/events.hpp>
-#include <ecs/types.hpp>
 #include <ecs/components.hpp>
+#include <ecs/types.hpp>
+#include <engine/events.hpp>
 
 using namespace battle;
 using namespace events::battle;
@@ -19,7 +19,6 @@ using bool_map = std::unordered_map<BattlePhase, bool_func>;
 
 class BattlePhaseConfiguration {
 public:
-
     void_map pre_phase;
     void_map phase;
     void_map post_phase;
@@ -68,17 +67,69 @@ namespace battle_configurations {
                 },
                 .end_condition = [](const std::shared_ptr<Core> &core) { return true; }};
     }
-    static BattlePhaseConfiguration animated_intro() {
+
+    template<int COLUMNS>
+    static BattlePhaseConfiguration enemies_in_two_rows() {
+        static_assert(COLUMNS > 0, "COLUMNS must be greater than 0");
+        using namespace components::battle;
         return {
                 .phase = {
                         {types::battle::BattlePhase::INACTIVE, [](const std::shared_ptr<Core> &core) {
-                             if (auto *animation = core->registry.ctx().find<components::values::AnimationTimer>()) {
-                                 if (animation->counter <= 0) {
-                                     core->registry.ctx().erase<components::values::AnimationTimer>();
-                                     core->dispatcher.trigger(NextStateEvent{BattlePhase::INACTIVE});
+                             core->registry.ctx().erase<config::BattleContext>();
+
+                             auto spectre = core->registry.create();
+                             core->registry.emplace<components::general::Name>(spectre, "Spectre");
+                             core->registry.emplace<components::battle::enemies::EnemyType>(spectre, MonsterType::SPECTRE);
+
+                             auto nomad = core->registry.create();
+                                core->registry.emplace<components::general::Name>(nomad, "Nomad");
+                                core->registry.emplace<components::battle::enemies::EnemyType>(nomad, MonsterType::NOMAD_THIEF);
+                             auto ghoul = core->registry.create();
+                                core->registry.emplace<components::general::Name>(ghoul, "Ghoul");
+                                core->registry.emplace<components::battle::enemies::EnemyType>(ghoul, MonsterType::GHOUL);
+
+                                auto two_rows = placement::TwoRows<COLUMNS>{};
+                             two_rows.rows[placement::Row::BACK_ROW] = {nomad, ghoul, spectre};
+                             two_rows.rows[placement::Row::FRONT_ROW] = {ghoul, spectre, nomad};
+
+                             auto enemy_config = core->registry.create();
+                             core->registry.emplace<placement::TwoRows<COLUMNS>>(enemy_config, two_rows);
+
+                             auto battle_ctx = core->registry.create();
+                             core->registry.ctx().emplace<config::BattleContext>(battle_ctx);
+                             core->registry.emplace<config::EnemyConfig>(battle_ctx, enemy_config);
+                             core->dispatcher.trigger(events::battle::NextStateEvent{types::battle::BattlePhase::INACTIVE});
+                         }},
+                        {types::battle::BattlePhase::BATTLE_START, [](const std::shared_ptr<Core> &core) {
+                             if (auto *battle_ctx = core->registry.ctx().find<config::BattleContext>()) {
+                                 auto enemy_config = core->registry.get<config::EnemyConfig>(battle_ctx->entity);
+                                 auto two_rows = core->registry.get<placement::TwoRows<COLUMNS>>(enemy_config.entity);
+                                 std::printf("Enemy placement:\n");
+                                 std::printf("Back row:\n");
+                                 for (const auto &entity: two_rows.rows[placement::Row::BACK_ROW]) {
+                                     if (entity != entt::null) {
+                                         auto &name = core->registry.get<components::general::Name>(entity);
+                                         std::printf("%s\n", name.name.data());
+                                     } else {
+                                         std::printf("Empty\n");
+                                     }
+                                 }
+                                 std::printf("Front row:\n");
+                                 for (const auto &entity: two_rows.rows[placement::Row::FRONT_ROW]) {
+                                     if (entity != entt::null) {
+                                         auto &name = core->registry.get<components::general::Name>(entity);
+                                         std::printf("%s\n", name.name.data());
+                                     } else {
+                                         std::printf("Empty\n");
+                                     }
                                  }
                              }
-                         }}},
+                             core->dispatcher.trigger(events::battle::NextStateEvent{types::battle::BattlePhase::BATTLE_START});
+                         }},
+                }};
+    }
+    static BattlePhaseConfiguration animated_intro() {
+        return {
                 .post_phase = {{types::battle::BattlePhase::INACTIVE, [](const std::shared_ptr<Core> &core) {
                                     std::printf("Starting battle...");
                                 }},
@@ -96,7 +147,7 @@ namespace battle_configurations {
                 .end_condition = [](const std::shared_ptr<Core> &core) {
                     return true;
                 }};
-               }
-}
+    }
+}// namespace battle_configurations
 
 #endif//DUNGEON_CRAWLER_BATTLE_CONFIGURATIONS_HPP

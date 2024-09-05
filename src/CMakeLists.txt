@@ -10,7 +10,9 @@ set(SOURCE_FILES
         views/main_menu.cpp
         views/dungeon_view.cpp
         views/encounter_view.cpp
+        views/party_view.cpp
         views/ui/dungeon_ui.cpp
+        views/ui/encounter_ui.cpp
         engine/core.cpp
         engine/scheduler.cpp
         engine/battle_system/combat.cpp

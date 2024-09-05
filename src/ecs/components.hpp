@@ -47,6 +47,14 @@ namespace components {
             float blur_alpha;
 
             float crt_alpha;
+            bool vignette_enabled;
+            int vignette_blend_mode;
+            float vignette_radius;
+            float vignette_softness;
+            float vignette_color;
+            float vignette_r;
+            float vignette_g;
+            float vignette_b;
         };
         struct EncounterChance {
             float chance;
@@ -98,6 +106,19 @@ namespace components {
         };
     }
     namespace battle {
+        namespace config {
+            struct BattleContext {
+                entt::entity entity;
+            };
+            struct EnemyConfig {
+                entt::entity entity;
+            };
+        }
+        namespace enemies {
+            struct EnemyType {
+                types::MonsterType value;
+            };
+        }
         namespace targets {
             struct TargetSingle {
                 entt::entity target;
@@ -192,6 +213,23 @@ namespace components {
             std::vector<entt::entity> damage;
             std::vector<entt::entity> ailments;
         };
+    }
+    namespace party {
+        struct Party {
+            std::vector<entt::entity> members;
+        };
+        struct PartyMember {
+            std::string name;
+            types::character::Role role;
+            battle::Attributes attributes;
+        };
+    }
+    namespace view {
+        namespace party {
+            struct Selected {
+                entt::entity party_member;
+            };
+        }
     }
 }
 #endif//DUNGEON_CRAWLER_COMPONENTS_HPP
