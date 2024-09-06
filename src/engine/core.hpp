@@ -46,8 +46,8 @@ private:
 template <typename T>
 class UIView {
 public:
-    static constexpr auto RENDER_TEXTURE_WIDTH = POV_DIMENSION.width;
-    static constexpr auto RENDER_TEXTURE_HEIGHT = POV_DIMENSION.height;
+    static constexpr auto RENDER_TEXTURE_WIDTH = 320;
+    static constexpr auto RENDER_TEXTURE_HEIGHT = 240;
 
     explicit UIView(std::shared_ptr<Core> &core) : _core{core} {};
     virtual void render() noexcept{

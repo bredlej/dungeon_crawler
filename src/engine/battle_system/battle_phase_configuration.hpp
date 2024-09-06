@@ -80,17 +80,24 @@ namespace battle_configurations {
                              auto spectre = core->registry.create();
                              core->registry.emplace<components::general::Name>(spectre, "Spectre");
                              core->registry.emplace<components::battle::enemies::EnemyType>(spectre, MonsterType::SPECTRE);
-
                              auto nomad = core->registry.create();
-                                core->registry.emplace<components::general::Name>(nomad, "Nomad");
-                                core->registry.emplace<components::battle::enemies::EnemyType>(nomad, MonsterType::NOMAD_THIEF);
+                             core->registry.emplace<components::general::Name>(nomad, "Nomad");
+                             core->registry.emplace<components::battle::enemies::EnemyType>(nomad, MonsterType::NOMAD_THIEF);
                              auto ghoul = core->registry.create();
-                                core->registry.emplace<components::general::Name>(ghoul, "Ghoul");
-                                core->registry.emplace<components::battle::enemies::EnemyType>(ghoul, MonsterType::GHOUL);
+                             core->registry.emplace<components::general::Name>(ghoul, "Ghoul");
+                             core->registry.emplace<components::battle::enemies::EnemyType>(ghoul, MonsterType::GHOUL);
+                             auto sand_scorpion = core->registry.create();
+                             core->registry.emplace<components::general::Name>(sand_scorpion, "Sand scorpion");
+                             core->registry.emplace<components::battle::enemies::EnemyType>(sand_scorpion, MonsterType::SAND_SCORPION);
+                             auto goblin = core->registry.create();
+                             core->registry.emplace<components::general::Name>(goblin, "Goblin");
+                             core->registry.emplace<components::battle::enemies::EnemyType>(goblin, MonsterType::GOBLIN);
 
-                                auto two_rows = placement::TwoRows<COLUMNS>{};
-                             two_rows.rows[placement::Row::BACK_ROW] = {nomad, ghoul, spectre};
-                             two_rows.rows[placement::Row::FRONT_ROW] = {ghoul, spectre, nomad};
+                             auto two_rows = placement::TwoRows<COLUMNS>{};
+
+
+                             two_rows.rows[placement::Row::BACK_ROW] = {nomad, ghoul, goblin};
+                             two_rows.rows[placement::Row::FRONT_ROW] = {sand_scorpion, spectre, entt::null};
 
                              auto enemy_config = core->registry.create();
                              core->registry.emplace<placement::TwoRows<COLUMNS>>(enemy_config, two_rows);

@@ -25,6 +25,19 @@ void EncounterUI::render() {
             if (ImGui::DragFloat("Offset", &_offset, 1.0f, 0.0f, 240.0f)) {
                 //
             }
+            if (ImGui::DragFloat("Speed", &_speed, 0.001f, 0.0f, 1.0f)) {
+                //
+            }
+            if (ImGui::DragFloat("Edge from", &_edge_from, 0.01f, 0.0f, 1.0f)) {
+                //
+            }
+            if (ImGui::DragFloat("Edge to", &_edge_to, 0.01f, 0.0f, 1.0f)) {
+                //
+            }
+            /*static float color_r = _color.r / 255.0f;
+            if (ImGui::ColorEdit4("Color", &color_r, ImGuiColorEditFlags_NoInputs)) {
+                //
+            }*/
         }
         ImGui::End();
     }
