@@ -43,7 +43,7 @@ static inline void draw_tile_asset(assets::Assets *assets, const size_t index, c
  */
 void DungeonView::_render_pov() noexcept {
 
-    BeginTextureMode(_render_texture_pov);
+    BeginTextureMode(_canvas);
     ClearBackground(BACKGROUND_COLOR);
 
     if (assets::Assets *assets = _core->get_assets()) {
@@ -277,7 +277,7 @@ void DungeonView::render() noexcept {
     }
     static Rectangle POV_DIMENSION_FULLSCREEN = Rectangle{0, 0, static_cast<float>(GetMonitorWidth(GetCurrentMonitor())), static_cast<float>(GetMonitorHeight(GetCurrentMonitor()))};
     static Rectangle GUI_DIMENSION_FULLSCREEN = Rectangle{static_cast<float>(GetMonitorWidth(GetCurrentMonitor())) * 0.75f, static_cast<float>(GetMonitorHeight(GetCurrentMonitor())) * 0.1f, static_cast<float>(GetMonitorWidth(GetCurrentMonitor())) * 0.2f, static_cast<float>(GetMonitorWidth(GetCurrentMonitor())) * 0.2f};
-    _render_texture(_render_texture_pov.texture, POV_DIMENSION_FULLSCREEN);
+    _render_texture(_canvas.texture, POV_DIMENSION_FULLSCREEN);
 
     _render_effects(POV_DIMENSION_FULLSCREEN);
 
@@ -296,7 +296,7 @@ void DungeonView::_render_effects(const Rectangle &POV_DIMENSION_FULLSCREEN) con
          BeginShaderMode(_brightness_filter_shader);
         {
             SetShaderValue(_brightness_filter_shader, GetShaderLocation(_brightness_filter_shader, "threshold"), &effects->brightness_threshold, SHADER_UNIFORM_FLOAT);
-            render_texture(_render_texture_pov.texture, Rectangle{0, 0, 320, 240});
+            render_texture(_canvas.texture, Rectangle{0, 0, RENDER_TEXTURE_WIDTH, RENDER_TEXTURE_HEIGHT});
         }
         EndShaderMode();
         EndTextureMode();

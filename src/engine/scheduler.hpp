@@ -5,7 +5,6 @@
 #ifndef DUNGEON_CRAWLER_SCHEDULER_HPP
 #define DUNGEON_CRAWLER_SCHEDULER_HPP
 
-
 #include <chrono>
 #include <condition_variable>
 #include <engine/core.hpp>

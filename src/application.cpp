@@ -259,7 +259,6 @@ void Application::start_encounter(events::dungeon::StartEncounter &event) noexce
                 _core->registry.ctx().erase<components::values::AnimationTimer>();
             }
             if (auto *effects = _core->registry.ctx().find<components::values::ShaderEffects>()) {
-                ;
                 effects->brightness_threshold += brightness_step;
             }
         } else {

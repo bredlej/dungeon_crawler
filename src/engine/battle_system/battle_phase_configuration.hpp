@@ -94,8 +94,6 @@ namespace battle_configurations {
                              core->registry.emplace<components::battle::enemies::EnemyType>(goblin, MonsterType::GOBLIN);
 
                              auto two_rows = placement::TwoRows<COLUMNS>{};
-
-
                              two_rows.rows[placement::Row::BACK_ROW] = {nomad, ghoul, goblin};
                              two_rows.rows[placement::Row::FRONT_ROW] = {sand_scorpion, spectre, entt::null};
 
@@ -105,29 +103,23 @@ namespace battle_configurations {
                              auto battle_ctx = core->registry.create();
                              core->registry.ctx().emplace<config::BattleContext>(battle_ctx);
                              core->registry.emplace<config::EnemyConfig>(battle_ctx, enemy_config);
+
                              core->dispatcher.trigger(events::battle::NextStateEvent{types::battle::BattlePhase::INACTIVE});
                          }},
                         {types::battle::BattlePhase::BATTLE_START, [](const std::shared_ptr<Core> &core) {
                              if (auto *battle_ctx = core->registry.ctx().find<config::BattleContext>()) {
                                  auto enemy_config = core->registry.get<config::EnemyConfig>(battle_ctx->entity);
                                  auto two_rows = core->registry.get<placement::TwoRows<COLUMNS>>(enemy_config.entity);
-                                 std::printf("Enemy placement:\n");
-                                 std::printf("Back row:\n");
                                  for (const auto &entity: two_rows.rows[placement::Row::BACK_ROW]) {
                                      if (entity != entt::null) {
                                          auto &name = core->registry.get<components::general::Name>(entity);
-                                         std::printf("%s\n", name.name.data());
                                      } else {
-                                         std::printf("Empty\n");
                                      }
                                  }
-                                 std::printf("Front row:\n");
                                  for (const auto &entity: two_rows.rows[placement::Row::FRONT_ROW]) {
                                      if (entity != entt::null) {
                                          auto &name = core->registry.get<components::general::Name>(entity);
-                                         std::printf("%s\n", name.name.data());
                                      } else {
-                                         std::printf("Empty\n");
                                      }
                                  }
                              }

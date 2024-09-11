@@ -9,12 +9,12 @@ extern "C" {
 };
 #include <cstdint>
 #include <cstdio>
-#include <ecs/types.hpp>
 #include <ecs/beasts.hpp>
+#include <ecs/types.hpp>
 #include <engine/asset_paths.hpp>
+#include <string>
 #include <unordered_map>
 #include <variant>
-#include <string>
 
 using namespace types;
 namespace assets {
@@ -28,10 +28,19 @@ namespace assets {
         explicit DCTexture() = default;
         DCTexture(const Texture &other) noexcept = delete;
         DCTexture(DCTexture &other) noexcept = delete;
-        DCTexture(DCTexture &&other) noexcept : _texture(other._texture) {};
-        DCTexture &operator=(const DCTexture &other) noexcept { _texture = other._texture; return *this; };
-        DCTexture &operator=(const DCTexture other) noexcept { _texture = other._texture; return *this; };
-        DCTexture &operator=(DCTexture &&other) noexcept { _texture = other._texture; return *this; };
+        DCTexture(DCTexture &&other) noexcept : _texture(other._texture){};
+        DCTexture &operator=(const DCTexture &other) noexcept {
+            _texture = other._texture;
+            return *this;
+        };
+        DCTexture &operator=(const DCTexture other) noexcept {
+            _texture = other._texture;
+            return *this;
+        };
+        DCTexture &operator=(DCTexture &&other) noexcept {
+            _texture = other._texture;
+            return *this;
+        };
         ~DCTexture() = default;
         [[nodiscard]] Texture2D get() const {
             return _texture;
@@ -43,21 +52,16 @@ namespace assets {
 
     static std::unordered_map<std::string, FloorType> name_to_floor_type = {
             {"RUINS_01", FloorType::RUINS_01},
-            {"RUINS_02", FloorType::RUINS_02}
-    };
+            {"RUINS_02", FloorType::RUINS_02}};
     static std::unordered_map<FloorType, std::string> floor_type_to_name = {
             {FloorType::RUINS_01, "RUINS_01"},
-            {FloorType::RUINS_02, "RUINS_02"}
-    };
+            {FloorType::RUINS_02, "RUINS_02"}};
     static std::unordered_map<std::string, CeilingType> name_to_ceiling_type = {
-            {"RUINS_01", CeilingType::RUINS_01}
-    };
+            {"RUINS_01", CeilingType::RUINS_01}};
     static std::unordered_map<CeilingType, std::string> ceiling_type_to_name = {
-            {CeilingType::RUINS_01, "RUINS_01"}
-    };
+            {CeilingType::RUINS_01, "RUINS_01"}};
     static std::unordered_map<std::string, WallType> name_to_wall_type = {
-            {"RUINS_01", WallType::RUINS_01}
-    };
+            {"RUINS_01", WallType::RUINS_01}};
     static std::unordered_map<WallType, std::string> wall_type_to_name = {
             {WallType::RUINS_01, "RUINS_01"},
     };
@@ -78,8 +82,7 @@ namespace assets {
             {"Closed", DoorStateType::CLOSED},
     };
     static std::unordered_map<std::string, Beast> name_to_beast_type = {
-            {"GoblinWarrior", Beast::GoblinWarrior}
-    };
+            {"GoblinWarrior", Beast::GoblinWarrior}};
     // clang-format off
     namespace dungeon_view {
         namespace GUI {
@@ -117,7 +120,7 @@ namespace assets {
                 }
             }
             for (const auto &[gui_element, texture]: _gui) {
-                    UnloadTexture(texture.get());
+                UnloadTexture(texture.get());
             }
         }
         std::unordered_map<std::variant<dungeon_view::POVFloor, dungeon_view::POVWall>, FieldMap> _tiles;
@@ -131,10 +134,28 @@ namespace assets {
     struct Fonts {
     public:
         Fonts() : font{LoadFont("assets/Fonts/romulus.png")} {};
-        ~Fonts() {UnloadFont(font);};
+        ~Fonts() { UnloadFont(font); };
         Font font;
     };
 
+    enum class ShaderType : uint8_t {
+        FILL,
+        OUTLINE
+    };
+
+    struct Shaders {
+    public:
+        Shaders() : _shaders() {
+            _shaders.emplace(ShaderType::FILL, LoadShader(0, assets::shaders::fill));
+            _shaders.emplace(ShaderType::OUTLINE, LoadShader(0, assets::shaders::outline));
+        };
+        ~Shaders() {
+            for (const auto &[shader_name, shader]: _shaders) {
+                UnloadShader(shader);
+            }
+        }
+        std::unordered_map<ShaderType, Shader> _shaders;
+    };
     class Assets {
     public:
         explicit Assets() noexcept {
@@ -330,6 +351,8 @@ namespace assets {
 
         Textures _textures;
         Fonts fonts;
+        Shaders shaders;
+
     };
 }// namespace assets
 

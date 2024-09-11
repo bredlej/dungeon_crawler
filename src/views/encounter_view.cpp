@@ -11,8 +11,8 @@ void EncounterView::_initialize() noexcept {
         _empty_canvas.push_back(BLANK);
     }
     _core->scheduler.attach([this](auto delta, void *, auto succeed, auto fail){
-        _timer+=delta * _ui.speed();
-        if (_timer > 360.0f) {
+        _timer += delta * _ui.speed();
+        if (_timer > 90.0f) {
             _timer = 0.0f;
         }
     });
@@ -33,9 +33,10 @@ void EncounterView::render() noexcept {
         _battle_director->update();
     }
     static auto POV_DIMENSION_FULLSCREEN = Rectangle{0, 0, static_cast<float>(GetMonitorWidth(GetCurrentMonitor())), static_cast<float>(GetMonitorHeight(GetCurrentMonitor()))};
-    _render_texture(_canvas.texture, POV_DIMENSION_FULLSCREEN);
+
     _render_mouseover();
     _render_texture(_canvas.texture, POV_DIMENSION_FULLSCREEN);
+    _render_effects();
     _ui.render();
     EndDrawing();
 }
@@ -51,8 +52,8 @@ void EncounterView::_render_mouseover() noexcept {
     auto *colors = LoadImageColors(image);
     int window_width = POV_DIMENSION.width;
     int window_height = POV_DIMENSION.height;
-    int image_width = 320;
-    int image_height = 240;
+    int image_width = RENDER_TEXTURE_WIDTH;
+    int image_height = RENDER_TEXTURE_HEIGHT;
 
     float scale_x = static_cast<float>(image_width) / static_cast<float>(window_width);
     float scale_y = static_cast<float>(image_height) / static_cast<float>(window_height);
@@ -128,15 +129,17 @@ void EncounterView::_render_enemy(entt::entity entity, int x, int y) noexcept {
         DrawTextureRec(enemy_texture->get(), {0, 0, static_cast<float>(enemy_texture->get().width), static_cast<float>(enemy_texture->get().height)}, {static_cast<float>(x - (enemy_texture->get().width / 2)), static_cast<float>(y - enemy_texture->get().height)}, WHITE);
         if (_selected_enemy == entity) {
             BeginBlendMode(BLEND_MULTIPLIED);
-            BeginShaderMode(_fill_shader);
+            Shader fill_shader = _core->get_assets()->shaders._shaders[assets::ShaderType::FILL];
+            BeginShaderMode(fill_shader);
             float edge_from = _ui.edge_from();
             float edge_to = _ui.edge_to();
             DrawTextureRec(enemy_texture->get(), {0, 0, static_cast<float>(enemy_texture->get().width), static_cast<float>(enemy_texture->get().height)}, {static_cast<float>(x - (enemy_texture->get().width / 2)), static_cast<float>(y - enemy_texture->get().height)}, WHITE);
             EndShaderMode();
-            BeginShaderMode(_outline_shader);
-            SetShaderValue(_outline_shader, GetShaderLocation(_outline_shader, "edge_from"), &edge_from, SHADER_UNIFORM_FLOAT);
-            SetShaderValue(_outline_shader, GetShaderLocation(_outline_shader, "edge_to"), &edge_to, SHADER_UNIFORM_FLOAT);
-            SetShaderValue(_outline_shader, GetShaderLocation(_outline_shader, "time"), &_timer, SHADER_UNIFORM_FLOAT);
+            Shader outline_shader = _core->get_assets()->shaders._shaders[assets::ShaderType::OUTLINE];
+            BeginShaderMode(outline_shader);
+            SetShaderValue(outline_shader, GetShaderLocation(outline_shader, "edge_from"), &edge_from, SHADER_UNIFORM_FLOAT);
+            SetShaderValue(outline_shader, GetShaderLocation(outline_shader, "edge_to"), &edge_to, SHADER_UNIFORM_FLOAT);
+            SetShaderValue(outline_shader, GetShaderLocation(outline_shader, "time"), &_timer, SHADER_UNIFORM_FLOAT);
             DrawTextureRec(enemy_texture->get(), {0, 0, static_cast<float>(enemy_texture->get().width), static_cast<float>(enemy_texture->get().height)}, {static_cast<float>(x - (enemy_texture->get().width / 2)), static_cast<float>(y - enemy_texture->get().height)}, WHITE);
             EndShaderMode();
             EndBlendMode();
@@ -144,6 +147,9 @@ void EncounterView::_render_enemy(entt::entity entity, int x, int y) noexcept {
     }
 }
 
+void EncounterView::_render_effects() noexcept {
+
+}
 
 void EncounterView::_render_enemy_slot(auto idx, const auto &row_entities, const auto row_start_x, const auto row_y, const auto offset) {
     for (const auto &entity: row_entities) {

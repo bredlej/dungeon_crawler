@@ -45,7 +45,7 @@ struct POVField {
 
 class DungeonView : public UIView<DungeonView> {
 public:
-    explicit DungeonView(std::shared_ptr<Core> &core, Level &&level) : UIView{core}, _ui{core}, _render_texture_pov{LoadRenderTexture(320, 240)}, _render_texture_gui(LoadRenderTexture(120, 120)), _level{std::move(level)} {
+    explicit DungeonView(std::shared_ptr<Core> &core, Level &&level) : UIView{core}, _ui{core}, _canvas{LoadRenderTexture(320, 240)}, _render_texture_gui(LoadRenderTexture(120, 120)), _level{std::move(level)} {
         _initialize();
         std::printf("Dungeon View constructed\n");
     };
@@ -69,7 +69,7 @@ private:
     void _clear() noexcept;
     POVField<assets::dungeon_view::POVFloor> _player_fov_tile;
     POVField<assets::dungeon_view::POVWall> _player_fov_wall;
-    RenderTexture _render_texture_pov;
+    RenderTexture _canvas;
     RenderTexture _render_texture_pov_bloom = LoadRenderTexture(320, 240);
     RenderTexture _render_texture_gui;
     Level _level;

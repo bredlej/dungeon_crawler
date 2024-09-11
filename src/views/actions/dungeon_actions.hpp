@@ -30,7 +30,6 @@ public:
     void move_back() const;
     void move_left() const;
     void move_right() const;
-    void start_encounter() const;
 private:
     void _initialize();
     void _on_movement(const events::dungeon::Movement &movement) const;

@@ -6,6 +6,14 @@
 #define DUNGEON_CRAWLER_ASSET_PATHS_HPP
 
 namespace assets {
+    namespace shaders {
+        constexpr const char *brightness_filter = "assets/Shaders/brightness_filter.fs";
+        constexpr const char *crt = "assets/Shaders/crt.fs";
+        constexpr const char *outline = "assets/Shaders/outline.fs";
+        constexpr const char *blur = "assets/Shaders/gauss_blur.fs";
+        constexpr const char *vignette = "assets/Shaders/vignette.fs";
+        constexpr const char *fill = "assets/Shaders/fill.fs";
+    }
     namespace gui {
         namespace minimap {
             constexpr const char *background = "assets/GUI/Minimap/background.png";

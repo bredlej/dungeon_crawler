@@ -96,8 +96,6 @@ namespace skills {
 
         OffensiveSkillMap offensive_skills;
         MonsterSkillMap monster_skills;
-
-
     };
 
 

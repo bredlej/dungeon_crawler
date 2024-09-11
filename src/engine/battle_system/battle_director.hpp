@@ -70,7 +70,7 @@ public:
 
     ~BattleDirector() = default;
 
-    void apply_configuration(BattlePhaseConfiguration config) {
+    void apply_configuration(const BattlePhaseConfiguration& config) {
         _battle_phase = types::battle::BattlePhase::INACTIVE;
         for (auto &[key, value]: config.pre_phase) {
             pre_phase[key] = value;

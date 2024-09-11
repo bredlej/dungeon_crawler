@@ -4,8 +4,8 @@
 
 #ifndef DUNGEON_CRAWLER_EVENTS_HPP
 #define DUNGEON_CRAWLER_EVENTS_HPP
-#include <entt/entt.hpp>
 #include <ecs/types.hpp>
+#include <entt/entt.hpp>
 
 namespace events::ui {
     struct ToggleShowDemo {};
@@ -14,8 +14,8 @@ namespace events::ui {
     namespace party {
         struct NextPartyMember {};
         struct PreviousPartyMember {};
-    }
-}
+    }// namespace party
+}// namespace events::ui
 namespace events::dungeon {
     struct RecalculateFov {};
     struct TurnLeft {};
@@ -41,9 +41,8 @@ namespace events::dungeon {
     };
 
     struct EndEncounter {
-
     };
-}
+}// namespace events::dungeon
 
 namespace events::battle {
     struct NextStateEvent {
@@ -54,25 +53,25 @@ namespace events::battle {
         entt::entity skill;
     };
 
-    template <typename DAMAGE_TYPE>
+    template<typename DAMAGE_TYPE>
     struct DamageEvent {
         entt::entity source_skill;
         entt::entity target;
         DAMAGE_TYPE damage;
     };
 
-    template <typename DAMAGE_TYPE>
+    template<typename DAMAGE_TYPE>
     struct FollowupEvent {
         entt::entity source_skill;
         entt::entity target;
         DAMAGE_TYPE damage;
     };
 
-    template <typename DAMAGE_TYPE, typename AILMENT>
+    template<typename DAMAGE_TYPE, typename AILMENT>
     struct AilmentEvent {
         entt::entity target;
         DAMAGE_TYPE damage;
         AILMENT ailment;
     };
-}
+}// namespace events::battle
 #endif//DUNGEON_CRAWLER_EVENTS_HPP

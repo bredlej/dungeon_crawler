@@ -32,8 +32,7 @@ public:
 private:
     EncounterUI _ui;
     RenderTexture _canvas;
-    Shader _outline_shader = LoadShader(0, "assets/Shaders/outline.fs");
-    Shader _fill_shader = LoadShader(0, "assets/Shaders/fill.fs");
+
     entt::entity _selected_enemy{entt::null};
     std::vector<Color> _empty_canvas;
     float _timer {0.0f};
@@ -41,6 +40,7 @@ private:
     void _initialize() noexcept;
     void _clear_canvas() noexcept;
     void _render_enemies() noexcept;
+    void _render_effects() noexcept;
     void _render_enemy(entt::entity entity, int x, int y) noexcept;
     void _render_enemy_slot(auto idx, const auto &row_entities, auto row_start_x, auto row_y, auto offset);
     entt::entity _get_entity_at_point(auto idx, const auto &row_entities, auto row_start_x, auto row_y, auto offset, auto mouse_x, auto mouse_y);
